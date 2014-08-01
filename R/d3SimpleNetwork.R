@@ -88,3 +88,14 @@ d3SimpleNetwork <- function(data,
   
   structure(params, class = c('d3SimpleNetwork', 'htmlwidget'))
 }
+
+#' @export
+widget_html.d3SimpleNetwork <- function(x, id, class, style) {
+  htmltools::tag('svg',
+                 id = id,
+                 class = class,
+                 width = x$options$width, 
+                 height = x$options$height)
+}
+
+
