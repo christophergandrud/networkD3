@@ -1,0 +1,64 @@
+#' Function for creating simple D3 JavaScript force directed network graphs.
+#'
+#' \code{d3SimpleNetwork} creates simple D3 JavaScript force directed network
+#' graphs.
+#'
+#' @param data a data frame object with three columns. The first two are the
+#' names of the linked units. The third records an edge value. (Currently the
+#' third column doesn't affect the graph.)
+#' @param source character string naming the network source variable in the data
+#' frame. If \code{source = NULL} then the first column of the data frame is
+#' treated as the source.
+#' @param target character string naming the network target variable in the data
+#' frame. If \code{target = NULL} then the second column of the data frame is
+#' treated as the target.
+#' @param height numeric height for the network graph's frame area in pixels.
+#' @param width numeric width for the network graph's frame area in pixels.
+#' @param linkDistance numeric distance between the links in pixels (actually
+#' arbitrary relative to the diagram's size).
+#' @param charge numeric value indicating either the strength of the node
+#' repulsion (negative value) or attraction (positive value).
+#' @param fontSize numeric font size in pixels for the node text labels.
+#' @param linkColour character string specifying the colour you want the link
+#' lines to be. Multiple formats supported (e.g. hexadecimal).
+#' @param nodeColour character string specifying the colour you want the node
+#' circles to be. Multiple formats supported (e.g. hexadecimal).
+#' @param nodeClickColour character string specifying the colour you want the
+#' node circles to be when they are clicked. Also changes the colour of the
+#' text. Multiple formats supported (e.g. hexadecimal).
+#' @param textColour character string specifying the colour you want the text to
+#' be before they are clicked. Multiple formats supported (e.g. hexadecimal).
+#' @param opacity numeric value of the proportion opaque you would like the
+#' graph elements to be.
+#'
+#' @examples
+#' # Fake data
+#' source <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
+#' target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
+#' networkData <- data.frame(source, target)
+#'
+#' # Create graph
+#' d3SimpleNetwork(networkData, height = 300, width = 700)
+#'
+#' @source
+#' D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
+#' specifically for directed networks
+#' \url{https://github.com/mbostock/d3/wiki/Force-Layout}
+#'
+#' @export
+d3SimpleNetwork <- function(data, 
+                            source = NULL, 
+                            target = NULL, 
+                            height = 600,
+                            width = 900, 
+                            linkDistance = 50, 
+                            charge = -200,
+                            fontSize = 7, 
+                            linkColour = "#666", 
+                            nodeColour = "#3182bd", 
+                            nodeClickColour = "#E34A33",
+                            textColour = "#3182bd", 
+                            opacity = 0.6)
+{
+
+}
