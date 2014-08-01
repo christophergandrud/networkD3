@@ -1,6 +1,6 @@
 Package: d3networks
 Type: Package
-Title: What the package does (short line)
+Title: Tools for creating D3 JavaScript network graphs from R
 Version: 1.0
 Date: 2014-08-01
 Author: Who wrote it
