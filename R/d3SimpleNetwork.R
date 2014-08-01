@@ -60,5 +60,31 @@ d3SimpleNetwork <- function(data,
                             textColour = "#3182bd", 
                             opacity = 0.6)
 {
-
+  # validate input
+  if (!is.data.frame(data))
+    stop("data must be a data frame class object.")
+  
+  # convert data to json
+  if (is.null(source) && is.null(target))
+    networkData <- data[, 1:2]
+  else if (!is.null(source) && !is.null(target))
+    networkData <- data.frame(data[, source], data[, target])
+  names(networkData) <- c("source", "target")
+  networkJson <- toJSONarray(networkData)
+    
+  params = list(
+    network = networkJson, 
+    options = list(height = height,
+                   width = width,
+                   linkDistance = linkDistance,
+                   charge = charge,
+                   fontSize = fontSize,
+                   linkColour = linkColour,
+                   nodeColour = nodeColour,
+                   nodeClickColour = nodeClickColour,
+                   textColour = textColour,
+                   opacity = opacity)
+  )
+  
+  structure(params, class = c('d3SimpleNetwork', 'htmlwidget'))
 }
