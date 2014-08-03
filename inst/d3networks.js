@@ -2,6 +2,7 @@ HTMLWidgets.widget({
   name: "d3networks",
   type: "output",
   
+  // TODO: use instance data for this
   force: d3.layout.force(),
   
   initialize: function(el) {
@@ -11,8 +12,8 @@ HTMLWidgets.widget({
   resize: function(el, width, height) {
      
      var svg = d3.select(el)
-      .attr("width", width)
-      .attr("height", height);
+       .attr("width", width)
+       .attr("height", height);
     
      this.force.size([width, height]).resume();
   },
