@@ -62,9 +62,9 @@ graphs.
 # Fake data
 source <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
 target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
-networkData <- data.frame(source, target)
+data <- data.frame(source, target)
 
 # Create graph
-d3SimpleNetwork(networkData, height = 300, width = 700)
+d3SimpleNetwork(data, height = 300, width = 700)
 }
 

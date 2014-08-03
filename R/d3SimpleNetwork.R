@@ -35,10 +35,10 @@
 #' # Fake data
 #' source <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
 #' target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
-#' networkData <- data.frame(source, target)
+#' data <- data.frame(source, target)
 #'
 #' # Create graph
-#' d3SimpleNetwork(networkData, height = 300, width = 700)
+#' d3SimpleNetwork(data, height = 300, width = 700)
 #'
 #' @source
 #' D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
@@ -66,14 +66,14 @@ d3SimpleNetwork <- function(data,
   
   # convert data to json
   if (is.null(source) && is.null(target))
-    networkData <- data[, 1:2]
+    links <- data[, 1:2]
   else if (!is.null(source) && !is.null(target))
-    networkData <- data.frame(data[, source], data[, target])
-  names(networkData) <- c("source", "target")
-  networkJson <- toJSONarray(networkData)
+    links <- data.frame(data[, source], data[, target])
+  names(links) <- c("source", "target")
+  linksJson <- toJSONarray(links)
     
   params = list(
-    network = networkJson, 
+    links = linksJson, 
     options = list(height = height,
                    width = width,
                    linkDistance = linkDistance,
@@ -83,19 +83,26 @@ d3SimpleNetwork <- function(data,
                    nodeColour = nodeColour,
                    nodeClickColour = nodeClickColour,
                    textColour = textColour,
-                   opacity = opacity)
+                   opacity = opacity),
+    sizePolicy = htmlwidgets::sizePolicy(
+      viewer.fill = TRUE, 
+      knitr.figure = TRUE)
   )
   
-  structure(params, class = c('d3SimpleNetwork', 'htmlwidget'))
+  structure(params, class = c('d3networks', 'htmlwidget'))
 }
 
 #' @export
-widget_html.d3SimpleNetwork <- function(x, id, class, style) {
-  htmltools::tag('svg',
-                 id = id,
-                 class = class,
-                 width = x$options$width, 
-                 height = x$options$height)
+widget_html.d3networks <- function(x, id, class, style, width, height) {
+  htmltools::tagList(
+    htmltools::singleton(tags$head(htmltools::includeCSS(
+      system.file("d3networks.css", package = "d3networks")))),
+    htmltools::tag('svg',
+                   list(id = id,
+                        class = class,
+                        width = width, 
+                        height = height))
+  )
 }
 
 

@@ -1,0 +1,17 @@
+.d3networks .link {
+  stroke: #666;
+  opacity: 0.6;
+  stroke-width: 1.5px;
+}
+
+.d3networks .node circle {
+  stroke: #fff;
+  opacity: 0.6;
+  stroke-width: 1.5px;
+}
+
+.d3networks text {
+  font: 15px serif;
+  opacity: 0.6;
+  pointer-events: none;
+}
