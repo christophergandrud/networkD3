@@ -100,7 +100,7 @@ widget_html.d3SimpleNetwork  <- function(x, id, class, style, width, height) {
   # read and render widget css 
   linkColour <- x$options$linkColour
   opacity <- x$options$opacity
-  fontSize <- x$options$fontsize
+  fontSize <- x$options$fontSize
   css <-  readLines(system.file("www/widgets/d3SimpleNetwork/styles.css", 
                                 package = "d3networks"))
   css <- whisker.render(css)

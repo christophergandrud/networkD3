@@ -28,8 +28,8 @@ HTMLWidgets.widget({
       .nodes(d3.values(nodes))
       .links(links)
       .size([width, height])
-      .linkDistance(50)
-      .charge(-200)
+      .linkDistance(data.options.linkDistance)
+      .charge(data.options.charge)
       .on("tick", tick)
       .start();
 
@@ -58,13 +58,13 @@ HTMLWidgets.widget({
     // node circles
     node.append("circle")
       .attr("r", 8)
-      .style("fill", "#3182bd");
+      .style("fill", data.options.nodeColour);
 
     // node text
     node.append("text")
       .attr("x", 12)
       .attr("dy", ".35em")
-      .style("fill", "#3182bd")
+      .style("fill", data.options.textColour)
       .text(function(d) { return d.name; });
 
     // tick event handler
@@ -100,11 +100,11 @@ HTMLWidgets.widget({
         .attr("x", 22)
         .style("stroke-width", ".5px")
         .style("opacity", 1)
-        .style("fill", "#E34A33")
-        .style("font", "37.5px serif");
+        .style("fill", data.options.nodeClickColour)
+        .style("font", data.options.clickTextSize + "px serif");
       d3.select(this).select("circle").transition()
         .duration(750)
-        .style("fill", "#E34A33")
+        .style("fill", data.options.nodeClickColour)
         .attr("r", 16)
     }
 
@@ -113,15 +113,15 @@ HTMLWidgets.widget({
       d3.select(this).select("circle").transition()
         .duration(750)
         .attr("r", 6)
-        .style("fill", "#E34A33");
+        .style("fill", data.options.nodeClickColour);
         d3.select(this).select("text").transition()
         .duration(750)
         .attr("x", 12)
         .style("stroke", "none")
-        .style("fill", "#E34A33")
+        .style("fill", data.options.nodeClickColour)
         .style("stroke", "none")
-        .style("opacity", 0.6)
-        .style("font", "15px serif");
+        .style("opacity", data.options.opacity)
+        .style("font", data.options.fontSize + "px serif");
     }
   },
   

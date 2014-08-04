@@ -11,7 +11,7 @@
 }
 
 .d3SimpleNetwork  text {
-  font: {{fontsize}}px serif;
+  font: {{fontSize}}px serif;
   opacity: {{opacity}};
   pointer-events: none;
 }
