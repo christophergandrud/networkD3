@@ -1,3 +1,21 @@
+
+#' Internal function to add required attributes to widget definitions
+#' 
+#' @param x widget parameters
+#' @param class widget class name
+#' @return a widget definition with all required attributes
+#' 
+#' @keywords internal
+#' @noRd
+asWidget <- function(x, name) {
+  structure(x, 
+    class = c(name, "htmlwidget"),
+    package = "d3networks",
+    config = sprintf("www/widgets/%s/config.yaml", name),
+    jsfile = sprintf("www/widgets/%s/widget.js", name)
+  )
+}
+
 #' Internal function from Wei Luo to convert a data frame to a JSON array
 #' 
 #' @param dtf a data frame object.

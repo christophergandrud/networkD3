@@ -72,6 +72,7 @@ d3SimpleNetwork <- function(data,
   names(links) <- c("source", "target")
   linksJson <- toJSONarray(links)
     
+  # define widget params
   params = list(
     links = linksJson, 
     options = list(height = height,
@@ -89,11 +90,8 @@ d3SimpleNetwork <- function(data,
       knitr.figure = TRUE)
   )
   
-  structure(params, 
-            class = c('d3SimpleNetwork', 'htmlwidget'),
-            package = "d3networks",
-            config = "www/widgets/d3SimpleNetwork/config.yaml",
-            jsfile = "www/widgets/d3SimpleNetwork/widget.js")
+  # return as a widget 
+  asWidget(params, "d3SimpleNetwork")
 }
 
 #' @export
