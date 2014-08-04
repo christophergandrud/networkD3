@@ -4,7 +4,7 @@
   stroke-width: 1.5px;
 }
 
-.d3SimpleNetwork  .node circle {
+.d3SimpleNetwork .node circle {
   stroke: #fff;
   opacity: {{opacity}};
   stroke-width: 1.5px;

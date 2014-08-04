@@ -3,13 +3,13 @@
 \alias{d3SimpleNetwork}
 \title{Function for creating simple D3 JavaScript force directed network graphs.}
 \source{
-D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
-specifically for directed networks
-\url{https://github.com/mbostock/d3/wiki/Force-Layout}
+D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
+  more specifically for directed networks
+  \url{https://github.com/mbostock/d3/wiki/Force-Layout}
 }
 \usage{
-d3SimpleNetwork(data, source = NULL, target = NULL, height = 600,
-  width = 900, linkDistance = 50, charge = -200, fontSize = 7,
+d3SimpleNetwork(data, source = NULL, target = NULL, height = NULL,
+  width = NULL, linkDistance = 50, charge = -200, fontSize = 7,
   linkColour = "#666", nodeColour = "#3182bd",
   nodeClickColour = "#E34A33", textColour = "#3182bd", opacity = 0.6)
 }
@@ -26,9 +26,11 @@ treated as the source.}
 frame. If \code{target = NULL} then the second column of the data frame is
 treated as the target.}
 
-\item{height}{numeric height for the network graph's frame area in pixels.}
+\item{height}{height for the network graph's frame area in pixels (if
+\code{NULL} then height is automatically determined based on context)}
 
-\item{width}{numeric width for the network graph's frame area in pixels.}
+\item{width}{numeric width for the network graph's frame area in pixels (if
+\code{NULL} then width is automatically determined based on context)}
 
 \item{linkDistance}{numeric distance between the links in pixels (actually
 arbitrary relative to the diagram's size).}
@@ -52,7 +54,7 @@ text. Multiple formats supported (e.g. hexadecimal).}
 be before they are clicked. Multiple formats supported (e.g. hexadecimal).}
 
 \item{opacity}{numeric value of the proportion opaque you would like the
-graph elements to be.}
+  graph elements to be.}
 }
 \description{
 \code{d3SimpleNetwork} creates simple D3 JavaScript force directed network
