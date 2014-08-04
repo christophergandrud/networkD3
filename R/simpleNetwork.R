@@ -1,6 +1,6 @@
 #' Function for creating simple D3 JavaScript force directed network graphs.
 #' 
-#' \code{d3SimpleNetwork} creates simple D3 JavaScript force directed network 
+#' \code{simpleNetwork} creates simple D3 JavaScript force directed network 
 #' graphs.
 #' 
 #' @param data a data frame object with three columns. The first two are the 
@@ -40,26 +40,26 @@
 #' data <- data.frame(source, target)
 #' 
 #' # Create graph
-#' d3SimpleNetwork(data, height = 300, width = 700)
+#' simpleNetwork(data, height = 300, width = 700)
 #' 
 #' @source D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
 #'   more specifically for directed networks 
 #'   \url{https://github.com/mbostock/d3/wiki/Force-Layout}
 #'   
 #' @export
-d3SimpleNetwork <- function(data, 
-                            source = NULL, 
-                            target = NULL, 
-                            height = NULL,
-                            width = NULL, 
-                            linkDistance = 50, 
-                            charge = -200,
-                            fontSize = 7, 
-                            linkColour = "#666", 
-                            nodeColour = "#3182bd", 
-                            nodeClickColour = "#E34A33",
-                            textColour = "#3182bd", 
-                            opacity = 0.6)
+simpleNetwork <- function(data, 
+                          source = NULL, 
+                          target = NULL, 
+                          height = NULL,
+                          width = NULL, 
+                          linkDistance = 50, 
+                          charge = -200,
+                          fontSize = 7, 
+                          linkColour = "#666", 
+                          nodeColour = "#3182bd", 
+                          nodeClickColour = "#E34A33",
+                          textColour = "#3182bd", 
+                          opacity = 0.6)
 {
   # validate input
   if (!is.data.frame(data))
@@ -94,18 +94,18 @@ d3SimpleNetwork <- function(data,
   )
   
   # return as a widget 
-  asWidget(params, "d3SimpleNetwork")
+  asWidget(params, "simpleNetwork")
 }
 
 #' @export
-widget_html.d3SimpleNetwork  <- function(x, id, class, style, width, height) {
+widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {
   
   # read and render widget css 
   linkColour <- x$options$linkColour
   opacity <- x$options$opacity
   fontSize <- x$options$fontSize
-  css <-  readLines(system.file("www/widgets/d3SimpleNetwork/styles.css", 
-                                package = "d3networks"))
+  css <-  readLines(system.file("www/widgets/simpleNetwork/styles.css", 
+                                package = "networkD3"))
   css <- whisker.render(css)
   
   # return style for head and svg tag for body

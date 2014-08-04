@@ -1,16 +1,16 @@
-.d3SimpleNetwork .link {
+.simpleNetwork .link {
   stroke: {{linkColour}};
   opacity: {{opacity}};
   stroke-width: 1.5px;
 }
 
-.d3SimpleNetwork .node circle {
+.simpleNetwork .node circle {
   stroke: #fff;
   opacity: {{opacity}};
   stroke-width: 1.5px;
 }
 
-.d3SimpleNetwork  text {
+.simpleNetwork  text {
   font: {{fontSize}}px serif;
   opacity: {{opacity}};
   pointer-events: none;

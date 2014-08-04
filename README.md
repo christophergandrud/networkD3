@@ -18,16 +18,16 @@ Note that the version of htmlwidgets installed is from a particular development 
 
 #### Usage
 
-There is currently only one of the d3Network package functions available (`d3SimpleNetwork`). Here's an example of it's use:
+There is currently only one of the d3Network package functions available (`simpleNetwork`). Here's an example of it's use:
 
 ```S
-library(NetworkD3)
+library(networkD3)
 
 src <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
 target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
 networkData <- data.frame(src, target)
 
-d3SimpleNetwork(networkData)
+simpleNetwork(networkData)
 ```
 
 

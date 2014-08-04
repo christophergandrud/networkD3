@@ -10,7 +10,7 @@
 asWidget <- function(x, name) {
   structure(x, 
     class = c(name, "htmlwidget"),
-    package = "d3networks",
+    package = "networkD3",
     config = sprintf("www/widgets/%s/config.yaml", name),
     jsfile = sprintf("www/widgets/%s/widget.js", name)
   )

@@ -1,6 +1,6 @@
 HTMLWidgets.widget({
   
-  name: "d3SimpleNetwork",
+  name: "simpleNetwork",
   
   type: "output",
   
