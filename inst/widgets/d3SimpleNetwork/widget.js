@@ -23,6 +23,7 @@ HTMLWidgets.widget({
     var width = el.offsetWidth;
     var height = el.offsetHeight;
     
+    // create d3 force layout
     force
       .nodes(d3.values(nodes))
       .links(links)
@@ -32,15 +33,18 @@ HTMLWidgets.widget({
       .on("tick", tick)
       .start();
 
+    // select the svg element
     var svg = d3.select(el)
       .attr("width", width)
       .attr("height", height);
 
+    // draw links
     var link = svg.selectAll(".link")
       .data(force.links())
       .enter().append("line")
       .attr("class", "link");
 
+    // draw nodes
     var node = svg.selectAll(".node")
       .data(force.nodes())
       .enter().append("g")
@@ -51,16 +55,19 @@ HTMLWidgets.widget({
       .on("dblclick", dblclick)
       .call(force.drag);
 
+    // node circles
     node.append("circle")
       .attr("r", 8)
       .style("fill", "#3182bd");
 
+    // node text
     node.append("text")
       .attr("x", 12)
       .attr("dy", ".35em")
       .style("fill", "#3182bd")
       .text(function(d) { return d.name; });
 
+    // tick event handler
     function tick() {
       link
         .attr("x1", function(d) { return d.source.x; })
@@ -72,18 +79,21 @@ HTMLWidgets.widget({
         });
     }
 
+    // mouseover event handler
     function mouseover() {
       d3.select(this).select("circle").transition()
       .duration(750)
       .attr("r", 16);
     }
 
+    // mouseout event handler
     function mouseout() {
       d3.select(this).select("circle").transition()
       .duration(750)
       .attr("r", 8);
     }
     
+    // click event handler
     function click() {
       d3.select(this).select("text").transition()
         .duration(750)
@@ -98,6 +108,7 @@ HTMLWidgets.widget({
         .attr("r", 16)
     }
 
+    // double-click event handler
     function dblclick() {
       d3.select(this).select("circle").transition()
         .duration(750)
@@ -114,6 +125,7 @@ HTMLWidgets.widget({
     }
   },
   
+  // sync size changes to the force layout
   resize: function(el, width, height, force) {  
      force.size([width, height]).resume();
   },
