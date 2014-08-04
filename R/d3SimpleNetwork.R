@@ -96,10 +96,18 @@ d3SimpleNetwork <- function(data,
 
 #' @export
 widget_html.d3SimpleNetwork  <- function(x, id, class, style, width, height) {
+  
+  # read and render widget css 
+  linkColour <- x$options$linkColour
+  opacity <- x$options$opacity
+  fontSize <- x$options$fontsize
+  css <-  readLines(system.file("www/widgets/d3SimpleNetwork/styles.css", 
+                                package = "d3networks"))
+  css <- whisker.render(css)
+  
+  # return style for head and svg tag for body
   htmltools::tagList(
-    htmltools::singleton(tags$head(htmltools::includeCSS(
-      system.file("www/widgets/d3SimpleNetwork/styles.css", 
-                  package = "d3networks")))),
+    htmltools::singleton(tags$head(tags$style(css))),
     htmltools::tag('svg',
                    list(id = id,
                         class = class,
