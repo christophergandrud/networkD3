@@ -89,14 +89,19 @@ d3SimpleNetwork <- function(data,
       knitr.figure = TRUE)
   )
   
-  structure(params, class = c('d3networks', 'htmlwidget'))
+  structure(params, 
+            class = c('d3SimpleNetwork', 'htmlwidget'),
+            package = "d3networks",
+            config = "widgets/d3SimpleNetwork/config.yaml",
+            jsfile = "widgets/d3SimpleNetwork/widget.js")
 }
 
 #' @export
-widget_html.d3networks <- function(x, id, class, style, width, height) {
+widget_html.d3SimpleNetwork  <- function(x, id, class, style, width, height) {
   htmltools::tagList(
     htmltools::singleton(tags$head(htmltools::includeCSS(
-      system.file("d3networks.css", package = "d3networks")))),
+      system.file("widgets/d3SimpleNetwork/styles.css", 
+                  package = "d3networks")))),
     htmltools::tag('svg',
                    list(id = id,
                         class = class,

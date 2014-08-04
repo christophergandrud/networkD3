@@ -1,5 +1,5 @@
 HTMLWidgets.widget({
-  name: "d3networks",
+  name: "d3SimpleNetwork",
   type: "output",
   
   // TODO: use instance data for this
@@ -11,9 +11,9 @@ HTMLWidgets.widget({
   
   resize: function(el, width, height) {
      
-     var svg = d3.select(el)
-       .attr("width", width)
-       .attr("height", height);
+     //var svg = d3.select(el)
+    //   .attr("width", width)
+    //   .attr("height", height);
     
      this.force.size([width, height]).resume();
   },
