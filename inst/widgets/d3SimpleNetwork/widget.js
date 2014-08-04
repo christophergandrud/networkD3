@@ -1,24 +1,14 @@
 HTMLWidgets.widget({
+  
   name: "d3SimpleNetwork",
+  
   type: "output",
   
-  // TODO: use instance data for this
-  force: d3.layout.force(),
-  
   initialize: function(el) {
-    
+    return d3.layout.force();
   },
   
-  resize: function(el, width, height) {
-     
-     //var svg = d3.select(el)
-    //   .attr("width", width)
-    //   .attr("height", height);
-    
-     this.force.size([width, height]).resume();
-  },
-  
-  renderValue: function(el, data) {
+  renderValue: function(el, data, force) {
      
     // compute the nodes from the links
     var links = JSON.parse(data.links);
@@ -33,7 +23,6 @@ HTMLWidgets.widget({
     var width = el.offsetWidth;
     var height = el.offsetHeight;
     
-    var force = this.force;
     force
       .nodes(d3.values(nodes))
       .links(links)
@@ -123,6 +112,11 @@ HTMLWidgets.widget({
         .style("opacity", 0.6)
         .style("font", "15px serif");
     }
-  }
+  },
+  
+  resize: function(el, width, height, force) {  
+     force.size([width, height]).resume();
+  },
+  
 });
 
