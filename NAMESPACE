@@ -2,3 +2,5 @@
 
 export(d3SimpleNetwork)
 export(widget_html.d3SimpleNetwork)
+import(htmltools)
+import(htmlwidgets)
