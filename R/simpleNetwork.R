@@ -76,9 +76,7 @@ simpleNetwork <- function(data,
   # define widget params
   params = list(
     links = linksJson, 
-    options = list(height = height,
-                   width = width,
-                   linkDistance = linkDistance,
+    options = list(linkDistance = linkDistance,
                    charge = charge,
                    fontSize = fontSize,
                    linkColour = linkColour,
@@ -88,9 +86,8 @@ simpleNetwork <- function(data,
                    opacity = opacity),
     width = width,
     height = height,
-    sizePolicy = htmlwidgets::sizePolicy(
-      viewer.fill = TRUE, 
-      knitr.figure = TRUE)
+    sizingPolicy = htmlwidgets::sizingPolicy(padding = 0,
+                                             browser.fill = TRUE)
   )
   
   # return as a widget 
@@ -110,7 +107,7 @@ widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {
   
   # return style for head and svg tag for body
   htmltools::tagList(
-    htmltools::singleton(tags$head(tags$style(css))),
+    htmltools::tags$style(htmltools::HTML(css)),
     htmltools::tag('svg',
                    list(id = id,
                         class = class,

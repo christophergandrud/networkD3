@@ -1,16 +1,16 @@
-.simpleNetwork .link {
+#{{id}} .link {
   stroke: {{linkColour}};
   opacity: {{opacity}};
   stroke-width: 1.5px;
 }
 
-.simpleNetwork .node circle {
+#{{id}} .node circle {
   stroke: #fff;
   opacity: {{opacity}};
   stroke-width: 1.5px;
 }
 
-.simpleNetwork  text {
+#{{id}} text {
   font: {{fontSize}}px serif;
   opacity: {{opacity}};
   pointer-events: none;

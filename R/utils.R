@@ -16,6 +16,30 @@ asWidget <- function(x, name) {
   )
 }
 
+# TODO: htmltools pickup single js file rather than directory
+
+# htmlwidgets
+#  lib/
+#  simpleNetwork.yaml
+#  simpleNetwork.js
+#  
+#  Define the CSS template in R code
+# 
+# createWidget <- function(name, 
+#                          data,
+#                          options,
+#                          width = NULL,
+#                          height = NULL,
+#                          sizePolicy = sizePolicy(), 
+#                          package = packageName(), 
+#                          config = sprintf("htmlwidgets/%s.yaml", name), 
+#                          jsfile = sprintf("htmlwidgets/%s.js", name)) {
+#   
+#   
+#   
+# }
+
+
 #' Internal function from Wei Luo to convert a data frame to a JSON array
 #' 
 #' @param dtf a data frame object.

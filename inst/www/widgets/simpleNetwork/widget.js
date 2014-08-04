@@ -4,7 +4,12 @@ HTMLWidgets.widget({
   
   type: "output",
   
-  initialize: function(el) {
+  initialize: function(el, width, height) {
+    
+     d3.select(el)
+      .attr("width", width)
+      .attr("height", height);
+    
     return d3.layout.force();
   },
   
@@ -34,9 +39,7 @@ HTMLWidgets.widget({
       .start();
 
     // select the svg element
-    var svg = d3.select(el)
-      .attr("width", width)
-      .attr("height", height);
+    var svg = d3.select(el);
 
     // draw links
     var link = svg.selectAll(".link")
@@ -125,8 +128,13 @@ HTMLWidgets.widget({
     }
   },
   
-  // sync size changes to the force layout
+  // sync size changes 
   resize: function(el, width, height, force) {  
+     
+     d3.select(el)
+      .attr("width", width)
+      .attr("height", height);
+    
      force.size([width, height]).resume();
   },
   
