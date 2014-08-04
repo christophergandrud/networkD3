@@ -11,7 +11,7 @@ To install and use you'll need to install this package and two of it's dependenc
 library(devtools)
 install_github("rstudio/htmltools")
 install_github("ramnathv/htmlwidgets", ref = "sizing")
-install_github("jjallaire/d3networks")
+install_github("jjallaire/NetworkD3")
 ```
 
 Note that the version of htmlwidgets installed is from a particular development branch in that repo.
@@ -21,7 +21,7 @@ Note that the version of htmlwidgets installed is from a particular development 
 There is currently only one of the d3Network package functions available (`d3SimpleNetwork`). Here's an example of it's use:
 
 ```S
-library(d3networks)
+library(NetworkD3)
 
 src <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
 target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
