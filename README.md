@@ -10,8 +10,8 @@ To install and use you'll need to install this package and two of it's dependenc
 ```S
 library(devtools)
 install_github("rstudio/htmltools")
-install_github("ramnathv/htmlwidgets", ref = "feature/create-widget")
-install_github("jjallaire/NetworkD3")
+install_github("ramnathv/htmlwidgets", ref = "feature/dataframe-to-d3")
+install_github("jjallaire/networkD3")
 ```
 
 Note that the version of htmlwidgets installed is from a particular development branch in that repo.

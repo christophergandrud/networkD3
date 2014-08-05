@@ -65,13 +65,12 @@ simpleNetwork <- function(data,
   if (!is.data.frame(data))
     stop("data must be a data frame class object.")
   
-  # convert data to json
+  # create links data
   if (is.null(source) && is.null(target))
     links <- data[, 1:2]
   else if (!is.null(source) && !is.null(target))
     links <- data.frame(data[, source], data[, target])
   names(links) <- c("source", "target")
-  linksJson <- toJSONarray(links)
     
   # create options
   options = list(
@@ -88,7 +87,7 @@ simpleNetwork <- function(data,
   # create widget
   htmlwidgets::createWidget(
     name = "simpleNetwork",
-    x = list(links = linksJson, options = options),
+    x = list(links = links, options = options),
     width = width,
     height = height,
     htmlwidgets::sizingPolicy(padding = 0, browser.fill = TRUE),
@@ -100,6 +99,11 @@ simpleNetwork <- function(data,
 widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {
   simpleNetworkHTML(id, class, style, width, height)
 }
+
+
+# TODO: htmltools pickup single js file rather than directory
+
+# TODO: don't pick up entire package
 
 # TODO: can the shiny output binding be made more compact/automatic
 # (see gist from ramnath)

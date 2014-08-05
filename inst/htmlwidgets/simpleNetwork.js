@@ -14,13 +14,13 @@ HTMLWidgets.widget({
     
     return d3.layout.force();
   },
-  
-  // TODO: passing data as string?
-  
+    
   renderValue: function(el, x, force) {
      
+    // convert links data frame to d3 friendly format
+    var links = HTMLWidgets.dataframeToD3(x.links);
+     
     // compute the nodes from the links
-    var links = JSON.parse(x.links);
     var nodes = {};
     links.forEach(function(link) {
       link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
