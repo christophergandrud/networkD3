@@ -117,10 +117,7 @@ simpleNetworkOutput <- function(id, width = "100%", height = 400) {
                              width = width, 
                              height = height))
   
-  deps <- htmlwidgets::getDependency("networkD3", 
-                                     "simpleNetwork",
-                                     "htmlwidgets/simpleNetwork.yaml",
-                                     "htmlwidgets/simpleNetwork.js")
+  deps <- htmlwidgets::getDependency("simpleNetwork", package = "networkD3")
   
   htmltools::attachDependencies(svg, deps)
 }
