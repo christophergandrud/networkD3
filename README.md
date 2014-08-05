@@ -10,7 +10,7 @@ To install and use you'll need to install this package and two of it's dependenc
 ```S
 library(devtools)
 install_github("rstudio/htmltools")
-install_github("ramnathv/htmlwidgets", ref = "sizing")
+install_github("ramnathv/htmlwidgets", ref = "feature/create-widget")
 install_github("jjallaire/NetworkD3")
 ```
 

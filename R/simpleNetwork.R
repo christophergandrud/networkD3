@@ -73,25 +73,28 @@ simpleNetwork <- function(data,
   names(links) <- c("source", "target")
   linksJson <- toJSONarray(links)
     
-  # define widget params
-  params = list(
-    links = linksJson, 
-    options = list(linkDistance = linkDistance,
-                   charge = charge,
-                   fontSize = fontSize,
-                   linkColour = linkColour,
-                   nodeColour = nodeColour,
-                   nodeClickColour = nodeClickColour,
-                   textColour = textColour,
-                   opacity = opacity),
-    width = width,
-    height = height,
-    sizingPolicy = htmlwidgets::sizingPolicy(padding = 0,
-                                             browser.fill = TRUE)
+  # create options
+  options = list(
+    linkDistance = linkDistance,
+    charge = charge,
+    fontSize = fontSize,
+    linkColour = linkColour,
+    nodeColour = nodeColour,
+    nodeClickColour = nodeClickColour,
+    textColour = textColour,
+    opacity = opacity
   )
   
-  # return as a widget 
-  asWidget(params, "simpleNetwork")
+  # create widget
+  htmlwidgets::createWidget(
+    name = "simpleNetwork",
+    package = "networkD3",
+    data = linksJson,
+    options = options,
+    width = width,
+    height = height,
+    htmlwidgets::sizingPolicy(padding = 0, browser.fill = TRUE),
+  )
 }
 
 #' @export
@@ -116,8 +119,8 @@ simpleNetworkOutput <- function(id, width = "100%", height = 400) {
   
   deps <- htmlwidgets::getDependency("networkD3", 
                                      "simpleNetwork",
-                                     "www/widgets/simpleNetwork/config.yaml",
-                                     "www/widgets/simpleNetwork/widget.js")
+                                     "htmlwidgets/simpleNetwork.yaml",
+                                     "htmlwidgets/simpleNetwork.js")
   
   htmltools::attachDependencies(svg, deps)
 }
