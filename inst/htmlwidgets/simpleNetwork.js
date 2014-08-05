@@ -5,12 +5,12 @@ HTMLWidgets.widget({
   type: "output",
   
   initialize: function(el, width, height) {
-       
-     // TODO: take advantage of shiny passing width and height   
+     
+     // TODO: shiny resizing doesn't currently work
        
      d3.select(el).select("svg")
-      .attr("width", el.offsetWidth)
-      .attr("height", el.offsetHeight);
+      .attr("width", width)
+      .attr("height", height);
     
     return d3.layout.force();
   },
