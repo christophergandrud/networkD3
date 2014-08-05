@@ -107,6 +107,7 @@ widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {
                       height = height))
 }
 
+# TODO: test shiny bindings
 # TODO: can the shiny output binding be made more compact/automatic
 
 #' Shiny bindings for simpleNetwork
