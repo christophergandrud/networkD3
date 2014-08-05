@@ -89,8 +89,7 @@ simpleNetwork <- function(data,
   htmlwidgets::createWidget(
     name = "simpleNetwork",
     package = "networkD3",
-    data = linksJson,
-    options = options,
+    x = list(links = linksJson, options = options),
     width = width,
     height = height,
     htmlwidgets::sizingPolicy(padding = 0, browser.fill = TRUE),
@@ -99,36 +98,45 @@ simpleNetwork <- function(data,
 
 #' @export
 widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {
-  htmltools::tag('svg',
-                 list(id = id,
-                      class = class,
-                      style = style,
-                      width = width, 
-                      height = height))
+  simpleNetworkHTML(id, class, style, width, height)
 }
 
-# TODO: test shiny bindings
 # TODO: can the shiny output binding be made more compact/automatic
 
 #' Shiny bindings for simpleNetwork
 #' @export
 simpleNetworkOutput <- function(id, width = "100%", height = 400) {
   
-  svg <- htmltools::tag('svg',
-                        list(id = id,
-                             class = "simpleNetwork",
-                             width = width, 
-                             height = height))
+  div <- simpleNetworkHTML(
+    id,
+    class = "simpleNetwork",
+    style = sprintf("width:%s;height:%s;", 
+                    validateCssUnit(width), 
+                    validateCssUnit(height)),
+    width,
+    height
+  )
   
   deps <- htmlwidgets::getDependency("simpleNetwork", package = "networkD3")
   
-  htmltools::attachDependencies(svg, deps)
+  htmltools::attachDependencies(div, deps)
 }
 
 #' @export
 #' @rdname simpleNetworkOutput
 renderSimpleNetwork <- htmlwidgets::renderWidget
 
+
+simpleNetworkHTML <- function(id, class, style, width, height) {
+  
+  # need to nest the svg element in a div because shiny can't 
+  # do an addClass on an svg element
+  div(id = id,
+      class = class,
+      style = style,
+      tag('svg', list(width = width, height = height))
+  )
+}
   
 
 

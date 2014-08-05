@@ -5,21 +5,20 @@ HTMLWidgets.widget({
   type: "output",
   
   initialize: function(el, width, height) {
-    
-     d3.select(el)
-      .attr("width", width)
-      .attr("height", height);
+       
+     d3.select(el).select("svg")
+      .attr("width", el.offsetWidth)
+      .attr("height", el.offsetHeight);
     
     return d3.layout.force();
   },
   
   // TODO: passing data as string?
-  // TODO: data.data awkwardness
   
-  renderValue: function(el, data, force) {
+  renderValue: function(el, x, force) {
      
     // compute the nodes from the links
-    var links = JSON.parse(data.data);
+    var links = JSON.parse(x.links);
     var nodes = {};
     links.forEach(function(link) {
       link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
@@ -36,20 +35,20 @@ HTMLWidgets.widget({
       .nodes(d3.values(nodes))
       .links(links)
       .size([width, height])
-      .linkDistance(data.options.linkDistance)
-      .charge(data.options.charge)
+      .linkDistance(x.options.linkDistance)
+      .charge(x.options.charge)
       .on("tick", tick)
       .start();
 
     // select the svg element
-    var svg = d3.select(el);
+    var svg = d3.select(el).select("svg");
 
     // draw links
     var link = svg.selectAll(".link")
       .data(force.links())
       .enter().append("line")
-      .style("stroke", data.options.linkColour)
-      .style("opacity", data.options.opacity)
+      .style("stroke", x.options.linkColour)
+      .style("opacity", x.options.opacity)
       .style("stroke-width", "1.5px");
 
     // draw nodes
@@ -65,18 +64,18 @@ HTMLWidgets.widget({
     // node circles
     node.append("circle")
       .attr("r", 8)
-      .style("fill", data.options.nodeColour)
+      .style("fill", x.options.nodeColour)
       .style("stroke", "#fff")
-      .style("opacity", data.options.opacity)
+      .style("opacity", x.options.opacity)
       .style("stroke-width", "1.5px");
 
     // node text
     node.append("text")
       .attr("x", 12)
       .attr("dy", ".35em")
-      .style("font", data.options.fontSize + "px serif")
-      .style("fill", data.options.textColour)
-      .style("opacity", data.options.opacity)
+      .style("font", x.options.fontSize + "px serif")
+      .style("fill", x.options.textColour)
+      .style("opacity", x.options.opacity)
       .style("pointer-events", "none")
       .text(function(d) { return d.name; });
 
@@ -113,11 +112,11 @@ HTMLWidgets.widget({
         .attr("x", 22)
         .style("stroke-width", ".5px")
         .style("opacity", 1)
-        .style("fill", data.options.nodeClickColour)
-        .style("font", data.options.clickTextSize + "px serif");
+        .style("fill", x.options.nodeClickColour)
+        .style("font", x.options.clickTextSize + "px serif");
       d3.select(this).select("circle").transition()
         .duration(750)
-        .style("fill", data.options.nodeClickColour)
+        .style("fill", x.options.nodeClickColour)
         .attr("r", 16)
     }
 
@@ -126,22 +125,22 @@ HTMLWidgets.widget({
       d3.select(this).select("circle").transition()
         .duration(750)
         .attr("r", 6)
-        .style("fill", data.options.nodeClickColour);
+        .style("fill", x.options.nodeClickColour);
         d3.select(this).select("text").transition()
         .duration(750)
         .attr("x", 12)
         .style("stroke", "none")
-        .style("fill", data.options.nodeClickColour)
+        .style("fill", x.options.nodeClickColour)
         .style("stroke", "none")
-        .style("opacity", data.options.opacity)
-        .style("font", data.options.fontSize + "px serif");
+        .style("opacity", x.options.opacity)
+        .style("font", x.options.fontSize + "px serif");
     }
   },
   
   // sync size changes 
   resize: function(el, width, height, force) {  
      
-     d3.select(el)
+     d3.select(el).select("svg")
       .attr("width", width)
       .attr("height", height);
     
