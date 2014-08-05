@@ -6,8 +6,7 @@ Date: 2014-08-01
 Author: Who wrote it
 Imports:
     htmltools,
-    htmlwidgets,
-    whisker
+    htmlwidgets
 Maintainer: Who to complain to <yourfault@somewhere.net>
 Description: More about what it does (maybe more than one line)
 License: What license is it under?

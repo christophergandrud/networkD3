@@ -96,24 +96,39 @@ simpleNetwork <- function(data,
 
 #' @export
 widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {
-  
-  # read and render widget css 
-  linkColour <- x$options$linkColour
-  opacity <- x$options$opacity
-  fontSize <- x$options$fontSize
-  css <-  readLines(system.file("www/widgets/simpleNetwork/styles.css", 
-                                package = "networkD3"))
-  css <- whisker.render(css)
-  
-  # return style for head and svg tag for body
-  htmltools::tagList(
-    htmltools::tags$style(htmltools::HTML(css)),
-    htmltools::tag('svg',
-                   list(id = id,
-                        class = class,
-                        width = width, 
-                        height = height))
-  )
+  htmltools::tag('svg',
+                 list(id = id,
+                      class = class,
+                      style = style,
+                      width = width, 
+                      height = height))
 }
+
+#' Shiny bindings for simpleNetwork
+#' @export
+simpleNetworkOutput <- function(id, width = "100%", height = 400) {
+  
+  svg <- htmltools::tag('svg',
+                        list(id = id,
+                             class = "simpleNetwork",
+                             width = width, 
+                             height = height))
+  
+  deps <- htmlwidgets::getDependency("networkD3", 
+                                     "simpleNetwork",
+                                     "www/widgets/simpleNetwork/config.yaml",
+                                     "www/widgets/simpleNetwork/widget.js")
+  
+  htmltools::attachDependencies(svg, deps)
+}
+
+#' @export
+#' @rdname simpleNetworkOutput
+renderSimpleNetwork <- htmlwidgets::renderWidget
+
+  
+
+
+
 
 

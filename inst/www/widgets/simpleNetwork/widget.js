@@ -45,13 +45,14 @@ HTMLWidgets.widget({
     var link = svg.selectAll(".link")
       .data(force.links())
       .enter().append("line")
-      .attr("class", "link");
+      .style("stroke", data.options.linkColour)
+      .style("opacity", data.options.opacity)
+      .style("stroke-width", "1.5px");
 
     // draw nodes
     var node = svg.selectAll(".node")
       .data(force.nodes())
       .enter().append("g")
-      .attr("class", "node")
       .on("mouseover", mouseover)
       .on("mouseout", mouseout)
       .on("click", click)
@@ -61,13 +62,19 @@ HTMLWidgets.widget({
     // node circles
     node.append("circle")
       .attr("r", 8)
-      .style("fill", data.options.nodeColour);
+      .style("fill", data.options.nodeColour)
+      .style("stroke", "#fff")
+      .style("opacity", data.options.opacity)
+      .style("stroke-width", "1.5px");
 
     // node text
     node.append("text")
       .attr("x", 12)
       .attr("dy", ".35em")
+      .style("font", data.options.fontSize + "px serif")
       .style("fill", data.options.textColour)
+      .style("opacity", data.options.opacity)
+      .style("pointer-events", "none")
       .text(function(d) { return d.name; });
 
     // tick event handler
