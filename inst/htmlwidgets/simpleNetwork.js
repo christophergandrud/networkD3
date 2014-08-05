@@ -6,6 +6,8 @@ HTMLWidgets.widget({
   
   initialize: function(el, width, height) {
        
+     // TODO: take advantage of shiny passing width and height   
+       
      d3.select(el).select("svg")
       .attr("width", el.offsetWidth)
       .attr("height", el.offsetHeight);

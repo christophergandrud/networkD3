@@ -88,11 +88,11 @@ simpleNetwork <- function(data,
   # create widget
   htmlwidgets::createWidget(
     name = "simpleNetwork",
-    package = "networkD3",
     x = list(links = linksJson, options = options),
     width = width,
     height = height,
     htmlwidgets::sizingPolicy(padding = 0, browser.fill = TRUE),
+    package = "networkD3",
   )
 }
 
@@ -102,6 +102,7 @@ widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {
 }
 
 # TODO: can the shiny output binding be made more compact/automatic
+# (see gist from ramnath)
 
 #' Shiny bindings for simpleNetwork
 #' @export
