@@ -123,6 +123,8 @@ simpleNetworkOutput <- function(id, width = "100%", height = 400) {
   htmltools::attachDependencies(div, deps)
 }
 
+# TODO: ensure that renderWidget does the required registration for Rmd
+
 #' @export
 #' @rdname simpleNetworkOutput
 renderSimpleNetwork <- htmlwidgets::renderWidget
