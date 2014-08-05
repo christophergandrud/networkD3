@@ -23,7 +23,6 @@ asWidget <- function(x, name) {
 #  simpleNetwork.yaml
 #  simpleNetwork.js
 #  
-#  Define the CSS template in R code
 # 
 # createWidget <- function(name, 
 #                          data,
