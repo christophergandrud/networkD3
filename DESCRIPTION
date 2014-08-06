@@ -1,15 +1,18 @@
 Package: networkD3
 Type: Package
-Title: Tools for creating D3 JavaScript network graphs from R
-Version: 1.0
+Title: Tools for creating D3 JavaScript network, tree, dendrogram, and Sankey
+    graphs from R
+Description: This packages is intended to make it easy to create D3 JavaScript
+    network, tree, dendrogram, and Sankey graphs from R using data frames.
+Version: 0.6.0
 Date: 2014-08-01
-Author: Who wrote it
-License: What license is it under?
+Author: Christopher Gandrud and J.J. Allaire
+Maintainer: Christopher Gandrud <christopher.gandrud@gmail.com>
+URL: http://github.com/christophergandrud/networkD3/
+License: GPL (>= 3)
 Depends:
     R (>= 3.0.0)
 Imports:
     htmltools,
     htmlwidgets
 Enhances: knitr, shiny
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
