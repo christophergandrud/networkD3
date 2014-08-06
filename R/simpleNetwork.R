@@ -96,7 +96,6 @@ simpleNetwork <- function(data,
 }
 
 
-
 #' Output bindings for simpleNetwork
 #' 
 #' Bindings used to generate HTML (statically and within Shiny applications).
@@ -114,14 +113,7 @@ simpleNetwork <- function(data,
 #' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
 #'   is useful if you want to save an expression in a variable.
 #'
-#' @export
-simpleNetworkOutput <- htmlwidgets::makeShinyOutput("simpleNetwork", "networkD3")
-
-#' @rdname simpleNetworkOutput
-#' @export
-renderSimpleNetwork <- htmlwidgets::makeShinyRender(simpleNetworkOutput)
-
-#' @rdname simpleNetworkOutput
+#' @name simpleNetworkOutputBindings
 #' @export
 widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {  
   div(id = id,
@@ -130,6 +122,15 @@ widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {
       tag('svg', list(width = width, height = height))
   )
 }
+
+#' @rdname simpleNetworkOutputBindings
+#' @export
+simpleNetworkOutput <- htmlwidgets::makeShinyOutput("simpleNetwork", "networkD3")
+
+#' @rdname simpleNetworkOutputBindings
+#' @export
+renderSimpleNetwork <- htmlwidgets::makeShinyRender(simpleNetworkOutput)
+
 
 
 
