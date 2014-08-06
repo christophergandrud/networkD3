@@ -95,14 +95,6 @@ simpleNetwork <- function(data,
   )
 }
 
-# TODO: htmltools pickup single js file rather than directory
-
-# TODO: don't pick up entire package
-
-# TODO: should widget_html take 'x' (since it's never available in the shiny case)
-
-# TODO: ensure that renderWidget does the required registration for Rmd
-
 #' Output bindings for simpleNetwork
 #' 
 #' Bindings used to generate HTML (statically and within Shiny applications).
