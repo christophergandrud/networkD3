@@ -120,7 +120,11 @@ simpleNetworkOutput <- function(id, width = "100%", height = "400px") {
 
 #' @rdname simpleNetworkOutput
 #' @export
-renderSimpleNetwork <- htmlwidgets::renderWidget
+renderSimpleNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
+  # TODO: when quoted = TRUE we might need to eval the expr
+  renderFunc <- htmlwidgets::renderWidget(expr, env, quoted = TRUE)
+  shiny::markRenderFunction(simpleNetworkOutput, renderFunc)
+}
 
 #' @rdname simpleNetworkOutput
 #' @export
