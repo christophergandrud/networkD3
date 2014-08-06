@@ -14,8 +14,6 @@ install_github("ramnathv/htmlwidgets")
 install_github("jjallaire/networkD3")
 ```
 
-Note that the version of htmlwidgets installed is from a particular development branch in that repo.
-
 #### Usage
 
 There is currently only one of the d3Network package functions available (`simpleNetwork`). Here's an example of it's use:
