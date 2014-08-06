@@ -105,6 +105,7 @@ simpleNetwork <- function(data,
 
 
 
+#' HTML generation for simpleNetwork
 #' @export
 widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {
   
