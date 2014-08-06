@@ -8,7 +8,7 @@ D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
   \url{https://github.com/mbostock/d3/wiki/Force-Layout}
 }
 \usage{
-simpleNetwork(data, source = NULL, target = NULL, height = NULL,
+simpleNetwork(data, src = NULL, target = NULL, height = NULL,
   width = NULL, linkDistance = 50, charge = -200, fontSize = 7,
   linkColour = "#666", nodeColour = "#3182bd",
   nodeClickColour = "#E34A33", textColour = "#3182bd", opacity = 0.6)
@@ -18,7 +18,7 @@ simpleNetwork(data, source = NULL, target = NULL, height = NULL,
 names of the linked units. The third records an edge value. (Currently the
 third column doesn't affect the graph.)}
 
-\item{source}{character string naming the network source variable in the data
+\item{src}{character string naming the network source variable in the data
 frame. If \code{source = NULL} then the first column of the data frame is
 treated as the source.}
 
@@ -62,11 +62,11 @@ graphs.
 }
 \examples{
 # Fake data
-source <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
+src <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
 target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
-data <- data.frame(source, target)
+data <- data.frame(src, target)
 
 # Create graph
-simpleNetwork(data, height = 300, width = 700)
+simpleNetwork(data)
 }
 

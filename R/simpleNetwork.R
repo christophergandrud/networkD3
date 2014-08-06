@@ -6,7 +6,7 @@
 #' @param data a data frame object with three columns. The first two are the 
 #'   names of the linked units. The third records an edge value. (Currently the 
 #'   third column doesn't affect the graph.)
-#' @param source character string naming the network source variable in the data
+#' @param src character string naming the network source variable in the data
 #'   frame. If \code{source = NULL} then the first column of the data frame is 
 #'   treated as the source.
 #' @param target character string naming the network target variable in the data
@@ -35,12 +35,12 @@
 #'   
 #' @examples
 #' # Fake data
-#' source <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
+#' src <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
 #' target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
-#' data <- data.frame(source, target)
+#' data <- data.frame(src, target)
 #' 
 #' # Create graph
-#' simpleNetwork(data, height = 300, width = 700)
+#' simpleNetwork(data)
 #' 
 #' @source D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
 #'   more specifically for directed networks 
@@ -48,7 +48,7 @@
 #'   
 #' @export
 simpleNetwork <- function(data, 
-                          source = NULL, 
+                          src = NULL, 
                           target = NULL, 
                           height = NULL,
                           width = NULL, 
@@ -66,10 +66,10 @@ simpleNetwork <- function(data,
     stop("data must be a data frame class object.")
   
   # create links data
-  if (is.null(source) && is.null(target))
+  if (is.null(src) && is.null(target))
     links <- data[, 1:2]
-  else if (!is.null(source) && !is.null(target))
-    links <- data.frame(data[, source], data[, target])
+  else if (!is.null(src) && !is.null(target))
+    links <- data.frame(data[, src], data[, target])
   names(links) <- c("source", "target")
     
   # create options
