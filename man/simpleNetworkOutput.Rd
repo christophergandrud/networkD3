@@ -2,13 +2,38 @@
 \name{simpleNetworkOutput}
 \alias{renderSimpleNetwork}
 \alias{simpleNetworkOutput}
-\title{Shiny bindings for simpleNetwork}
+\alias{widget_html.simpleNetwork}
+\title{Output bindings for simpleNetwork}
 \usage{
 simpleNetworkOutput(id, width = "100\%", height = "400px")
 
 renderSimpleNetwork(expr, env = parent.frame(), quoted = FALSE)
+
+widget_html.simpleNetwork(x, id, class, style, width, height)
+}
+\arguments{
+\item{x}{Instance data associated with element}
+
+\item{id}{Unique id of output element}
+
+\item{class}{CSS class for output element}
+
+\item{style}{Inline CSS styles for output element}
+
+\item{width}{Output width. Must be a valid CSS unit (like "100%", "400px",
+"auto") or a number, which will be coerced to a string and have "px"
+appended.}
+
+\item{height}{Output height (same semantics as \code{width}).}
+
+\item{expr}{An expression that generates a simpleNetwork.}
+
+\item{env}{The environment in which to evaluate \code{expr}.}
+
+\item{quoted}{Is \code{expr} a quoted expression (with \code{quote()})? This
+  is useful if you want to save an expression in a variable.}
 }
 \description{
-Shiny bindings for simpleNetwork
+Bindings used to generate HTML (statically and within Shiny applications).
 }
 
