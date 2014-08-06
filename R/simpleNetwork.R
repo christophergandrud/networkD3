@@ -95,55 +95,47 @@ simpleNetwork <- function(data,
   )
 }
 
-#' @export
-widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {
-  simpleNetworkHTML(id, class, style, width, height)
-}
-
-
 # TODO: htmltools pickup single js file rather than directory
 
 # TODO: don't pick up entire package
 
-# TODO: can the shiny output binding be made more compact/automatic
-# (see gist from ramnath)
-
-#' Shiny bindings for simpleNetwork
-#' @export
-simpleNetworkOutput <- function(id, width = "100%", height = 400) {
-  
-  div <- simpleNetworkHTML(
-    id,
-    class = "simpleNetwork",
-    style = sprintf("width:%s;height:%s;", 
-                    validateCssUnit(width), 
-                    validateCssUnit(height)),
-    width,
-    height
-  )
-  
-  deps <- htmlwidgets::getDependency("simpleNetwork", package = "networkD3")
-  
-  htmltools::attachDependencies(div, deps)
-}
+# TODO: should widget_html take 'x' (since it's never available in the shiny case)
 
 # TODO: ensure that renderWidget does the required registration for Rmd
 
+
+
 #' @export
-#' @rdname simpleNetworkOutput
-renderSimpleNetwork <- htmlwidgets::renderWidget
-
-
-simpleNetworkHTML <- function(id, class, style, width, height) {
+widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {
   
-  # need to nest the svg element in a div because shiny can't 
-  # do an addClass on an svg element
+  # NOTE: two provisions specific to shiny are made in HTML generation:
+  #
+  #  (1) We don't use the 'x' value because in shiny this will be empty
+  #      until output is reactively bound
+  #
+  #  (2) We need to nest the svg element in a div because shiny can't 
+  #      do an addClass on an svg element (DOM limitation)
+  #
+  
   div(id = id,
       class = class,
       style = style,
       tag('svg', list(width = width, height = height))
   )
 }
+
+#' Shiny bindings for simpleNetwork
+#' @export
+simpleNetworkOutput <- function(id, width = "100%", height = "400px") {
+  outputFunc <- widgetOutput("simpleNetwork", package = "networkD3")
+  outputFunc(id, width, height)
+}
+
+
+#' @export
+#' @rdname simpleNetworkOutput
+renderSimpleNetwork <- htmlwidgets::renderWidget
+
   
 
 

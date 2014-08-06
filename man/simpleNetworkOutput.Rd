@@ -4,7 +4,7 @@
 \alias{simpleNetworkOutput}
 \title{Shiny bindings for simpleNetwork}
 \usage{
-simpleNetworkOutput(id, width = "100\%", height = 400)
+simpleNetworkOutput(id, width = "100\%", height = "400px")
 
 renderSimpleNetwork(expr, env = parent.frame(), quoted = FALSE)
 }
