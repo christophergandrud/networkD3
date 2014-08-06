@@ -8,3 +8,11 @@
 - ensure that renderWidget does the required registration for Rmd
 
 - shiny resizing doesn't currently work
+
+- opt out of viewer using sizingPolicy (browseable?)
+
+- way of identifying "static html" widgets 
+
+- viewer clear all command
+
+- saveWidget or saveAsHTML function
