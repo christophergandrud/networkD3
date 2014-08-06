@@ -95,12 +95,14 @@ simpleNetwork <- function(data,
   )
 }
 
+
+
 #' Output bindings for simpleNetwork
 #' 
 #' Bindings used to generate HTML (statically and within Shiny applications).
 #' 
 #' @param x Instance data associated with element
-#' @param id Unique id of output element
+#' @param outputId Unique id of output element
 #' @param class CSS class for output element
 #' @param style Inline CSS styles for output element
 #' @param width Output width. Must be a valid CSS unit (like "100%", "400px", 
@@ -113,38 +115,22 @@ simpleNetwork <- function(data,
 #'   is useful if you want to save an expression in a variable.
 #'
 #' @export
-simpleNetworkOutput <- function(id, width = "100%", height = "400px") {
-  outputFunc <- widgetOutput("simpleNetwork", package = "networkD3")
-  outputFunc(id, width, height)
-}
+simpleNetworkOutput <- htmlwidgets::makeShinyOutput("simpleNetwork", "networkD3")
 
 #' @rdname simpleNetworkOutput
 #' @export
-renderSimpleNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
-  # TODO: when quoted = TRUE we might need to eval the expr
-  renderFunc <- htmlwidgets::renderWidget(expr, env, quoted = TRUE)
-  shiny::markRenderFunction(simpleNetworkOutput, renderFunc)
-}
+renderSimpleNetwork <- htmlwidgets::makeShinyRender(simpleNetworkOutput)
 
 #' @rdname simpleNetworkOutput
 #' @export
-widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {
-  
-  # NOTE: two provisions specific to shiny are made in HTML generation:
-  #
-  #  (1) We don't use the 'x' value because in shiny this will be empty
-  #      until output is reactively bound
-  #
-  #  (2) We need to nest the svg element in a div because shiny can't 
-  #      do an addClass on an svg element (DOM limitation)
-  #
-  
+widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {  
   div(id = id,
       class = class,
       style = style,
       tag('svg', list(width = width, height = height))
   )
 }
+
 
 
 

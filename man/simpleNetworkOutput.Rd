@@ -5,7 +5,7 @@
 \alias{widget_html.simpleNetwork}
 \title{Output bindings for simpleNetwork}
 \usage{
-simpleNetworkOutput(id, width = "100\%", height = "400px")
+simpleNetworkOutput(outputId, width = "100\%", height = "400px")
 
 renderSimpleNetwork(expr, env = parent.frame(), quoted = FALSE)
 
@@ -14,7 +14,7 @@ widget_html.simpleNetwork(x, id, class, style, width, height)
 \arguments{
 \item{x}{Instance data associated with element}
 
-\item{id}{Unique id of output element}
+\item{outputId}{Unique id of output element}
 
 \item{class}{CSS class for output element}
 
