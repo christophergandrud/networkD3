@@ -4,13 +4,5 @@
 - widget dissapears in rmarkdown resize
 
 
-- reparenting for export
-
-- viewer.height property (allow "maximize")
-
-- common network render/output
-
 - should widget_html take 'x' (since it's never available in the shiny case)
   (vchat with ramnath next week)
-
-- saveWidget or saveAsHTML function
