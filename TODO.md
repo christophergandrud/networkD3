@@ -1,14 +1,9 @@
 
 - htmltools pickup single js file rather than directory
-
 - don't pick up entire package
-
 - shiny resizing doesn't currently work
 
-
-
-- opt out of viewer using sizingPolicy (browseable?)
- (createWidget needs to be able to add suppress)
+- resolve includeSrcDir issue with html_dependency
 
 
 - loosen what is allowed to have history and be exported 
