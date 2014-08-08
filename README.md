@@ -9,9 +9,7 @@ To install and use you'll need to install this package and two of it's dependenc
 
 ```S
 library(devtools)
-install_github("rstudio/htmltools")
-install_github("ramnathv/htmlwidgets", ref = "feature/make-shiny-functions")
-install_github("jjallaire/networkD3")
+install_github(c('rstudio/htmltools', 'ramnathv/htmlwidgets', 'jjallaire/networkD3'))
 ```
 
 #### Usage
