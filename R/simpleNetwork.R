@@ -34,6 +34,7 @@
 #'   graph elements to be.
 #'   
 #' @examples
+#' \dontrun{
 #' # Fake data
 #' src <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
 #' target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
@@ -41,6 +42,7 @@
 #' 
 #' # Create graph
 #' simpleNetwork(data)
+#' }
 #' 
 #' @source D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
 #'   more specifically for directed networks 
