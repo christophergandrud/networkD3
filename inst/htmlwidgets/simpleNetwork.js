@@ -6,7 +6,7 @@ HTMLWidgets.widget({
   
   initialize: function(el, width, height) {
          
-     d3.select(el).select("svg")
+     d3.select(el).append("svg")
       .attr("width", width)
       .attr("height", height);
     

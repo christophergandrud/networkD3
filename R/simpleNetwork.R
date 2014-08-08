@@ -118,8 +118,7 @@ simpleNetwork <- function(data,
 widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {  
   div(id = id,
       class = class,
-      style = style,
-      tag('svg', list(width = width, height = height))
+      style = style)
   )
 }
 
