@@ -97,37 +97,11 @@ simpleNetwork <- function(data,
   )
 }
 
-
-#' Output bindings for simpleNetwork
-#' 
-#' Bindings used to generate HTML (statically and within Shiny applications).
-#' 
-#' @param x Instance data associated with element
-#' @param outputId Unique id of output element
-#' @param class CSS class for output element
-#' @param style Inline CSS styles for output element
-#' @param width Output width. Must be a valid CSS unit (like "100%", "400px", 
-#'   "auto") or a number, which will be coerced to a string and have "px" 
-#'   appended.
-#' @param height Output height (same semantics as \code{width}).
-#' @param expr An expression that generates a simpleNetwork.
-#' @param env The environment in which to evaluate \code{expr}.
-#' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
-#'   is useful if you want to save an expression in a variable.
-#'
-#' @name simpleNetworkOutputBindings
-#' @export
-widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {  
-  div(id = id,
-      class = class,
-      style = style)
-}
-
-#' @rdname simpleNetworkOutputBindings
+#' @rdname networkD3-shiny
 #' @export
 simpleNetworkOutput <- htmlwidgets::makeShinyOutput("simpleNetwork", "networkD3")
 
-#' @rdname simpleNetworkOutputBindings
+#' @rdname networkD3-shiny
 #' @export
 renderSimpleNetwork <- htmlwidgets::makeShinyRender(simpleNetworkOutput)
 

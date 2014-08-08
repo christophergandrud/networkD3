@@ -1,3 +1,4 @@
+
 #' A data file of nodes from Knuth's Les Miserables characters data base.
 #' 
 #'  @docType data
@@ -37,3 +38,5 @@ NULL
 #' @name energy
 #' 
 NULL
+
+

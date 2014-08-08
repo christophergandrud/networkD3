@@ -3,6 +3,4 @@
 export(renderSimpleNetwork)
 export(simpleNetwork)
 export(simpleNetworkOutput)
-export(widget_html.simpleNetwork)
-import(htmltools)
 import(htmlwidgets)
