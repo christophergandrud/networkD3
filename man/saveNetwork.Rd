@@ -8,6 +8,12 @@ saveNetwork(network, file, selfcontained = TRUE)
 \arguments{
 \item{network}{Network to save (e.g. result of calling the function
   \code{simpleNetwork}).}
+
+\item{file}{File to save HTML into}
+
+\item{selfcontained}{Whether to save the HTML as a single self-contained file
+  (with external resources base64 encoded) or a file with external resources
+  placed in an adjacent directory.}
 }
 \description{
 Save a networkD3 graph to an HTML file for sharing with others. The HTML can
