@@ -91,7 +91,7 @@ simpleNetwork <- function(data,
     width = width,
     height = height,
     htmlwidgets::sizingPolicy(padding = 0, browser.fill = TRUE),
-    package = "networkD3",
+    package = "networkD3"
   )
 }
 
