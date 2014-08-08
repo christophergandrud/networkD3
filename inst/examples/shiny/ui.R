@@ -3,15 +3,10 @@ library(networkD3)
 
 shinyUI(fluidPage(
   
-  titlePanel("Simple Network"),
+  titlePanel("Shiny networkD3 "),
   
-  sidebarLayout(
-    sidebarPanel(
-      
-    ),
-    
-    mainPanel(
-      simpleNetworkOutput("network")
-    )
+  tabsetPanel(
+    tabPanel("Simple Network", simpleNetworkOutput("simple")),
+    tabPanel("Force Network", forceNetworkOutput("force"))
   )
 ))
