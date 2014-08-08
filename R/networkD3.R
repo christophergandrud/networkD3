@@ -7,7 +7,9 @@
 #' @name networkD3-package
 #' @aliases networkD3
 #' @docType package
-#' @import htmlwidgets
+#' @importFrom htmlwidgets createWidget
+#' @importFrom htmlwidgets makeShinyOutput
+#' @importFrom htmlwidgets makeShinyRender   
 NULL
 
 

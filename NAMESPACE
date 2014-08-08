@@ -3,4 +3,6 @@
 export(renderSimpleNetwork)
 export(simpleNetwork)
 export(simpleNetworkOutput)
-import(htmlwidgets)
+importFrom(htmlwidgets,createWidget)
+importFrom(htmlwidgets,makeShinyOutput)
+importFrom(htmlwidgets,makeShinyRender)
