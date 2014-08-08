@@ -12,6 +12,15 @@ HTMLWidgets.widget({
     
     return d3.layout.force();
   },
+  
+  resize: function(el, width, height, force) {  
+     
+     d3.select(el).select("svg")
+      .attr("width", width)
+      .attr("height", height);
+    
+     force.size([width, height]).resume();
+  },  
     
   renderValue: function(el, x, force) {
      
@@ -135,17 +144,6 @@ HTMLWidgets.widget({
         .style("opacity", x.options.opacity)
         .style("font", x.options.fontSize + "px serif");
     }
-  },
-  
-  // sync size changes 
-  resize: function(el, width, height, force) {  
-     
-     d3.select(el).select("svg")
-      .attr("width", width)
-      .attr("height", height);
-    
-     force.size([width, height]).resume();
-  },
-  
+  },  
 });
 
