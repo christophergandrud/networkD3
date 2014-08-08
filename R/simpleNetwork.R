@@ -119,7 +119,6 @@ widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {
   div(id = id,
       class = class,
       style = style)
-  )
 }
 
 #' @rdname simpleNetworkOutputBindings
