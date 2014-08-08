@@ -3,14 +3,14 @@
 #' \code{simpleNetwork} creates simple D3 JavaScript force directed network 
 #' graphs.
 #' 
-#' @param data a data frame object with three columns. The first two are the 
+#' @param Data a data frame object with three columns. The first two are the 
 #'   names of the linked units. The third records an edge value. (Currently the 
 #'   third column doesn't affect the graph.)
-#' @param src character string naming the network source variable in the data
-#'   frame. If \code{source = NULL} then the first column of the data frame is 
+#' @param Source character string naming the network source variable in the data
+#'   frame. If \code{Source = NULL} then the first column of the data frame is 
 #'   treated as the source.
-#' @param target character string naming the network target variable in the data
-#'   frame. If \code{target = NULL} then the second column of the data frame is 
+#' @param Target character string naming the network target variable in the data
+#'   frame. If \code{Target = NULL} then the second column of the data frame is 
 #'   treated as the target.
 #' @param height height for the network graph's frame area in pixels (if 
 #'   \code{NULL} then height is automatically determined based on context)
@@ -36,12 +36,12 @@
 #' @examples
 #' \dontrun{
 #' # Fake data
-#' src <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
-#' target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
-#' data <- data.frame(src, target)
+#' Source <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
+#' Target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
+#' NetworkData <- data.frame(Source, Target)
 #' 
 #' # Create graph
-#' simpleNetwork(data)
+#' simpleNetwork(NetworkData)
 #' }
 #' 
 #' @source D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
@@ -49,9 +49,9 @@
 #'   \url{https://github.com/mbostock/d3/wiki/Force-Layout}
 #'   
 #' @export
-simpleNetwork <- function(data, 
-                          src = NULL, 
-                          target = NULL, 
+simpleNetwork <- function(Data, 
+                          Source = NULL, 
+                          Target = NULL, 
                           height = NULL,
                           width = NULL, 
                           linkDistance = 50, 
@@ -64,14 +64,14 @@ simpleNetwork <- function(data,
                           opacity = 0.6)
 {
   # validate input
-  if (!is.data.frame(data))
+  if (!is.data.frame(Data))
     stop("data must be a data frame class object.")
   
   # create links data
-  if (is.null(src) && is.null(target))
-    links <- data[, 1:2]
-  else if (!is.null(src) && !is.null(target))
-    links <- data.frame(data[, src], data[, target])
+  if (is.null(Source) && is.null(Target))
+    links <- Data[, 1:2]
+  else if (!is.null(Source) && !is.null(Target))
+    links <- data.frame(Data[, Source], Data[, Target])
   names(links) <- c("source", "target")
     
   # create options

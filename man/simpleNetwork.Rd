@@ -8,22 +8,22 @@ D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
   \url{https://github.com/mbostock/d3/wiki/Force-Layout}
 }
 \usage{
-simpleNetwork(data, src = NULL, target = NULL, height = NULL,
+simpleNetwork(Data, Source = NULL, Target = NULL, height = NULL,
   width = NULL, linkDistance = 50, charge = -200, fontSize = 7,
   linkColour = "#666", nodeColour = "#3182bd",
   nodeClickColour = "#E34A33", textColour = "#3182bd", opacity = 0.6)
 }
 \arguments{
-\item{data}{a data frame object with three columns. The first two are the
+\item{Data}{a data frame object with three columns. The first two are the
 names of the linked units. The third records an edge value. (Currently the
 third column doesn't affect the graph.)}
 
-\item{src}{character string naming the network source variable in the data
-frame. If \code{source = NULL} then the first column of the data frame is
+\item{Source}{character string naming the network source variable in the data
+frame. If \code{Source = NULL} then the first column of the data frame is
 treated as the source.}
 
-\item{target}{character string naming the network target variable in the data
-frame. If \code{target = NULL} then the second column of the data frame is
+\item{Target}{character string naming the network target variable in the data
+frame. If \code{Target = NULL} then the second column of the data frame is
 treated as the target.}
 
 \item{height}{height for the network graph's frame area in pixels (if
@@ -63,12 +63,12 @@ graphs.
 \examples{
 \dontrun{
 # Fake data
-src <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
-target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
-data <- data.frame(src, target)
+Source <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
+Target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
+NetworkData <- data.frame(Source, Target)
 
 # Create graph
-simpleNetwork(data)
+simpleNetwork(NetworkData)
 }
 }
 
