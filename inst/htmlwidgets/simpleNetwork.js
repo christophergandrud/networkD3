@@ -6,10 +6,12 @@ HTMLWidgets.widget({
   
   initialize: function(el, width, height) {
          
-     d3.select(el).select("svg")
+     // create the svg element
+     d3.select(el).append("svg")
       .attr("width", width)
       .attr("height", height);
     
+    // create and return the force layout 
     return d3.layout.force();
   },
     
@@ -30,7 +32,7 @@ HTMLWidgets.widget({
     var width = el.offsetWidth;
     var height = el.offsetHeight;
     
-    // create d3 force layout
+    // update d3 force layout
     force
       .nodes(d3.values(nodes))
       .links(links)

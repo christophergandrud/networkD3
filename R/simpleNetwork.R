@@ -34,6 +34,7 @@
 #'   graph elements to be.
 #'   
 #' @examples
+#' \dontrun{
 #' # Fake data
 #' src <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
 #' target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
@@ -41,10 +42,11 @@
 #' 
 #' # Create graph
 #' simpleNetwork(data)
+#' }
 #' 
 #' @source D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
 #'   more specifically for directed networks 
-#'   \url{https://github.com/mbostock/d3/wiki/Force-Layout}
+#'   \url{https://github.com/mbostock/d3/wiki/Force-Layout} 
 #'   
 #' @export
 simpleNetwork <- function(data, 
@@ -91,46 +93,9 @@ simpleNetwork <- function(data,
     width = width,
     height = height,
     htmlwidgets::sizingPolicy(padding = 0, browser.fill = TRUE),
-    package = "networkD3",
+    package = "networkD3"
   )
 }
-
-
-#' Output bindings for simpleNetwork
-#' 
-#' Bindings used to generate HTML (statically and within Shiny applications).
-#' 
-#' @param x Instance data associated with element
-#' @param outputId Unique id of output element
-#' @param class CSS class for output element
-#' @param style Inline CSS styles for output element
-#' @param width Output width. Must be a valid CSS unit (like "100%", "400px", 
-#'   "auto") or a number, which will be coerced to a string and have "px" 
-#'   appended.
-#' @param height Output height (same semantics as \code{width}).
-#' @param expr An expression that generates a simpleNetwork.
-#' @param env The environment in which to evaluate \code{expr}.
-#' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
-#'   is useful if you want to save an expression in a variable.
-#'
-#' @name simpleNetworkOutputBindings
-#' @export
-widget_html.simpleNetwork  <- function(x, id, class, style, width, height) {  
-  div(id = id,
-      class = class,
-      style = style,
-      tag('svg', list(width = width, height = height))
-  )
-}
-
-#' @rdname simpleNetworkOutputBindings
-#' @export
-simpleNetworkOutput <- htmlwidgets::makeShinyOutput("simpleNetwork", "networkD3")
-
-#' @rdname simpleNetworkOutputBindings
-#' @export
-renderSimpleNetwork <- htmlwidgets::makeShinyRender(simpleNetworkOutput)
-
 
 
 

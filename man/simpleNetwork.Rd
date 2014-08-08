@@ -61,6 +61,7 @@ be before they are clicked. Multiple formats supported (e.g. hexadecimal).}
 graphs.
 }
 \examples{
+\dontrun{
 # Fake data
 src <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
 target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
@@ -68,5 +69,6 @@ data <- data.frame(src, target)
 
 # Create graph
 simpleNetwork(data)
+}
 }
 
