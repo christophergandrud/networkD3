@@ -47,8 +47,9 @@ HTMLWidgets.widget({
       .on("tick", tick)
       .start();
   
-    // select the svg element
+    // select the svg element and remove existing children
     var svg = d3.select(el).select("svg");
+    svg.selectAll("*").remove();
     
     // add zooming if requested
     if (options.zoom) {
@@ -68,6 +69,10 @@ HTMLWidgets.widget({
           "translate(" + d3.event.translate + ")"
           + " scale(" + d3.event.scale + ")");
       }
+    } else {
+      svg
+        .attr("pointer-events", "auto")
+        .call(d3.behavior.zoom().on("zoom", null));
     }
     
     // draw links

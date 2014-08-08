@@ -49,9 +49,10 @@ HTMLWidgets.widget({
       .on("tick", tick)
       .start();
 
-    // select the svg element
+    // select the svg element and remove existing children
     var svg = d3.select(el).select("svg");
-
+    svg.selectAll("*").remove();
+    
     // draw links
     var link = svg.selectAll(".link")
       .data(force.links())
