@@ -125,7 +125,8 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value = NULL, NodeID,
 
 #' @rdname networkD3-shiny
 #' @export
-forceNetworkOutput <- htmlwidgets::makeShinyOutput("forceNetwork", "networkD3")
+forceNetworkOutput <- htmlwidgets::makeShinyOutput("forceNetwork", "networkD3", 
+                                                   defaultHeight = "500px")
 
 #' @rdname networkD3-shiny
 #' @export

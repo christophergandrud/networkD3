@@ -99,7 +99,8 @@ simpleNetwork <- function(Data,
 
 #' @rdname networkD3-shiny
 #' @export
-simpleNetworkOutput <- htmlwidgets::makeShinyOutput("simpleNetwork", "networkD3")
+simpleNetworkOutput <- htmlwidgets::makeShinyOutput("simpleNetwork", "networkD3",
+                                                    defaultHeight = "500px")
 
 #' @rdname networkD3-shiny
 #' @export
