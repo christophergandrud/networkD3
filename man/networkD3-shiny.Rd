@@ -7,11 +7,11 @@
 \alias{simpleNetworkOutput}
 \title{Shiny bindings for networkD3 widgets}
 \usage{
-forceNetworkOutput(outputId, width = "100\%", height = "400px")
+forceNetworkOutput(outputId, width = "100\%", height = "500px")
 
 renderForceNetwork(expr, env = parent.frame(), quoted = FALSE)
 
-simpleNetworkOutput(outputId, width = "100\%", height = "400px")
+simpleNetworkOutput(outputId, width = "100\%", height = "500px")
 
 renderSimpleNetwork(expr, env = parent.frame(), quoted = FALSE)
 }
