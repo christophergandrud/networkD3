@@ -30,7 +30,6 @@ Here's `forceNetwork`:
 data(MisLinks)
 data(MisNodes)
 
-# Create graph
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4)
