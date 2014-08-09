@@ -9,16 +9,14 @@ To install and use you'll need to install this package and two of it's dependenc
 
 ```S
 library(devtools)
-install_github(c('rstudio/htmltools', 'ramnathv/htmlwidgets', 'jjallaire/networkD3'))
+install_github(c('rstudio/htmltools', 'ramnathv/htmlwidgets', 'christophergandrud/networkD3'))
 ```
 
 #### Usage
 
-There is currently only one of the d3Network package functions available (`simpleNetwork`). Here's an example of it's use:
+Here's an example of `simpleNetwork`:
 
 ```S
-library(networkD3)
-
 src <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
 target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
 networkData <- data.frame(src, target)
@@ -26,5 +24,16 @@ networkData <- data.frame(src, target)
 simpleNetwork(networkData)
 ```
 
+Here's `forceNetwork`:
+
+```S
+data(MisLinks)
+data(MisNodes)
+
+# Create graph
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Group = "group", opacity = 0.4)
+```
 
 
