@@ -9,7 +9,8 @@ To install and use you'll need to install this package and two of it's dependenc
 
 ```S
 library(devtools)
-install_github(c('rstudio/htmltools', 'ramnathv/htmlwidgets', 'christophergandrud/networkD3'))
+install_github(c('rstudio/htmltools', 'ramnathv/htmlwidgets', 
+              'christophergandrud/networkD3'))
 ```
 
 #### Usage
