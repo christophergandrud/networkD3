@@ -99,12 +99,16 @@ simpleNetwork <- function(Data,
 
 #' @rdname networkD3-shiny
 #' @export
-simpleNetworkOutput <- htmlwidgets::makeShinyOutput("simpleNetwork", "networkD3",
-                                                    defaultHeight = "500px")
-
+simpleNetworkOutput <- function(outputId, width = "100%", height = "500px") {
+  shinyWidgetOutput(outputId, "simpleNetwork", width, height, package = "networkD3")
+}
+                                                   
 #' @rdname networkD3-shiny
 #' @export
-renderSimpleNetwork <- htmlwidgets::makeShinyRender(simpleNetworkOutput)
+renderSimpleNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
+  if (!quoted) { expr <- substitute(expr) } # force quoted
+  shinyRenderWidget(expr, simpleNetworkOutput, env, quoted = TRUE)
+}
 
 
 
