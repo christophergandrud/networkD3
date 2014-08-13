@@ -1,7 +1,3 @@
----
-output: pdf_document
----
-
 ### Tools for creating D3 JavaScript network graphs from R
 
 This is a port of Christopher Gandrud's
