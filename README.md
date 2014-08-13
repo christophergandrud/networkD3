@@ -1,7 +1,12 @@
+---
+output: pdf_document
+---
 
 ### Tools for creating D3 JavaScript network graphs from R
 
-This is a port of Christopher Gandrud's [d3Network](http://christophergandrud.github.io/d3Network/) package to the [htmlwidgets](https://github.com/ramnathv/htmlwidgets) framework. 
+This is a port of Christopher Gandrud's
+[d3Network](http://christophergandrud.github.io/d3Network/) package to the
+[htmlwidgets](https://github.com/ramnathv/htmlwidgets) framework.
 
 #### Installation
 
@@ -9,7 +14,7 @@ To install and use you'll need to install this package and two of it's dependenc
 
 ```S
 library(devtools)
-install_github(c('rstudio/htmltools', 'ramnathv/htmlwidgets', 
+install_github(c('rstudio/htmltools', 'ramnathv/htmlwidgets',
               'christophergandrud/networkD3'))
 ```
 
@@ -35,5 +40,3 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4)
 ```
-
-
