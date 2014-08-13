@@ -1,0 +1,113 @@
+HTMLWidgets.widget({
+
+    name: "sankeyNetwork",
+
+    type: "output",
+
+    initalize: function(el, width, height) {
+
+        d3.select(el).append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        return d3.sankey();
+    },
+
+    resize: function(el, width, height, sankey) {
+
+        d3.select(el).select("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        sankey.size([width, height]).resume();
+    },
+
+    renderValue: function(el, x, sankey) {
+
+        // alias options
+        var options = x.options;
+
+        // convert links and nodes data frames to d3 friendly format
+        var links = HTMLWidgets.dataframeToD3(x.links);
+        var nodes = HTMLWidgets.dataframeToD3(x.nodes);
+
+        // get margin
+        var margin = {top: 1, right: 1, bottom: 6, left: 1};
+
+        // get the width and height
+        var width = el.offsetWidth;
+        var height = el.offsetHeight;
+
+        var color = d3.scale.category20();
+
+        var formatNumber = d3.format(",.0f"),
+        format = function(d) { return formatNumber(d); },
+
+        // create d3 sankey layout
+        sankey
+            .nodes(d3.values(nodes))
+            .links(links)
+            .size([width, height])
+            .nodeWidth(options.nodeWidth)
+            .nodePadding(options.nodePadding)
+            .layout(32);
+
+        // select the svg element and remove existing childern
+        var svg = d3.select(el).select("svg");
+        svg.selectAll("*").remove();
+
+        // draw path
+        var path = sankey.link();
+
+        // draw links
+        var link = svg.selectAll(".link")
+            .data(sankey.links())
+            .enter().append("path")
+            .attr("class", "link")
+            .attr("d", path)
+            .style("stroke-width", function(d) { return Math.max(1, d.dy); })
+            .sort(function(a, b) { return b.dy - a.dy; });
+
+        // draw nodes
+        var node = svg.selectAll(".node")
+            .data(sankey.nodes())
+            .enter().append("g")
+            .attr("class", "node")
+            .attr("transform", function(d) { return
+                                "translate(" + d.x + "," + d.y + ")"; })
+            .call(d3.behavior.drag()
+            .origin(function(d) { return d; })
+            .on("dragstart", function() { this.parentNode.appendChild(this); })
+            .on("drag", dragmove));
+
+
+        link.append("title")
+            .text(function(d) { return d.source.name + " u2192 " + d.target.name + "\\n" + format(d.value); });
+
+        node.append("rect")
+            .attr("height", function(d) { return d.dy; })
+            .attr("width", sankey.nodeWidth())
+            .style("fill", function(d) { return d.color = color(d.name.replace(/ .*/, "")); })
+            .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
+            .append("title")
+            .text(function(d) { return d.name + "\\n" + format(d.value); });
+
+        node.append("svg:text")
+            .attr("x", -6)
+            .attr("y", function(d) { return d.dy / 2; })
+            .attr("dy", ".35em")
+            .attr("text-anchor", "end")
+            .attr("transform", null)
+            .text(function(d) { return d.name; })
+            .style("font", options.fontsize + "px serif")
+            .filter(function(d) { return d.x < width / 2; })
+            .attr("x", 6 + sankey.nodeWidth())
+            .attr("text-anchor", "start");
+
+        function dragmove(d) {
+            d3.select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))) + ")");
+            sankey.relayout();
+            link.attr("d", path);
+        }
+    },
+});

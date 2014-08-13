@@ -8,7 +8,7 @@ specifically for force directed networks
 \url{https://github.com/mbostock/d3/wiki/Force-Layout}.
 }
 \usage{
-forceNetwork(Links, Nodes, Source, Target, Value = NULL, NodeID, Group,
+forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Group,
   height = NULL, width = NULL, fontsize = 7, linkDistance = 50,
   linkWidth = "function(d) { return Math.sqrt(d.value); }", charge = -120,
   linkColour = "#666", opacity = 0.6, zoom = FALSE)

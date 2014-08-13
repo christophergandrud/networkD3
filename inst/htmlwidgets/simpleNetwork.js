@@ -1,44 +1,44 @@
 HTMLWidgets.widget({
-  
+
   name: "simpleNetwork",
-  
+
   type: "output",
-  
+
   initialize: function(el, width, height) {
-         
+
      d3.select(el).append("svg")
       .attr("width", width)
       .attr("height", height);
-    
+
     return d3.layout.force();
   },
-  
-  resize: function(el, width, height, force) {  
-     
+
+  resize: function(el, width, height, force) {
+
      d3.select(el).select("svg")
       .attr("width", width)
       .attr("height", height);
-    
+
      force.size([width, height]).resume();
-  },  
-    
+  },
+
   renderValue: function(el, x, force) {
-     
+
     // convert links data frame to d3 friendly format
     var links = HTMLWidgets.dataframeToD3(x.links);
-     
+
     // compute the nodes from the links
     var nodes = {};
     links.forEach(function(link) {
-      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
-      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+            link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+            link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
       link.value = +link.value;
     });
-    
+
     // get the width and height
     var width = el.offsetWidth;
     var height = el.offsetHeight;
-    
+
     // create d3 force layout
     force
       .nodes(d3.values(nodes))
@@ -52,7 +52,7 @@ HTMLWidgets.widget({
     // select the svg element and remove existing children
     var svg = d3.select(el).select("svg");
     svg.selectAll("*").remove();
-    
+
     // draw links
     var link = svg.selectAll(".link")
       .data(force.links())
@@ -96,8 +96,8 @@ HTMLWidgets.widget({
         .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
-        node.attr("transform", function(d) { 
-          return "translate(" + d.x + "," + d.y + ")"; 
+        node.attr("transform", function(d) {
+          return "translate(" + d.x + "," + d.y + ")";
         });
     }
 
@@ -114,7 +114,7 @@ HTMLWidgets.widget({
       .duration(750)
       .attr("r", 8);
     }
-    
+
     // click event handler
     function click() {
       d3.select(this).select("text").transition()
@@ -145,6 +145,5 @@ HTMLWidgets.widget({
         .style("opacity", x.options.opacity)
         .style("font", x.options.fontSize + "px serif");
     }
-  },  
+  },
 });
-

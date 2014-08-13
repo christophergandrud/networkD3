@@ -63,80 +63,74 @@
 #'              Target = "target", Value = "value", NodeID = "name",
 #'              Group = "group", opacity = 0.4)
 #' }
-#' 
+#'
 #' @source
 #' D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
 #' specifically for force directed networks
 #' \url{https://github.com/mbostock/d3/wiki/Force-Layout}.
 #'
 #' @export
-forceNetwork <- function(Links, Nodes, Source, Target, Value = NULL, NodeID,
-	Group, height = NULL, width = NULL, fontsize = 7, linkDistance = 50,
-	linkWidth = "function(d) { return Math.sqrt(d.value); }", charge = -120,
-	linkColour = "#666",opacity = 0.6, zoom = FALSE)
+forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
+    Group, height = NULL, width = NULL, fontsize = 7, linkDistance = 50,
+    linkWidth = "function(d) { return Math.sqrt(d.value); }", charge = -120,
+    linkColour = "#666",opacity = 0.6, zoom = FALSE)
 {
-	# Subset data frames for network graph
-	if (class(Links) != "data.frame"){
-		stop("Links must be a data frame class object.")
-	}
-	if (class(Nodes) != "data.frame"){
-		stop("Nodes must be a data frame class object.")
-	}
-	if (is.null(Value)){
-		LinksDF <- data.frame(Links[, Source], Links[, Target])
-		names(LinksDF) <- c("source", "target")
-	}
-	else if (!is.null(Value)){
-		LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
-		names(LinksDF) <- c("source", "target", "value")
-	}
-	NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
-	names(NodesDF) <- c("name", "group")
+    # Subset data frames for network graph
+    if (class(Links) != "data.frame"){
+        stop("Links must be a data frame class object.")
+    }
+    if (class(Nodes) != "data.frame"){
+        stop("Nodes must be a data frame class object.")
+    }
+    if (missing(Value)){
+        LinksDF <- data.frame(Links[, Source], Links[, Target])
+        names(LinksDF) <- c("source", "target")
+    }
+    else if (!missing(Value)){
+        LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
+        names(LinksDF) <- c("source", "target", "value")
+    }
+    NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
+    names(NodesDF) <- c("name", "group")
 
-	# derive click text size
-	clickTextSize <- fontsize * 2.5
-	
-	# create options
-	options = list(
-	  NodeID = NodeID,
-	  Group = Group,
-	  fontsize = fontsize,
-    clickTextSize = fontsize * 2.5,
-	  linkDistance = linkDistance,
-	  linkWidth = linkWidth,
-    charge = charge,
-    linkColour = linkColour,
-	  opacity = opacity,
-    zoom = zoom
-	)
-	
-	# create widget
-	htmlwidgets::createWidget(
-	  name = "forceNetwork",
-	  x = list(links = LinksDF, nodes = NodesDF, options = options),
-	  width = width,
-	  height = height,
-	  htmlwidgets::sizingPolicy(padding = 0, 
-                              browser.fill = TRUE),
-	  package = "networkD3"
-	)
+    # derive click text size
+    clickTextSize <- fontsize * 2.5
+
+    # create options
+    options = list(
+        NodeID = NodeID,
+        Group = Group,
+        fontsize = fontsize,
+        clickTextSize = fontsize * 2.5,
+        linkDistance = linkDistance,
+        linkWidth = linkWidth,
+        charge = charge,
+        linkColour = linkColour,
+        opacity = opacity,
+        zoom = zoom
+    )
+
+    # create widget
+    htmlwidgets::createWidget(
+        name = "forceNetwork",
+        x = list(links = LinksDF, nodes = NodesDF, options = options),
+        width = width,
+        height = height,
+        htmlwidgets::sizingPolicy(padding = 0, browser.fill = TRUE),
+        package = "networkD3"
+    )
 }
-
 
 #' @rdname networkD3-shiny
 #' @export
 forceNetworkOutput <- function(outputId, width = "100%", height = "500px") {
-  shinyWidgetOutput(outputId, "forceNetwork", width, height, package = "networkD3")
+    shinyWidgetOutput(outputId, "forceNetwork", width, height,
+    package = "networkD3")
 }
 
 #' @rdname networkD3-shiny
 #' @export
 renderForceNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
-  if (!quoted) { expr <- substitute(expr) } # force quoted
-  shinyRenderWidget(expr, forceNetworkOutput, env, quoted = TRUE)
+    if (!quoted) { expr <- substitute(expr) } # force quoted
+    shinyRenderWidget(expr, forceNetworkOutput, env, quoted = TRUE)
 }
-
-
-
-
-
