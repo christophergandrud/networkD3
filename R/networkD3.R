@@ -24,6 +24,9 @@ NULL
 #' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This 
 #'   is useful if you want to save an expression in a variable.
 #'   
+#' @importFrom htmlwidgets shinyWidgetOutput
+#' @importFrom htmlwidgets shinyRenderWidget
+#' 
 #' @name networkD3-shiny
 NULL
 

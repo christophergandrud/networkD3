@@ -125,12 +125,17 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value = NULL, NodeID,
 
 #' @rdname networkD3-shiny
 #' @export
-forceNetworkOutput <- htmlwidgets::makeShinyOutput("forceNetwork", "networkD3", 
-                                                   defaultHeight = "500px")
+forceNetworkOutput <- function(outputId, width = "100%", height = "500px") {
+  shinyWidgetOutput(outputId, "forceNetwork", width, height, package = "networkD3")
+}
 
 #' @rdname networkD3-shiny
 #' @export
-renderForceNetwork <- htmlwidgets::makeShinyRender(forceNetworkOutput)
+renderForceNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
+  if (!quoted) { expr <- substitute(expr) } # force quoted
+  shinyRenderWidget(expr, forceNetworkOutput, env, quoted = TRUE)
+}
+
 
 
 
