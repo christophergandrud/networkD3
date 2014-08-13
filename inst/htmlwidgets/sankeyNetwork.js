@@ -10,7 +10,7 @@ HTMLWidgets.widget({
             .attr("width", width)
             .attr("height", height);
 
-        return d3.sankey();
+        return d3.layout.sankey();
     },
 
     resize: function(el, width, height, sankey) {
@@ -30,9 +30,6 @@ HTMLWidgets.widget({
         // convert links and nodes data frames to d3 friendly format
         var links = HTMLWidgets.dataframeToD3(x.links);
         var nodes = HTMLWidgets.dataframeToD3(x.nodes);
-
-        // get margin
-        var margin = {top: 1, right: 1, bottom: 6, left: 1};
 
         // get the width and height
         var width = el.offsetWidth;

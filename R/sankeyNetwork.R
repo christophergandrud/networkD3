@@ -66,10 +66,6 @@
 sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
     height = 600, width = 900, fontsize = 7, nodeWidth = 15, nodePadding = 10)
 {
-    # Create iframe dimensions larger than graph dimensions
-    FrameHeight <- height + height * 0.07
-    FrameWidth <- width + width * 0.03
-
     # Subset data frames for network graph
     if (class(Links) != "data.frame"){
         stop("Links must be a data frame class object.")

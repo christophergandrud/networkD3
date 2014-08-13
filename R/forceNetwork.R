@@ -93,9 +93,6 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
     NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
     names(NodesDF) <- c("name", "group")
 
-    # derive click text size
-    clickTextSize <- fontsize * 2.5
-
     # create options
     options = list(
         NodeID = NodeID,
