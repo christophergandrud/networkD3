@@ -82,7 +82,15 @@ HTMLWidgets.widget({
       .attr("class", "link")
       .style("stroke", options.linkColour)
       .style("opacity", options.opacity)
-      .style("stroke-width", eval("(" + options.linkWidth + ")"));
+      .style("stroke-width", eval("(" + options.linkWidth + ")"))
+      .on("mouseover", function(d) {
+          d3.select(this)
+            .style("opacity", 1);
+      })
+      .on("mouseout", function(d) {
+          d3.select(this)
+            .style("opacity", options.opacity);
+      });
 
     // draw nodes
     var node = svg.selectAll(".node")
