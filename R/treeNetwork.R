@@ -73,22 +73,21 @@
 #' ))
 #'
 #' # Create tree
-#' d3Tree(List = CanadaPC, fontsize = 10, diameter = 500)
+#' treeNetwork(List = CanadaPC, fontsize = 10, diameter = 500)
 #'
 #' ## Create tree from JSON formatted data
-#' ## dontrun
-#' ## Download JSON data
-#' # library(RCurl)
-#' # URL <- "https://raw.github.com/christophergandrud/d3Network/master/JSONdata/flare.json"
-#' # Flare <- getURL(URL)
+#' \dontrun{
+#' # Download JSON data
+#' library(RCurl)
+#' URL <- "https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/flare.json"
+#' Flare <- getURL(URL)
 #'
-#' ## Convert to list format
-#' # Flare <- rjson::fromJSON(Flare)
+#' # Convert to list format
+#' Flare <- rjson::fromJSON(Flare)
 #'
-#' ## Recreate Bostock example from http://bl.ocks.org/mbostock/4063550
-#' # d3Tree(List = Flare, file = "Flare.html",
-#' #        fontsize = 10, opacity = 0.9, diameter = 1000)
-#'
+#' # Recreate Bostock example from http://bl.ocks.org/mbostock/4063550
+#' treeNetwork(List = Flare, fontsize = 10, opacity = 0.9, diameter = 1000)
+#' }
 #' @source Reingold. E. M., and Tilford, J. S. (1981). Tidier Drawings of Trees.
 #' IEEE Transactions on Software Engineering, SE-7(2), 223-228.
 #'
@@ -98,7 +97,7 @@
 #' @importFrom rjson toJSON
 #' @export
 
-d3Tree <- function(List, height = 600, width = 900, fontsize = 10,
+treeNetwork <- function(List, height = 600, width = 900, fontsize = 10,
     linkColour = "#ccc", nodeColour = "#3182bd", textColour = "#3182bd",
     opacity = 0.9, diameter = 980, zoom = FALSE)
 {
@@ -116,6 +115,7 @@ d3Tree <- function(List, height = 600, width = 900, fontsize = 10,
     # create options
     options = list(
         fontsize = fontsize,
+        fontsizeBig = fontsizeBig,
         linkColour = linkColour,
         nodeColour = nodeColour,
         textColour = textColour,
@@ -127,7 +127,7 @@ d3Tree <- function(List, height = 600, width = 900, fontsize = 10,
     # create widget
     htmlwidgets::createWidget(
         name = "treeNetwork",
-        x = list(root = RootList, options = options),
+        x = list(root = List, options = options),
         width = width,
         height = height,
         htmlwidgets::sizingPolicy(padding = 0, browser.fill = TRUE),
