@@ -106,8 +106,7 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
 #' @rdname networkD3-shiny
 #' @export
 sankeyNetworkOutput <- function(outputId, width = "100%", height = "500px") {
-    shinyWidgetOutput(outputId, "sankeyNetwork", width, height,
-    package = "networkD3")
+    shinyWidgetOutput(outputId, "sankeyNetwork", width, height, package = "networkD3")
 }
 
 #' @rdname networkD3-shiny

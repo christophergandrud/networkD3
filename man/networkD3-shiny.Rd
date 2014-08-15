@@ -3,8 +3,10 @@
 \alias{forceNetworkOutput}
 \alias{networkD3-shiny}
 \alias{renderForceNetwork}
+\alias{renderSankeyNetwork}
 \alias{renderSimpleNetwork}
 \alias{renderTreeNetwork}
+\alias{sankeyNetworkOutput}
 \alias{simpleNetworkOutput}
 \alias{treeNetworkOutput}
 \title{Shiny bindings for networkD3 widgets}
@@ -12,6 +14,10 @@
 forceNetworkOutput(outputId, width = "100\%", height = "500px")
 
 renderForceNetwork(expr, env = parent.frame(), quoted = FALSE)
+
+sankeyNetworkOutput(outputId, width = "100\%", height = "800px")
+
+renderSankeyNetwork(expr, env = parent.frame(), quoted = FALSE)
 
 simpleNetworkOutput(outputId, width = "100\%", height = "500px")
 
