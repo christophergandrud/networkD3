@@ -79,12 +79,14 @@ HTMLWidgets.widget({
 
 
         link.append("title")
-            .text(function(d) { return d.source.name + " u2192 " + d.target.name + "\\n" + format(d.value); });
+            .text(function(d) { return d.source.name + d.target.name + "\\n" + format(d.value); });
 
         node.append("rect")
             .attr("height", function(d) { return d.dy; })
             .attr("width", sankey.nodeWidth())
             .style("fill", function(d) { return d.color = color(d.name.replace(/ .*/, "")); })
+            .style("fill-opacity", 0.9)
+            .style("shape-rendering", crispEdges)
             .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
             .append("title")
             .text(function(d) { return d.name + "\\n" + format(d.value); });
