@@ -4,7 +4,7 @@ HTMLWidgets.widget({
 
     type: "output",
 
-    initalize: function(el, width, height) {
+    initialize: function(el, width, height) {
 
         d3.select(el).append("svg")
             .attr("width", width)
@@ -19,7 +19,7 @@ HTMLWidgets.widget({
             .attr("width", width)
             .attr("height", height);
 
-        sankey.size([width, height]).resume();
+        sankey.size([width, height]);
     },
 
     renderValue: function(el, x, sankey) {
@@ -38,7 +38,7 @@ HTMLWidgets.widget({
         var color = d3.scale.category20();
 
         var formatNumber = d3.format(",.0f"),
-        format = function(d) { return formatNumber(d); },
+        format = function(d) { return formatNumber(d); }
 
         // create d3 sankey layout
         sankey
