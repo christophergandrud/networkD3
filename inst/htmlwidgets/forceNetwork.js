@@ -66,8 +66,8 @@ HTMLWidgets.widget({
 
       function redraw() {
         vis.attr("transform",
-          "translate(" + d3.event.translate + ")"
-          + " scale(" + d3.event.scale + ")");
+          "translate(" + d3.event.translate + ")"+
+          " scale(" + d3.event.scale + ")");
     }
     } else {
       svg
@@ -99,7 +99,7 @@ HTMLWidgets.widget({
       .attr("r", 6)
       .style("stroke", "#fff")
       .style("opacity", options.opacity)
-      .style("stroke-width", "1.5px")
+      .style("stroke-width", "1.5px");
 
     node.append("svg:text")
       .attr("class", "nodetext")
@@ -108,7 +108,7 @@ HTMLWidgets.widget({
       .text(function(d) { return d.name })
       .style("font", options.fontsize + "px serif")
       .style("opacity", 0)
-      .style("pointer-events", "none")
+      .style("pointer-events", "none");
 
     function tick() {
       link
@@ -140,7 +140,7 @@ HTMLWidgets.widget({
         .duration(750)
         .attr("r", 8);
       d3.select(this).select("text").transition()
-        .style("opacity", 0)
+        .style("opacity", 0);
     }
   },
 });

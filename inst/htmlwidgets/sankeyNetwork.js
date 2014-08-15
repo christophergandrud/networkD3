@@ -10,7 +10,7 @@ HTMLWidgets.widget({
             .attr("width", width)
             .attr("height", height);
 
-        return d3.layout.sankey();
+        return d3.sankey();
     },
 
     resize: function(el, width, height, sankey) {
@@ -70,8 +70,8 @@ HTMLWidgets.widget({
             .data(sankey.nodes())
             .enter().append("g")
             .attr("class", "node")
-            .attr("transform", function(d) { return
-                                "translate(" + d.x + "," + d.y + ")"; })
+            .attr("transform", function(d) { return "translate(" +
+                                            d.x + "," + d.y + ")"; })
             .call(d3.behavior.drag()
             .origin(function(d) { return d; })
             .on("dragstart", function() { this.parentNode.appendChild(this); })
