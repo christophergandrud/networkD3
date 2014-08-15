@@ -90,12 +90,14 @@ HTMLWidgets.widget({
 
 
         link.append("title")
-            .text(function(d) { return d.source.name + d.target.name + "\\n" + format(d.value); });
+            .text(function(d) { return d.source.name + d.target.name +
+                "\\n" + format(d.value); });
 
         node.append("rect")
             .attr("height", function(d) { return d.dy; })
             .attr("width", sankey.nodeWidth())
-            .style("fill", function(d) { return d.color = color(d.name.replace(/ .*/, "")); })
+            .style("fill", function(d) {
+                return d.color = color(d.name.replace(/ .*/, "")); })
             .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
             .style("opacity", 0.9)
             .style("cursor", "move")
@@ -115,7 +117,8 @@ HTMLWidgets.widget({
             .attr("text-anchor", "start");
 
         function dragmove(d) {
-            d3.select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))) + ")");
+            d3.select(this).attr("transform", "translate(" + d.x + "," +
+            (d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))) + ")");
             sankey.relayout();
             link.attr("d", path);
         }
