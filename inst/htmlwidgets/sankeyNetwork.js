@@ -66,7 +66,15 @@ HTMLWidgets.widget({
             .style("fill", "none")
             .style("stroke", "#000")
             .style("stroke-opacity", 0.2)
-            .sort(function(a, b) { return b.dy - a.dy; });
+            .sort(function(a, b) { return b.dy - a.dy; })
+            .on("mouseover", function(d) {
+                d3.select(this)
+                .style("stroke-opacity", 0.5);
+            })
+            .on("mouseout", function(d) {
+                d3.select(this)
+                .style("stroke-opacity", 0.2);
+            });
 
         // draw nodes
         var node = svg.selectAll(".node")
@@ -90,6 +98,7 @@ HTMLWidgets.widget({
             .style("fill", function(d) { return d.color = color(d.name.replace(/ .*/, "")); })
             .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
             .style("opacity", 0.9)
+            .style("cursor", "move")
             .append("title")
             .text(function(d) { return d.name + "\\n" + format(d.value); });
 
