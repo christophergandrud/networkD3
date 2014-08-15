@@ -47,7 +47,7 @@
 #' @export
 
 sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
-    height = 600, width = 900, colourScale = "d3.scale.category20()",
+    height = NULL, width = NULL, colourScale = "d3.scale.category20()",
     fontsize = 7, nodeWidth = 15, nodePadding = 10)
 {
     # Subset data frames for network graph
@@ -85,18 +85,17 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
         height = height,
         htmlwidgets::sizingPolicy(viewer.suppress = TRUE,
                                   knitr.figure = FALSE,
-                                  browser.defaultWidth = 800,
-                                  browser.defaultHeight = 500,
+                                  browser.fill = TRUE,
                                   browser.padding = 75,
                                   knitr.defaultWidth = 800,
-                                  knitr.defaultHeight = 500),
+                                  knitr.defaultHeight = 600),
         package = "networkD3"
     )
 }
 
 #' @rdname networkD3-shiny
 #' @export
-sankeyNetworkOutput <- function(outputId, width = "100%", height = "500px") {
+sankeyNetworkOutput <- function(outputId, width = "100%", height = "600px") {
     shinyWidgetOutput(outputId, "sankeyNetwork", width, height, package = "networkD3")
 }
 
