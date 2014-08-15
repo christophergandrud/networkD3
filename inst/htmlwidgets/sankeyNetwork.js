@@ -19,7 +19,7 @@ HTMLWidgets.widget({
             .attr("width", width)
             .attr("height", height);
 
-        sankey.size([width, height]);
+        sankey.size([width, height]).layout(32);
     },
 
     renderValue: function(el, x, sankey) {

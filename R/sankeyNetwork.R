@@ -98,7 +98,13 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
         x = list(links = LinksDF, nodes = NodesDF, options = options),
         width = width,
         height = height,
-        htmlwidgets::sizingPolicy(padding = 0, browser.fill = TRUE),
+        htmlwidgets::sizingPolicy(viewer.suppress = TRUE,
+                                  knitr.figure = FALSE,
+                                  browser.defaultWidth = 800,
+                                  browser.defaultHeight = 500,
+                                  browser.padding = 75,
+                                  knitr.defaultWidth = 800,
+                                  knitr.defaultHeight = 500),
         package = "networkD3"
     )
 }
