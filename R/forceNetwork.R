@@ -20,8 +20,9 @@
 #' \code{Nodes} data frame.
 #' @param height numeric height for the network graph's frame area in pixels.
 #' @param width numeric width for the network graph's frame area in pixels.
-#' @param colourScale character string specifying the the D3 categorical colour
-#' scale. See \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.
+#' @param colourScale character string specifying the categorical colour
+#' scale for the nodes. See
+#' \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.
 #' @param fontsize numeric font size in pixels for the node text labels.
 #' @param linkDistance numeric or character string. Either numberic fixed
 #' distance between the links in pixels (actually arbitrary relative to the

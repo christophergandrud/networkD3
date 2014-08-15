@@ -44,8 +44,9 @@ data frame.}
 
 \item{width}{numeric width for the network graph's frame area in pixels.}
 
-\item{colourScale}{character string specifying the the D3 categorical colour
-scale. See \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.}
+\item{colourScale}{character string specifying the categorical colour
+scale for the nodes. See
+\url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.}
 
 \item{fontsize}{numeric font size in pixels for the node text labels.}
 

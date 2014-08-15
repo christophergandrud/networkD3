@@ -18,31 +18,12 @@
 #' data frame.
 #' @param height numeric height for the network graph's frame area in pixels.
 #' @param width numeric width for the network graph's frame area in pixels.
-#' @param colourScale character string specifying the the D3 categorical colour
-#' scale. See \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.
+#' @param colourScale character string specifying the categorical colour
+#' scale for the nodes. See
+#' \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.
+#' @param fontsize numeric font size in pixels for the node text labels.
 #' @param nodeWidth numeric width of each node.
 #' @param nodePadding numeric essentially influences the width height.
-#' @param parentElement character string specifying the parent element for the
-#' resulting svg network graph. This effectively allows the user to specify
-#' where on the html page the graph will be placed. By default the parent
-#' element is \code{body}.
-#' @param standAlone logical, whether or not to return a complete HTML document
-#' (with head and foot) or just the script.
-#' @param file a character string of the file name to save the resulting graph.
-#' If a file name is given a standalone webpage is created, i.e. with a header
-#' and footer. If \code{file = NULL} then result is returned to the console.
-#' @param iframe logical. If \code{iframe = TRUE} then the graph is saved to an
-#' external file in the working directory and an HTML \code{iframe} linking to
-#' the file is printed to the console. This is useful if you are using Slidify
-#' and many other HTML slideshow framworks and want to include the graph in the
-#' resulting page. If you set the knitr code chunk \code{results='asis'} then
-#' the graph will be rendered in the output. Usually, you can use
-#' \code{iframe = FALSE} if you are creating simple knitr Markdown or HTML
-#' pages. Note: you do not need to specify the file name if
-#' \code{iframe = TRUE}, however if you do, do not include the file path.
-#' @param d3Script a character string that allows you to specify the location of
-#' the d3.js script you would like to use. The default is
-#' \url{http://d3js.org/d3.v3.min.js}.
 #'
 #' @examples
 #' \dontrun{

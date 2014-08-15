@@ -5,10 +5,8 @@
 \alias{renderForceNetwork}
 \alias{renderSankeyNetwork}
 \alias{renderSimpleNetwork}
-\alias{renderTreeNetwork}
 \alias{sankeyNetworkOutput}
 \alias{simpleNetworkOutput}
-\alias{treeNetworkOutput}
 \title{Shiny bindings for networkD3 widgets}
 \usage{
 forceNetworkOutput(outputId, width = "100\%", height = "500px")
@@ -22,10 +20,6 @@ renderSankeyNetwork(expr, env = parent.frame(), quoted = FALSE)
 simpleNetworkOutput(outputId, width = "100\%", height = "500px")
 
 renderSimpleNetwork(expr, env = parent.frame(), quoted = FALSE)
-
-treeNetworkOutput(outputId, width = "100\%", height = "500px")
-
-renderTreeNetwork(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
 \item{outputId}{output variable to read from}
