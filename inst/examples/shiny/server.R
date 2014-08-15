@@ -20,4 +20,15 @@ shinyServer(function(input, output) {
                  Group = "group", opacity = input$opacity)
   })
   
+  output$sankey <- renderSankeyNetwork({
+    library(RCurl)
+    URL <- "https://raw.githubusercontent.com/christophergandrud/d3Network/sankey/JSONdata/energy.json"
+    Energy <- getURL(URL, ssl.verifypeer = FALSE)
+    EngLinks <- JSONtoDF(jsonStr = Energy, array = "links")
+    EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
+    sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
+                  Target = "target", Value = "value", NodeID = "name",
+                  fontsize = 12, nodeWidth = 30)
+  })
+  
 })

@@ -19,7 +19,7 @@ HTMLWidgets.widget({
             .attr("width", width)
             .attr("height", height);
 
-        sankey.size([width, height]);
+        sankey.size([width, height]).layout(32);
     },
 
     renderValue: function(el, x, sankey) {
@@ -63,6 +63,9 @@ HTMLWidgets.widget({
             .attr("class", "link")
             .attr("d", path)
             .style("stroke-width", function(d) { return Math.max(1, d.dy); })
+            .style("fill", "none")
+            .style("stroke", "#000")
+            .style("stroke-opacity", 0.2)
             .sort(function(a, b) { return b.dy - a.dy; });
 
         // draw nodes
@@ -85,9 +88,8 @@ HTMLWidgets.widget({
             .attr("height", function(d) { return d.dy; })
             .attr("width", sankey.nodeWidth())
             .style("fill", function(d) { return d.color = color(d.name.replace(/ .*/, "")); })
-            .style("fill-opacity", 0.9)
-            .style("shape-rendering", crispEdges)
             .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
+            .style("opacity", 0.9)
             .append("title")
             .text(function(d) { return d.name + "\\n" + format(d.value); });
 
