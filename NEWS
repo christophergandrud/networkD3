@@ -1,0 +1,6 @@
+## Version 0.7
+
+- `sankeyNetwork` added.
+
+- `colourScale` argument added to `forceNetwork` and `sankeyNetwork` to allow
+the user to change the node colour scale.

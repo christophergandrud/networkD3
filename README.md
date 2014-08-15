@@ -1,5 +1,7 @@
 # Tools for creating D3 JavaScript network graphs from R
 
+Version 0.7
+
 This is a port of Christopher Gandrud's
 [d3Network](http://christophergandrud.github.io/d3Network/) package to the
 [htmlwidgets](https://github.com/ramnathv/htmlwidgets) framework.
@@ -38,7 +40,8 @@ data(MisNodes)
 # Plot
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
-             Group = "group", opacity = 0.4)
+             Group = "group", opacity = 0.4,
+             colourScale = "d3.scale.category20b()")
 ```
 
 Here's `sankeyNetwork` using a downloaded JSON data file:

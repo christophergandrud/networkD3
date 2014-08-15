@@ -35,7 +35,7 @@ HTMLWidgets.widget({
     var width = el.offsetWidth;
     var height = el.offsetHeight;
 
-    var color = d3.scale.category20();
+    var color = eval(options.colourScale);
 
     // create d3 force layout
     force
@@ -82,7 +82,15 @@ HTMLWidgets.widget({
       .attr("class", "link")
       .style("stroke", options.linkColour)
       .style("opacity", options.opacity)
-      .style("stroke-width", eval("(" + options.linkWidth + ")"));
+      .style("stroke-width", eval("(" + options.linkWidth + ")"))
+      .on("mouseover", function(d) {
+          d3.select(this)
+            .style("opacity", 1);
+      })
+      .on("mouseout", function(d) {
+          d3.select(this)
+            .style("opacity", options.opacity);
+      });
 
     // draw nodes
     var node = svg.selectAll(".node")

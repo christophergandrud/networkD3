@@ -7,7 +7,8 @@ D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more speci
 }
 \usage{
 sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, height = 600,
-  width = 900, fontsize = 7, nodeWidth = 15, nodePadding = 10)
+  width = 900, colourScale = "d3.scale.category20()", fontsize = 7,
+  nodeWidth = 15, nodePadding = 10)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -36,35 +37,15 @@ data frame.}
 
 \item{width}{numeric width for the network graph's frame area in pixels.}
 
+\item{colourScale}{character string specifying the categorical colour
+scale for the nodes. See
+\url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.}
+
+\item{fontsize}{numeric font size in pixels for the node text labels.}
+
 \item{nodeWidth}{numeric width of each node.}
 
 \item{nodePadding}{numeric essentially influences the width height.}
-
-\item{parentElement}{character string specifying the parent element for the
-resulting svg network graph. This effectively allows the user to specify
-where on the html page the graph will be placed. By default the parent
-element is \code{body}.}
-
-\item{standAlone}{logical, whether or not to return a complete HTML document
-(with head and foot) or just the script.}
-
-\item{file}{a character string of the file name to save the resulting graph.
-If a file name is given a standalone webpage is created, i.e. with a header
-and footer. If \code{file = NULL} then result is returned to the console.}
-
-\item{iframe}{logical. If \code{iframe = TRUE} then the graph is saved to an
-external file in the working directory and an HTML \code{iframe} linking to
-the file is printed to the console. This is useful if you are using Slidify
-and many other HTML slideshow framworks and want to include the graph in the
-resulting page. If you set the knitr code chunk \code{results='asis'} then
-the graph will be rendered in the output. Usually, you can use
-\code{iframe = FALSE} if you are creating simple knitr Markdown or HTML
-pages. Note: you do not need to specify the file name if
-\code{iframe = TRUE}, however if you do, do not include the file path.}
-
-\item{d3Script}{a character string that allows you to specify the location of
-the d3.js script you would like to use. The default is
-\url{http://d3js.org/d3.v3.min.js}.}
 }
 \description{
 Create a D3 JavaScript Sankey diagram
@@ -74,7 +55,7 @@ Create a D3 JavaScript Sankey diagram
 # Recreate Bostock Sankey diagram: http://bost.ocks.org/mike/sankey/
 # Load energy projection data
 library(RCurl)
-URL <- "https://raw.githubusercontent.com/christophergandrud/d3Network/sankey/JSONdata/energy.json"
+URL <- "https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/energy.json"
 Energy <- getURL(URL, ssl.verifypeer = FALSE)
 # Convert to data frame
 EngLinks <- JSONtoDF(jsonStr = Energy, array = "links")
