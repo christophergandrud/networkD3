@@ -12,7 +12,8 @@ shinyUI(fluidPage(
     mainPanel(
       tabsetPanel(
         tabPanel("Simple Network", simpleNetworkOutput("simple")),
-        tabPanel("Force Network", forceNetworkOutput("force"))
+        tabPanel("Force Network", forceNetworkOutput("force")),
+        tabPanel("Sankey Network", sankeyNetworkOutput("sankey"))
       )
     )
   )
