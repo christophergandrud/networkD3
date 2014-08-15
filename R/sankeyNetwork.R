@@ -18,6 +18,8 @@
 #' data frame.
 #' @param height numeric height for the network graph's frame area in pixels.
 #' @param width numeric width for the network graph's frame area in pixels.
+#' @param colourScale character string specifying the the D3 categorical colour
+#' scale. See \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.
 #' @param nodeWidth numeric width of each node.
 #' @param nodePadding numeric essentially influences the width height.
 #' @param parentElement character string specifying the parent element for the
@@ -64,7 +66,8 @@
 #' @export
 
 sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
-    height = 600, width = 900, fontsize = 7, nodeWidth = 15, nodePadding = 10)
+    height = 600, width = 900, colourScale = "d3.scale.category20()",
+    fontsize = 7, nodeWidth = 15, nodePadding = 10)
 {
     # Subset data frames for network graph
     if (class(Links) != "data.frame"){
@@ -87,6 +90,7 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
     # create options
     options = list(
         NodeID = NodeID,
+        colourScale = colourScale,
         fontsize = fontsize,
         nodeWidth = nodeWidth,
         nodePadding = nodePadding

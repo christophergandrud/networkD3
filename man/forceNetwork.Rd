@@ -9,7 +9,8 @@ specifically for force directed networks
 }
 \usage{
 forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Group,
-  height = NULL, width = NULL, fontsize = 7, linkDistance = 50,
+  height = NULL, width = NULL, colourScale = "d3.scale.category20()",
+  fontsize = 7, linkDistance = 50,
   linkWidth = "function(d) { return Math.sqrt(d.value); }", charge = -120,
   linkColour = "#666", opacity = 0.6, zoom = FALSE)
 }
@@ -42,6 +43,9 @@ data frame.}
 \item{height}{numeric height for the network graph's frame area in pixels.}
 
 \item{width}{numeric width for the network graph's frame area in pixels.}
+
+\item{colourScale}{character string specifying the the D3 categorical colour
+scale. See \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.}
 
 \item{fontsize}{numeric font size in pixels for the node text labels.}
 

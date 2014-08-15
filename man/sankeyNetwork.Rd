@@ -7,7 +7,8 @@ D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more speci
 }
 \usage{
 sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, height = 600,
-  width = 900, fontsize = 7, nodeWidth = 15, nodePadding = 10)
+  width = 900, colourScale = "d3.scale.category20()", fontsize = 7,
+  nodeWidth = 15, nodePadding = 10)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -35,6 +36,9 @@ data frame.}
 \item{height}{numeric height for the network graph's frame area in pixels.}
 
 \item{width}{numeric width for the network graph's frame area in pixels.}
+
+\item{colourScale}{character string specifying the the D3 categorical colour
+scale. See \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.}
 
 \item{nodeWidth}{numeric width of each node.}
 

@@ -35,7 +35,7 @@ HTMLWidgets.widget({
         var width = el.offsetWidth;
         var height = el.offsetHeight;
 
-        var color = d3.scale.category20();
+        var color = eval(options.colourScale);
 
         var formatNumber = d3.format(",.0f"),
         format = function(d) { return formatNumber(d); }

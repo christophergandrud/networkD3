@@ -20,6 +20,8 @@
 #' \code{Nodes} data frame.
 #' @param height numeric height for the network graph's frame area in pixels.
 #' @param width numeric width for the network graph's frame area in pixels.
+#' @param colourScale character string specifying the the D3 categorical colour
+#' scale. See \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.
 #' @param fontsize numeric font size in pixels for the node text labels.
 #' @param linkDistance numeric or character string. Either numberic fixed
 #' distance between the links in pixels (actually arbitrary relative to the
@@ -71,7 +73,8 @@
 #'
 #' @export
 forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
-    Group, height = NULL, width = NULL, fontsize = 7, linkDistance = 50,
+    Group, height = NULL, width = NULL, colourScale = "d3.scale.category20()",
+    fontsize = 7, linkDistance = 50,
     linkWidth = "function(d) { return Math.sqrt(d.value); }", charge = -120,
     linkColour = "#666",opacity = 0.6, zoom = FALSE)
 {
@@ -97,6 +100,7 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
     options = list(
         NodeID = NodeID,
         Group = Group,
+        colourScale = colourScale,
         fontsize = fontsize,
         clickTextSize = fontsize * 2.5,
         linkDistance = linkDistance,

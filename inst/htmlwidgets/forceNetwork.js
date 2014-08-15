@@ -35,7 +35,7 @@ HTMLWidgets.widget({
     var width = el.offsetWidth;
     var height = el.offsetHeight;
 
-    var color = d3.scale.category20();
+    var color = eval(options.colourScale);
 
     // create d3 force layout
     force
