@@ -4,5 +4,6 @@ dependencies:
     src: "htmlwidgets/lib/d3-3.4.11"
     script: d3.v3.min.js
   - name: sankey
+    version: 1.0
     src: "htmlwidgets/lib"
-    script: sankey.min.js
+    script: sankey.js
