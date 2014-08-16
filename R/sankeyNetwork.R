@@ -88,14 +88,14 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
                                   browser.fill = TRUE,
                                   browser.padding = 75,
                                   knitr.defaultWidth = 800,
-                                  knitr.defaultHeight = 600),
+                                  knitr.defaultHeight = 500),
         package = "networkD3"
     )
 }
 
 #' @rdname networkD3-shiny
 #' @export
-sankeyNetworkOutput <- function(outputId, width = "100%", height = "600px") {
+sankeyNetworkOutput <- function(outputId, width = "100%", height = "500px") {
     shinyWidgetOutput(outputId, "sankeyNetwork", width, height, package = "networkD3")
 }
 
