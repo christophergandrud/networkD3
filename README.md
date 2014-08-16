@@ -1,5 +1,7 @@
 # Tools for creating D3 JavaScript network graphs from R
 
+Version 0.7
+
 This is a port of Christopher Gandrud's
 [d3Network](http://christophergandrud.github.io/d3Network/) package to the
 [htmlwidgets](https://github.com/ramnathv/htmlwidgets) framework.

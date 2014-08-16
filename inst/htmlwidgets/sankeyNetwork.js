@@ -10,21 +10,28 @@ HTMLWidgets.widget({
             .attr("width", width)
             .attr("height", height);
 
-        return d3.sankey();
+        return {
+          sankey: d3.sankey(),
+          x: null
+        }
     },
 
-    resize: function(el, width, height, sankey) {
+    resize: function(el, width, height, instance) {
 
         d3.select(el).select("svg")
             .attr("width", width)
             .attr("height", height);
 
-        sankey.size([width, height]).layout(32);
+        this.renderValue(el, instance.x, instance);
     },
 
-    renderValue: function(el, x, sankey) {
+    renderValue: function(el, x, instance) {
 
-        // alias options
+        // save the x in our instance (for calling back from resize)
+        instance.x = x;
+
+        // alias sankey and options
+        var sankey = instance.sankey;
         var options = x.options;
 
         // convert links and nodes data frames to d3 friendly format
