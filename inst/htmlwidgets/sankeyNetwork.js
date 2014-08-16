@@ -8,7 +8,7 @@ HTMLWidgets.widget({
 
         d3.select(el).append("svg")
             .attr("width", width)
-            .attr("height", height);
+            .attr("height", height + 6);
 
         return {
           sankey: d3.sankey(),
@@ -20,7 +20,7 @@ HTMLWidgets.widget({
 
         d3.select(el).select("svg")
             .attr("width", width)
-            .attr("height", height);
+            .attr("height", height + 6);
 
         this.renderValue(el, instance.x, instance);
     },

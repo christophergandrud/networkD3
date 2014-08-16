@@ -13,7 +13,7 @@ forceNetworkOutput(outputId, width = "100\%", height = "500px")
 
 renderForceNetwork(expr, env = parent.frame(), quoted = FALSE)
 
-sankeyNetworkOutput(outputId, width = "100\%", height = "500px")
+sankeyNetworkOutput(outputId, width = "100\%", height = "600px")
 
 renderSankeyNetwork(expr, env = parent.frame(), quoted = FALSE)
 

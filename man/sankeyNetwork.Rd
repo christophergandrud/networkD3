@@ -6,8 +6,8 @@
 D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more specifically for Sankey diagrams \url{http://bost.ocks.org/mike/sankey/}.
 }
 \usage{
-sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, height = 600,
-  width = 900, colourScale = "d3.scale.category20()", fontsize = 7,
+sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, height = NULL,
+  width = NULL, colourScale = "d3.scale.category20()", fontsize = 7,
   nodeWidth = 15, nodePadding = 10)
 }
 \arguments{
