@@ -30,9 +30,8 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 # sankeyNetwork
 
 ```{r}
-library(RCurl)
 URL <- "https://raw.githubusercontent.com/christophergandrud/d3Network/sankey/JSONdata/energy.json"
-Energy <- getURL(URL, ssl.verifypeer = FALSE)
+Energy <- RCurl::getURL(URL, ssl.verifypeer = FALSE)
 EngLinks <- JSONtoDF(jsonStr = Energy, array = "links")
 EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
 
