@@ -1,0 +1,121 @@
+//* Characterset */
+@charset "UTF-8";
+
+
+//******************************** SASS ***************************************/
+
+$body-background: #fff;
+$shadow: rgba(0, 0, 0, .06);
+
+$text-colour: #545454;
+$header-colour: #222;
+$link-colour: #0083e8;
+$link-hover-colour: #06c;
+$header-line-colour: #fec44f;
+
+$h2-fontsize: 30px;
+
+
+//*****************************************************************************/
+html {
+  background-color: $body-background;
+  background-image: linear-gradient(270deg,rgb(230,233,233) 0%,rgb(216,221,221) 100%);
+  background-image: -o-linear-gradient(270deg,rgb(230,233,233) 0%,rgb(216,221,221) 100%);
+  background-image: -moz-linear-gradient(270deg,rgb(230,233,233) 0%,rgb(216,221,221) 100%);
+  background-image: -webkit-linear-gradient(270deg,rgb(230,233,233) 0%,rgb(216,221,221) 100%);
+  background-image: -ms-linear-gradient(270deg,rgb(230,233,233) 0%,rgb(216,221,221) 100%);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0 auto;
+  padding-left: 10%;
+  padding-right: 10%;
+  max-width: 700px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5em;
+  color: $text-colour;
+  background-color: $body-background;
+  -webkit-box-shadow: 0 0 2px $shadow;
+  -moz-box-shadow: 0 0 2px $shadow;
+  box-shadow: 0 0 2px $shadow;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $header-colour;
+  font-weight: 600;
+  line-height: 1.3em;
+  padding-top: 5%;
+}
+
+h2 {
+  font-size: $h2-fontsize;
+  border-bottom: solid $header-line-colour;
+}
+
+a {
+  color: $link-colour;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: $link-hover-colour;
+  text-decoration: underline;
+}
+
+p {
+  margin: 10px;
+  font-size: 17px;
+  font-weight: 400;
+  text-align: justify;
+}
+
+b,
+strong {
+  font-weight: 600;
+}
+
+pre {
+    word-wrap: break-word;
+}
+
+#navlist li {
+  padding-right: 10%;
+  padding-left: 10%;
+  display: inline;
+  list-style-type: none;
+}
+
+.topbar {
+  float: top;
+  width: 90%;
+  font-size: 3em;
+  font-weight: bold;
+  padding-top: 10%;
+  line-height: 1.2em;
+}
+
+.topbarsub {
+  float: top;
+  width: 90%;
+  font-size: 2em;
+  padding-top: 20px;
+  padding-bottom: 7%;
+  padding-left: 5%;
+  line-height: 1.2em;
+}
+
+.main {
+  width: 70%;
+  padding-left: 20%;
+  padding-right: 10%;
+  padding-top: 5%;
+  font-size: 22px;
+}

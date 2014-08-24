@@ -1,0 +1,191 @@
+<html>
+
+<head>
+<style type="text/css">
+.knitr.inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+},
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0em 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.rimage.left {
+  text-align: left;
+}
+.rimage.right {
+  text-align: right;
+}
+.rimage.center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>networkD3</title>
+    <meta name="networkD3Vignette" content="networkD3: Tools for creating D3 JavaScript network graphs from R">
+    <LINK href="css/main.css" rel="stylesheet">
+    <LINK href="css/images.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+
+    <!----------------------------- Header ------------------------------>
+    <div class="rect1"></div>
+    <div class="topbar"><code>networkD3</code>:</div> <div class="topbarsub">Tools for creating D3 JavaScript network graphs from R</div>
+
+    <p class="pull-right">
+        <strong>Fork me on <a href="https://github.com/christophergandrud/networkD3"><i class="fa fa-github fa-lg"></i></a></strong>
+    </p>
+
+    <p>
+        v0.7
+    </p>
+
+    <p>
+        <a href="http://christophergandrud.blogspot.com/">Christopher Gandrud</a> and <a href="https://github.com/jjallaire">JJ Allaire</a>
+    </p>
+
+    <p>
+        23 August 2014
+    </p>
+
+    <!-- Banner image -->
+    <div class="rect1"></div>
+    <div class="circlel"></div>
+    <div class="circlel"></div>
+    <div class="circlel"></div>
+    <div class="circlel"></div>
+
+    <div class="circler"></div>
+    <div class="circler"></div>
+    <div class="circler"></div>
+    <div class="circler"></div>
+
+    <br><br><br><br><br>
+
+    <h2><i class="fa fa-thumb-tack"></i> About</h2>
+
+    <p>
+        This is a port of Christopher Gandrud's R package <a href="http://christophergandrud.github.io/d3Network/">d3Network</a> to the <a href="https://github.com/ramnathv/htmlwidgets">htmlwidgets</a> framework. The htmlwidgets framework greatly simplifies the package's syntax for exporting the graphs and improves integration with <a href="http://www.rstudio.com/">RStudio's</a> viewer pane.
+    </p>
+
+    <p>
+        It currently supports two types of network graphs:</p>
+        <ul>
+            <li>
+                Force directed networks with <a href="#simple">simpleNetwork</a> and <a href="#force"><code>forceNetwork</code></a>
+            </li>
+            <li>
+                Sankey diagrams with <a href="#sankey"><code>sankeyNetwork</code></a>
+            </li>
+        </ul>
+
+    <h2><i class="fa fa-download"></i> Install</h2>
+
+    <p>
+        To install and use you'll need to install this package and two of it's dependencies from GitHub:
+    </p>
+
+<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(devtools)</span>
+<span class="hl kwd">install_github</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">'rstudio/htmltools'</span><span class="hl std">,</span>
+                <span class="hl str">'ramnathv/htmlwidgets'</span><span class="hl std">,</span>
+                <span class="hl str">'christophergandrud/networkD3'</span><span class="hl std">))</span>
+</pre></div>
+</div></div>
+
+    <h2><i class="fa fa-code"></i> Ussage</h2>
+
+    <h3 id="simple"><code>simpleNetwork</code></h3>
+    <p>
+        For very basic force directed network graphics you can use <code>simpleNetwork</code>. For example:
+    </p>
+
+<div class="source"><pre class="knitr r"><span class="hl com"># Load packages</span>
+<span class="hl kwd">library</span><span class="hl std">(networkD3)</span>
+
+<span class="hl com"># Create fake data</span>
+<span class="hl std">src</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;A&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;A&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;A&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;A&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;B&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;B&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;C&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;C&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;D&quot;</span><span class="hl std">)</span>
+<span class="hl std">target</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;B&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;C&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;D&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;J&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;E&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;F&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;G&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;H&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;I&quot;</span><span class="hl std">)</span>
+<span class="hl std">networkData</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">data.frame</span><span class="hl std">(src, target)</span>
+
+<span class="hl com"># Plot</span>
+<span class="hl kwd">simpleNetwork</span><span class="hl std">(networkData)</span>
+</pre></div>
+<!--html_preserve--><div id="htmlwidget-5344" style="width:504px;height:504px;" class="simpleNetwork"></div>
+<script type="application/json" data-for="htmlwidget-5344">{ "links": {
+ "source": [ "A", "A", "A", "A", "B", "B", "C", "C", "D" ],
+"target": [ "B", "C", "D", "J", "E", "F", "G", "H", "I" ] 
+},"options": {
+ "linkDistance":     50,
+"charge":   -200,
+"fontSize":      7,
+"linkColour": "#666",
+"nodeColour": "#3182bd",
+"nodeClickColour": "#E34A33",
+"textColour": "#3182bd",
+"opacity":    0.6 
+} }</script><!--/html_preserve-->
+
+<!----------------------------- Footer ------------------------------>
+<footer>
+<hr>
+
+    <a href="http://nadrosia.tumblr.com/post/53520500877/made-in-berlin-badge-update"><img alt="BerlinBadge" src="http://media.tumblr.com/023c285c14ef01953d3b67ffe789004d/tumblr_inline_mor1uu2OOZ1qz4rgp.png" width = "100" align = "right"></a>
+
+    <p><a href="https://github.com/christophergandrud">Christopher Gandrud <i class="fa fa-github fa-lg"></i></a> <a href="https://twitter.com/ChrisGandrud"><i class="fa fa-twitter"></i></a></p>
+
+    <p><strong><code>networkD3</code></strong> is covered under the <a href="https://www.gnu.org/licenses/quick-guide-gplv3.html">GPL-3 license</a>.</p>
+
+    <p>This site is covered under a <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC By-NC-SA 4.0 License</a> and relies on <a href="http://getbootstrap.com/">Bootstrap</a>.</p>
+
+</footer>
+</body>
+<!----------------------------- Scripts ----------------------------->
+
+</html>
