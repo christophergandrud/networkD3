@@ -1,0 +1,169 @@
+---
+output:
+    html_document:
+        theme: null
+        highlight: kate
+        self_contained: false
+        includes:
+            in_header: header.html
+            after_body: footer.html
+---
+
+```{r include=FALSE}
+library(knitr)
+opts_chunk$set(fig.align='center')
+opts_chunk$set(dev='svg')
+opts_chunk$set(tidy=FALSE)
+opts_chunk$set(message=FALSE)
+```
+
+<!----------------------------- Header ------------------------------>
+<div class="rect1"></div>
+<div class="topbar"><code>networkD3</code>:</div> <div class="topbarsub">Tools for creating D3 JavaScript network graphs from R</div>
+
+<div class="rect1"></div>
+<p class="pull-right">
+    <strong>
+        Fork me on <a href="https://github.com/christophergandrud/networkD3"><i class="fa fa-github fa-lg"></i></a>
+    </strong>
+</p>
+
+v0.7
+
+[Christopher Gandrud](http://christophergandrud.blogspot.com/) and
+[JJ Allaire](https://github.com/jjallaire)
+
+25 August 2014
+
+
+<!-- Banner image -->
+<div class="rect1"></div>
+<div class="circlel"></div>
+<div class="circlel"></div>
+<div class="circlel"></div>
+<div class="circlel"></div>
+<div class="circlel"></div>
+
+<div class="circler"></div>
+<div class="circler"></div>
+<div class="circler"></div>
+<div class="circler"></div>
+<div class="circler"></div>
+
+<br><br><br><br><br>
+
+<h2><i class="fa fa-thumb-tack"></i> About</h2>
+
+This is a port of Christopher Gandrud's R package
+[d3Network](http://christophergandrud.github.io/d3Network/) for creating
+[D3](http://d3js.org/) network graphs to the
+[htmlwidgets](https://github.com/ramnathv/htmlwidgets) framework. The
+htmlwidgets framework greatly simplifies the package's syntax for exporting the
+graphs, improves integration with [RStudio's](http://www.rstudio.com/) viewer
+pane, and [RMarkdown](http://rmarkdown.rstudio.com/).
+
+It currently supports two types of network graphs:
+
+- *Force directed networks* with <a href="#simple"><code>simpleNetwork</code></a> and
+<a href="#force"><code>forceNetwork</code></a>
+
+- Sankey diagrams with <a href="#sankey"><code>sankeyNetwork</code></a>
+
+<h2><i class="fa fa-download"></i> Install</h2>
+
+To install and use the package you'll need to the package and two of it's
+dependencies from [GitHub](https://github.com/):
+
+```{r eval=FALSE}
+library(devtools)
+install_github(c('rstudio/htmltools',
+            'ramnathv/htmlwidgets',
+            'christophergandrud/networkD3'))
+```
+
+<h2><i class="fa fa-code"></i> Usage</h2>
+
+<h3 id="simple"><code>> </code>simpleNetwork</code></h3>
+
+For very basic
+[force directed network](http://en.wikipedia.org/wiki/Force-directed_graph_drawing)
+graphics you can use `simpleNetwork`. For example:
+
+```{r}
+# Load package
+library(networkD3)
+
+# Create fake data
+src <- c("A", "A", "A", "A",
+    "B", "B", "C", "C", "D")
+target <- c("B", "C", "D", "J",
+        "E", "F", "G", "H", "I")
+networkData <- data.frame(src, target)
+
+# Plot
+simpleNetwork(networkData)
+```
+
+<h3 id="force"><code>> forceNetwork</code></h3>
+
+Use `forceNetwork` to have more control over the appearance of the forced
+directed network and to plot more complicated networks. Here is an example:
+
+```{r}
+# Load data
+data(MisLinks)
+data(MisNodes)
+
+# Plot
+forceNetwork(Links = MisLinks, Nodes = MisNodes,
+        Source = "source", Target = "target",
+        Value = "value", NodeID = "name",
+        Group = "group", opacity = 0.8)
+```
+
+
+<h3 id="sankey"><code>> sankeyNetwork</code></h3>
+
+You can also create [Sankey diagrams](http://en.wikipedia.org/wiki/Sankey_diagram)
+with `sankeyNetwork`. Here is an example using downloaded JSON data:
+
+```{r}
+# Load energy projection data
+library(RCurl)
+URL <- "https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/energy.json"
+Energy <- getURL(URL, ssl.verifypeer = FALSE)
+
+# Convert to data frame
+EngLinks <- JSONtoDF(jsonStr = Energy,
+                array = "links")
+EngNodes <- JSONtoDF(jsonStr = Energy,
+                array = "nodes")
+
+# Plot
+sankeyNetwork(Links = EngLinks, Nodes = EngNodes,
+        Source = "source", Target = "target",
+        Value = "value", NodeID = "name",
+        width = 700, fontsize = 12, nodeWidth = 30)
+```
+
+
+<h2><i class="fa fa-floppy-o"></i> Output</h2>
+
+### Saving to an external stand alone file
+
+Use `saveNetwork` to save a network to a stand alone HTML file:
+
+```{r, eval=FALSE}
+library(magrittr)
+
+simpleNetwork(networkData) %>%
+saveNetwork(file = 'Net1.html')
+```
+
+### Including in an RMarkdown file
+
+It is simple to include a *networkD3* graphic in an
+[RMarkdown](http://rmarkdown.rstudio.com/) file. Simply place the code to create
+the graph in a code chunk the same way you would any other plot.  
+
+<br><br>

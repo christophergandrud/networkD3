@@ -79,9 +79,9 @@ a:focus {
 }
 
 p {
-  margin: 10px;
   font-size: 17px;
   font-weight: 400;
+  margin: 10px;
   text-align: justify;
 }
 
@@ -91,23 +91,25 @@ strong {
 }
 
 pre {
-    word-wrap: break-word;
+  border: solid 1px $header-line-colour;
+  padding-left: 5%;
+  word-wrap: break-word;
 }
 
 #navlist li {
-  padding-right: 10%;
-  padding-left: 10%;
   display: inline;
   list-style-type: none;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 .topbar {
   float: top;
-  width: 90%;
   font-size: 3em;
   font-weight: bold;
-  padding-top: 10%;
   line-height: 1.2em;
+  padding-top: 10%;
+  width: 90%;
 }
 
 .topbarsub {
