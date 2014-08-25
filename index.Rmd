@@ -32,7 +32,7 @@ v0.7
 
 <p class="pull-right">
     <strong>
-        Report issues <a href="https://github.com/christophergandrud/networkD3/issues"><i class="fa fa-exclamation-circle"></i></a>
+        Issues/suggestions <a href="https://github.com/christophergandrud/networkD3/issues"><i class="fa fa-exclamation-circle"></i></a>
     </strong>
 </p>
 
