@@ -33,3 +33,11 @@
   background: #d95f0e;
   float: right;
 }
+
+.circlel:hover {
+  opacity: 0.5;
+}
+
+.circler:hover {
+  opacity: 0.5;
+}
