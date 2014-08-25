@@ -192,7 +192,7 @@ You can also easily include **networkD3** graphs in
 
 In the *server.R* file create the
 graph by placing the function inside of `render*Network`, where the `*` is either
-`simple`, `force`, or `sankey` depending on the graph type. For example:
+`Simple`, `Force`, or `Sankey` depending on the graph type. For example:
 
 ```{r, eval=FALSE}
 output$force <- renderForceNetwork({
@@ -200,10 +200,11 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes,
             Source = "source", Target = "target",
             Value = "value", NodeID = "name",
             Group = "group", opacity = input$opacity)
-  })
+})
 ```
 
-In the *ui.R* file include `*NetworkOutput` (with `*` as before). The argument
+In the *ui.R* file include `*NetworkOutput` (with `*` as before, but starting
+with a lowercase letter). The argument
 placed in this function should be the element specified with `output`, e.g.:
 
 ```{r, eval=FALSE}
@@ -215,5 +216,8 @@ You can run a simple example with the following code:
 ```{r, eval=FALSE}
 shiny::runGitHub('christophergandrud/networkD3-shiny-example')
 ```
+
+Full source code for this example can be found
+[here](https://github.com/christophergandrud/networkD3-shiny-example).
 
 <br><br>
