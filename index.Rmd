@@ -64,10 +64,10 @@ pane, and [RMarkdown](http://rmarkdown.rstudio.com/).
 
 It currently supports two types of network graphs:
 
-- *Force directed networks* with <a href="#simple"><code>simpleNetwork</code></a> and
+- **Force directed networks** with <a href="#simple"><code>simpleNetwork</code></a> and
 <a href="#force"><code>forceNetwork</code></a>
 
-- Sankey diagrams with <a href="#sankey"><code>sankeyNetwork</code></a>
+- **Sankey diagrams** with <a href="#sankey"><code>sankeyNetwork</code></a>
 
 <h2><i class="fa fa-download"></i> Install</h2>
 
@@ -95,9 +95,9 @@ library(networkD3)
 
 # Create fake data
 src <- c("A", "A", "A", "A",
-    "B", "B", "C", "C", "D")
+        "B", "B", "C", "C", "D")
 target <- c("B", "C", "D", "J",
-        "E", "F", "G", "H", "I")
+            "E", "F", "G", "H", "I")
 networkData <- data.frame(src, target)
 
 # Plot
@@ -116,9 +116,9 @@ data(MisNodes)
 
 # Plot
 forceNetwork(Links = MisLinks, Nodes = MisNodes,
-        Source = "source", Target = "target",
-        Value = "value", NodeID = "name",
-        Group = "group", opacity = 0.8)
+            Source = "source", Target = "target",
+            Value = "value", NodeID = "name",
+            Group = "group", opacity = 0.8)
 ```
 
 
@@ -135,21 +135,21 @@ Energy <- getURL(URL, ssl.verifypeer = FALSE)
 
 # Convert to data frame
 EngLinks <- JSONtoDF(jsonStr = Energy,
-                array = "links")
+                    array = "links")
 EngNodes <- JSONtoDF(jsonStr = Energy,
-                array = "nodes")
+                    array = "nodes")
 
 # Plot
 sankeyNetwork(Links = EngLinks, Nodes = EngNodes,
-        Source = "source", Target = "target",
-        Value = "value", NodeID = "name",
-        width = 700, fontsize = 12, nodeWidth = 30)
+            Source = "source", Target = "target",
+            Value = "value", NodeID = "name",
+            width = 700, fontsize = 12, nodeWidth = 30)
 ```
 
 
 <h2><i class="fa fa-floppy-o"></i> Output</h2>
 
-### Saving to an external stand alone file
+### Saving to an external stand alone HTML file
 
 Use `saveNetwork` to save a network to a stand alone HTML file:
 
@@ -162,7 +162,7 @@ saveNetwork(file = 'Net1.html')
 
 ### Including in an RMarkdown file
 
-It is simple to include a *networkD3* graphic in an
+It is simple to include a **networkD3** graphic in an
 [RMarkdown](http://rmarkdown.rstudio.com/) file. Simply place the code to create
 the graph in a code chunk the same way you would any other plot.  
 
