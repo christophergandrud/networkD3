@@ -28,14 +28,14 @@ html {
 }
 
 body {
+  color: $text-colour;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
   margin: 0 auto;
   padding-left: 10%;
   padding-right: 10%;
   max-width: 700px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 16px;
   line-height: 1.5em;
-  color: $text-colour;
   background-color: $body-background;
   -webkit-box-shadow: 0 0 2px $shadow;
   -moz-box-shadow: 0 0 2px $shadow;
@@ -55,8 +55,16 @@ h6 {
 }
 
 h2 {
-  font-size: $h2-fontsize;
   border-bottom: solid $header-line-colour;
+  font-size: $h2-fontsize;
+}
+
+h3 {
+  border-bottom: solid 1px $text-colour;
+}
+
+hr {
+  border-bottom: solid 2px $text-colour;
 }
 
 a {
