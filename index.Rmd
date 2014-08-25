@@ -52,6 +52,8 @@ v0.7
 
 <br><br><br><br><br>
 
+<!------------- About --------------------------------------------------------->
+
 <h2><i class="fa fa-thumb-tack"></i> About</h2>
 
 This is a port of Christopher Gandrud's R package
@@ -59,8 +61,10 @@ This is a port of Christopher Gandrud's R package
 [D3](http://d3js.org/) network graphs to the
 [htmlwidgets](https://github.com/ramnathv/htmlwidgets) framework. The
 htmlwidgets framework greatly simplifies the package's syntax for exporting the
-graphs, improves integration with [RStudio's](http://www.rstudio.com/) viewer
-pane, and [RMarkdown](http://rmarkdown.rstudio.com/).
+graphs, improves integration with [RStudio's](http://www.rstudio.com/) Viewer
+Pane, [RMarkdown](http://rmarkdown.rstudio.com/), and
+[Shiny web apps](http://shiny.rstudio.com/).
+See <a href="#networkD3output">below</a> for examples.
 
 It currently supports two types of network graphs:
 
@@ -69,9 +73,18 @@ It currently supports two types of network graphs:
 
 - **Sankey diagrams** with <a href="#sankey"><code>sankeyNetwork</code></a>
 
+<!------------- Install ------------------------------------------------------->
+
 <h2><i class="fa fa-download"></i> Install</h2>
 
-To install and use the package you'll need to the package and two of it's
+**networkD3** works very well with the most recent
+[RStudio development version](http://www.rstudio.org/download/daily/desktop/).
+When you use this version of RStudio, graphs will appear in the Viewer Pane. Not
+only does this give you a handy
+way of seeing and tweaking your graphs, but you can also export the graphs to
+the clipboard or a PNG/JPEG/TIFF/etc. file.
+
+To install and use the package you'll need to download the package and its two
 dependencies from [GitHub](https://github.com/):
 
 ```{r eval=FALSE}
@@ -81,7 +94,12 @@ install_github(c('rstudio/htmltools',
             'christophergandrud/networkD3'))
 ```
 
+<!------------- Usage --------------------------------------------------------->
+
 <h2><i class="fa fa-code"></i> Usage</h2>
+
+For a full set of examples for each of the functions see
+[this pages](https://github.com/christophergandrud/networkD3/blob/master/inst/examples/examples.R).
 
 <h3 id="simple"><code>> </code>simpleNetwork</code></h3>
 
@@ -147,7 +165,7 @@ sankeyNetwork(Links = EngLinks, Nodes = EngNodes,
 ```
 
 
-<h2><i class="fa fa-floppy-o"></i> Output</h2>
+<h2 id="networkD3output"><i class="fa fa-floppy-o"></i> Output</h2>
 
 ### Saving to an external stand alone HTML file
 
@@ -164,6 +182,38 @@ saveNetwork(file = 'Net1.html')
 
 It is simple to include a **networkD3** graphic in an
 [RMarkdown](http://rmarkdown.rstudio.com/) file. Simply place the code to create
-the graph in a code chunk the same way you would any other plot.  
+the graph in a code chunk the same way you would any other plot. Checkout this
+[simple example](https://github.com/christophergandrud/networkD3/blob/master/inst/examples/examples.Rmd).
+
+### Including in Shiny web apps
+
+You can also easily include **networkD3** graphs in
+[Shiny web apps](http://shiny.rstudio.com/).
+
+In the *server.R* file create the
+graph by placing the function inside of `render*Network`, where the `*` is either
+`simple`, `force`, or `sankey` depending on the graph type. For example:
+
+```{r, eval=FALSE}
+output$force <- renderForceNetwork({
+forceNetwork(Links = MisLinks, Nodes = MisNodes,
+            Source = "source", Target = "target",
+            Value = "value", NodeID = "name",
+            Group = "group", opacity = input$opacity)
+  })
+```
+
+In the *ui.R* file include `*NetworkOutput` (with `*` as before). The argument
+placed in this function should be the element specified with `output`, e.g.:
+
+```{r, eval=FALSE}
+forceNetworkOutput("force")
+```
+
+You can run a simple example with the following code:
+
+```{r, eval=FALSE}
+shiny::runGitHub('christophergandrud/networkD3-shiny-example')
+```
 
 <br><br>
