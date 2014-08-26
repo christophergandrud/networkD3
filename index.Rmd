@@ -28,7 +28,7 @@ opts_chunk$set(message=FALSE)
     </strong>
 </p>
 
-v0.7
+v0.1
 
 <p class="pull-right">
     <strong>
