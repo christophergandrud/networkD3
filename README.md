@@ -8,11 +8,12 @@ This is a port of Christopher Gandrud's
 
 ## Installation
 
-To install and use you'll need to install this package and two of it's dependencies from GitHub:
+To install and use you'll need to install this package and two of it's
+dependencies from GitHub:
 
 ```S
 library(devtools)
-install_github(c('rstudio/htmltools', 
+install_github(c('rstudio/htmltools',
               'ramnathv/htmlwidgets',
               'christophergandrud/networkD3'))
 ```

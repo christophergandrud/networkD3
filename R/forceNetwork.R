@@ -39,8 +39,6 @@
 #' lines to be. Multiple formats supported (e.g. hexadecimal).
 #' @param opacity numeric value of the proportion opaque you would like the
 #' graph elements to be.
-#' @param zoom logical, whether or not to enable the ability to use the mouse
-#' scroll-wheel to zoom in and out of the graph.
 #'
 #' @examples
 #' \dontrun{
@@ -77,7 +75,7 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
     Group, height = NULL, width = NULL, colourScale = "d3.scale.category20()",
     fontsize = 7, linkDistance = 50,
     linkWidth = "function(d) { return Math.sqrt(d.value); }", charge = -120,
-    linkColour = "#666",opacity = 0.6, zoom = FALSE)
+    linkColour = "#666",opacity = 0.6)
 {
     # Subset data frames for network graph
     if (class(Links) != "data.frame"){
@@ -108,8 +106,7 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
         linkWidth = linkWidth,
         charge = charge,
         linkColour = linkColour,
-        opacity = opacity,
-        zoom = zoom
+        opacity = opacity
     )
 
     # create widget
