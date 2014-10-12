@@ -22,18 +22,19 @@ opts_chunk$set(message=FALSE)
 <div class="topbar"><code>networkD3</code>:</div> <div class="topbarsub">Tools for creating D3 JavaScript network graphs from R</div>
 
 <div class="rect1"></div>
+
 <p class="pull-right">
-    <strong>
-        Fork me on <a href="https://github.com/christophergandrud/networkD3"><i class="fa fa-github fa-lg"></i></a>
-    </strong>
+<strong>
+Fork me on <a href="https://github.com/christophergandrud/networkD3"><i class="fa fa-github fa-lg"></i></a>
+</strong>
 </p>
 
 v0.1
 
 <p class="pull-right">
-    <strong>
-        Issues/suggestions <a href="https://github.com/christophergandrud/networkD3/issues"><i class="fa fa-exclamation-circle"></i></a>
-    </strong>
+<strong>
+Issues/suggestions <a href="https://github.com/christophergandrud/networkD3/issues"><i class="fa fa-exclamation-circle"></i></a>
+</strong>
 </p>
 
 [Christopher Gandrud](http://christophergandrud.blogspot.com/) &
@@ -208,9 +209,10 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes,
 })
 ```
 
-In the *ui.R* file include `*NetworkOutput` (with `*` as before, but starting
-with a lowercase letter). The argument
-placed in this function should be the element specified with `output`, e.g.:
+In the `shinyUI` part of your *app.R* file (for [single-file Shiny apps](http://shiny.rstudio.com/articles/single-file.html))
+include `*NetworkOutput` (with `*` as before, but starting with a lowercase
+letter). The argument placed in this function should be the element specified
+with `output`, e.g.:
 
 ```{r, eval=FALSE}
 forceNetworkOutput("force")
