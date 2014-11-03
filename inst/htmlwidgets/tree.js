@@ -15,11 +15,20 @@ HTMLWidgets.widget({
 
   },
 
+  resize: function(el, width, height, tree) {
+
+     d3.select(el).select("svg")
+      .attr("width", width)
+      .attr("height", height);
+  },
+
   renderValue: function(el, x, tree) {
     // x is a list with two elements, options and root; root must already be a
     // JSON array with the d3Tree root data
+    var width = parseInt(el.style.width);
+    var height = parseInt(el.style.height);
 
-  tree.size([x.options.height, x.options.width - x.options.margin]);
+    tree.size([height, width - x.options.margin]);
 
     // select the svg group element and remove existing children
     var s = d3.select(el).selectAll("svg")

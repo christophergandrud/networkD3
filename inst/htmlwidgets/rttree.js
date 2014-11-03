@@ -1,15 +1,3 @@
-// Called by widget bindings to register a new type of widget. The definition
-// object can contain the following properties:
-// - name (required) - A string indicating the binding name, which will be
-//   used by default as the CSS classname to look for.
-// - initialize (optional) - A function(el) that will be called once per
-//   widget element; if a value is returned, it will be passed as the third
-//   value to renderValue.
-// - renderValue (required) - A function(el, data, initValue) that will be
-//   called with data. Static contexts will cause this to be called once per
-//   element; Shiny apps will cause this to be called multiple times per
-//   element, as the data changes.
-
 HTMLWidgets.widget({
 
   name: "rttree",
@@ -17,8 +5,7 @@ HTMLWidgets.widget({
 
   initialize: function(el, width, height) {
 
-     diameter = Math.min(width,height);
-
+     var diameter = Math.min(parseInt(width),parseInt(height));
      d3.select(el).append("svg")
       .attr("width", diameter)
       .attr("height", diameter)
@@ -29,10 +16,18 @@ HTMLWidgets.widget({
 
   },
 
+  resize: function(el, width, height, tree) {
+
+     d3.select(el).select("svg")
+      .attr("width", width)
+      .attr("height", height);
+  },
+
   renderValue: function(el, x, tree) {
     // x is a list with two elements, options and root; root must already be a
     // JSON array with the d3Tree root data
 
+    var diameter = Math.min(parseInt(el.style.width),parseInt(el.style.height));
     tree.size([360, diameter/2 - x.options.margin ])
         .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
 

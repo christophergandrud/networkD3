@@ -3,8 +3,10 @@
 #'
 #' @param List a hierarchical list object with a root node and children.
 
-#' @param height numeric height for the network graph's frame area in pixels.
-#' @param width numeric width for the network graph's frame area in pixels.
+#' @param height height for the network graph's frame area in pixels (if
+#'   \code{NULL} then height is automatically determined based on context)
+#' @param width numeric width for the network graph's frame area in pixels (if
+#'   \code{NULL} then width is automatically determined based on context)
 #' @param fontSize numeric font size in pixels for the node text labels.
 #' @param linkColour character string specifying the colour you want the link 
 #' lines to be. Multiple formats supported (e.g. hexadecimal).
@@ -62,7 +64,7 @@
 #' ))
 #' 
 #' # Create tree
-#' d3Tree(List = CanadaPC, fontSize = 10, width=600, height=600)
+#' d3Tree(List = CanadaPC, fontSize = 10)
 #' 
 #' ## Create tree from JSON formatted data
 #' ## Download JSON data
@@ -87,8 +89,8 @@
 #' 
 d3Tree <- function(
   List,
-  height = 800,
-  width = 800,
+  height = NULL,
+  width = NULL,
   fontSize = 10,
   linkColour = "#ccc",
   nodeColour = "#fff",
