@@ -1,4 +1,4 @@
-#' Creates a D3 JavaScript Reingold-Tilford Tree network graph.
+#' Create Reingold-Tilford Tree network graphs and linear dendrograms.
 #'
 #'
 #' @param List a hierarchical list object with a root node and children.
@@ -17,9 +17,17 @@
 #' @param opacity numeric value of the proportion opaque you would like the 
 #' graph elements to be.
 #' @param margin integer value of the radial plot margin
+#' @param type either "dendrogram" for a traditional cluster dendrogram
+#' or "radial" for a radial Reingold-Tilford network graph. Abbreviation is
+#' allowed (argument matching is used).
 #'
 #' 
 #' @examples
+#' ## dontrun
+#' ## Create a dendrogram from an R hclust object
+#'  hc <- hclust(dist(USArrests), "ave")
+#'  d3Tree(as.d3Tree(hc), type="dendrogram")
+#'
 #' ## Create tree from R list
 #' # Create hierarchical list
 #' CanadaPC <- list(name = "Canada", children = list(list(name = "Newfoundland",
@@ -57,7 +65,6 @@
 #' d3Tree(List = CanadaPC, fontSize = 10, width=600, height=600)
 #' 
 #' ## Create tree from JSON formatted data
-#' ## dontrun
 #' ## Download JSON data
 #' # library(RCurl)
 #' # URL <- "https://raw.github.com/christophergandrud/d3Network/master/JSONdata/flare.json"
@@ -88,12 +95,14 @@ d3Tree <- function(
   nodeStroke = "steelblue",
   textColour = "#111",
   opacity = 0.9,
-  margin = 120)
+  margin = 120,
+  type = c("radial","dendrogram"))
 {
     # validate input
     if (!is.list(List))
       stop("List must be a list object.")
     root <- toJSON(List)
+    type <- match.arg(type)
 
     # create options
     options = list(
@@ -105,18 +114,29 @@ d3Tree <- function(
         nodeStroke = nodeStroke,
         textColour = textColour,
         margin = margin,
-        opacity = opacity
+        opacity = opacity,
+        type = type
     )
 
     # create widget
-    htmlwidgets::createWidget(
+    if(type=="radial")
+    {
+      htmlwidgets::createWidget(
         name = "rttree",
         x = list(root = root, options = options),
         width = width,
         height = height,
         htmlwidgets::sizingPolicy(padding = 0, browser.fill = TRUE),
-        package = "networkD3"
-    )
+        package = "networkD3")
+    } else {
+      htmlwidgets::createWidget(
+        name = "tree",
+        x = list(root = root, options = options),
+        width = width,
+        height = height,
+        htmlwidgets::sizingPolicy(padding = 0, browser.fill = TRUE),
+        package = "networkD3")
+    }
 
 }
 

@@ -15,10 +15,6 @@ forceNetworkOutput(outputId, width = "100\%", height = "500px")
 
 renderForceNetwork(expr, env = parent.frame(), quoted = FALSE)
 
-d3TreeOutput(outputId, width = "100\%", height = "500px")
-
-renderD3Tree(expr, env = parent.frame(), quoted = FALSE)
-
 sankeyNetworkOutput(outputId, width = "100\%", height = "500px")
 
 renderSankeyNetwork(expr, env = parent.frame(), quoted = FALSE)
@@ -26,6 +22,10 @@ renderSankeyNetwork(expr, env = parent.frame(), quoted = FALSE)
 simpleNetworkOutput(outputId, width = "100\%", height = "500px")
 
 renderSimpleNetwork(expr, env = parent.frame(), quoted = FALSE)
+
+d3TreeOutput(outputId, width = "100\%", height = "500px")
+
+renderD3Tree(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
 \item{outputId}{output variable to read from}
