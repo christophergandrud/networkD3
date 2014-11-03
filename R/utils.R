@@ -76,3 +76,46 @@ toJSONarray <- function(dtf){
 read_file <- function(doc, ...){
   paste(readLines(doc, ...), collapse = '\n')
 }
+
+
+#' Convert an R hclust or dendrogram object into a d3Tree list.
+#' 
+#' \code{as.d3Tree} converts an R hclust or dendrogram object into a list suitable
+#' for use by the \code{d3Tree} function.
+#'
+#' @param d An object of R class \code{hclust} or \code{dendrogram}.
+#' @param root An optional name for the root node. If missing, use the first argument
+#' variable name.
+#'
+#' @details \code{as.d3Tree} coverts R objects of class \code{hclust} or
+#' \code{dendrogram} into a list suitable for use with the \code{d3Tree} function.
+#'
+#' @examples
+#' # Create a hierarchical cluster object and display with d3Tree
+#' ## dontrun
+#' hc <- hclust(dist(USArrests), "ave")
+#' d3Tree(as.d3Tree(hc))
+#' 
+#' @export
+
+as.d3Tree <- function(d, root)
+{
+  if(missing(root)) root <- as.character(match.call()[[2]])
+  if("hclust" %in% class(d)) d <- as.dendrogram(d)
+  if(!("dendrogram" %in% class(d)))
+    stop("d must be a object of class hclust or dendrogram")
+  ul <- function(x, level=1)
+  {
+    if(is.list(x))
+    {
+      return(lapply(x, function(y)
+                       {
+                         name <- ""
+                         if(!is.list(y)) name <- attr(y,"label")
+                         list(name=name, children=ul(y,level+1))
+                       }))
+    }
+    list(name=attr(x,"label"))
+  }
+  list(name=root,children=ul(d))
+}
