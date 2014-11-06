@@ -1,5 +1,4 @@
-
-
+library(shiny)
 library(networkD3)
 
 data(MisLinks)
@@ -29,6 +28,13 @@ shinyServer(function(input, output) {
     sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
                   Target = "target", Value = "value", NodeID = "name",
                   fontsize = 12, nodeWidth = 30)
+  })
+
+  output$rt <- renderTreeNetwork({
+    library(RCurl)
+    Flare <- getURL("https://gist.githubusercontent.com/mbostock/4063550/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json")
+    Flare <- rjson::fromJSON(Flare)
+    treeNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0)
   })
   
 })

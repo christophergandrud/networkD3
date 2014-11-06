@@ -78,27 +78,27 @@ read_file <- function(doc, ...){
 }
 
 
-#' Convert an R hclust or dendrogram object into a d3Tree list.
+#' Convert an R hclust or dendrogram object into a treeNetwork list.
 #' 
-#' \code{as.d3Tree} converts an R hclust or dendrogram object into a list suitable
-#' for use by the \code{d3Tree} function.
+#' \code{as.treeNetwork} converts an R hclust or dendrogram object into a list suitable
+#' for use by the \code{treeNetwork} function.
 #'
 #' @param d An object of R class \code{hclust} or \code{dendrogram}.
 #' @param root An optional name for the root node. If missing, use the first argument
 #' variable name.
 #'
-#' @details \code{as.d3Tree} coverts R objects of class \code{hclust} or
-#' \code{dendrogram} into a list suitable for use with the \code{d3Tree} function.
+#' @details \code{as.treeNetwork} coverts R objects of class \code{hclust} or
+#' \code{dendrogram} into a list suitable for use with the \code{treeNetwork} function.
 #'
 #' @examples
-#' # Create a hierarchical cluster object and display with d3Tree
+#' # Create a hierarchical cluster object and display with treeNetwork
 #' ## dontrun
 #' hc <- hclust(dist(USArrests), "ave")
-#' d3Tree(as.d3Tree(hc))
+#' treeNetwork(as.treeNetwork(hc))
 #' 
 #' @export
 
-as.d3Tree <- function(d, root)
+as.treeNetwork <- function(d, root)
 {
   if(missing(root)) root <- as.character(match.call()[[2]])
   if("hclust" %in% class(d)) d <- as.dendrogram(d)

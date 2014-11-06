@@ -5,44 +5,45 @@ HTMLWidgets.widget({
 
   initialize: function(el, width, height) {
 
-     var diameter = Math.min(parseInt(width),parseInt(height));
-     d3.select(el).append("svg")
-      .attr("width", diameter)
-      .attr("height", diameter)
+    var diameter = Math.min(parseInt(width),parseInt(height));
+    d3.select(el).append("svg")
+      .attr("width", width)
+      .attr("height", height)
       .append("g")
-      .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
-
+      .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")"
+                         + " scale("+diameter/800+","+diameter/800+")");
     return d3.layout.tree();
 
   },
 
   resize: function(el, width, height, tree) {
+    var diameter = Math.min(parseInt(width),parseInt(height));
+    var s = d3.select(el).selectAll("svg");
+    s.attr("width", width).attr("height", height);
+    tree.size([360, diameter/2 - parseInt(s.attr("margin"))]);
+    var svg = d3.select(el).selectAll("svg").select("g");
+    svg.attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")"
+                         + " scale("+diameter/800+","+diameter/800+")");
 
-     d3.select(el).select("svg")
-      .attr("width", width)
-      .attr("height", height);
   },
 
   renderValue: function(el, x, tree) {
     // x is a list with two elements, options and root; root must already be a
     // JSON array with the d3Tree root data
 
-    var diameter = Math.min(parseInt(el.style.width),parseInt(el.style.height));
-    tree.size([360, diameter/2 - x.options.margin ])
+    var s = d3.select(el).selectAll("svg");
+    var diameter = Math.min(parseInt(s.attr("width")),parseInt(s.attr("height")));
+    s.attr("margin", x.options.margin);
+    tree.size([360, diameter/2 - parseInt(s.attr("margin"))])
         .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
 
     // select the svg group element and remove existing children
-    var s = d3.select(el).selectAll("svg")
-               .attr("pointer-events", "all")
-               .call(d3.behavior.zoom().on("zoom", redraw));
+    s.attr("pointer-events", "all").selectAll("*").remove();
+    s.append("g")
+     .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")"
+                         + " scale("+diameter/800+","+diameter/800+")");
 
     var svg = d3.select(el).selectAll("g");
-    svg.selectAll("*").remove();
-
-    function redraw() {
-        svg.attr("transform", "translate(" + d3.event.translate + ")"
-                 + " scale(" + d3.event.scale + ")");
-    }
 
     var root = JSON.parse(x.root);
     var nodes = tree.nodes(root),
