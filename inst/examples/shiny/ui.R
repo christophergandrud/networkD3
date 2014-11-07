@@ -1,4 +1,4 @@
-
+library(shiny)
 library(networkD3)
 
 shinyUI(fluidPage(
@@ -13,7 +13,8 @@ shinyUI(fluidPage(
       tabsetPanel(
         tabPanel("Simple Network", simpleNetworkOutput("simple")),
         tabPanel("Force Network", forceNetworkOutput("force")),
-        tabPanel("Sankey Network", sankeyNetworkOutput("sankey"))
+        tabPanel("Sankey Network", sankeyNetworkOutput("sankey")),
+        tabPanel("Reingold-Tilford Tree", treeNetworkOutput("rt"))
       )
     )
   )
