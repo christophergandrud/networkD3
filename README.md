@@ -2,8 +2,6 @@
 
 Version 0.1 
 
-[![Build Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://travis-ci.org/christophergandrud/networkD3)
-
 This is a port of Christopher Gandrud's
 [d3Network](http://christophergandrud.github.io/d3Network/) package to the
 [htmlwidgets](https://github.com/ramnathv/htmlwidgets) framework.
