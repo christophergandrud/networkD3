@@ -6,6 +6,7 @@ This is a port of Christopher Gandrud's
 [d3Network](http://christophergandrud.github.io/d3Network/) package to the
 [htmlwidgets](https://github.com/ramnathv/htmlwidgets) framework.
 
+This README includes information on set up and a number of basic examples.
 For more information see the package's [main page](http://christophergandrud.github.io/networkD3/).
 
 ## Installation
