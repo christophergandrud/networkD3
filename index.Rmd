@@ -83,21 +83,17 @@ It currently supports two types of network graphs:
 
 <h2><i class="fa fa-download"></i> Install</h2>
 
-**networkD3** works very well with the most recent
-[RStudio development version](http://www.rstudio.org/download/daily/desktop/).
+**networkD3** works very well with the most recent version of
+[RStudio](http://www.rstudio.com/rstudio) (v0.98.1091).
 When you use this version of RStudio, graphs will appear in the Viewer Pane. Not
 only does this give you a handy
 way of seeing and tweaking your graphs, but you can also export the graphs to
 the clipboard or a PNG/JPEG/TIFF/etc. file.
 
-To install and use the package you'll need to download the package and its two
-dependencies from [GitHub](https://github.com/):
+You can install **networkD3** from GitHub as follows:
 
 ```{r eval=FALSE}
-library(devtools)
-install_github(c('rstudio/htmltools',
-            'ramnathv/htmlwidgets',
-            'christophergandrud/networkD3'))
+devtools::install_github('christophergandrud/networkD3')
 ```
 
 <!------------- Usage --------------------------------------------------------->
