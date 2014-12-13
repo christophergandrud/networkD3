@@ -11,14 +11,10 @@ For more information see the package's [main page](http://christophergandrud.git
 
 ## Installation
 
-To install and use you'll need to install this package and two of it's
-dependencies from GitHub:
+You can install **networkD3** from GitHub as follows:
 
 ```S
-library(devtools)
-install_github(c('rstudio/htmltools',
-              'ramnathv/htmlwidgets',
-              'christophergandrud/networkD3'))
+devtools::install_github('christophergandrud/networkD3')
 ```
 
 ## Usage
