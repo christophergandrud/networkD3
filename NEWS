@@ -1,5 +1,9 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.1.1
+
+- Upgrade to d3.js version 3.5.2.
+
 ## Version 0.1
 
 - `sankeyNetwork` added.

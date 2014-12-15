@@ -6,31 +6,34 @@
 #' @param width numeric width for the network graph's frame area in pixels (if
 #'   \code{NULL} then width is automatically determined based on context)
 #' @param fontSize numeric font size in pixels for the node text labels.
-#' @param linkColour character string specifying the colour you want the link 
+#' @param linkColour character string specifying the colour you want the link
 #' lines to be. Multiple formats supported (e.g. hexadecimal).
-#' @param nodeColour character string specifying the colour you want the node 
+#' @param nodeColour character string specifying the colour you want the node
 #' circles to be. Multiple formats supported (e.g. hexadecimal).
-#' @param nodeStroke character string specifying the colour you want the node 
+#' @param nodeStroke character string specifying the colour you want the node
 #' perimeter to be. Multiple formats supported (e.g. hexadecimal).
-#' @param textColour character string specifying the colour you want the text to 
+#' @param textColour character string specifying the colour you want the text to
 #' be before they are clicked. Multiple formats supported (e.g. hexadecimal).
-#' @param opacity numeric value of the proportion opaque you would like the 
+#' @param opacity numeric value of the proportion opaque you would like the
 #' graph elements to be.
 #' @param margin integer value of the plot margin. Set the margin
 #' appropriately to accomodate long text labels.
 #'
-#' 
+#'
 #' @examples
-#' ## dontrun
+#' \dontrun{
 #' ## Create tree from JSON formatted data
 #' ## Download JSON data
 #' library(RCurl)
-#' Flare <- getURL("https://gist.githubusercontent.com/mbostock/4063550/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json")
+#' Flare <-
+#'  getURL("http://bit.ly/1uNNAbu")
+#'
 #' ## Convert to list format
 #' Flare <- rjson::fromJSON(Flare)
+#'
 #' ## Recreate Bostock example from http://bl.ocks.org/mbostock/4063550
 #' treeNetwork(List = Flare, fontSize = 10, opacity = 0.9)
-#' 
+#'
 #' ## Create a tree dendrogram from an R hclust object
 #' hc <- hclust(dist(USArrests), "ave")
 #' treeNetwork(as.treeNetwork(hc))
@@ -47,8 +50,8 @@
 #'                list(name = "Quebec",
 #'                     children = list(list(name = "Montreal"),
 #'                                     list(name = "Quebec City"))),
-#'                list(name = "Ontario", 
-#'                     children = list(list(name = "Toronto"), 
+#'                list(name = "Ontario",
+#'                     children = list(list(name = "Toronto"),
 #'                                     list(name = "Ottawa"))),
 #'                list(name = "Manitoba",
 #'                     children = list(list(name = "Winnipeg"))),
@@ -66,29 +69,30 @@
 #'                list(name = "Yukon",
 #'                     children = list(list(name = "Whitehorse")))
 #' ))
-#' 
+#'
 #' # Visualize the tree
 #' treeNetwork(List = CanadaPC, fontSize = 10)
-#' 
-#' @source Reingold. E. M., and Tilford, J. S. (1981). Tidier Drawings of Trees. 
+#' }
+#'
+#' @source Reingold. E. M., and Tilford, J. S. (1981). Tidier Drawings of Trees.
 #' IEEE Transactions on Software Engineering, SE-7(2), 223-228.
-#' 
+#'
 #' Mike Bostock: \url{http://bl.ocks.org/mbostock/4063550}.
-#' 
+#'
 #' @importFrom rjson toJSON
 #' @export
-#' 
+#'
 treeNetwork <- function(
-  List,
-  height = NULL,
-  width = NULL,
-  fontSize = 10,
-  linkColour = "#ccc",
-  nodeColour = "#fff",
-  nodeStroke = "steelblue",
-  textColour = "#111",
-  opacity = 0.9,
-  margin = 0)
+                          List,
+                          height = NULL,
+                          width = NULL,
+                          fontSize = 10,
+                          linkColour = "#ccc",
+                          nodeColour = "#fff",
+                          nodeStroke = "steelblue",
+                          textColour = "#111",
+                          opacity = 0.9,
+                          margin = 0)
 {
     # validate input
     if (!is.list(List))
@@ -138,7 +142,7 @@ renderTreeNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
 }
 
 #' Convert an R hclust or dendrogram object into a treeNetwork list.
-#' 
+#'
 #' \code{as.treeNetwork} converts an R hclust or dendrogram object into a list suitable
 #' for use by the \code{treeNetwork} function.
 #'
@@ -154,7 +158,7 @@ renderTreeNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' ## dontrun
 #' hc <- hclust(dist(USArrests), "ave")
 #' treeNetwork(as.treeNetwork(hc))
-#' 
+#'
 #' @export
 
 as.treeNetwork <- function(d, root)
@@ -178,5 +182,3 @@ as.treeNetwork <- function(d, root)
   }
   list(name=root,children=ul(d))
 }
-
-
