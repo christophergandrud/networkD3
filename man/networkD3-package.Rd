@@ -4,9 +4,8 @@
 \name{networkD3-package}
 \alias{networkD3}
 \alias{networkD3-package}
-\title{Tools for creating D3 network graphs from R}
+\title{Tools for Creating D3 Network Graphs from R}
 \description{
-This packages is intended to make it easy to create D3 JavaScript force
-network and Sankey graphs from R using data frames.
+Creates D3 JavaScript network, tree, dendrogram, and Sankey graphs from R.
 }
 

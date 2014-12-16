@@ -2,6 +2,9 @@
 
 ## Version 0.1.1
 
+- `treeNetwork` added allowing the user to create tree networks. Thanks to
+B.W. Lewis.
+
 - Upgrade to d3.js version 3.5.2.
 
 ## Version 0.1

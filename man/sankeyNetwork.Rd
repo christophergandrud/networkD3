@@ -4,7 +4,8 @@
 \alias{sankeyNetwork}
 \title{Create a D3 JavaScript Sankey diagram}
 \source{
-D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more specifically for Sankey diagrams \url{http://bost.ocks.org/mike/sankey/}.
+D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
+specifically for Sankey diagrams \url{http://bost.ocks.org/mike/sankey/}.
 }
 \usage{
 sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, height = NULL,

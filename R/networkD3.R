@@ -1,8 +1,7 @@
 
-#' Tools for creating D3 network graphs from R
+#' Tools for Creating D3 Network Graphs from R
 #'
-#' This packages is intended to make it easy to create D3 JavaScript force
-#' network and Sankey graphs from R using data frames.
+#' Creates D3 JavaScript network, tree, dendrogram, and Sankey graphs from R.
 #'
 #' @name networkD3-package
 #' @aliases networkD3

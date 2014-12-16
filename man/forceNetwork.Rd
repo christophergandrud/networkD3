@@ -75,7 +75,6 @@ graph elements to be.}
 Create a D3 JavaScript force directed network graph.
 }
 \examples{
-\dontrun{
 #### Tabular data example.
 # Load data
 data(MisLinks)
@@ -86,6 +85,7 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4)
 
+\dontrun{
 #### JSON Data Example
 # Load data JSON formated data into two R data frames
 library(RCurl)

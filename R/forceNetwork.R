@@ -41,7 +41,6 @@
 #' graph elements to be.
 #'
 #' @examples
-#' \dontrun{
 #' #### Tabular data example.
 #' # Load data
 #' data(MisLinks)
@@ -52,6 +51,7 @@
 #'              Target = "target", Value = "value", NodeID = "name",
 #'              Group = "group", opacity = 0.4)
 #'
+#' \dontrun{
 #' #### JSON Data Example
 #' # Load data JSON formated data into two R data frames
 #' library(RCurl)
