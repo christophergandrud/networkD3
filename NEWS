@@ -1,5 +1,9 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.1.2
+
+- Minor internal correction to d3.js version number. 
+
 ## Version 0.1.1
 
 - `treeNetwork` added allowing the user to create tree networks. Thanks to
