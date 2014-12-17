@@ -29,7 +29,7 @@ Fork me on <a href="https://github.com/christophergandrud/networkD3"><i class="f
 </strong>
 </p>
 
-v0.1
+v`r packageVersion('networkD3')`
 
 <p class="pull-right">
 <strong>
@@ -72,12 +72,14 @@ Pane, [RMarkdown](http://rmarkdown.rstudio.com/), and
 [Shiny web apps](http://shiny.rstudio.com/).
 See <a href="#networkD3output">below</a> for examples.
 
-It currently supports two types of network graphs:
+It currently supports three types of network graphs:
 
 - **Force directed networks** with <a href="#simple"><code>simpleNetwork</code></a> and
 <a href="#force"><code>forceNetwork</code></a>
 
 - **Sankey diagrams** with <a href="#sankey"><code>sankeyNetwork</code></a>
+
+- **Tree graphs** with `treeNetwork`
 
 <!------------- Install ------------------------------------------------------->
 
@@ -86,11 +88,11 @@ It currently supports two types of network graphs:
 **networkD3** works very well with the most recent
 [RStudio development version](http://www.rstudio.org/download/daily/desktop/).
 When you use this version of RStudio, graphs will appear in the Viewer Pane. Not
-only does this give you a handy
-way of seeing and tweaking your graphs, but you can also export the graphs to
-the clipboard or a PNG/JPEG/TIFF/etc. file.
+only does this give you a handy way of seeing and tweaking your graphs, but you 
+can also export the graphs to the clipboard or a PNG/JPEG/TIFF/etc. file.
 
-To install and use the package you'll need to download the package and its two
+The package can be downloaded from [CRAN](). Or, to install and use the package 
+you'll need to download the package and its two
 dependencies from [GitHub](https://github.com/):
 
 ```{r eval=FALSE}
