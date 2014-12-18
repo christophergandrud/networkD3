@@ -79,7 +79,7 @@ It currently supports three types of network graphs:
 
 - **Sankey diagrams** with <a href="#sankey"><code>sankeyNetwork</code></a>
 
-- **Tree graphs** with `treeNetwork`
+- **[Reingold-Tilford Tree graphs](http://bl.ocks.org/mbostock/4339184)** with `treeNetwork`
 
 <!------------- Install ------------------------------------------------------->
 
