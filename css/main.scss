@@ -59,6 +59,10 @@ h2 {
   font-size: $h2-fontsize;
 }
 
+h3 {
+  text-decoration: underline;
+}
+
 hr {
   border-bottom: solid 2px $text-colour;
 }
@@ -95,6 +99,7 @@ pre {
 blockquote {
   border-left: solid 10px $header-line-colour;
   background-color: $shadow;
+  text-align: left;
 }
 
 #navlist li {
