@@ -88,10 +88,10 @@ It currently supports three types of network graphs:
 **networkD3** works very well with the most recent version of
 [RStudio](http://www.rstudio.com/rstudio) (v0.98.1091).
 When you use this version of RStudio, graphs will appear in the Viewer Pane. Not
-only does this give you a handy way of seeing and tweaking your graphs, but you 
+only does this give you a handy way of seeing and tweaking your graphs, but you
 can also export the graphs to the clipboard or a PNG/JPEG/TIFF/etc. file.
 
-The package can be downloaded from 
+The package can be downloaded from
 [CRAN](http://cran.r-project.org/web/packages/networkD3/index.html).
 
 <!------------- Usage --------------------------------------------------------->
@@ -99,9 +99,9 @@ The package can be downloaded from
 <h2><i class="fa fa-code"></i> Usage</h2>
 
 For a full set of examples for each of the functions see
-[this pages](https://github.com/christophergandrud/networkD3/blob/master/inst/examples/examples.R).
+[this page](https://github.com/christophergandrud/networkD3/blob/master/inst/examples/examples.R).
 
-<h3 id="simple"><code>> </code>simpleNetwork</code></h3>
+<a href="#simple"><h3 id="simple"><code>> </code>simpleNetwork</code></h3></a>
 
 For very basic
 [force directed network](http://en.wikipedia.org/wiki/Force-directed_graph_drawing)
@@ -122,7 +122,7 @@ networkData <- data.frame(src, target)
 simpleNetwork(networkData)
 ```
 
-<h3 id="force"><code>> forceNetwork</code></h3>
+<a href="force"><h3 id="force"><code>> forceNetwork</code></h3></a>
 
 Use `forceNetwork` to have more control over the appearance of the forced
 directed network and to plot more complicated networks. Here is an example:
@@ -140,7 +140,7 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes,
 ```
 
 
-<h3 id="sankey"><code>> sankeyNetwork</code></h3>
+<a href="#sankey"><h3 id="sankey"><code>> sankeyNetwork</code></h3></a>
 
 You can also create [Sankey diagrams](http://en.wikipedia.org/wiki/Sankey_diagram)
 with `sankeyNetwork`. Here is an example using downloaded JSON data:

@@ -59,10 +59,6 @@ h2 {
   font-size: $h2-fontsize;
 }
 
-h3 {
-  border-bottom: solid 1px $text-colour;
-}
-
 hr {
   border-bottom: solid 2px $text-colour;
 }
@@ -94,6 +90,11 @@ pre {
   border: solid 1px $header-line-colour;
   padding: 5%;
   word-wrap: break-word;
+}
+
+blockquote {
+  border-left: solid 10px $header-line-colour;
+  background-color: $shadow;
 }
 
 #navlist li {
