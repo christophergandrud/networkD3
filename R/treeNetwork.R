@@ -22,11 +22,10 @@
 #'
 #' @examples
 #' \dontrun{
-#' ## Create tree from JSON formatted data
+#' #### Create tree from JSON formatted data
 #' ## Download JSON data
 #' library(RCurl)
-#' Flare <-
-#'  getURL("http://bit.ly/1uNNAbu")
+#' Flare <- getURL("http://bit.ly/1uNNAbu")
 #'
 #' ## Convert to list format
 #' Flare <- rjson::fromJSON(Flare)
@@ -34,11 +33,11 @@
 #' ## Recreate Bostock example from http://bl.ocks.org/mbostock/4063550
 #' treeNetwork(List = Flare, fontSize = 10, opacity = 0.9)
 #'
-#' ## Create a tree dendrogram from an R hclust object
+#' #### Create a tree dendrogram from an R hclust object
 #' hc <- hclust(dist(USArrests), "ave")
 #' treeNetwork(as.treeNetwork(hc))
 #'
-#' ## Create tree from a hierarchical R list
+#' #### Create tree from a hierarchical R list
 #' CanadaPC <- list(name = "Canada", children = list(list(name = "Newfoundland",
 #'                     children = list(list(name = "St. John's"))),
 #'                list(name = "PEI",
@@ -70,7 +69,6 @@
 #'                     children = list(list(name = "Whitehorse")))
 #' ))
 #'
-#' # Visualize the tree
 #' treeNetwork(List = CanadaPC, fontSize = 10)
 #' }
 #'
