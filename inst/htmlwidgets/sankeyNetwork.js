@@ -97,7 +97,7 @@ HTMLWidgets.widget({
 
 
         link.append("title")
-            .text(function(d) { return d.source.name + d.target.name +
+            .text(function(d) { return d.source.name + " \u2192 " + d.target.name +
                 "\n" + format(d.value); });
 
         node.append("rect")
