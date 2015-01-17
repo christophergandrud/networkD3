@@ -16,6 +16,7 @@
 #' frame for how far away the nodes are from one another.
 #' @param NodeID character string specifying the node IDs in the \code{Nodes}
 #' data frame.
+#' @param units character string describing physical units (if any) for Value
 #' @param height numeric height for the network graph's frame area in pixels.
 #' @param width numeric width for the network graph's frame area in pixels.
 #' @param colourScale character string specifying the categorical colour
@@ -39,7 +40,7 @@
 #' # Plot
 #' sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
-#               fontsize = 12, nodeWidth = 30)
+#               units = "TWh", fontsize = 12, nodeWidth = 30)
 #' }
 #' @source
 #' D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
@@ -47,8 +48,8 @@
 #'
 #' @export
 
-sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
-    height = NULL, width = NULL, colourScale = "d3.scale.category20()",
+sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, 
+    units = "", height = NULL, width = NULL, colourScale = "d3.scale.category20()",
     fontsize = 7, nodeWidth = 15, nodePadding = 10)
 {
     # Subset data frames for network graph
@@ -75,7 +76,8 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
         colourScale = colourScale,
         fontsize = fontsize,
         nodeWidth = nodeWidth,
-        nodePadding = nodePadding
+        nodePadding = nodePadding,
+        units = units
     )
 
     # create widget
