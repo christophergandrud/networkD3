@@ -95,7 +95,7 @@ HTMLWidgets.widget({
             .on("dragstart", function() { this.parentNode.appendChild(this); })
             .on("drag", dragmove));
 
-
+        // note: u2192 is right-arrow
         link.append("title")
             .text(function(d) { return d.source.name + " \u2192 " + d.target.name +
                 "\n" + format(d.value); });
