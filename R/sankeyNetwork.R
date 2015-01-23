@@ -52,10 +52,10 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
     fontsize = 7, nodeWidth = 15, nodePadding = 10)
 {
     # Subset data frames for network graph
-    if (class(Links) != "data.frame"){
+    if (!is.data.frame(Links)){
         stop("Links must be a data frame class object.")
     }
-    if (class(Nodes) != "data.frame"){
+    if (!is.data.frame(Nodes)){
         stop("Nodes must be a data frame class object.")
     }
     if (missing(Value)){
