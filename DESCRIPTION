@@ -6,7 +6,8 @@ Description: Creates D3 JavaScript network, tree, dendrogram, and Sankey graphs
 Version: 0.1.2.1
 Date: 2014-01-23
 Authors@R: c(
-    person("Christopher", "Gandrud", "christopher.gandrud@gmail.com", c("aut", "cre")),
+    person("Christopher", "Gandrud", email = "christopher.gandrud@gmail.com", 
+    role = c("aut", "cre")),
     person("J.J.", "Allaire", role = "aut"),
     person("B.W.", "Lewis", role = "ctb"),
     person("Kevin", "Kuo", role = "ctb")
