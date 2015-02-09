@@ -60,7 +60,7 @@ simpleNetwork <- function(Data,
                           nodeColour = "#3182bd",
                           nodeClickColour = "#E34A33",
                           textColour = "#3182bd",
-                          opacity = 0.6
+                          opacity = 0.6,
                           zoom = F)
 {
   # validate input
