@@ -36,6 +36,9 @@ HTMLWidgets.widget({
     var height = el.offsetHeight;
 
     var color = eval(options.colourScale);
+    
+    // set this up even if zoom = F
+    var zoom = d3.behavior.zoom();
 
     // create d3 force layout
     force
@@ -46,33 +49,41 @@ HTMLWidgets.widget({
       .charge(options.charge)
       .on("tick", tick)
       .start();
+     
+    // thanks http://plnkr.co/edit/cxLlvIlmo1Y6vJyPs6N9?p=preview
+    //  http://stackoverflow.com/questions/22924253/adding-pan-zoom-to-d3js-force-directed
+  	var drag = force.drag()
+	    .on("dragstart", dragstart)
+	  // allow force drag to work with pan/zoom drag
+	  function dragstart(d) {
+  	  d3.event.sourceEvent.preventDefault();
+  	  d3.event.sourceEvent.stopPropagation();
+  	}
 
     // select the svg element and remove existing children
     var svg = d3.select(el).select("svg");
     svg.selectAll("*").remove();
+    // add two g layers; the first will be zoom target if zoom = T
+    //  fine to have two g layers even if zoom = F
+    svg = svg
+	    .append("g").attr("class","zoom-layer")
+	    .append("g")
 
     // add zooming if requested
     if (options.zoom) {
-      svg
-        .attr("pointer-events", "all")
-        .call(d3.behavior.zoom().on("zoom", redraw));
-
-      var vis = svg.append("svg:g");
-
-      vis.append("svg:rect")
-        .attr("width", width)
-        .attr("height", height)
-        .attr("fill", 'white');
-
+      zoom.on("zoom", redraw)
       function redraw() {
-        vis.attr("transform",
+        d3.select(el).select(".zoom-layer").attr("transform",
           "translate(" + d3.event.translate + ")"+
           " scale(" + d3.event.scale + ")");
-    }
+      }
+      
+      d3.select(el).select("svg")
+        .attr("pointer-events", "all")
+        .call(zoom);
+
     } else {
-      svg
-        .attr("pointer-events", "auto")
-        .call(d3.behavior.zoom().on("zoom", null));
+      zoom.on("zoom", null);
     }
 
     // draw links
