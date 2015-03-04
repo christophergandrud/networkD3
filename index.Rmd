@@ -86,7 +86,7 @@ It currently supports three types of network graphs:
 <h2><i class="fa fa-download"></i> Install</h2>
 
 **networkD3** works very well with the most recent version of
-[RStudio](http://www.rstudio.com/rstudio) (v0.98.1091).
+[RStudio](http://www.rstudio.com/rstudio) (>=v0.99, [download](http://www.rstudio.com/products/rstudio/download/preview/)).
 When you use this version of RStudio, graphs will appear in the Viewer Pane. Not
 only does this give you a handy way of seeing and tweaking your graphs, but you
 can also export the graphs to the clipboard or a PNG/JPEG/TIFF/etc. file.
