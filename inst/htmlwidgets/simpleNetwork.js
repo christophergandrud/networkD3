@@ -60,7 +60,8 @@ HTMLWidgets.widget({
       .style("stroke", function(d,i)
         { if(Array.isArray(x.options.linkColour)) return x.options.linkColour[i];
           return x.options.linkColour;})
-      .style("opacity", function(d,i)
+      .style("opacity",
+ function(d,i)
         { if(Array.isArray(x.options.opacity)) return x.options.opacity[i];
           return x.options.opacity;})
       .style("stroke-width", "1.5px");
@@ -92,7 +93,8 @@ HTMLWidgets.widget({
       .attr("x", 12)
       .attr("dy", ".35em")
       .style("font", x.options.fontSize + "px serif")
-      .style("fill", function(d,i)
+      .style("fill",
+ function(d,i)
         { if(Array.isArray(x.options.textColour)) return x.options.textColour[i];
           return x.options.textColour;})
       .style("opacity", function(d,i)
@@ -134,11 +136,15 @@ HTMLWidgets.widget({
         .attr("x", 22)
         .style("stroke-width", ".5px")
         .style("opacity", 1)
-        .style("fill", x.options.nodeClickColour)
+        .style("fill", function(d,i)
+        { if(Array.isArray(x.options.nodeClickColour)) return x.options.nodeClickColour[i];
+          return x.options.nodeClickColour;})
         .style("font", x.options.clickTextSize + "px serif");
       d3.select(this).select("circle").transition()
         .duration(750)
-        .style("fill", x.options.nodeClickColour)
+        .style("fill", function(d,i)
+        { if(Array.isArray(x.options.nodeClickColour)) return x.options.nodeClickColour[i];
+          return x.options.nodeClickColour;})
         .attr("r", 16)
     }
 
@@ -147,14 +153,20 @@ HTMLWidgets.widget({
       d3.select(this).select("circle").transition()
         .duration(750)
         .attr("r", 6)
-        .style("fill", x.options.nodeClickColour);
+        .style("fill", function(d,i)
+        { if(Array.isArray(x.options.nodeClickColour)) return x.options.nodeClickColour[i];
+          return x.options.nodeClickColour;});
         d3.select(this).select("text").transition()
         .duration(750)
         .attr("x", 12)
         .style("stroke", "none")
-        .style("fill", x.options.nodeClickColour)
+        .style("fill", function(d,i)
+        { if(Array.isArray(x.options.nodeClickColour)) return x.options.nodeClickColour[i];
+          return x.options.nodeClickColour;})
         .style("stroke", "none")
-        .style("opacity", x.options.opacity)
+        .style("opacity", function(d,i)
+        { if(Array.isArray(x.options.opacity)) return x.options.opacity[i];
+          return x.options.opacity;})
         .style("font", x.options.fontSize + "px serif");
     }
   },
