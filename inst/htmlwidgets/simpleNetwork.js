@@ -57,8 +57,12 @@ HTMLWidgets.widget({
     var link = svg.selectAll(".link")
       .data(force.links())
       .enter().append("line")
-      .style("stroke", x.options.linkColour)
-      .style("opacity", x.options.opacity)
+      .style("stroke", function(d,i)
+        { if(Array.isArray(x.options.linkColour)) return x.options.linkColour[i];
+          return x.options.linkColour;})
+      .style("opacity", function(d,i)
+        { if(Array.isArray(x.options.opacity)) return x.options.opacity[i];
+          return x.options.opacity;})
       .style("stroke-width", "1.5px");
 
     // draw nodes
@@ -74,9 +78,13 @@ HTMLWidgets.widget({
     // node circles
     node.append("circle")
       .attr("r", 8)
-      .style("fill", x.options.nodeColour)
+      .style("fill", function(d,i)
+        { if(Array.isArray(x.options.nodeColour)) return x.options.nodeColour[i];
+          return x.options.nodeColour;})
       .style("stroke", "#fff")
-      .style("opacity", x.options.opacity)
+      .style("opacity", function(d,i)
+        { if(Array.isArray(x.options.opacity)) return x.options.opacity[i];
+          return x.options.opacity;})
       .style("stroke-width", "1.5px");
 
     // node text
@@ -84,8 +92,12 @@ HTMLWidgets.widget({
       .attr("x", 12)
       .attr("dy", ".35em")
       .style("font", x.options.fontSize + "px serif")
-      .style("fill", x.options.textColour)
-      .style("opacity", x.options.opacity)
+      .style("fill", function(d,i)
+        { if(Array.isArray(x.options.textColour)) return x.options.textColour[i];
+          return x.options.textColour;})
+      .style("opacity", function(d,i)
+        { if(Array.isArray(x.options.opacity)) return x.options.opacity[i];
+          return x.options.opacity;})
       .style("pointer-events", "none")
       .text(function(d) { return d.name; });
 

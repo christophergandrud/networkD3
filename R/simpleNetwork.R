@@ -33,6 +33,11 @@
 #' @param opacity numeric value of the proportion opaque you would like the
 #'   graph elements to be.
 #'
+#' @note The \code{linkColour}, \code{nodeColour}, \code{textColour}, and
+#'  \code{opacity} parameters may be a single character string specifying values
+#'  for all nodes and links, or they may be vectors of the same length as the
+#'  number of rows in \code{Data} specifying a value per row.
+#'
 #' @examples
 #' # Fake data
 #' Source <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
