@@ -40,7 +40,8 @@
 #'  \code{opacity} parameters may be a single character string specifying values
 #'  for all nodes and links, or they may be vectors of the same length as the
 #'  number of nodes or links. The total number of unique nodes and their
-#'  order is given by \code{unique(Reduce(c,t(Data)))} (see below for an example).
+#'  plot order is given by \code{unique(Reduce(c,t(Data)))} (see below for an example).
+#'  The links are ordered by the rows of \code{Data}.
 #'  Alternatively, consider \code{forceNetwork} for additional output
 #'  options.
 #'
@@ -55,8 +56,15 @@
 #'
 #' # Alter the colors of each node.
 #' nodes <- unique(Reduce(c, t(NetworkData))) # Graph nodes in order
-#' # Note use of substring to remove alpha level from colors.
+#' # (Note use of substring to remove alpha level from colors)
 #' simpleNetwork(NetworkData, nodeColour=substr(rainbow(length(nodes)),1,7))
+#'
+#' # Color the links independently too
+#' link_colours <- c(rep("#0000ff",4), rep("#00ff00",2), rep("#ff0000",2), "#000000")
+#' simpleNetwork(NetworkData, linkColour=link_colours)
+#'
+#' # Display as a directed graph
+#' simpleNetwork(NetworkData, linkColour=link_colours, directed=TRUE)
 #'
 #' @source D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
 #'   more specifically for directed networks

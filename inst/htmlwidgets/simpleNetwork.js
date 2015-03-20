@@ -168,6 +168,9 @@ HTMLWidgets.widget({
       d3.select(this).select("circle").transition()
       .duration(750)
       .attr("r", 16);
+      d3.select(this).select("text").transition()
+      .duration(550)
+      .style("font", 2 * x.options.fontSize + "px serif");
     }
 
     // mouseout event handler
@@ -175,6 +178,9 @@ HTMLWidgets.widget({
       d3.select(this).select("circle").transition()
       .duration(750)
       .attr("r", 8);
+      d3.select(this).select("text").transition()
+      .duration(550)
+      .style("font", x.options.fontSize + "px serif");
     }
 
     // click event handler
