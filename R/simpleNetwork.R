@@ -27,17 +27,22 @@
 #'   circles to be. Multiple formats supported (e.g. hexadecimal).
 #' @param nodeClickColour character string specifying the colour you want the
 #'   node circles to be when they are clicked. Also changes the colour of the
-#'   text. Multiple formats supported (e.g. hexadecimal).
+#'   text. Multiple formats supported (e.g. hexadecimal). Set to \code{NULL}
+#'   to not change color when clicked.
 #' @param textColour character string specifying the colour you want the text to
 #'   be before they are clicked. Multiple formats supported (e.g. hexadecimal).
 #' @param opacity numeric value of the proportion opaque you would like the
 #'   graph elements to be.
+#' @param directed TRUE draws a directed graph with arrows, FALSE draws
+#'   an undirected graph (the default).
 #'
-#' @note The \code{linkColour}, \code{nodeColour}, \code{textColour}, \code{nodeClickColour}, and
+#' @note The \code{linkColour}, \code{nodeColour}, \code{textColour}, and
 #'  \code{opacity} parameters may be a single character string specifying values
 #'  for all nodes and links, or they may be vectors of the same length as the
 #'  number of nodes or links. The total number of unique nodes and their
-#'  order is given by \code{unique(Reduce(c,t(Data)))}.
+#'  order is given by \code{unique(Reduce(c,t(Data)))} (see below for an example).
+#'  Alternatively, consider \code{forceNetwork} for additional output
+#'  options.
 #'
 #' @examples
 #' # Fake data
@@ -47,6 +52,11 @@
 #'
 #' # Create graph
 #' simpleNetwork(NetworkData)
+#'
+#' # Alter the colors of each node.
+#' nodes <- unique(Reduce(c, t(NetworkData))) # Graph nodes in order
+#' # Note use of substring to remove alpha level from colors.
+#' simpleNetwork(NetworkData, nodeColour=substr(rainbow(length(nodes)),1,7))
 #'
 #' @source D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
 #'   more specifically for directed networks
@@ -65,7 +75,8 @@ simpleNetwork <- function(Data,
                           nodeColour = "#3182bd",
                           nodeClickColour = "#E34A33",
                           textColour = "#3182bd",
-                          opacity = 0.6)
+                          opacity = 0.6,
+                          directed = FALSE)
 {
   # validate input
     if (!is.data.frame(Data))
@@ -87,7 +98,8 @@ simpleNetwork <- function(Data,
         nodeColour = nodeColour,
         nodeClickColour = nodeClickColour,
         textColour = textColour,
-        opacity = opacity
+        opacity = opacity,
+        directed = directed
     )
 
     # create widget
