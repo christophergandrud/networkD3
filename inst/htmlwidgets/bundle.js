@@ -228,18 +228,7 @@ HTMLWidgets.widget({
     }
     
     // endrotation
-    
-    // tensionSlider
-    
-    $("#tensionSlider").on('change', function(x){
-      if (this.value == "NaN")
-	return
-      line.tension(this.value);
-      link.attr("d", function(d, i) { return line(d); });
-    })
-    
-    // endTensionSlider
-    
+        
   },
   resize: function(el, width, height, force) {
     //for resizing I need to rework the svg to use viewbox
