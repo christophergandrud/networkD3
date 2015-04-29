@@ -63,6 +63,16 @@ sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
             fontsize = 12, nodeWidth = 30)
 ```
 
+Here's `bundle`:
+
+```S
+  output$bundle <- renderBundle({
+    library(RCurl)
+    flareImports <- getURL("http://bl.ocks.org/mbostock/raw/7607999/readme-flare-imports.json")
+    return(bundle(flareImports))
+  })
+```
+
 ### Saving to an external file
 
 Use `saveNetwork` to save a network to stand alone HTML file:
