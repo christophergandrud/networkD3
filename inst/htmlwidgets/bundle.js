@@ -26,19 +26,8 @@ HTMLWidgets.widget({
     var g = svg.append("g")
 	.attr("transform", "translate(" + min / 2 + "," + min / 2 + ")")
     
-    var classes = JSON.parse(x.data),
-	funCount = classes.length;
-    
-    // http://stackoverflow.com/questions/3426404/create-a-hexadecimal-colour-based-on-a-string-with-javascript
-    // temporary
-    var stringToColour = function(str) {
-	// str to hash
-	for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));
-	// int/hash to hex
-	for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
-	return colour;
-    }
-    
+    var classes = JSON.parse(x.data)
+
     // create layout
     var cluster = d3.layout.cluster()
 	.size([360, radius])
