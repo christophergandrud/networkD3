@@ -9,7 +9,7 @@ specifically for force directed networks
 \url{https://github.com/mbostock/d3/wiki/Force-Layout}.
 }
 \usage{
-forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Group,
+forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Group, Color = NULL,
   height = NULL, width = NULL, colourScale = "d3.scale.category20()",
   fontsize = 7, linkDistance = 50,
   linkWidth = "function(d) { return Math.sqrt(d.value); }", charge = -120,
@@ -39,6 +39,9 @@ frame for how wide the links are.}
 data frame.}
 
 \item{Group}{character string specifying the group of each node in the
+\code{Nodes} data frame.}
+
+\item{Color}{character string specifying the color of each node in the
 \code{Nodes} data frame.}
 
 \item{height}{numeric height for the network graph's frame area in pixels.}
@@ -99,4 +102,3 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Group = "group", opacity = 0.4)
 }
 }
-
