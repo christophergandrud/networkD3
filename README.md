@@ -1,4 +1,4 @@
-# Tools for creating D3 JavaScript network graphs from R
+# D3 JavaScript Network Graphs from R
 
 Version 0.1.2.1 [![Build Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://travis-ci.org/christophergandrud/networkD3)
 
