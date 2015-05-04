@@ -19,7 +19,7 @@ opts_chunk$set(message=FALSE)
 
 <!----------------------------- Header ------------------------------>
 <div class="rect1"></div>
-<div class="topbar"><code>networkD3</code>:</div> <div class="topbarsub">Tools for creating D3 JavaScript network graphs from R</div>
+<div class="topbar"><code>networkD3</code>:</div> <div class="topbarsub">D3 JavaScript Network Graphs from R</div>
 
 <div class="rect1"></div>
 
