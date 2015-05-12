@@ -1,6 +1,6 @@
 Package: networkD3
 Type: Package
-Title: Tools for Creating D3 JavaScript Network Graphs from R
+Title: D3 JavaScript Network Graphs from R
 Description: Creates D3 JavaScript network, tree, dendrogram, and Sankey graphs
     from R.
 Version: 0.1.2.1
