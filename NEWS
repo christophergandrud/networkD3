@@ -1,5 +1,9 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.1.2.2
+
+- Update link in `forceNetwork` example.
+
 ## Version 0.1.2.1
 
 Enhanced flexibility when using data frames manipulated with dplyr/data.table. 
