@@ -18,6 +18,8 @@
 #' data frame.
 #' @param Group character string specifying the group of each node in the
 #' \code{Nodes} data frame.
+#' @param Color character string specifying the color of each node in the
+#' \code{Nodes} data frame.
 #' @param height numeric height for the network graph's frame area in pixels.
 #' @param width numeric width for the network graph's frame area in pixels.
 #' @param colourScale character string specifying the categorical colour
@@ -72,64 +74,74 @@
 #'
 #' @export
 forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
-    Group, height = NULL, width = NULL, colourScale = "d3.scale.category20()",
-    fontsize = 7, linkDistance = 50,
-    linkWidth = "function(d) { return Math.sqrt(d.value); }", charge = -120,
-    linkColour = "#666",opacity = 0.6)
+                         Group, Color = NULL, height = NULL, width = NULL, colourScale = "d3.scale.category20()",
+                         fontsize = 7, linkDistance = 50,
+                         linkWidth = "function(d) { return Math.sqrt(d.value); }", charge = -120,
+                         linkColour = "#666",opacity = 0.6)
 {
-    # Subset data frames for network graph
-    if (!is.data.frame(Links)){
-        stop("Links must be a data frame class object.")
-    }
-    if (!is.data.frame(Nodes)){
-        stop("Nodes must be a data frame class object.")
-    }
-    if (missing(Value)){
-        LinksDF <- data.frame(Links[, Source], Links[, Target])
-        names(LinksDF) <- c("source", "target")
-    }
-    else if (!missing(Value)){
-        LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
-        names(LinksDF) <- c("source", "target", "value")
-    }
+  # Subset data frames for network graph
+  if (!is.data.frame(Links)){
+    stop("Links must be a data frame class object.")
+  }
+  if (!is.data.frame(Nodes)){
+    stop("Nodes must be a data frame class object.")
+  }
+  if (missing(Value)){
+    LinksDF <- data.frame(Links[, Source], Links[, Target])
+    names(LinksDF) <- c("source", "target")
+  }
+  else if (!missing(Value)){
+    LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
+    names(LinksDF) <- c("source", "target", "value")
+  }
+  
+  if (missing(Color)){
     NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
     names(NodesDF) <- c("name", "group")
-
-    # create options
-    options = list(
-        NodeID = NodeID,
-        Group = Group,
-        colourScale = colourScale,
-        fontsize = fontsize,
-        clickTextSize = fontsize * 2.5,
-        linkDistance = linkDistance,
-        linkWidth = linkWidth,
-        charge = charge,
-        linkColour = linkColour,
-        opacity = opacity
-    )
-
-    # create widget
-    htmlwidgets::createWidget(
-        name = "forceNetwork",
-        x = list(links = LinksDF, nodes = NodesDF, options = options),
-        width = width,
-        height = height,
-        htmlwidgets::sizingPolicy(padding = 0, browser.fill = TRUE),
-        package = "networkD3"
-    )
+  }
+  else if (!missing(Color)){
+    NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group], Nodes[, Color])
+    names(NodesDF) <- c("name", "group", "color")
+  }
+  
+  
+  
+  
+  # create options
+  options = list(
+    NodeID = NodeID,
+    Group = Group,
+    colourScale = colourScale,
+    fontsize = fontsize,
+    clickTextSize = fontsize * 2.5,
+    linkDistance = linkDistance,
+    linkWidth = linkWidth,
+    charge = charge,
+    linkColour = linkColour,
+    opacity = opacity
+  )
+  
+  # create widget
+  htmlwidgets::createWidget(
+    name = "forceNetwork",
+    x = list(links = LinksDF, nodes = NodesDF, options = options),
+    width = width,
+    height = height,
+    htmlwidgets::sizingPolicy(padding = 0, browser.fill = TRUE),
+    package = "networkD3"
+  )
 }
 
 #' @rdname networkD3-shiny
 #' @export
 forceNetworkOutput <- function(outputId, width = "100%", height = "500px") {
-    shinyWidgetOutput(outputId, "forceNetwork", width, height,
-    package = "networkD3")
+  shinyWidgetOutput(outputId, "forceNetwork", width, height,
+                    package = "networkD3")
 }
 
 #' @rdname networkD3-shiny
 #' @export
 renderForceNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
-    if (!quoted) { expr <- substitute(expr) } # force quoted
-    shinyRenderWidget(expr, forceNetworkOutput, env, quoted = TRUE)
+  if (!quoted) { expr <- substitute(expr) } # force quoted
+  shinyRenderWidget(expr, forceNetworkOutput, env, quoted = TRUE)
 }
