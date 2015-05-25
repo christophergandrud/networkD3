@@ -95,9 +95,11 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,Nodesize,
     if (!missing(Nodesize)){
             NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group], Nodes[, Nodesize])
             names(NodesDF) <- c("name", "group", 'nodesize')
+            nodesize = 'true'
     }else{
             NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
-            names(NodesDF) <- c("name", "group")    
+            names(NodesDF) <- c("name", "group") 
+            nodesize = 'false'
     }
     if (legend){
             legend = 'true'
@@ -115,7 +117,8 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,Nodesize,
         charge = charge,
         linkColour = linkColour,
         opacity = opacity,
-        legend = legend
+        legend = legend,
+        nodesize = nodesize
     )
 
     # create widget
