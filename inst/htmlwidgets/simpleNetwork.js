@@ -53,13 +53,56 @@ HTMLWidgets.widget({
     var svg = d3.select(el).select("svg");
     svg.selectAll("*").remove();
 
+// Per-type markers for directed option
+    svg.append("defs").selectAll("marker")
+      .data(["arrow"])
+      .enter().append("marker")
+        .attr("id", function(d) { return d; })
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 15)
+        .attr("refY", -1.5)
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("orient", "auto")
+      .append("path")
+        .attr("d", "M0,-5L10,0L0,5");
+
     // draw links
-    var link = svg.selectAll(".link")
-      .data(force.links())
-      .enter().append("line")
-      .style("stroke", x.options.linkColour)
-      .style("opacity", x.options.opacity)
-      .style("stroke-width", "1.5px");
+    var link;
+    if(x.options.directed)
+    {
+      link = svg.selectAll(".link")
+        .data(force.links())
+        .enter().append("path")
+        .attr("marker-end", function(d) { return "url(#arrow)"; })
+        .style("stroke", function(d,i)
+          { if(Array.isArray(x.options.linkColour)) return x.options.linkColour[i];
+            return x.options.linkColour;})
+        .style("fill", "none")
+        .style("opacity", function(d,i)
+          { if(Array.isArray(x.options.opacity)) return x.options.opacity[i];
+            return x.options.opacity;})
+        .style("stroke-width", "1.5px");
+    } else
+    {
+      link = svg.selectAll(".link")
+        .data(force.links())
+        .enter().append("line")
+        .style("stroke", function(d,i)
+          { if(Array.isArray(x.options.linkColour)) return x.options.linkColour[i];
+            return x.options.linkColour;})
+        .style("fill", "none")
+        .style("opacity", function(d,i)
+          { if(Array.isArray(x.options.opacity)) return x.options.opacity[i];
+            return x.options.opacity;})
+    }
+
+    function linkArc(d) {
+      var dx = d.target.x - d.source.x,
+          dy = d.target.y - d.source.y,
+          dr = Math.sqrt(dx * dx + dy * dy);
+      return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+    }
 
     // draw nodes
     var node = svg.selectAll(".node")
@@ -74,9 +117,13 @@ HTMLWidgets.widget({
     // node circles
     node.append("circle")
       .attr("r", 8)
-      .style("fill", x.options.nodeColour)
+      .style("fill", function(d,i)
+        { if(Array.isArray(x.options.nodeColour)) return x.options.nodeColour[i];
+          return x.options.nodeColour;})
       .style("stroke", "#fff")
-      .style("opacity", x.options.opacity)
+      .style("opacity", function(d,i)
+        { if(Array.isArray(x.options.opacity)) return x.options.opacity[i];
+          return x.options.opacity;})
       .style("stroke-width", "1.5px");
 
     // node text
@@ -84,21 +131,36 @@ HTMLWidgets.widget({
       .attr("x", 12)
       .attr("dy", ".35em")
       .style("font", x.options.fontSize + "px serif")
-      .style("fill", x.options.textColour)
-      .style("opacity", x.options.opacity)
+      .style("fill",
+       function(d,i)
+        { if(Array.isArray(x.options.textColour)) return x.options.textColour[i];
+          return x.options.textColour;})
+      .style("opacity", function(d,i)
+        { if(Array.isArray(x.options.opacity)) return x.options.opacity[i];
+          return x.options.opacity;})
       .style("pointer-events", "none")
       .text(function(d) { return d.name; });
 
     // tick event handler
     function tick() {
-      link
+      if(x.options.directed)
+      {
+        link
+          .attr("d", linkArc)
+          .attr("transform",transform)
+      } else
+      {
+        link
         .attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
-        node.attr("transform", function(d) {
-          return "translate(" + d.x + "," + d.y + ")";
-        });
+      }
+      node.attr("transform", transform);
+    }
+
+    function transform(d) {
+      return "translate(" + d.x + "," + d.y + ")";
     }
 
     // mouseover event handler
@@ -106,6 +168,9 @@ HTMLWidgets.widget({
       d3.select(this).select("circle").transition()
       .duration(750)
       .attr("r", 16);
+      d3.select(this).select("text").transition()
+      .duration(550)
+      .style("font", 2 * x.options.fontSize + "px serif");
     }
 
     // mouseout event handler
@@ -113,10 +178,14 @@ HTMLWidgets.widget({
       d3.select(this).select("circle").transition()
       .duration(750)
       .attr("r", 8);
+      d3.select(this).select("text").transition()
+      .duration(550)
+      .style("font", x.options.fontSize + "px serif");
     }
 
     // click event handler
     function click() {
+      if(x.options.nodeClickColour === null) return;
       d3.select(this).select("text").transition()
         .duration(750)
         .attr("x", 22)
@@ -132,17 +201,18 @@ HTMLWidgets.widget({
 
     // double-click event handler
     function dblclick() {
+      if(x.options.nodeClickColour === null) return;
       d3.select(this).select("circle").transition()
         .duration(750)
         .attr("r", 6)
         .style("fill", x.options.nodeClickColour);
-        d3.select(this).select("text").transition()
+      d3.select(this).select("text").transition()
         .duration(750)
         .attr("x", 12)
         .style("stroke", "none")
         .style("fill", x.options.nodeClickColour)
         .style("stroke", "none")
-        .style("opacity", x.options.opacity)
+        .style("opacity", 1)
         .style("font", x.options.fontSize + "px serif");
     }
   },

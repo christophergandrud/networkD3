@@ -12,7 +12,8 @@ D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
 simpleNetwork(Data, Source = NULL, Target = NULL, height = NULL,
   width = NULL, linkDistance = 50, charge = -200, fontSize = 7,
   linkColour = "#666", nodeColour = "#3182bd",
-  nodeClickColour = "#E34A33", textColour = "#3182bd", opacity = 0.6)
+  nodeClickColour = "#E34A33", textColour = "#3182bd", opacity = 0.6,
+  directed = FALSE)
 }
 \arguments{
 \item{Data}{a data frame object with three columns. The first two are the
@@ -49,17 +50,31 @@ circles to be. Multiple formats supported (e.g. hexadecimal).}
 
 \item{nodeClickColour}{character string specifying the colour you want the
 node circles to be when they are clicked. Also changes the colour of the
-text. Multiple formats supported (e.g. hexadecimal).}
+text. Multiple formats supported (e.g. hexadecimal). Set to \code{NULL}
+to not change color when clicked.}
 
 \item{textColour}{character string specifying the colour you want the text to
 be before they are clicked. Multiple formats supported (e.g. hexadecimal).}
 
 \item{opacity}{numeric value of the proportion opaque you would like the
-  graph elements to be.}
+graph elements to be.}
+
+\item{directed}{TRUE draws a directed graph with arrows, FALSE draws
+  an undirected graph (the default).}
 }
 \description{
 \code{simpleNetwork} creates simple D3 JavaScript force directed network
 graphs.
+}
+\note{
+The \code{linkColour}, \code{nodeColour}, \code{textColour}, and
+ \code{opacity} parameters may be a single character string specifying values
+ for all nodes and links, or they may be vectors of the same length as the
+ number of nodes or links. The total number of unique nodes and their
+ plot order is given by \code{unique(Reduce(c,t(Data)))} (see below for an example).
+ The links are ordered by the rows of \code{Data}.
+ Alternatively, consider \code{forceNetwork} for additional output
+ options.
 }
 \examples{
 # Fake data
@@ -69,5 +84,17 @@ NetworkData <- data.frame(Source, Target)
 
 # Create graph
 simpleNetwork(NetworkData)
+
+# Alter the colors of each node.
+nodes <- unique(Reduce(c, t(NetworkData))) # Graph nodes in order
+# (Note use of substring to remove alpha level from colors)
+simpleNetwork(NetworkData, nodeColour=substr(rainbow(length(nodes)),1,7))
+
+# Color the links independently too
+link_colours <- c(rep("#0000ff",4), rep("#00ff00",2), rep("#ff0000",2), "#000000")
+simpleNetwork(NetworkData, linkColour=link_colours)
+
+# Display as a directed graph
+simpleNetwork(NetworkData, linkColour=link_colours, directed=TRUE)
 }
 
