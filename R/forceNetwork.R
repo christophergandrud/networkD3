@@ -71,9 +71,9 @@
 #' \url{https://github.com/mbostock/d3/wiki/Force-Layout}.
 #'
 #' @export
-forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
+forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,Nodesize,
     Group, height = NULL, width = NULL, colourScale = "d3.scale.category20()",
-    fontsize = 7, linkDistance = 50,
+    fontsize = 7, linkDistance = 50, legend = FALSE,
     linkWidth = "function(d) { return Math.sqrt(d.value); }", charge = -120,
     linkColour = "#666",opacity = 0.6)
 {
@@ -92,8 +92,16 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
         LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
         names(LinksDF) <- c("source", "target", "value")
     }
-    NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
-    names(NodesDF) <- c("name", "group")
+    if (!missing(Nodesize)){
+            NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group], Nodes[, Nodesize])
+            names(NodesDF) <- c("name", "group", 'nodesize')
+    }else{
+            NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
+            names(NodesDF) <- c("name", "group")    
+    }
+    if (legend){
+            legend = 'true'
+    }
 
     # create options
     options = list(
@@ -106,7 +114,8 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
         linkWidth = linkWidth,
         charge = charge,
         linkColour = linkColour,
-        opacity = opacity
+        opacity = opacity,
+        legend = legend
     )
 
     # create widget
