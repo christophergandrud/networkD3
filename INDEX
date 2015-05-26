@@ -1,0 +1,20 @@
+JSONtoDF                Read a link-node structured JSON file into R as
+                        two data frames.
+MisLinks                A data file of links from Knuth's Les
+                        Miserables characters data base.
+MisNodes                A data file of nodes from Knuth's Les
+                        Miserables characters data base.
+as.treeNetwork          Convert an R hclust or dendrogram object into a
+                        treeNetwork list.
+energy                  JSON data file of a projection of UK energy
+                        production and consumption in 2050.
+flare                   JSON data file of the Flare class hierarchy.
+forceNetwork            Create a D3 JavaScript force directed network
+                        graph.
+forceNetworkOutput      Shiny bindings for networkD3 widgets
+networkD3-package       Tools for Creating D3 Network Graphs from R
+sankeyNetwork           Create a D3 JavaScript Sankey diagram
+saveNetwork             Save a network graph to an HTML file
+simpleNetwork           Function for creating simple D3 JavaScript
+                        force directed network graphs.
+treeNetwork             Create Reingold-Tilford Tree network diagrams.
