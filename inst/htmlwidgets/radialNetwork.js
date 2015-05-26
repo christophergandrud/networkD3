@@ -111,11 +111,11 @@ HTMLWidgets.widget({
       .on('keydown', keydown)
       .on('keyup', keyup);
 
-    d3.selectAll('.button')
+    el.selectAll('.button')
       .on('mousedown', tooldown)
       .on('mouseup', toolup);
-    d3.select('.selection').on('mousedown', switchroot);
-    d3.select('.contextmenu').on('mouseup', menuSelection);
+    el.select('.selection').on('mousedown', switchroot);
+    el.select('.contextmenu').on('mouseup', menuSelection);
   
     // Define the data root
     var root = x.root;
@@ -539,7 +539,7 @@ HTMLWidgets.widget({
           root = root === curNode ? treeData : curNode;
           update(root, true);
           curPath = []; // filled in by fullpath
-          d3.select('#selection').html(fullpath(curNode));
+          el.select('.selection').html(fullpath(curNode));
           return;
         case KEY_PAGEUP: // rotate counterclockwise
           moveR = -ROT_INC * slow;

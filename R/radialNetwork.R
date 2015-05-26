@@ -84,7 +84,7 @@ radialNetwork_html <- function(id, style, class, ...){
 </div>
 <div class="tool">
 <div class="tlabel" style="text-align:left" title="Change Root">&nbsp;selection</div>
-<div id="selection" class="tlabel"></div>
+<div class="selection" class="tlabel"></div>
 </div>
 </div>
 
