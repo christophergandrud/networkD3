@@ -52,15 +52,6 @@ HTMLWidgets.widget({
       .charge(options.charge)
       .on("tick", tick)
       .start();
-  /*   
-function radius(node){
-            if (eval(options.nodesize)){
-        return function(d){return nodeSize(d.nodesize);}
-}  else{
-        return 6
-        }
-      }
-*/
 
     // select the svg element and remove existing children
     var svg = d3.select(el).select("svg");
@@ -118,8 +109,9 @@ function radius(node){
       .style("opacity", options.opacity)
       .on("mouseover", mouseover)
       .on("mouseout", mouseout)
-      .call(force.drag);
-// function(d){if(options.radius){return nodeSize(d.nodesize);}else{return 6}}
+      .call(force.drag);            
+        
+
     node.append("circle")
       .attr("r", function(d){if(eval(options.nodesize)){return nodeSize(d.nodesize);}else{return 6}})
       .style("stroke", "#fff")

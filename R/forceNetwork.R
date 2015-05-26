@@ -73,7 +73,7 @@
 #' @export
 forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,Nodesize,
     Group, height = NULL, width = NULL, colourScale = "d3.scale.category20()",
-    fontsize = 7, linkDistance = 50, legend = FALSE,
+    fontsize = 7, linkDistance = 50, legend = FALSE, 
     linkWidth = "function(d) { return Math.sqrt(d.value); }", charge = -120,
     linkColour = "#666",opacity = 0.6)
 {
