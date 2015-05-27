@@ -44,9 +44,6 @@ radialNetwork_html <- function(id, style, class, ...){
 
 <div class="toolbar">
 <div class="tool">
-<div class="help" title="click for help"><a href="help.html" target="_blank">HELP</a></div>
-</div>
-<div class="tool">
 <div class="tlabel">zoom</div>
 <div class="tbuttons">
 <div class="button" data-key="187" title="Zoom In (+ OR scrollwheel)">+</div>
