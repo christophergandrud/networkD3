@@ -1,5 +1,8 @@
-#' Create radial network diagrams.
+#' Radial Network Diagrams
 #'
+#' Create \code{d3.js} radial network diagrams with helpful interactivity.  These diagrams
+#' are based off the code from this \href{https://gist.github.com/wmleler/a734fb2bb3319a2cb386}{gist}.
+#' 
 #' @param List a hierarchical \code{list} object with a root node and children.
 #' @param options \code{list} of options for the \code{radialNetwork}.
 #' @param tasks \code{list} of \code{htmlwidgets::JS} functions to perform after the 
@@ -8,6 +11,22 @@
 #'   \code{NULL} then height is automatically determined based on context)
 #' @param width numeric width for the network graph's frame area in pixels (if
 #'   \code{NULL} then width is automatically determined based on context)
+#'   
+#' @examples
+#' \dontrun{
+#' radialNetwork(
+#'   rjson::fromJSON( 
+#'    paste0(
+#'      readLines(
+#'        curl(
+#'          "https://gist.githubusercontent.com/mbostock/1093025/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json"
+#'        )
+#'      )
+#'      ,collapse = "\n"
+#'    )
+#'   )
+#' )
+#' }
 #'   
 #' @export
 

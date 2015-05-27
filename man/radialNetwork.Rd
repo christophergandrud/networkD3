@@ -2,7 +2,7 @@
 % Please edit documentation in R/radialNetwork.R
 \name{radialNetwork}
 \alias{radialNetwork}
-\title{Create radial network diagrams.}
+\title{Radial Network Diagrams}
 \usage{
 radialNetwork(List, options = list(), tasks = NULL, width = NULL,
   height = NULL)
@@ -22,6 +22,23 @@ the radialNetwork is rendered.}
 \code{NULL} then height is automatically determined based on context)}
 }
 \description{
-Create radial network diagrams.
+Create \code{d3.js} radial network diagrams with helpful interactivity.  These diagrams
+are based off the code from this \href{https://gist.github.com/wmleler/a734fb2bb3319a2cb386}{gist}.
+}
+\examples{
+\dontrun{
+radialNetwork(
+  rjson::fromJSON(
+   paste0(
+     readLines(
+       curl(
+         "https://gist.githubusercontent.com/mbostock/1093025/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json"
+       )
+     )
+     ,collapse = "\\n"
+   )
+  )
+)
+}
 }
 
