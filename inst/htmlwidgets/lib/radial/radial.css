@@ -131,7 +131,7 @@
   fill: #fff;
 }
 .radialNetwork .node text {
-  font-size: 10px;
+  font-size: 8px;
   font-family: Roboto, sans-serif;
   text-shadow: 4px 4px 3px white, -4px -4px 3px white;
 }
