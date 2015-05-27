@@ -127,7 +127,7 @@ HTMLWidgets.widget({
     // el.select('.contextmenu').on('mouseup', menuSelection);
   
     // Define the data root
-    root = x.root;
+    var root = x.root;
     root.x0 = curY;
     root.y0 = 0;
     selectNode(root); // current selected node
@@ -146,12 +146,12 @@ HTMLWidgets.widget({
     // transition - whether to do a transition
     function update(source, transition) {
   
-      duration = transition ?
+      var duration = transition ?
         (d3.event && d3.event.altKey ? defaults.DURATION * 4 : defaults.DURATION) : 0;
   
       // Compute the new tree layout.
-      nodes = tree.nodes(root);
-      links = tree.links(nodes);
+      var nodes = tree.nodes(root);
+      var links = tree.links(nodes);
   
       // Update the view
       svgGroup.transition().duration(duration)
@@ -353,9 +353,9 @@ HTMLWidgets.widget({
   
     // expand one level of tree
     function expand1Level(d) {
-      q = [d]; // non-recursive
-      cn;
-      done = null;
+      var q = [d]; // non-recursive
+      var cn;
+      var done = null;
       while (q.length > 0) {
         cn = q.shift();
         if (done !== null && done < cn.depth) { return; }
@@ -395,12 +395,12 @@ HTMLWidgets.widget({
   
     function switchroot() {
       d3.event.preventDefault();
-      pathelms = document.querySelectorAll('.selection .nodepath');
+      var pathelms = document.querySelectorAll('.selection .nodepath');
       for (i = 0; i < pathelms.length; i++) {
         pathelms[i].classList.remove('highlight');
       }
-      target = d3.event.target;
-      node = curPath[+target.dataset.sel];
+      var target = d3.event.target;
+      var node = curPath[+target.dataset.sel];
       if (d3.event.shiftKey) {
         if (curNode !== node) {
           selectNode(node);
