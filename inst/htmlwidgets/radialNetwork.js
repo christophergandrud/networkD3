@@ -5,7 +5,7 @@ HTMLWidgets.widget({
 
   initialize: function(el, width, height) {
 
-    var diameter = Math.min(parseInt(width),parseInt(height));
+    diameter = Math.min(parseInt(width),parseInt(height));
     d3.select(el).select(".tree-container").append("svg")
       .attr("width", width)
       .attr("height", height)
@@ -18,11 +18,11 @@ HTMLWidgets.widget({
 
   resize: function(el, width, height, tree) {
     /*
-    var diameter = Math.min(parseInt(width),parseInt(height));
-    var s = d3.select(el).selectAll("svg");
+    diameter = Math.min(parseInt(width),parseInt(height));
+    s = d3.select(el).selectAll("svg");
     s.attr("width", width).attr("height", height);
     tree.size([360, diameter/2 - parseInt(s.attr("margin"))]);
-    var svg = d3.select(el).selectAll("svg").select("g");
+    svg = d3.select(el).selectAll("svg").select("g");
     svg.attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")"
                          + " scale("+diameter/800+","+diameter/800+")");
                          
@@ -36,17 +36,26 @@ HTMLWidgets.widget({
     el = d3.select(el)
     
 
-    var DURATION = 700; // d3 animation duration
-    var STAGGERN = 4; // delay for each node
-    var STAGGERD = 200; // delay for each depth
-    var NODE_DIAMETER = 4; // diameter of circular nodes
-    var MIN_ZOOM = 0.5; // minimum zoom allowed
-    var MAX_ZOOM = 10;  // maximum zoom allowed
-    var HAS_CHILDREN_COLOR = 'lightsteelblue';
-    var SELECTED_COLOR = '#a00';  // color of selected node
-    var ZOOM_INC = 0.04;  // zoom factor per animation frame
-    var PAN_INC = 3;  //  pan per animation frame
-    var ROT_INC = 0.3;  // rotation per animation frame
+    var defaults = {
+      DURATION : 700, // d3 animation duration
+      STAGGERN : 4, // delay for each node
+      STAGGERD : 200, // delay for each depth
+      NODE_DIAMETER : 4, // diameter of circular nodes
+      MIN_ZOOM : 0.5, // minimum zoom allowed
+      MAX_ZOOM : 10,  // maximum zoom allowed
+      HAS_CHILDREN_COLOR : 'lightsteelblue',
+      SELECTED_COLOR : '#a00',  // color of selected node
+      ZOOM_INC : 0.04,  // zoom factor per animation frame
+      PAN_INC : 3,  //  pan per animation frame
+      ROT_INC : 0.3  // rotation per animation frame
+    }
+    
+    // overwrite defaults with x.options if provided
+    if( x.options !== "undefined"  && x.options.length > 0 ){
+      Object.keys( x.options ).map(function(key){
+        defaults[key] = x.options[key]
+      })
+    }
   
     var counter = 0;  // node ids
     var curNode;  // currently selected node
@@ -93,7 +102,7 @@ HTMLWidgets.widget({
     var KEY_END = 35;       // (center selection)
   
     // d3 diagonal projection for use by the node paths
-    var diagonal= d3.svg.diagonal.radial()
+    diagonal= d3.svg.diagonal.radial()
       .projection(function(d) {
           return [d.y, d.x / 180 * Math.PI];
       });
@@ -115,10 +124,10 @@ HTMLWidgets.widget({
       .on('mousedown', tooldown)
       .on('mouseup', toolup);
     el.select('.selection').on('mousedown', switchroot);
-    el.select('.contextmenu').on('mouseup', menuSelection);
+    // el.select('.contextmenu').on('mouseup', menuSelection);
   
     // Define the data root
-    var root = x.root;
+    root = x.root;
     root.x0 = curY;
     root.y0 = 0;
     selectNode(root); // current selected node
@@ -137,12 +146,12 @@ HTMLWidgets.widget({
     // transition - whether to do a transition
     function update(source, transition) {
   
-      var duration = transition ?
-        (d3.event && d3.event.altKey ? DURATION * 4 : DURATION) : 0;
+      duration = transition ?
+        (d3.event && d3.event.altKey ? defaults.DURATION * 4 : defaults.DURATION) : 0;
   
       // Compute the new tree layout.
-      var nodes = tree.nodes(root);
-      var links = tree.links(nodes);
+      nodes = tree.nodes(root);
+      links = tree.links(nodes);
   
       // Update the view
       svgGroup.transition().duration(duration)
@@ -152,22 +161,22 @@ HTMLWidgets.widget({
           ')scale(' + curZ + ')');
   
       // Update the nodesâ€¦
-      var node = svgGroup.selectAll('g.node')
+      node = svgGroup.selectAll('g.node')
         .data(nodes, function(d) {
           return d.id || (d.id = ++counter);
         });
   
       // Enter any new nodes at the parent's previous position
-      var nodeEnter = node.enter().insert('g', ':first-child')
+      nodeEnter = node.enter().insert('g', ':first-child')
           .attr('class', 'node')
           .attr('transform', 'rotate(' + (source.x0 - 90) + ')translate(' + source.y0 + ')')
-          .on('click', click).on('dblclick', dblclick).on('contextmenu', showContextMenu);
+          .on('click', click).on('dblclick', dblclick) //.on('contextmenu', showContextMenu);
           // .on('mousedown', suppress);
   
       nodeEnter.append('circle')
         .attr('r', 1e-6)
         .style('fill', function(d) {
-          return d._children ? HAS_CHILDREN_COLOR : 'white';
+          return d._children ? defaults.HAS_CHILDREN_COLOR : 'white';
         });
   
       nodeEnter.append('text')
@@ -187,11 +196,11 @@ HTMLWidgets.widget({
   
       // Change the circle fill depending on whether it has children and is collapsed
       node.select('circle')
-        .attr('r', NODE_DIAMETER * reduceZ())
+        .attr('r', defaults.NODE_DIAMETER * reduceZ())
         .style('fill', function(d) {
-            return d._children ? HAS_CHILDREN_COLOR : 'white';
+            return d._children ? defaults.HAS_CHILDREN_COLOR : 'white';
         }).attr('stroke', function(d) {
-            return d.selected ? SELECTED_COLOR : 'steelblue';
+            return d.selected ? defaults.SELECTED_COLOR : 'steelblue';
         }).attr('stroke-width', function(d) {
             return d.selected ? 3 : 1.5;
         });
@@ -205,30 +214,30 @@ HTMLWidgets.widget({
                 'rotate(180)translate(-8)scale('
               ) + reduceZ() +')';
         }).attr('fill', function(d) {
-            return d.selected ? SELECTED_COLOR : 'black';
+            return d.selected ? defaults.SELECTED_COLOR : 'black';
         }).attr('dy', '.35em');
   
-      var nodeUpdate = node.transition().duration(duration)
+      nodeUpdate = node.transition().duration(duration)
         .delay( transition ? function(d, i) {
-            return i * STAGGERN +
-              Math.abs(d.depth - curNode.depth) * STAGGERD; }  : 0)
+            return i * defaults.STAGGERN +
+              Math.abs(d.depth - curNode.depth) * defaults.STAGGERD; }  : 0)
         .attr('transform', function(d) {
             return 'rotate(' + (d.x - 90) + ')translate(' + d.y + ')';
         });
   
       nodeUpdate.select('circle')
-        .attr('r', NODE_DIAMETER * reduceZ());
+        .attr('r', defaults.NODE_DIAMETER * reduceZ());
         // .style('fill', function(d) {
-        //   return d._children ? HAS_CHILDREN_COLOR : 'white';
+        //   return d._children ? defaults.HAS_CHILDREN_COLOR : 'white';
         // });
   
       nodeUpdate.select('text')
         .style('fill-opacity', 1);
   
       // Transition exiting nodes to the parent's new position and remove
-      var nodeExit = node.exit().transition().duration(duration)
+      nodeExit = node.exit().transition().duration(duration)
         .delay( transition ? function(d, i) {
-            return i * STAGGERN; } : 0)
+            return i * defaults.STAGGERN; } : 0)
         .attr('transform', function() {
           return 'rotate(' + (source.x - 90) +')translate(' + source.y + ')';
       }).remove();
@@ -236,8 +245,8 @@ HTMLWidgets.widget({
       nodeExit.select('circle').attr('r', 0);
       nodeExit.select('text').style('fill-opacity', 0);
   
-      // Update the linksâ€¦
-      var link = svgGroup.selectAll('path.link')
+      // Update the links
+      link = svgGroup.selectAll('path.link')
         .data(links, function(d) {
           return d.target.id;
         });
@@ -246,7 +255,7 @@ HTMLWidgets.widget({
       link.enter().insert('path', 'g')
           .attr('class', 'link')
           .attr('d', function() {
-          var o = {
+          o = {
               x: source.x0,
               y: source.y0
           };
@@ -259,16 +268,16 @@ HTMLWidgets.widget({
       // Transition links to their new position
       link.transition().duration(duration)
         .delay( transition ? function(d, i) {
-            return i * STAGGERN +
-              Math.abs(d.source.depth - curNode.depth) * STAGGERD;
-              // Math.max(0, d.source.depth - curNode.depth) * STAGGERD;
+            return i * defaults.STAGGERN +
+              Math.abs(d.source.depth - curNode.depth) * defaults.STAGGERD;
+              // Math.max(0, d.source.depth - curNode.depth) * defaults.STAGGERD;
             } : 0)
         .attr('d', diagonal);
   
       // Transition exiting nodes to the parent's new position
       link.exit().transition().duration(duration)
           .attr('d', function() {
-            var o = {
+            o = {
               x: source.x0,
               y: source.y0
             };
@@ -344,9 +353,9 @@ HTMLWidgets.widget({
   
     // expand one level of tree
     function expand1Level(d) {
-      var q = [d]; // non-recursive
-      var cn;
-      var done = null;
+      q = [d]; // non-recursive
+      cn;
+      done = null;
       while (q.length > 0) {
         cn = q.shift();
         if (done !== null && done < cn.depth) { return; }
@@ -386,12 +395,12 @@ HTMLWidgets.widget({
   
     function switchroot() {
       d3.event.preventDefault();
-      var pathelms = document.querySelectorAll('.selection .nodepath');
-      for (var i = 0; i < pathelms.length; i++) {
+      pathelms = document.querySelectorAll('.selection .nodepath');
+      for (i = 0; i < pathelms.length; i++) {
         pathelms[i].classList.remove('highlight');
       }
-      var target = d3.event.target;
-      var node = curPath[+target.dataset.sel];
+      target = d3.event.target;
+      node = curPath[+target.dataset.sel];
       if (d3.event.shiftKey) {
         if (curNode !== node) {
           selectNode(node);
@@ -404,8 +413,8 @@ HTMLWidgets.widget({
     }
   
     function resize() { // window resize
-      var oldwidth = width;
-      var oldheight = height;
+      oldwidth = width;
+      oldheight = height;
       width = window.innerWidth - 20;
       height = window.innerHeight - 20;
       tree.size([360, Math.min(width, height) / 2 - 120]);
@@ -438,7 +447,7 @@ HTMLWidgets.widget({
     function tooldown(d) {  // tool button pressed
       d3.event.preventDefault();
       d3.select(d3.event.target).on('mouseout', toolup);
-      var key = +d3.event.target.dataset.key;
+      key = +d3.event.target.dataset.key;
       keydown(Math.abs(key), key < 0 || d3.event.shiftKey);
     }
   
@@ -453,13 +462,35 @@ HTMLWidgets.widget({
       d3.event.preventDefault();
       el.selectAll('.expcol').text(d.children ? 'Collapse' : 'Expand');
       el.select('.contextmenu').style({
-        left: (d3.event.pageX + 3) + 'px',
-        top: (d3.event.pageY + 8) + 'px',
+        left: (getPosition(d3.event).x + 3) + 'px',
+        top: (getPosition(d3.event).y + 8) + 'px',
         display: 'block'
       });
       el.on('mouseup', hideContextMenu);
       selectNode(d);
       update(d);
+    }
+    
+    function getPosition(e) {
+      var posx = 0;
+      var posy = 0;
+     
+      if (!e) var e = window.event;
+     
+      if (e.pageX || e.pageY) {
+        posx = e.pageX;
+        posy = e.pageY;
+      } else if (e.clientX || e.clientY) {
+        posx = e.clientX + document.body.scrollLeft + 
+                           document.documentElement.scrollLeft;
+        posy = e.clientY + document.body.scrollTop + 
+                           document.documentElement.scrollTop;
+      }
+     
+      return {
+        x: posx,
+        y: posy
+      }
     }
   
     function hideContextMenu() {
@@ -469,7 +500,7 @@ HTMLWidgets.widget({
   
     function menuSelection() {
       d3.event.preventDefault();
-      var key = +d3.event.target.dataset.key;
+      key = +d3.event.target.dataset.key;
       keydown(Math.abs(key), key < 0 || d3.event.shiftKey);
     }
   
@@ -496,9 +527,9 @@ HTMLWidgets.widget({
       el.on('mouseup', null);
     }
   
-    var keysdown = [];  // which keys are currently down
-    var moveX = 0, moveY = 0, moveZ = 0, moveR = 0; // animations
-    var aniRequest = null;
+    keysdown = [];  // which keys are currently down
+    moveX = 0, moveY = 0, moveZ = 0, moveR = 0; // animations
+    aniRequest = null;
   
     function wheel() {  // mousewheel
       var dz, newZ;
@@ -530,10 +561,10 @@ HTMLWidgets.widget({
       if (keysdown.indexOf(key) >= 0) { return; } // defeat auto repeat
       switch (key) {
         case KEY_PLUS: // zoom in
-          moveZ = ZOOM_INC * slow;
+          moveZ = defaults.ZOOM_INC * slow;
           break;
         case KEY_MINUS: // zoom out
-          moveZ = -ZOOM_INC * slow;
+          moveZ = -defaults.ZOOM_INC * slow;
           break;
         case KEY_SLASH: // toggle root to selection
           root = root === curNode ? treeData : curNode;
@@ -542,10 +573,10 @@ HTMLWidgets.widget({
           el.select('.selection').html(fullpath(curNode));
           return;
         case KEY_PAGEUP: // rotate counterclockwise
-          moveR = -ROT_INC * slow;
+          moveR = -defaults.ROT_INC * slow;
           break;
         case KEY_PAGEDOWN: // zoom out
-          moveR = ROT_INC * slow; // rotate clockwise
+          moveR = defaults.ROT_INC * slow; // rotate clockwise
           break;
         case KEY_LEFT: // left arrow
           if (shift) { // move selection to parent
@@ -557,7 +588,7 @@ HTMLWidgets.widget({
             update(curNode);
             return;
           }
-          moveX = -PAN_INC * slow;
+          moveX = -defaults.PAN_INC * slow;
           break;
         case KEY_UP: // up arrow
           if (shift) { // move selection to previous child
@@ -571,7 +602,7 @@ HTMLWidgets.widget({
             update(curNode);
             return;
           }
-          moveY = -PAN_INC * slow;
+          moveY = -defaults.PAN_INC * slow;
           break;
         case KEY_RIGHT: // right arrow
           if (shift) { // move selection to first/last child
@@ -586,7 +617,7 @@ HTMLWidgets.widget({
             update(curNode);
             return;
           }
-          moveX = PAN_INC * slow;
+          moveX = defaults.PAN_INC * slow;
           break;
         case KEY_DOWN: // down arrow
           if (shift) { // move selection to next child
@@ -599,7 +630,7 @@ HTMLWidgets.widget({
             update(curNode);
             return;
           }
-          moveY = PAN_INC * slow;
+          moveY = defaults.PAN_INC * slow;
           break;
         case KEY_SPACE: // expand/collapse node
           if (!curNode) {
@@ -647,7 +678,7 @@ HTMLWidgets.widget({
   
     function keyup(key) {
       key = key || d3.event.which;
-      var pos = keysdown.indexOf(key);
+      pos = keysdown.indexOf(key);
       if (pos < 0) { return; }
   
       switch (key) {
@@ -674,15 +705,15 @@ HTMLWidgets.widget({
       aniRequest = aniTime = null;
     }
   
-    var aniTime = null;
+    aniTime = null;
   
     // update animation frame
     function frame(frametime) {
-      var diff = aniTime ? (frametime - aniTime) / 16 : 0;
+      diff = aniTime ? (frametime - aniTime) / 16 : 0;
       aniTime = frametime;
   
-      var dz = Math.pow(1.2, diff * moveZ);
-      var newZ = limitZ(curZ * dz);
+      dz = Math.pow(1.2, diff * moveZ);
+      newZ = limitZ(curZ * dz);
       dz = newZ / curZ;
       curZ = newZ;
       curX += diff * moveX - (width / 2- curX) * (dz - 1);
@@ -694,7 +725,7 @@ HTMLWidgets.widget({
   
     // enforce zoom extent
     function limitZ(z) {
-      return Math.max(Math.min(z, MAX_ZOOM), MIN_ZOOM);
+      return Math.max(Math.min(z, defaults.MAX_ZOOM), defaults.MIN_ZOOM);
     }
   
     // keep rotation between 0 and 360
@@ -721,7 +752,7 @@ HTMLWidgets.widget({
                     'rotate(180)translate(-8)scale('
                   ) + reduceZ() +')';
             });
-        svgGroup.selectAll('circle').attr('r', NODE_DIAMETER * reduceZ());
+        svgGroup.selectAll('circle').attr('r', defaults.NODE_DIAMETER * reduceZ());
     }
   }
 });

@@ -1,3 +1,7 @@
+.radialNetwork {
+  position: relative;
+}
+
 .radialNetwork .toolbar {
   display: flex;
   display: -webkit-box;
@@ -5,23 +9,26 @@
   display: -ms-flexbox;
   display: -webkit-flex;
   flex-wrap: wrap;
-  position: fixed;
-  top: 10px;
+  position: absolute;
+  top: 90px;
   left: 10px;
   font-family: Roboto, Helvetica, sans-serif;
   box-shadow: 1px 1px 3px;
   background-color: #ECEFF1;
 }
+
 .radialNetwork .tool {
   display: flex;
   flex-direction: column;
   border: solid black 1px;
   padding: 1px;
 }
+
 .radialNetwork .tlabel {
   text-align: center;
   padding: 3px 2px 1px 2px;
 }
+
 .radialNetwork .tbuttons {
   display: flex;
   display: -webkit-box;
@@ -31,6 +38,7 @@
   flex-wrap: wrap;
   flex-direction: row;
 }
+
 .radialNetwork .button {
   border: outset gray 2px;
 	border-radius: 4px;
@@ -42,12 +50,15 @@
   font-family: "Courier New", Courier, monospace;
   background-color: white;
 }
+
 .radialNetwork .button:hover {
   background-color: yellow;
 }
+
 .radialNetwork .button:active {
   border: inset gray 2px;
 }
+
 .radialNetwork .selection {
   margin: 2px 5px;
   vertical-align: middle;
@@ -55,6 +66,7 @@
   color: black;
   background-color: white;
 }
+
 .radialNetwork .selection span.nodepath:hover {
   background-color: rgba(0, 0, 25, 0.1);
   cursor: pointer;
@@ -66,7 +78,7 @@
 
 .radialNetwork .contextmenu {
   display: none;
-  position: absolute;
+  position: fixed;
   border: solid black 1px;
   box-shadow: 2px 2px 3px gray;
   padding: 2px;
@@ -103,6 +115,11 @@
 .radialNetwork .help:hover a {
   background-color: yellow;
 }
+
+.radialNetwork .tree-container{
+  position: absolute;
+  top: 100px;
+}
  
 .radialNetwork .tree-container, .radialNetwork svg {
   overflow: hidden;
@@ -114,7 +131,7 @@
   fill: #fff;
 }
 .radialNetwork .node text {
-  font-size: 12px;
+  font-size: 10px;
   font-family: Roboto, sans-serif;
   text-shadow: 4px 4px 3px white, -4px -4px 3px white;
 }
