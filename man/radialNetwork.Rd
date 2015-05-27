@@ -4,10 +4,16 @@
 \alias{radialNetwork}
 \title{Create radial network diagrams.}
 \usage{
-radialNetwork(List, options = list(), width = NULL, height = NULL)
+radialNetwork(List, options = list(), tasks = NULL, width = NULL,
+  height = NULL)
 }
 \arguments{
-\item{List}{a hierarchical list object with a root node and children.}
+\item{List}{a hierarchical \code{list} object with a root node and children.}
+
+\item{options}{\code{list} of options for the \code{radialNetwork}.}
+
+\item{tasks}{\code{list} of \code{htmlwidgets::JS} functions to perform after the
+the radialNetwork is rendered.}
 
 \item{width}{numeric width for the network graph's frame area in pixels (if
   \code{NULL} then width is automatically determined based on context)}

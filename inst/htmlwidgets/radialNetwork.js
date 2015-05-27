@@ -5,7 +5,7 @@ HTMLWidgets.widget({
 
   initialize: function(el, width, height) {
 
-    diameter = Math.min(parseInt(width),parseInt(height));
+    var diameter = Math.min(parseInt(width),parseInt(height));
     d3.select(el).select(".tree-container").append("svg")
       .attr("width", width)
       .attr("height", height)
@@ -31,7 +31,7 @@ HTMLWidgets.widget({
   },
 
   renderValue: function(el, x, tree) {
-    // x is a list with two elements, options and root    
+    // x is a list with three elements: root, options, tasks   
     
     el = d3.select(el)
     
@@ -462,8 +462,8 @@ HTMLWidgets.widget({
       d3.event.preventDefault();
       el.selectAll('.expcol').text(d.children ? 'Collapse' : 'Expand');
       el.select('.contextmenu').style({
-        left: (getPosition(d3.event).x + 3) + 'px',
-        top: (getPosition(d3.event).y + 8) + 'px',
+        left: (d3.event.pagex + 3) + 'px',
+        top: (d3.event.pagey + 8) + 'px',
         display: 'block'
       });
       el.on('mouseup', hideContextMenu);
@@ -471,28 +471,6 @@ HTMLWidgets.widget({
       update(d);
     }
     
-    function getPosition(e) {
-      var posx = 0;
-      var posy = 0;
-     
-      if (!e) var e = window.event;
-     
-      if (e.pageX || e.pageY) {
-        posx = e.pageX;
-        posy = e.pageY;
-      } else if (e.clientX || e.clientY) {
-        posx = e.clientX + document.body.scrollLeft + 
-                           document.documentElement.scrollLeft;
-        posy = e.clientY + document.body.scrollTop + 
-                           document.documentElement.scrollTop;
-      }
-     
-      return {
-        x: posx,
-        y: posy
-      }
-    }
-  
     function hideContextMenu() {
       el.select('.contextmenu').style('display', 'none');
       el.on('mouseup', null);
@@ -527,9 +505,9 @@ HTMLWidgets.widget({
       el.on('mouseup', null);
     }
   
-    keysdown = [];  // which keys are currently down
-    moveX = 0, moveY = 0, moveZ = 0, moveR = 0; // animations
-    aniRequest = null;
+    var keysdown = [];  // which keys are currently down
+    var moveX = 0, moveY = 0, moveZ = 0, moveR = 0; // animations
+    var aniRequest = null;
   
     function wheel() {  // mousewheel
       var dz, newZ;
@@ -705,11 +683,11 @@ HTMLWidgets.widget({
       aniRequest = aniTime = null;
     }
   
-    aniTime = null;
+    var aniTime = null;
   
     // update animation frame
     function frame(frametime) {
-      diff = aniTime ? (frametime - aniTime) / 16 : 0;
+      var diff = aniTime ? (frametime - aniTime) / 16 : 0;
       aniTime = frametime;
   
       dz = Math.pow(1.2, diff * moveZ);
@@ -754,5 +732,23 @@ HTMLWidgets.widget({
             });
         svgGroup.selectAll('circle').attr('r', defaults.NODE_DIAMETER * reduceZ());
     }
+    
+    
+    
+    // set up a container for tasks to perform after completion
+    //  one example would be add callbacks for event handling
+    //  styling
+    if (!(typeof x.tasks === "undefined") ){
+      if ( (typeof x.tasks.length === "undefined") ||
+       (typeof x.tasks === "function" ) ) {
+         // handle a function not enclosed in array
+         // should be able to remove once using jsonlite
+         x.tasks = [x.tasks];
+      }
+      x.tasks.map(function(t){
+        // for each tasks add it to the mermaid.tasks with el
+        t.call(el);
+      })
+    }     
   }
 });

@@ -1,6 +1,9 @@
 #' Create radial network diagrams.
 #'
-#' @param List a hierarchical list object with a root node and children.
+#' @param List a hierarchical \code{list} object with a root node and children.
+#' @param options \code{list} of options for the \code{radialNetwork}.
+#' @param tasks \code{list} of \code{htmlwidgets::JS} functions to perform after the 
+#'          the radialNetwork is rendered.
 #' @param height height for the network graph's frame area in pixels (if
 #'   \code{NULL} then height is automatically determined based on context)
 #' @param width numeric width for the network graph's frame area in pixels (if
@@ -11,6 +14,7 @@
 radialNetwork <- function(
   List
   , options = list()
+  , tasks = NULL
   , width = NULL
   , height = NULL
 ){
@@ -19,7 +23,7 @@ radialNetwork <- function(
   # create widget
   htmlwidgets::createWidget(
     name = "radialNetwork",
-    x = list(root = List, options = options),
+    x = list(root = List, options = options, tasks = tasks ),
     width = width,
     height = height,
     htmlwidgets::sizingPolicy(#viewer.suppress = TRUE,
