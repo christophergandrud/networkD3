@@ -7,3 +7,7 @@ dependencies:
     version: 0.1
     src: "htmlwidgets/lib/radial"
     stylesheet: radial.css
+  - name: TreeColors
+    version: 0.1.0
+    src: "htmlwidgets/lib/TreeColors"
+    script: TreeColors.min.js
