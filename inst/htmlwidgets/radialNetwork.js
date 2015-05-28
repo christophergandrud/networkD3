@@ -31,6 +31,13 @@ HTMLWidgets.widget({
   },
 
   renderValue: function(el, x, tree) {
+    
+    /*
+    ######################################################
+    thanks to Wm Leler
+    https://gist.github.com/wmleler/a734fb2bb3319a2cb386
+    ######################################################
+    */
     // x is a list with three elements: root, options, tasks   
     
     el = d3.select(el)
