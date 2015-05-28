@@ -58,7 +58,7 @@ HTMLWidgets.widget({
     }
     
     // overwrite defaults with x.options if provided
-    if( x.options !== "undefined"  && x.options.length > 0 ){
+    if( typeof x.options !== "undefined"  && Object.keys(x.options).length > 0 ){
       Object.keys( x.options ).map(function(key){
         defaults[key] = x.options[key]
       })
@@ -745,7 +745,7 @@ HTMLWidgets.widget({
     // set up a container for tasks to perform after completion
     //  one example would be add callbacks for event handling
     //  styling
-    if (!(typeof x.tasks === "undefined") ){
+    if (!(typeof x.tasks === "undefined") && x.tasks !== null ){
       if ( (typeof x.tasks.length === "undefined") ||
        (typeof x.tasks === "function" ) ) {
          // handle a function not enclosed in array
