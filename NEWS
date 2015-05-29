@@ -1,5 +1,12 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.2
+
+- `zoom` argument added to `simpleNetwork` and `forceNetwork` to allow zooming.
+Thanks to @timelyportfolio.
+
+
+
 ## Version 0.1.2.2
 
 - Update link in `forceNetwork` example.
