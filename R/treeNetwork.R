@@ -25,7 +25,7 @@
 #' #### Create tree from JSON formatted data
 #' ## Download JSON data
 #' library(RCurl)
-#' Flare <- getURL("http://bit.ly/1uNNAbu")
+#' Flare <- getURL("https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/flare.json")
 #'
 #' ## Convert to list format
 #' Flare <- rjson::fromJSON(Flare)

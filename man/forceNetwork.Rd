@@ -92,7 +92,7 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 #### JSON Data Example
 # Load data JSON formated data into two R data frames
 library(RCurl)
-MisJson <- getURL("https://raw.githubusercontent.com/christophergandrud/d3Network/master/JSONdata/miserables.json")
+MisJson <- getURL("https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/flare.json")
 MisLinks <- JSONtoDF(jsonStr = MisJson, array = "links")
 MisNodes <- JSONtoDF(jsonStr = MisJson, array = "nodes")
 
