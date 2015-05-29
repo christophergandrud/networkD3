@@ -101,6 +101,8 @@ The package can be downloaded from
 For a full set of examples for each of the functions see
 [this page](https://github.com/christophergandrud/networkD3/blob/master/inst/examples/examples.R).
 
+**Note:** You are probably used to R's 1-based numbering (i.e. counting in R starts from 1). However, **networkD3** plots are created using JavaScript, which is [0-based](http://en.wikipedia.org/wiki/Zero-based_numbering). So, your data links will need to start from 0. See [this data set](https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/energy.json) for example.
+
 <a href="#simple"><h3 id="simple"><code>> </code>simpleNetwork</code></h3></a>
 
 For very basic
@@ -139,7 +141,7 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes,
             Group = "group", opacity = 0.8)
 ```
 
-You can also allow scroll-wheel zooming by setting `zoom = TRUE`.
+From version 0.1.3 you can also allow scroll-wheel zooming by setting `zoom = TRUE`.
 
 <a href="#sankey"><h3 id="sankey"><code>> sankeyNetwork</code></h3></a>
 
