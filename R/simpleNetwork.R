@@ -32,6 +32,8 @@
 #'   be before they are clicked. Multiple formats supported (e.g. hexadecimal).
 #' @param opacity numeric value of the proportion opaque you would like the
 #'   graph elements to be.
+#' @param zoom logical value to enable (\code{TRUE}) or disable (\code{FALSE})
+#' zooming
 #'
 #' @examples
 #' # Fake data
@@ -59,7 +61,8 @@ simpleNetwork <- function(Data,
                           nodeColour = "#3182bd",
                           nodeClickColour = "#E34A33",
                           textColour = "#3182bd",
-                          opacity = 0.6)
+                          opacity = 0.6,
+                          zoom = F)
 {
   # validate input
     if (!is.data.frame(Data))
@@ -81,7 +84,8 @@ simpleNetwork <- function(Data,
         nodeColour = nodeColour,
         nodeClickColour = nodeClickColour,
         textColour = textColour,
-        opacity = opacity
+        opacity = opacity,
+        zoom = zoom
     )
 
     # create widget

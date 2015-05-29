@@ -39,6 +39,8 @@
 #' lines to be. Multiple formats supported (e.g. hexadecimal).
 #' @param opacity numeric value of the proportion opaque you would like the
 #' graph elements to be.
+#' @param zoom logical value to enable (\code{TRUE}) or disable (\code{FALSE})
+#' zooming
 #'
 #' @examples
 #' #### Tabular data example.
@@ -63,6 +65,11 @@
 #' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
 #'              Group = "group", opacity = 0.4)
+#'
+#' # Create graph with zooming
+#' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+#'              Target = "target", Value = "value", NodeID = "name",
+#'              Group = "group", opacity = 0.4, zoom = TRUE)
 #' }
 #'
 #' @source
@@ -75,7 +82,7 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
     Group, height = NULL, width = NULL, colourScale = "d3.scale.category20()",
     fontsize = 7, linkDistance = 50,
     linkWidth = "function(d) { return Math.sqrt(d.value); }", charge = -120,
-    linkColour = "#666",opacity = 0.6)
+    linkColour = "#666", opacity = 0.6, zoom = FALSE)
 {
     # Subset data frames for network graph
     if (!is.data.frame(Links)){
@@ -106,7 +113,8 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
         linkWidth = linkWidth,
         charge = charge,
         linkColour = linkColour,
-        opacity = opacity
+        opacity = opacity,
+        zoom = zoom
     )
 
     # create widget

@@ -13,7 +13,7 @@ forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Group,
   height = NULL, width = NULL, colourScale = "d3.scale.category20()",
   fontsize = 7, linkDistance = 50,
   linkWidth = "function(d) { return Math.sqrt(d.value); }", charge = -120,
-  linkColour = "#666", opacity = 0.6)
+  linkColour = "#666", opacity = 0.6, zoom = FALSE)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -70,6 +70,9 @@ lines to be. Multiple formats supported (e.g. hexadecimal).}
 
 \item{opacity}{numeric value of the proportion opaque you would like the
 graph elements to be.}
+
+\item{zoom}{logical value to enable (\code{TRUE}) or disable (\code{FALSE})
+zooming}
 }
 \description{
 Create a D3 JavaScript force directed network graph.
@@ -97,6 +100,11 @@ MisNodes <- JSONtoDF(jsonStr = MisJson, array = "nodes")
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4)
+
+# Create graph with zooming
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Group = "group", opacity = 0.4, zoom = TRUE)
 }
 }
 
