@@ -12,12 +12,12 @@
 
 <title></title>
 
-<script src="index_files/htmlwidgets-0.3.2/htmlwidgets.js"></script>
+<script src="index_files/htmlwidgets-0.4/htmlwidgets.js"></script>
 <script src="index_files/d3-3.5.2/d3.min.js"></script>
-<script src="index_files/simpleNetwork-binding-0.1.2.1/simpleNetwork.js"></script>
-<script src="index_files/forceNetwork-binding-0.1.2.1/forceNetwork.js"></script>
+<script src="index_files/simpleNetwork-binding-0.1.2.2/simpleNetwork.js"></script>
+<script src="index_files/forceNetwork-binding-0.1.2.2/forceNetwork.js"></script>
 <script src="index_files/sankey-1/sankey.js"></script>
-<script src="index_files/sankeyNetwork-binding-0.1.2.1/sankeyNetwork.js"></script>
+<script src="index_files/sankeyNetwork-binding-0.1.2.2/sankeyNetwork.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title>networkD3</title>
 <meta name="networkD3Vignette" content="networkD3: Tools for creating D3 JavaScript network graphs from R">
@@ -28,6 +28,7 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
+div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; }
@@ -77,12 +78,12 @@ Tools for creating D3 JavaScript network graphs from R
 <p class="pull-right">
 <strong> Fork me on <a href="https://github.com/christophergandrud/networkD3"><i class="fa fa-github fa-lg"></i></a> </strong>
 </p>
-<p>v0.1.2.1</p>
+<p>v0.1.2.2</p>
 <p class="pull-right">
 <strong> Issues/suggestions <a href="https://github.com/christophergandrud/networkD3/issues"><i class="fa fa-exclamation-circle"></i></a> </strong>
 </p>
 <p><a href="http://christophergandrud.blogspot.com/">Christopher Gandrud</a> &amp; <a href="https://github.com/jjallaire">JJ Allaire</a></p>
-<p>2015-03-31</p>
+<p>2015-05-29</p>
 <!-- Banner image -->
 <div class="rect1">
 
@@ -146,7 +147,7 @@ Tools for creating D3 JavaScript network graphs from R
 </h3>
 <p></a></p>
 <p>For very basic <a href="http://en.wikipedia.org/wiki/Force-directed_graph_drawing">force directed network</a> graphics you can use <code>simpleNetwork</code>. For example:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load package</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load package</span>
 <span class="kw">library</span>(networkD3)
 
 <span class="co"># Create fake data</span>
@@ -157,31 +158,16 @@ target &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">
 networkData &lt;-<span class="st"> </span><span class="kw">data.frame</span>(src, target)
 
 <span class="co"># Plot</span>
-<span class="kw">simpleNetwork</span>(networkData)</code></pre>
-<p><div id="htmlwidget-2501" style="width:672px;height:480px;" class="simpleNetwork"></div>
-<script type="application/json" data-for="htmlwidget-2501">{ "x": {
- "links": {
- "source": [ "A", "A", "A", "A", "B", "B", "C", "C", "D" ],
-"target": [ "B", "C", "D", "J", "E", "F", "G", "H", "I" ] 
-},
-"options": {
- "linkDistance":                50,
-"charge":              -200,
-"fontSize":                 7,
-"linkColour": "#666",
-"nodeColour": "#3182bd",
-"nodeClickColour": "#E34A33",
-"textColour": "#3182bd",
-"opacity":               0.6 
-} 
-},"evals": [  ] }</script></p>
+<span class="kw">simpleNetwork</span>(networkData)</code></pre></div>
+<p><div id="htmlwidget-268" style="width:672px;height:480px;" class="simpleNetwork"></div>
+<script type="application/json" data-for="htmlwidget-268">{"x":{"links":{"source":["A","A","A","A","B","B","C","C","D"],"target":["B","C","D","J","E","F","G","H","I"]},"options":{"linkDistance":50,"charge":-200,"fontSize":7,"linkColour":"#666","nodeColour":"#3182bd","nodeClickColour":"#E34A33","textColour":"#3182bd","opacity":0.6}},"evals":[]}</script></p>
 <a href="force">
 <h3 id="force">
 <code>&gt; forceNetwork</code>
 </h3>
 <p></a></p>
 <p>Use <code>forceNetwork</code> to have more control over the appearance of the forced directed network and to plot more complicated networks. Here is an example:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load data</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load data</span>
 <span class="kw">data</span>(MisLinks)
 <span class="kw">data</span>(MisNodes)
 
@@ -189,38 +175,17 @@ networkData &lt;-<span class="st"> </span><span class="kw">data.frame</span>(src
 <span class="kw">forceNetwork</span>(<span class="dt">Links =</span> MisLinks, <span class="dt">Nodes =</span> MisNodes,
             <span class="dt">Source =</span> <span class="st">&quot;source&quot;</span>, <span class="dt">Target =</span> <span class="st">&quot;target&quot;</span>,
             <span class="dt">Value =</span> <span class="st">&quot;value&quot;</span>, <span class="dt">NodeID =</span> <span class="st">&quot;name&quot;</span>,
-            <span class="dt">Group =</span> <span class="st">&quot;group&quot;</span>, <span class="dt">opacity =</span> <span class="fl">0.8</span>)</code></pre>
-<p><div id="htmlwidget-191" style="width:672px;height:480px;" class="forceNetwork"></div>
-<script type="application/json" data-for="htmlwidget-191">{ "x": {
- "links": {
- "source": [ 1, 2, 3, 3, 4, 5, 6, 7, 8, 9, 11, 11, 11, 11, 12, 13, 14, 15, 17, 18, 18, 19, 19, 19, 20, 20, 20, 20, 21, 21, 21, 21, 21, 22, 22, 22, 22, 22, 22, 23, 23, 23, 23, 23, 23, 23, 23, 23, 24, 24, 25, 25, 25, 26, 26, 26, 26, 27, 27, 27, 27, 27, 28, 28, 29, 29, 29, 30, 31, 31, 31, 31, 32, 33, 33, 34, 34, 35, 35, 35, 36, 36, 36, 36, 37, 37, 37, 37, 37, 38, 38, 38, 38, 38, 38, 39, 40, 41, 41, 42, 42, 42, 43, 43, 43, 44, 44, 45, 47, 48, 48, 48, 48, 49, 49, 50, 50, 51, 51, 51, 52, 52, 53, 54, 54, 54, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 56, 56, 57, 57, 57, 58, 58, 58, 58, 58, 59, 59, 59, 59, 60, 60, 60, 61, 61, 61, 61, 61, 61, 62, 62, 62, 62, 62, 62, 62, 62, 63, 63, 63, 63, 63, 63, 63, 63, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 66, 66, 66, 66, 66, 66, 66, 66, 66, 67, 68, 68, 68, 68, 68, 68, 69, 69, 69, 69, 69, 69, 69, 70, 70, 70, 70, 70, 70, 70, 70, 71, 71, 71, 71, 71, 71, 71, 71, 72, 72, 72, 73, 74, 74, 75, 75, 75, 75, 75, 75, 75, 76, 76, 76, 76, 76, 76, 76 ],
-"target": [ 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 10, 3, 2, 0, 11, 11, 11, 11, 16, 16, 17, 16, 17, 18, 16, 17, 18, 19, 16, 17, 18, 19, 20, 16, 17, 18, 19, 20, 21, 16, 17, 18, 19, 20, 21, 22, 12, 11, 23, 11, 24, 23, 11, 24, 11, 16, 25, 11, 23, 25, 24, 26, 11, 27, 23, 27, 11, 23, 30, 11, 23, 27, 11, 11, 27, 11, 29, 11, 34, 29, 34, 35, 11, 29, 34, 35, 36, 11, 29, 34, 35, 36, 37, 11, 29, 25, 25, 24, 25, 41, 25, 24, 11, 26, 27, 28, 11, 28, 46, 47, 25, 27, 11, 26, 11, 49, 24, 49, 26, 11, 51, 39, 51, 51, 49, 26, 51, 49, 39, 54, 26, 11, 16, 25, 41, 48, 49, 55, 55, 41, 48, 55, 48, 27, 57, 11, 58, 55, 48, 57, 48, 58, 59, 48, 58, 60, 59, 57, 55, 55, 58, 59, 48, 57, 41, 61, 60, 59, 48, 62, 57, 58, 61, 60, 55, 55, 62, 48, 63, 58, 61, 60, 59, 57, 11, 63, 64, 48, 62, 58, 61, 60, 59, 57, 55, 64, 58, 59, 62, 65, 48, 63, 61, 60, 57, 25, 11, 24, 27, 48, 41, 25, 68, 11, 24, 27, 48, 41, 25, 69, 68, 11, 24, 27, 41, 58, 27, 69, 68, 70, 11, 48, 41, 25, 26, 27, 11, 48, 48, 73, 69, 68, 25, 48, 41, 70, 71, 64, 65, 66, 63, 62, 48, 58 ],
-"value": [ 1, 8, 10, 6, 1, 1, 1, 1, 2, 1, 1, 3, 3, 5, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 3, 3, 3, 4, 3, 3, 3, 3, 5, 3, 3, 3, 3, 4, 4, 3, 3, 3, 3, 4, 4, 4, 2, 9, 2, 7, 13, 1, 12, 4, 31, 1, 1, 17, 5, 5, 1, 1, 8, 1, 1, 1, 2, 1, 2, 3, 2, 1, 1, 2, 1, 3, 2, 3, 3, 2, 2, 2, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 1, 1, 2, 3, 2, 2, 1, 3, 1, 1, 3, 1, 2, 1, 2, 1, 1, 1, 3, 2, 1, 1, 9, 2, 2, 1, 1, 1, 2, 1, 1, 6, 12, 1, 1, 21, 19, 1, 2, 5, 4, 1, 1, 1, 1, 1, 7, 7, 6, 1, 4, 15, 5, 6, 2, 1, 4, 2, 2, 6, 2, 5, 1, 1, 9, 17, 13, 7, 2, 1, 6, 3, 5, 5, 6, 2, 4, 3, 2, 1, 5, 12, 5, 4, 10, 6, 2, 9, 1, 1, 5, 7, 3, 5, 5, 5, 2, 5, 1, 2, 3, 3, 1, 2, 2, 1, 1, 1, 1, 3, 5, 1, 1, 1, 1, 1, 6, 6, 1, 1, 2, 1, 1, 4, 4, 4, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 2, 1, 1, 2, 2, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ] 
-},
-"nodes": {
- "name": [ "Myriel", "Napoleon", "Mlle.Baptistine", "Mme.Magloire", "CountessdeLo", "Geborand", "Champtercier", "Cravatte", "Count", "OldMan", "Labarre", "Valjean", "Marguerite", "Mme.deR", "Isabeau", "Gervais", "Tholomyes", "Listolier", "Fameuil", "Blacheville", "Favourite", "Dahlia", "Zephine", "Fantine", "Mme.Thenardier", "Thenardier", "Cosette", "Javert", "Fauchelevent", "Bamatabois", "Perpetue", "Simplice", "Scaufflaire", "Woman1", "Judge", "Champmathieu", "Brevet", "Chenildieu", "Cochepaille", "Pontmercy", "Boulatruelle", "Eponine", "Anzelma", "Woman2", "MotherInnocent", "Gribier", "Jondrette", "Mme.Burgon", "Gavroche", "Gillenormand", "Magnon", "Mlle.Gillenormand", "Mme.Pontmercy", "Mlle.Vaubois", "Lt.Gillenormand", "Marius", "BaronessT", "Mabeuf", "Enjolras", "Combeferre", "Prouvaire", "Feuilly", "Courfeyrac", "Bahorel", "Bossuet", "Joly", "Grantaire", "MotherPlutarch", "Gueulemer", "Babet", "Claquesous", "Montparnasse", "Toussaint", "Child1", "Child2", "Brujon", "Mme.Hucheloup" ],
-"group": [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 3, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 5, 4, 0, 2, 3, 2, 2, 2, 2, 2, 2, 2, 2, 4, 6, 4, 4, 5, 0, 0, 7, 7, 8, 5, 5, 5, 5, 5, 5, 8, 5, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 4, 4, 4, 4, 5, 10, 10, 4, 8 ] 
-},
-"options": {
- "NodeID": "name",
-"Group": "group",
-"colourScale": "d3.scale.category20()",
-"fontsize":                 7,
-"clickTextSize":              17.5,
-"linkDistance":                50,
-"linkWidth": "function(d) { return Math.sqrt(d.value); }",
-"charge":              -120,
-"linkColour": "#666",
-"opacity":               0.8 
-} 
-},"evals": [  ] }</script></p>
+            <span class="dt">Group =</span> <span class="st">&quot;group&quot;</span>, <span class="dt">opacity =</span> <span class="fl">0.8</span>)</code></pre></div>
+<p><div id="htmlwidget-6493" style="width:672px;height:480px;" class="forceNetwork"></div>
+<script type="application/json" data-for="htmlwidget-6493">{"x":{"links":{"source":[1,2,3,3,4,5,6,7,8,9,11,11,11,11,12,13,14,15,17,18,18,19,19,19,20,20,20,20,21,21,21,21,21,22,22,22,22,22,22,23,23,23,23,23,23,23,23,23,24,24,25,25,25,26,26,26,26,27,27,27,27,27,28,28,29,29,29,30,31,31,31,31,32,33,33,34,34,35,35,35,36,36,36,36,37,37,37,37,37,38,38,38,38,38,38,39,40,41,41,42,42,42,43,43,43,44,44,45,47,48,48,48,48,49,49,50,50,51,51,51,52,52,53,54,54,54,55,55,55,55,55,55,55,55,55,55,56,56,57,57,57,58,58,58,58,58,59,59,59,59,60,60,60,61,61,61,61,61,61,62,62,62,62,62,62,62,62,63,63,63,63,63,63,63,63,64,64,64,64,64,64,64,64,64,64,65,65,65,65,65,65,65,65,65,65,66,66,66,66,66,66,66,66,66,67,68,68,68,68,68,68,69,69,69,69,69,69,69,70,70,70,70,70,70,70,70,71,71,71,71,71,71,71,71,72,72,72,73,74,74,75,75,75,75,75,75,75,76,76,76,76,76,76,76],"target":[0,0,0,2,0,0,0,0,0,0,10,3,2,0,11,11,11,11,16,16,17,16,17,18,16,17,18,19,16,17,18,19,20,16,17,18,19,20,21,16,17,18,19,20,21,22,12,11,23,11,24,23,11,24,11,16,25,11,23,25,24,26,11,27,23,27,11,23,30,11,23,27,11,11,27,11,29,11,34,29,34,35,11,29,34,35,36,11,29,34,35,36,37,11,29,25,25,24,25,41,25,24,11,26,27,28,11,28,46,47,25,27,11,26,11,49,24,49,26,11,51,39,51,51,49,26,51,49,39,54,26,11,16,25,41,48,49,55,55,41,48,55,48,27,57,11,58,55,48,57,48,58,59,48,58,60,59,57,55,55,58,59,48,57,41,61,60,59,48,62,57,58,61,60,55,55,62,48,63,58,61,60,59,57,11,63,64,48,62,58,61,60,59,57,55,64,58,59,62,65,48,63,61,60,57,25,11,24,27,48,41,25,68,11,24,27,48,41,25,69,68,11,24,27,41,58,27,69,68,70,11,48,41,25,26,27,11,48,48,73,69,68,25,48,41,70,71,64,65,66,63,62,48,58],"value":[1,8,10,6,1,1,1,1,2,1,1,3,3,5,1,1,1,1,4,4,4,4,4,4,3,3,3,4,3,3,3,3,5,3,3,3,3,4,4,3,3,3,3,4,4,4,2,9,2,7,13,1,12,4,31,1,1,17,5,5,1,1,8,1,1,1,2,1,2,3,2,1,1,2,1,3,2,3,3,2,2,2,2,1,2,2,2,2,1,2,2,2,2,2,1,1,1,2,3,2,2,1,3,1,1,3,1,2,1,2,1,1,1,3,2,1,1,9,2,2,1,1,1,2,1,1,6,12,1,1,21,19,1,2,5,4,1,1,1,1,1,7,7,6,1,4,15,5,6,2,1,4,2,2,6,2,5,1,1,9,17,13,7,2,1,6,3,5,5,6,2,4,3,2,1,5,12,5,4,10,6,2,9,1,1,5,7,3,5,5,5,2,5,1,2,3,3,1,2,2,1,1,1,1,3,5,1,1,1,1,1,6,6,1,1,2,1,1,4,4,4,1,1,1,1,1,1,2,2,2,1,1,1,1,2,1,1,2,2,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1]},"nodes":{"name":["Myriel","Napoleon","Mlle.Baptistine","Mme.Magloire","CountessdeLo","Geborand","Champtercier","Cravatte","Count","OldMan","Labarre","Valjean","Marguerite","Mme.deR","Isabeau","Gervais","Tholomyes","Listolier","Fameuil","Blacheville","Favourite","Dahlia","Zephine","Fantine","Mme.Thenardier","Thenardier","Cosette","Javert","Fauchelevent","Bamatabois","Perpetue","Simplice","Scaufflaire","Woman1","Judge","Champmathieu","Brevet","Chenildieu","Cochepaille","Pontmercy","Boulatruelle","Eponine","Anzelma","Woman2","MotherInnocent","Gribier","Jondrette","Mme.Burgon","Gavroche","Gillenormand","Magnon","Mlle.Gillenormand","Mme.Pontmercy","Mlle.Vaubois","Lt.Gillenormand","Marius","BaronessT","Mabeuf","Enjolras","Combeferre","Prouvaire","Feuilly","Courfeyrac","Bahorel","Bossuet","Joly","Grantaire","MotherPlutarch","Gueulemer","Babet","Claquesous","Montparnasse","Toussaint","Child1","Child2","Brujon","Mme.Hucheloup"],"group":[1,1,1,1,1,1,1,1,1,1,2,2,3,2,2,2,3,3,3,3,3,3,3,3,4,4,5,4,0,2,3,2,2,2,2,2,2,2,2,4,6,4,4,5,0,0,7,7,8,5,5,5,5,5,5,8,5,8,8,8,8,8,8,8,8,8,8,9,4,4,4,4,5,10,10,4,8]},"options":{"NodeID":"name","Group":"group","colourScale":"d3.scale.category20()","fontsize":7,"clickTextSize":17.5,"linkDistance":50,"linkWidth":"function(d) { return Math.sqrt(d.value); }","charge":-120,"linkColour":"#666","opacity":0.8,"legend":false,"nodesize":"false"}},"evals":[]}</script></p>
+<p>You can also allow scroll-wheel zooming by setting <code>zoom = TRUE</code>.</p>
 <a href="#sankey">
 <h3 id="sankey">
 <code>&gt; sankeyNetwork</code>
 </h3>
 <p></a></p>
 <p>You can also create <a href="http://en.wikipedia.org/wiki/Sankey_diagram">Sankey diagrams</a> with <code>sankeyNetwork</code>. Here is an example using downloaded JSON data:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load energy projection data</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load energy projection data</span>
 <span class="kw">library</span>(RCurl)
 URL &lt;-<span class="st"> &quot;https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/energy.json&quot;</span>
 Energy &lt;-<span class="st"> </span><span class="kw">getURL</span>(URL, <span class="dt">ssl.verifypeer =</span> <span class="ot">FALSE</span>)
@@ -235,35 +200,19 @@ EngNodes &lt;-<span class="st"> </span><span class="kw">JSONtoDF</span>(<span cl
 <span class="kw">sankeyNetwork</span>(<span class="dt">Links =</span> EngLinks, <span class="dt">Nodes =</span> EngNodes,
             <span class="dt">Source =</span> <span class="st">&quot;source&quot;</span>, <span class="dt">Target =</span> <span class="st">&quot;target&quot;</span>,
             <span class="dt">Value =</span> <span class="st">&quot;value&quot;</span>, <span class="dt">NodeID =</span> <span class="st">&quot;name&quot;</span>,
-            <span class="dt">width =</span> <span class="dv">700</span>, <span class="dt">fontsize =</span> <span class="dv">12</span>, <span class="dt">nodeWidth =</span> <span class="dv">30</span>)</code></pre>
-<p><div id="htmlwidget-4439" style="width:700px;height:500px;" class="sankeyNetwork"></div>
-<script type="application/json" data-for="htmlwidget-4439">{ "x": {
- "links": {
- "source": [                 0,                 1,                 1,                 1,                 1,                 6,                 7,                 8,                10,                 9,                11,                11,                11,                15,                15,                15,                15,                15,                15,                15,                15,                15,                15,                15,                23,                25,                 5,                 5,                 5,                 5,                 5,                27,                17,                17,                28,                29,                 2,                 2,                 2,                 2,                 2,                 2,                 2,                 2,                34,                24,                35,                36,                38,                37,                39,                39,                40,                40,                41,                42,                43,                43,                 4,                 4,                 4,                26,                26,                26,                44,                45,                46,                47 ],
-"target": [                 1,                 2,                 3,                 4,                 5,                 2,                 4,                 9,                 9,                 4,                12,                13,                14,                16,                14,                17,                12,                18,                19,                13,                 3,                20,                21,                22,                24,                24,                13,                 3,                26,                19,                12,                15,                28,                 3,                18,                15,                12,                30,                18,                31,                32,                19,                33,                20,                 1,                 5,                26,                37,                37,                 2,                 4,                 1,                14,                13,                15,                14,                42,                41,                19,                26,                12,                15,                 3,                11,                15,                 1,                15,                15 ],
-"value": [           124.729,             0.597,            26.862,           280.322, 81.14400000000001,                35,                35,            11.606,            63.965,            75.571,            10.639,            22.505,            46.184,           104.453,           113.726,             27.14,           342.165,            37.797,             4.412,            40.858,            56.691,             7.863,            90.008,            93.494,            40.719,            82.233,             0.129,             1.401,           151.891,             2.096,             48.58,             7.013,            20.897,             6.242,            20.897,             6.995,           121.066,            128.69,           135.835,            14.458,           206.267,              3.64,            33.218,             4.413,             4.375,           122.952,           839.978,           504.287,           107.703,            611.99,            56.587,             77.81,           193.026,            70.672,            59.901,            19.263,            19.263,            59.901,             0.882,            400.12,            46.477, 525.5309999999999,           787.129, 79.32899999999999,             9.452,            182.01,            19.013,           289.366 ] 
-},
-"nodes": {
- "name": [ "Agricultural 'waste'", "Bio-conversion", "Liquid", "Losses", "Solid", "Gas", "Biofuel imports", "Biomass imports", "Coal imports", "Coal", "Coal reserves", "District heating", "Industry", "Heating and cooling - commercial", "Heating and cooling - homes", "Electricity grid", "Over generation / exports", "H2 conversion", "Road transport", "Agriculture", "Rail transport", "Lighting & appliances - commercial", "Lighting & appliances - homes", "Gas imports", "Ngas", "Gas reserves", "Thermal generation", "Geothermal", "H2", "Hydro", "International shipping", "Domestic aviation", "International aviation", "National navigation", "Marine algae", "Nuclear", "Oil imports", "Oil", "Oil reserves", "Other waste", "Pumped heat", "Solar PV", "Solar Thermal", "Solar", "Tidal", "UK land based bioenergy", "Wave", "Wind" ] 
-},
-"options": {
- "NodeID": "name",
-"colourScale": "d3.scale.category20()",
-"fontsize":                12,
-"nodeWidth":                30,
-"nodePadding":                10 
-} 
-},"evals": [  ] }</script></p>
+            <span class="dt">width =</span> <span class="dv">700</span>, <span class="dt">fontsize =</span> <span class="dv">12</span>, <span class="dt">nodeWidth =</span> <span class="dv">30</span>)</code></pre></div>
+<p><div id="htmlwidget-2264" style="width:700px;height:500px;" class="sankeyNetwork"></div>
+<script type="application/json" data-for="htmlwidget-2264">{"x":{"links":{"source":[0,1,1,1,1,6,7,8,10,9,11,11,11,15,15,15,15,15,15,15,15,15,15,15,23,25,5,5,5,5,5,27,17,17,28,29,2,2,2,2,2,2,2,2,34,24,35,36,38,37,39,39,40,40,41,42,43,43,4,4,4,26,26,26,44,45,46,47],"target":[1,2,3,4,5,2,4,9,9,4,12,13,14,16,14,17,12,18,19,13,3,20,21,22,24,24,13,3,26,19,12,15,28,3,18,15,12,30,18,31,32,19,33,20,1,5,26,37,37,2,4,1,14,13,15,14,42,41,19,26,12,15,3,11,15,1,15,15],"value":[124.729,0.597,26.862,280.322,81.144,35,35,11.606,63.965,75.571,10.639,22.505,46.184,104.453,113.726,27.14,342.165,37.797,4.412,40.858,56.691,7.863,90.008,93.494,40.719,82.233,0.129,1.401,151.891,2.096,48.58,7.013,20.897,6.242,20.897,6.995,121.066,128.69,135.835,14.458,206.267,3.64,33.218,4.413,4.375,122.952,839.978,504.287,107.703,611.99,56.587,77.81,193.026,70.672,59.901,19.263,19.263,59.901,0.882,400.12,46.477,525.531,787.129,79.329,9.452,182.01,19.013,289.366]},"nodes":{"name":["Agricultural 'waste'","Bio-conversion","Liquid","Losses","Solid","Gas","Biofuel imports","Biomass imports","Coal imports","Coal","Coal reserves","District heating","Industry","Heating and cooling - commercial","Heating and cooling - homes","Electricity grid","Over generation / exports","H2 conversion","Road transport","Agriculture","Rail transport","Lighting & appliances - commercial","Lighting & appliances - homes","Gas imports","Ngas","Gas reserves","Thermal generation","Geothermal","H2","Hydro","International shipping","Domestic aviation","International aviation","National navigation","Marine algae","Nuclear","Oil imports","Oil","Oil reserves","Other waste","Pumped heat","Solar PV","Solar Thermal","Solar","Tidal","UK land based bioenergy","Wave","Wind"]},"options":{"NodeID":"name","colourScale":"d3.scale.category20()","fontsize":12,"nodeWidth":30,"nodePadding":10}},"evals":[]}</script></p>
 <h2 id="networkD3output">
 <i class="fa fa-floppy-o"></i> Output
 </h2>
 <div id="saving-to-an-external-stand-alone-html-file" class="section level3">
 <h3>Saving to an external stand alone HTML file</h3>
 <p>Use <code>saveNetwork</code> to save a network to a stand alone HTML file:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(magrittr)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(magrittr)
 
 <span class="kw">simpleNetwork</span>(networkData) %&gt;%
-<span class="kw">saveNetwork</span>(<span class="dt">file =</span> <span class="st">&#39;Net1.html&#39;</span>)</code></pre>
+<span class="kw">saveNetwork</span>(<span class="dt">file =</span> <span class="st">&#39;Net1.html&#39;</span>)</code></pre></div>
 </div>
 <div id="including-in-an-rmarkdown-file" class="section level3">
 <h3>Including in an RMarkdown file</h3>
@@ -273,16 +222,16 @@ EngNodes &lt;-<span class="st"> </span><span class="kw">JSONtoDF</span>(<span cl
 <h3>Including in Shiny web apps</h3>
 <p>You can also easily include <strong>networkD3</strong> graphs in <a href="http://shiny.rstudio.com/">Shiny web apps</a>.</p>
 <p>In the <em>server.R</em> file create the graph by placing the function inside of <code>render*Network</code>, where the <code>*</code> is either <code>Simple</code>, <code>Force</code>, or <code>Sankey</code> depending on the graph type. For example:</p>
-<pre class="sourceCode r"><code class="sourceCode r">output$force &lt;-<span class="st"> </span><span class="kw">renderForceNetwork</span>({
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">output$force &lt;-<span class="st"> </span><span class="kw">renderForceNetwork</span>({
 <span class="kw">forceNetwork</span>(<span class="dt">Links =</span> MisLinks, <span class="dt">Nodes =</span> MisNodes,
             <span class="dt">Source =</span> <span class="st">&quot;source&quot;</span>, <span class="dt">Target =</span> <span class="st">&quot;target&quot;</span>,
             <span class="dt">Value =</span> <span class="st">&quot;value&quot;</span>, <span class="dt">NodeID =</span> <span class="st">&quot;name&quot;</span>,
             <span class="dt">Group =</span> <span class="st">&quot;group&quot;</span>, <span class="dt">opacity =</span> input$opacity)
-})</code></pre>
+})</code></pre></div>
 <p>In the <code>shinyUI</code> part of your <em>app.R</em> file (for <a href="http://shiny.rstudio.com/articles/single-file.html">single-file Shiny apps</a>) include <code>*NetworkOutput</code> (with <code>*</code> as before, but starting with a lowercase letter). The argument placed in this function should be the element specified with <code>output</code>, e.g.:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">forceNetworkOutput</span>(<span class="st">&quot;force&quot;</span>)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">forceNetworkOutput</span>(<span class="st">&quot;force&quot;</span>)</code></pre></div>
 <p>You can run a simple example with the following code:</p>
-<pre class="sourceCode r"><code class="sourceCode r">shiny::<span class="kw">runGitHub</span>(<span class="st">&#39;christophergandrud/networkD3-shiny-example&#39;</span>)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shiny::<span class="kw">runGitHub</span>(<span class="st">&#39;christophergandrud/networkD3-shiny-example&#39;</span>)</code></pre></div>
 <p>Full source code for this example can be found <a href="https://github.com/christophergandrud/networkD3-shiny-example">here</a>.</p>
 </div>
 <div id="saving-as-static-png-image" class="section level3">

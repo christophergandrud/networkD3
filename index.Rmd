@@ -139,6 +139,7 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes,
             Group = "group", opacity = 0.8)
 ```
 
+You can also allow scroll-wheel zooming by setting `zoom = TRUE`.
 
 <a href="#sankey"><h3 id="sankey"><code>> sankeyNetwork</code></h3></a>
 
@@ -223,10 +224,10 @@ Full source code for this example can be found
 
 ### Saving as static PNG image
 
-You can use RStudio to save static images of **networkD3** plots as PNG files. 
-Simply create your plot as usual in RStudio. The output should appear in the 
-*Viewer* pane. Then click *Export* > *Save as Image...*. A new window will 
-appear. You can use this window to manipulate the plot, 
+You can use RStudio to save static images of **networkD3** plots as PNG files.
+Simply create your plot as usual in RStudio. The output should appear in the
+*Viewer* pane. Then click *Export* > *Save as Image...*. A new window will
+appear. You can use this window to manipulate the plot,
 resize it, and save the result as a PNG file.
 
 <img class="display" src="img/networkD3_save_PNG.gif" height=300 width=400 alt="RStudio-save-plot-as-image">
