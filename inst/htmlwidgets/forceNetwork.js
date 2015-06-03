@@ -24,6 +24,17 @@ HTMLWidgets.widget({
 
   renderValue: function(el, x, force) {
 
+  // Compute the node radius  using the javascript math expression specified    
+    function nodeSize(d) {
+            if(eval(options.nodesize)){
+                    return eval(options.radiusCalculation);
+                    
+            }else{
+                    return 6}
+            
+    }
+	
+	
     // alias options
     var options = x.options;
 
@@ -115,7 +126,7 @@ HTMLWidgets.widget({
       .call(force.drag);
 
     node.append("circle")
-      .attr("r", 6)
+      .attr("r", function(d){return nodeSize(d);})
       .style("stroke", "#fff")
       .style("opacity", options.opacity)
       .style("stroke-width", "1.5px");
@@ -145,7 +156,7 @@ HTMLWidgets.widget({
     function mouseover() {
       d3.select(this).select("circle").transition()
         .duration(750)
-        .attr("r", 16);
+        .attr("r", function(d){return nodeSize(d)+5;});
       d3.select(this).select("text").transition()
         .duration(750)
         .attr("x", 13)
@@ -157,9 +168,38 @@ HTMLWidgets.widget({
     function mouseout() {
       d3.select(this).select("circle").transition()
         .duration(750)
-        .attr("r", 8);
+        .attr("r", function(d){return nodeSize(d)+2;});
       d3.select(this).select("text").transition()
         .style("opacity", 0);
+    }
+	
+	// add legend option
+    if(eval(options.legend)){
+        var legendRectSize = 18;                                  
+        var legendSpacing = 4;
+        var legend = svg.selectAll('.legend')                     
+          .data(color.domain())                                   
+          .enter()                                                
+          .append('g')                                            
+          .attr('class', 'legend')                                
+          .attr('transform', function(d, i) {                     
+            var height = legendRectSize + legendSpacing;          
+            var offset =  height * color.domain().length / 2;     
+            var horz = legendRectSize;                       
+            var vert = i * height+4;                       
+            return 'translate(' + horz + ',' + vert + ')';        
+          });                                                   
+
+        legend.append('rect')                                     
+          .attr('width', legendRectSize)                          
+          .attr('height', legendRectSize)                         
+          .style('fill', color)                                   
+          .style('stroke', color);                                
+          
+        legend.append('text')                                     
+          .attr('x', legendRectSize + legendSpacing)              
+          .attr('y', legendRectSize - legendSpacing)              
+          .text(function(d) { return d; }); 
     }
   },
 });
