@@ -9,10 +9,11 @@ specifically for force directed networks
 \url{https://github.com/mbostock/d3/wiki/Force-Layout}.
 }
 \usage{
-forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Group,
+forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Nodesize, Group,
   height = NULL, width = NULL, colourScale = "d3.scale.category20()",
-  fontsize = 7, linkDistance = 50,
-  linkWidth = "function(d) { return Math.sqrt(d.value); }", charge = -120,
+  fontsize = 7, linkDistance = 50, zoom = FALSE, legend = FALSE,
+  linkWidth = "function(d) { return Math.sqrt(d.value); }",
+  radiusCalculation = " Math.sqrt(d.nodesize)+6", charge = -120,
   linkColour = "#666", opacity = 0.6)
 }
 \arguments{
@@ -38,6 +39,10 @@ frame for how wide the links are.}
 \item{NodeID}{character string specifying the node IDs in the \code{Nodes}
 data frame.}
 
+\item{Nodesize}{character string specifying the a column in the \code{Nodes}
+data frame with some value to vary the node radius's with. See also
+\code{radiusCalculation}.}
+
 \item{Group}{character string specifying the group of each node in the
 \code{Nodes} data frame.}
 
@@ -57,10 +62,19 @@ diagram's size). Or a JavaScript function, possibly to weight by
 \code{Value}. For example:
 \code{linkDistance = "function(d){return d.value * 10}"}.}
 
+\item{zoom}{logical value to enable (\code{TRUE}) or disable (\code{FALSE})
+zooming}
+
+\item{legend}{logical value to enable node colour legends.}
+
 \item{linkWidth}{numeric or character string. Can be a numeric fixed width in
 pixels (arbitrary relative to the diagram's size). Or a JavaScript function,
 possibly to weight by \code{Value}. The default is
 \code{linkWidth = "function(d) { return Math.sqrt(d.value); }"}.}
+
+\item{radiusCalculation}{character string. A javascript mathematical
+expression, to weight the radius by \code{Nodesize}. The default value is
+\code{radiusCalculation = "Math.sqrt(d.nodesize)+6"}.}
 
 \item{charge}{numeric value indicating either the strength of the node
 repulsion (negative value) or attraction (positive value).}
@@ -79,17 +93,23 @@ Create a D3 JavaScript force directed network graph.
 # Load data
 data(MisLinks)
 data(MisNodes)
-
 # Create graph
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
-             Group = "group", opacity = 0.4)
+             Group = "group", opacity = 0.4, zoom = TRUE)
+
+# Create graph with legend and varying node radius
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Nodesize = "size",
+             radiusCalculation = "Math.sqrt(d.nodesize)+6",
+             Group = "group", opacity = 0.4, legend = TRUE)
 
 \dontrun{
 #### JSON Data Example
 # Load data JSON formated data into two R data frames
 library(RCurl)
-MisJson <- getURL("https://raw.githubusercontent.com/christophergandrud/d3Network/master/JSONdata/miserables.json")
+MisJson <- getURL("https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/flare.json")
 MisLinks <- JSONtoDF(jsonStr = MisJson, array = "links")
 MisNodes <- JSONtoDF(jsonStr = MisJson, array = "nodes")
 
@@ -97,6 +117,11 @@ MisNodes <- JSONtoDF(jsonStr = MisJson, array = "nodes")
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4)
+
+# Create graph with zooming
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Group = "group", opacity = 0.4, zoom = TRUE)
 }
 }
 

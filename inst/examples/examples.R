@@ -7,12 +7,20 @@ target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
 networkData <- data.frame(src, target)
 simpleNetwork(networkData)
 
-# forceNetwork  
+# forceNetwork 
 data(MisLinks)
 data(MisNodes)
+
+# Create graph
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4)
+
+# Create graph with legend and varying radius
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Nodesize = 'size', radiusCalculation = " Math.sqrt(d.nodesize)+6",
+             Group = "group", opacity = 0.4, legend = T) 
 
 # sankeyNetwork
 library(RCurl)

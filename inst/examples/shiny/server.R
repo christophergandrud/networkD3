@@ -19,6 +19,13 @@ shinyServer(function(input, output) {
                  Group = "group", opacity = input$opacity)
   })
   
+  output$forceRadius <- renderForceNetwork({
+          forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+                       Target = "target", Value = "value", NodeID = "name",
+                       Nodesize = 'size', radiusCalculation = " Math.sqrt(d.nodesize)+6",
+                       Group = "group", opacity = input$opacity, legend = T) 
+  })
+  
   output$sankey <- renderSankeyNetwork({
     library(RCurl)
     URL <- "https://raw.githubusercontent.com/christophergandrud/d3Network/sankey/JSONdata/energy.json"
