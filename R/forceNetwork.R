@@ -52,12 +52,17 @@
 #' # Load data
 #' data(MisLinks)
 #' data(MisNodes)
-#'
 #' # Create graph
 #' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
 #'              Group = "group", opacity = 0.4)
 #'
+#' # Create graph with legend and varying radius
+#' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+#'              Target = "target", Value = "value", NodeID = "name",
+#'              Nodesize = 'size', radiusCalculation = " Math.sqrt(d.nodesize)+6",
+#'              Group = "group", opacity = 0.4, legend = T) 
+#' 
 #' \dontrun{
 #' #### JSON Data Example
 #' # Load data JSON formated data into two R data frames
@@ -77,6 +82,7 @@
 #'              Group = "group", opacity = 0.4, zoom = TRUE)
 #' }
 #'
+
 #' @source
 #' D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
 #' specifically for force directed networks
