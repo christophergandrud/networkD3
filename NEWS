@@ -1,5 +1,16 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.1.4
+
+- `forceNetwork` gains three new arguments.
+
+    + `legend` allows you to add a node colour legend.
+
+    + `radiusCalculation` and `Nodesize` allow you to vary node radius by
+some values.
+
+Thank you to Charles Sese for these additions.
+
 ## Version 0.1.3
 
 - `zoom` argument added to `simpleNetwork` and `forceNetwork` to allow zooming.
@@ -13,12 +24,12 @@ Thanks to @timelyportfolio.
 
 ## Version 0.1.2.1
 
-Enhanced flexibility when using data frames manipulated with dplyr/data.table. 
+Enhanced flexibility when using data frames manipulated with dplyr/data.table.
 Thanks to Kevin Kuo.
 
 ## Version 0.1.2
 
-- Minor internal correction to d3.js version number. 
+- Minor internal correction to d3.js version number.
 
 ## Version 0.1.1
 

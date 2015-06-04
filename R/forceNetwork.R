@@ -16,8 +16,9 @@
 #' frame for how wide the links are.
 #' @param NodeID character string specifying the node IDs in the \code{Nodes}
 #' data frame.
-#' @param Nodesize integer specifying the node radius in the \code{Nodes}
-#' data frame.
+#' @param Nodesize character string specifying the a column in the \code{Nodes}
+#' data frame with some value to vary the node radius's with. See also
+#' \code{radiusCalculation}.
 #' @param Group character string specifying the group of each node in the
 #' \code{Nodes} data frame.
 #' @param height numeric height for the network graph's frame area in pixels.
@@ -31,21 +32,22 @@
 #' diagram's size). Or a JavaScript function, possibly to weight by
 #' \code{Value}. For example:
 #' \code{linkDistance = "function(d){return d.value * 10}"}.
+#' @param zoom logical value to enable (\code{TRUE}) or disable (\code{FALSE})
+#' zooming
+#' @param legend logical value to enable node colour legends.
 #' @param linkWidth numeric or character string. Can be a numeric fixed width in
 #' pixels (arbitrary relative to the diagram's size). Or a JavaScript function,
 #' possibly to weight by \code{Value}. The default is
 #' \code{linkWidth = "function(d) { return Math.sqrt(d.value); }"}.
-#' @param radiusCalculation character string. A javascript mathematical expression,
-#' to weight the radius by \code{Nodesize}. The default value is 
-#' \code{radiusCalculation = "Math.sqrt(d.nodesize)+6"}. 
+#' @param radiusCalculation character string. A javascript mathematical
+#' expression, to weight the radius by \code{Nodesize}. The default value is
+#' \code{radiusCalculation = "Math.sqrt(d.nodesize)+6"}.
 #' @param charge numeric value indicating either the strength of the node
 #' repulsion (negative value) or attraction (positive value).
 #' @param linkColour character string specifying the colour you want the link
 #' lines to be. Multiple formats supported (e.g. hexadecimal).
 #' @param opacity numeric value of the proportion opaque you would like the
 #' graph elements to be.
-#' @param zoom logical value to enable (\code{TRUE}) or disable (\code{FALSE})
-#' zooming
 #'
 #' @examples
 #' #### Tabular data example.
@@ -55,14 +57,15 @@
 #' # Create graph
 #' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
-#'              Group = "group", opacity = 0.4)
+#'              Group = "group", opacity = 0.4, zoom = TRUE)
 #'
-#' # Create graph with legend and varying radius
+#' # Create graph with legend and varying node radius
 #' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
-#'              Nodesize = 'size', radiusCalculation = " Math.sqrt(d.nodesize)+6",
-#'              Group = "group", opacity = 0.4, legend = T) 
-#' 
+#'              Nodesize = "size",
+#'              radiusCalculation = "Math.sqrt(d.nodesize)+6",
+#'              Group = "group", opacity = 0.4, legend = TRUE)
+#'
 #' \dontrun{
 #' #### JSON Data Example
 #' # Load data JSON formated data into two R data frames
@@ -90,11 +93,13 @@
 #'
 #' @export
 forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, Nodesize,
-                         Group, height = NULL, width = NULL, colourScale = "d3.scale.category20()",
-                         fontsize = 7, linkDistance = 50, legend = FALSE, 
-                         linkWidth = "function(d) { return Math.sqrt(d.value); }", 
-                         radiusCalculation = " Math.sqrt(d.nodesize)+6", 
-                         charge = -120, linkColour = "#666",opacity = 0.6, zoom = FALSE)
+                         Group, height = NULL, width = NULL,
+                         colourScale = "d3.scale.category20()",
+                         fontsize = 7, linkDistance = 50, zoom = FALSE,
+                         legend = FALSE,
+                         linkWidth = "function(d) { return Math.sqrt(d.value); }",
+                         radiusCalculation = " Math.sqrt(d.nodesize)+6",
+                         charge = -120, linkColour = "#666", opacity = 0.6)
 {
         # Subset data frames for network graph
         if (!is.data.frame(Links)){
@@ -112,18 +117,20 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, Nodesize,
                 names(LinksDF) <- c("source", "target", "value")
         }
         if (!missing(Nodesize)){
-                NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group], Nodes[, Nodesize])
-                names(NodesDF) <- c("name", "group", 'nodesize')
+                NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group],
+                                        Nodes[, Nodesize])
+                names(NodesDF) <- c("name", "group", "nodesize")
                 nodesize = 'true'
-        }else{
+        }
+        else{
                 NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
-                names(NodesDF) <- c("name", "group") 
+                names(NodesDF) <- c("name", "group")
                 nodesize = 'false'
         }
         if (legend){
                 legend = 'true'
         }
-        
+
         # create options
         options = list(
                 NodeID = NodeID,
@@ -141,7 +148,7 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, Nodesize,
                 nodesize = nodesize,
                 radiusCalculation = radiusCalculation
         )
-        
+
         # create widget
         htmlwidgets::createWidget(
                 name = "forceNetwork",
