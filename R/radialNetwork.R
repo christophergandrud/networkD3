@@ -56,12 +56,12 @@ radialNetwork <- function(
 
 #' custom html function for radialNetwork
 #' 
-#' @import htmltools
+#' @importFrom htmltools HTML
 
 radialNetwork_html <- function(id, style, class, ...){
   tags$div(
     id = id, style = style, class = class
-    ,htmltools::HTML(
+    ,HTML(
 '
 <div class="tree-container"></div>
 
