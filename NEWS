@@ -1,5 +1,10 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.1.5
+
+- Minor improvement to treeNetwork documentation.
+Thanks to Steven Beaupré and MrFlick.
+
 ## Version 0.1.4
 
 - `forceNetwork` gains three new arguments.

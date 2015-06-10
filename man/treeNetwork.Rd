@@ -64,6 +64,7 @@ hc <- hclust(dist(USArrests), "ave")
 treeNetwork(as.treeNetwork(hc))
 
 #### Create tree from a hierarchical R list
+For an alternative structure see: http://stackoverflow.com/a/30747323/1705044
 CanadaPC <- list(name = "Canada", children = list(list(name = "Newfoundland",
                     children = list(list(name = "St. John's"))),
                list(name = "PEI",
