@@ -9,7 +9,7 @@ specifically for Sankey diagrams \url{http://bost.ocks.org/mike/sankey/}.
 }
 \usage{
 sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, height = NULL,
-  width = NULL, colourScale = "d3.scale.category20()", fontSize = 7,
+  width = NULL, colourScale = JS("d3.scale.category20()"), fontSize = 7,
   nodeWidth = 15, nodePadding = 10)
 }
 \arguments{

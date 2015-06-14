@@ -31,23 +31,23 @@
 #' distance between the links in pixels (actually arbitrary relative to the
 #' diagram's size). Or a JavaScript function, possibly to weight by
 #' \code{Value}. For example:
-#' \code{linkDistance = "function(d){return d.value * 10}"}.
-#' @param zoom logical value to enable (\code{TRUE}) or disable (\code{FALSE})
-#' zooming
-#' @param legend logical value to enable node colour legends.
+#' \code{linkDistance = JS("function(d){return d.value * 10}")}.
 #' @param linkWidth numeric or character string. Can be a numeric fixed width in
 #' pixels (arbitrary relative to the diagram's size). Or a JavaScript function,
 #' possibly to weight by \code{Value}. The default is
-#' \code{linkWidth = "function(d) { return Math.sqrt(d.value); }"}.
+#' \code{linkWidth = JS("function(d) { return Math.sqrt(d.value); }")}.
 #' @param radiusCalculation character string. A javascript mathematical
 #' expression, to weight the radius by \code{Nodesize}. The default value is
-#' \code{radiusCalculation = "Math.sqrt(d.nodesize)+6"}.
+#' \code{radiusCalculation = JS("Math.sqrt(d.nodesize)+6")}.
 #' @param charge numeric value indicating either the strength of the node
 #' repulsion (negative value) or attraction (positive value).
 #' @param linkColour character string specifying the colour you want the link
 #' lines to be. Multiple formats supported (e.g. hexadecimal).
 #' @param opacity numeric value of the proportion opaque you would like the
 #' graph elements to be.
+#' @param zoom logical value to enable (\code{TRUE}) or disable (\code{FALSE})
+#' zooming
+#' @param legend logical value to enable node colour legends.
 #'
 #' @examples
 #' #### Tabular data example.
@@ -90,33 +90,46 @@
 #' D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
 #' specifically for force directed networks
 #' \url{https://github.com/mbostock/d3/wiki/Force-Layout}.
+#' @seealso \code{\link{JS}}.
 #'
 #' @export
-forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, Nodesize,
-                         Group, height = NULL, width = NULL,
+forceNetwork <- function(Links,
+                         Nodes,
+                         Source,
+                         Target,
+                         Value,
+                         NodeID,
+                         Nodesize,
+                         Group,
+                         height = NULL,
+                         width = NULL,
                          colourScale = "d3.scale.category20()",
-                         fontSize = 7, linkDistance = 50, zoom = FALSE,
-                         legend = FALSE,
+                         fontSize = 7,
+                         linkDistance = 50,
                          linkWidth = "function(d) { return Math.sqrt(d.value); }",
                          radiusCalculation = " Math.sqrt(d.nodesize)+6",
-                         charge = -120, linkColour = "#666", opacity = 0.6)
+                         charge = -120,
+                         linkColour = "#666",
+                         opacity = 0.6,
+                         zoom = FALSE,
+                         legend = FALSE)
 {
         # Subset data frames for network graph
-        if (!is.data.frame(Links)){
+        if (!is.data.frame(Links)) {
                 stop("Links must be a data frame class object.")
         }
-        if (!is.data.frame(Nodes)){
+        if (!is.data.frame(Nodes)) {
                 stop("Nodes must be a data frame class object.")
         }
-        if (missing(Value)){
+        if (missing(Value)) {
                 LinksDF <- data.frame(Links[, Source], Links[, Target])
                 names(LinksDF) <- c("source", "target")
         }
-        else if (!missing(Value)){
+        else if (!missing(Value)) {
                 LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
                 names(LinksDF) <- c("source", "target", "value")
         }
-        if (!missing(Nodesize)){
+        if (!missing(Nodesize)) {
                 NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group],
                                         Nodes[, Nodesize])
                 names(NodesDF) <- c("name", "group", "nodesize")
@@ -127,7 +140,7 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, Nodesize,
                 names(NodesDF) <- c("name", "group")
                 nodesize = 'false'
         }
-        if (legend){
+        if (legend) {
                 legend = 'true'
         }
 
