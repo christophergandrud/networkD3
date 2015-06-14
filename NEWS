@@ -1,5 +1,10 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.1.6
+
+- `fontSize` used for all functions rather than `fontsize`. Thank you to 
+@Hunter-Github for spotting this inconsistency.
+
 ## Version 0.1.5
 
 - Minor improvement to treeNetwork documentation.

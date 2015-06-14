@@ -26,7 +26,7 @@
 #' @param colourScale character string specifying the categorical colour
 #' scale for the nodes. See
 #' \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.
-#' @param fontsize numeric font size in pixels for the node text labels.
+#' @param fontSize numeric font size in pixels for the node text labels.
 #' @param linkDistance numeric or character string. Either numberic fixed
 #' distance between the links in pixels (actually arbitrary relative to the
 #' diagram's size). Or a JavaScript function, possibly to weight by
@@ -95,7 +95,7 @@
 forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, Nodesize,
                          Group, height = NULL, width = NULL,
                          colourScale = "d3.scale.category20()",
-                         fontsize = 7, linkDistance = 50, zoom = FALSE,
+                         fontSize = 7, linkDistance = 50, zoom = FALSE,
                          legend = FALSE,
                          linkWidth = "function(d) { return Math.sqrt(d.value); }",
                          radiusCalculation = " Math.sqrt(d.nodesize)+6",
@@ -136,8 +136,8 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, Nodesize,
                 NodeID = NodeID,
                 Group = Group,
                 colourScale = colourScale,
-                fontsize = fontsize,
-                clickTextSize = fontsize * 2.5,
+                fontSize = fontSize,
+                clickTextSize = fontSize * 2.5,
                 linkDistance = linkDistance,
                 linkWidth = linkWidth,
                 charge = charge,

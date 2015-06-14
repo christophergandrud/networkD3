@@ -11,7 +11,7 @@ specifically for force directed networks
 \usage{
 forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Nodesize, Group,
   height = NULL, width = NULL, colourScale = "d3.scale.category20()",
-  fontsize = 7, linkDistance = 50, zoom = FALSE, legend = FALSE,
+  fontSize = 7, linkDistance = 50, zoom = FALSE, legend = FALSE,
   linkWidth = "function(d) { return Math.sqrt(d.value); }",
   radiusCalculation = " Math.sqrt(d.nodesize)+6", charge = -120,
   linkColour = "#666", opacity = 0.6)
@@ -54,7 +54,7 @@ data frame with some value to vary the node radius's with. See also
 scale for the nodes. See
 \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.}
 
-\item{fontsize}{numeric font size in pixels for the node text labels.}
+\item{fontSize}{numeric font size in pixels for the node text labels.}
 
 \item{linkDistance}{numeric or character string. Either numberic fixed
 distance between the links in pixels (actually arbitrary relative to the

@@ -33,7 +33,7 @@ EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
 # Plot
 sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
               Target = "target", Value = "value", NodeID = "name",
-              fontsize = 12, nodeWidth = 30)
+              fontSize = 12, nodeWidth = 30)
 
 # treeNetwork
 Flare <- RCurl::getURL("https://gist.githubusercontent.com/mbostock/4063550/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json")

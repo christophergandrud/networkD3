@@ -21,7 +21,7 @@
 #' @param colourScale character string specifying the categorical colour
 #' scale for the nodes. See
 #' \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.
-#' @param fontsize numeric font size in pixels for the node text labels.
+#' @param fontSize numeric font size in pixels for the node text labels.
 #' @param nodeWidth numeric width of each node.
 #' @param nodePadding numeric essentially influences the width height.
 #'
@@ -39,7 +39,7 @@
 #' # Plot
 #' sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
-#               fontsize = 12, nodeWidth = 30)
+#               fontSize = 12, nodeWidth = 30)
 #' }
 #' @source
 #' D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
@@ -49,7 +49,7 @@
 
 sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
     height = NULL, width = NULL, colourScale = "d3.scale.category20()",
-    fontsize = 7, nodeWidth = 15, nodePadding = 10)
+    fontSize = 7, nodeWidth = 15, nodePadding = 10)
 {
     # Subset data frames for network graph
     if (!is.data.frame(Links)){
@@ -73,7 +73,7 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
     options = list(
         NodeID = NodeID,
         colourScale = colourScale,
-        fontsize = fontsize,
+        fontSize = fontSize,
         nodeWidth = nodeWidth,
         nodePadding = nodePadding
     )

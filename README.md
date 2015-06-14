@@ -1,6 +1,6 @@
 # D3 JavaScript Network Graphs from R
 
-Version 0.1.4 [![Build Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://travis-ci.org/christophergandrud/networkD3) ![CRAN Downloads](http://cranlogs.r-pkg.org/badges/last-month/networkD3)
+Version 0.1.6 [![Build Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://travis-ci.org/christophergandrud/networkD3) ![CRAN Downloads](http://cranlogs.r-pkg.org/badges/last-month/networkD3)
 
 This is a port of Christopher Gandrud's
 [d3Network](http://christophergandrud.github.io/d3Network/) package to the
@@ -60,7 +60,7 @@ EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
 # Plot
 sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
             Target = "target", Value = "value", NodeID = "name",
-            fontsize = 12, nodeWidth = 30)
+            fontSize = 12, nodeWidth = 30)
 ```
 
 ### Saving to an external file

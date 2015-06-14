@@ -34,7 +34,7 @@ shinyServer(function(input, output) {
     EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
     sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
                   Target = "target", Value = "value", NodeID = "name",
-                  fontsize = 12, nodeWidth = 30)
+                  fontSize = 12, nodeWidth = 30)
   })
 
   output$rt <- renderTreeNetwork({

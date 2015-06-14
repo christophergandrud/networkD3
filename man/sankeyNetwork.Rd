@@ -9,7 +9,7 @@ specifically for Sankey diagrams \url{http://bost.ocks.org/mike/sankey/}.
 }
 \usage{
 sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, height = NULL,
-  width = NULL, colourScale = "d3.scale.category20()", fontsize = 7,
+  width = NULL, colourScale = "d3.scale.category20()", fontSize = 7,
   nodeWidth = 15, nodePadding = 10)
 }
 \arguments{
@@ -43,7 +43,7 @@ data frame.}
 scale for the nodes. See
 \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.}
 
-\item{fontsize}{numeric font size in pixels for the node text labels.}
+\item{fontSize}{numeric font size in pixels for the node text labels.}
 
 \item{nodeWidth}{numeric width of each node.}
 
