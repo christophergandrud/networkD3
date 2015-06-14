@@ -30,8 +30,12 @@
 #' # Recreate Bostock Sankey diagram: http://bost.ocks.org/mike/sankey/
 #' # Load energy projection data
 #' library(RCurl)
-#' URL <- "https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/energy.json"
+#' # Create URL. paste0 used purely to keep within line width.
+
+#' URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
+#'               "networkD3/master/JSONdata/energy.json")
 #' Energy <- getURL(URL, ssl.verifypeer = FALSE)
+#'
 #' # Convert to data frame
 #' EngLinks <- JSONtoDF(jsonStr = Energy, array = "links")
 #' EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
@@ -39,11 +43,13 @@
 #' # Plot
 #' sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
-#               fontSize = 12, nodeWidth = 30)
+#'               fontSize = 12, nodeWidth = 30)
 #' }
 #' @source
 #' D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
 #' specifically for Sankey diagrams \url{http://bost.ocks.org/mike/sankey/}.
+#'
+#' @seealso \code{\link{JS}}
 #'
 #' @export
 
@@ -53,13 +59,16 @@ sankeyNetwork <- function(Links,
                           Target,
                           Value,
                           NodeID,
-                          height = NULL, 
-                          width = NULL, 
-                          colourScale = JS("d3.scale.category20()"), 
-                          fontSize = 7, 
-                          nodeWidth = 15, 
+                          height = NULL,
+                          width = NULL,
+                          colourScale = JS("d3.scale.category20()"),
+                          fontSize = 7,
+                          nodeWidth = 15,
                           nodePadding = 10)
 {
+    # Hack for UI consistency. Think of improving.
+    colourScale <- as.character(colourScale)
+
     # Subset data frames for network graph
     if (!is.data.frame(Links)) {
         stop("Links must be a data frame class object.")

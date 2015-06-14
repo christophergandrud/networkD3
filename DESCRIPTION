@@ -3,7 +3,7 @@ Type: Package
 Title: D3 JavaScript Network Graphs from R
 Description: Creates 'D3' 'JavaScript' network, tree, dendrogram, and Sankey
     graphs from 'R'.
-Version: 0.1.6
+Version: 0.1.7
 Date: 2015-06-10
 Authors@R: c(
     person("Christopher", "Gandrud", email = "christopher.gandrud@gmail.com",

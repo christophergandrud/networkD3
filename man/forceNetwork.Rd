@@ -10,10 +10,10 @@ specifically for force directed networks
 }
 \usage{
 forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Nodesize, Group,
-  height = NULL, width = NULL, colourScale = "d3.scale.category20()",
+  height = NULL, width = NULL, colourScale = JS("d3.scale.category20()"),
   fontSize = 7, linkDistance = 50,
-  linkWidth = "function(d) { return Math.sqrt(d.value); }",
-  radiusCalculation = " Math.sqrt(d.nodesize)+6", charge = -120,
+  linkWidth = JS("function(d) { return Math.sqrt(d.value); }"),
+  radiusCalculation = JS(" Math.sqrt(d.nodesize)+6"), charge = -120,
   linkColour = "#666", opacity = 0.6, zoom = FALSE, legend = FALSE)
 }
 \arguments{
@@ -109,7 +109,11 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 #### JSON Data Example
 # Load data JSON formated data into two R data frames
 library(RCurl)
-MisJson <- getURL("https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/flare.json")
+# Create URL. paste0 used purely to keep within line width.
+URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
+               "networkD3/master/JSONdata/flare.json")
+MisJson <- getURL(URL)
+
 MisLinks <- JSONtoDF(jsonStr = MisJson, array = "links")
 MisNodes <- JSONtoDF(jsonStr = MisJson, array = "nodes")
 

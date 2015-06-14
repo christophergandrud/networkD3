@@ -70,7 +70,11 @@
 #' #### JSON Data Example
 #' # Load data JSON formated data into two R data frames
 #' library(RCurl)
-#' MisJson <- getURL("https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/flare.json")
+#' # Create URL. paste0 used purely to keep within line width.
+#' URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
+#'                "networkD3/master/JSONdata/flare.json")
+#' MisJson <- getURL(URL)
+#'
 #' MisLinks <- JSONtoDF(jsonStr = MisJson, array = "links")
 #' MisNodes <- JSONtoDF(jsonStr = MisJson, array = "nodes")
 #'
@@ -103,17 +107,22 @@ forceNetwork <- function(Links,
                          Group,
                          height = NULL,
                          width = NULL,
-                         colourScale = "d3.scale.category20()",
+                         colourScale = JS("d3.scale.category20()"),
                          fontSize = 7,
                          linkDistance = 50,
-                         linkWidth = "function(d) { return Math.sqrt(d.value); }",
-                         radiusCalculation = " Math.sqrt(d.nodesize)+6",
+                         linkWidth = JS("function(d) { return Math.sqrt(d.value); }"),
+                         radiusCalculation = JS(" Math.sqrt(d.nodesize)+6"),
                          charge = -120,
                          linkColour = "#666",
                          opacity = 0.6,
                          zoom = FALSE,
                          legend = FALSE)
 {
+        # Hack for UI consistency. Think of improving.
+        colourScale <- as.character(colourScale)
+        linkWidth <- as.character(linkWidth)
+        radiusCalculation <- as.character(radiusCalculation)
+
         # Subset data frames for network graph
         if (!is.data.frame(Links)) {
                 stop("Links must be a data frame class object.")
