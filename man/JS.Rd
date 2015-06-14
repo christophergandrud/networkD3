@@ -4,9 +4,9 @@
 \alias{JS}
 \title{Character strings to evaluate as JavaScript}
 \source{
-A direct import of Ramnath Vaidyanathan, Yihui Xie, JJ Allaire,
-Joe Cheng and Kenton Russell (2015). \link{htmlwidgets}: HTML Widgets for R.
-R package version 0.4.
+A direct import of \code{JS} from Ramnath Vaidyanathan, Yihui Xie,
+JJ Allaire, Joe Cheng and Kenton Russell (2015). \link{htmlwidgets}: HTML
+Widgets for R. R package version 0.4.
 }
 \usage{
 JS(...)

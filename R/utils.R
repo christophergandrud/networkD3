@@ -1,4 +1,4 @@
-#' Character strings to evaluate as JavaScript
+#' Create character strings that will be evaluated as JavaScript
 #'
 #' @param ... character string to evaluate
 #'
