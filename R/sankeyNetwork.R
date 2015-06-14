@@ -47,22 +47,27 @@
 #'
 #' @export
 
-sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
+sankeyNetwork <- function(Links,
+                          Nodes, 
+                          Source, 
+                          Target, 
+                          Value, 
+                          NodeID,
     height = NULL, width = NULL, colourScale = "d3.scale.category20()",
     fontSize = 7, nodeWidth = 15, nodePadding = 10)
 {
     # Subset data frames for network graph
-    if (!is.data.frame(Links)){
+    if (!is.data.frame(Links)) {
         stop("Links must be a data frame class object.")
     }
-    if (!is.data.frame(Nodes)){
+    if (!is.data.frame(Nodes)) {
         stop("Nodes must be a data frame class object.")
     }
-    if (missing(Value)){
+    if (missing(Value)) {
         LinksDF <- data.frame(Links[, Source], Links[, Target])
         names(LinksDF) <- c("source", "target")
     }
-    else if (!missing(Value)){
+    else if (!missing(Value)) {
         LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
         names(LinksDF) <- c("source", "target", "value")
     }
@@ -97,7 +102,8 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
 #' @rdname networkD3-shiny
 #' @export
 sankeyNetworkOutput <- function(outputId, width = "100%", height = "500px") {
-    shinyWidgetOutput(outputId, "sankeyNetwork", width, height, package = "networkD3")
+    shinyWidgetOutput(outputId, "sankeyNetwork", width, height, 
+                      package = "networkD3")
 }
 
 #' @rdname networkD3-shiny
