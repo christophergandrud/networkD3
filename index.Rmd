@@ -164,7 +164,7 @@ EngNodes <- JSONtoDF(jsonStr = Energy,
 sankeyNetwork(Links = EngLinks, Nodes = EngNodes,
             Source = "source", Target = "target",
             Value = "value", NodeID = "name",
-            width = 700, fontsize = 12, nodeWidth = 30)
+            width = 700, fontSize = 12, nodeWidth = 30)
 ```
 
 
