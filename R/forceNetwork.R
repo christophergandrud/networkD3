@@ -71,7 +71,7 @@
 #' \url{https://github.com/mbostock/d3/wiki/Force-Layout}.
 #'
 #' @export
-forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
+forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, url, pic,
     Group, height = NULL, width = NULL, colourScale = "d3.scale.category20()",
     fontsize = 7, linkDistance = 50,
     linkWidth = "function(d) { return Math.sqrt(d.value); }", charge = -120,
@@ -95,6 +95,15 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
     LinksDF$colour = as.character(LinksDF$colour)
     NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
     names(NodesDF) <- c("name", "group")
+    if(!missing(url)){
+      NodesDF$url <- Nodes[, url]
+    }
+    if(!missing(pic)){
+      NodesDF$pic <- Nodes[, pic]
+    }
+    
+    
+
 
     # create options
     options = list(
@@ -107,7 +116,9 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
         linkWidth = linkWidth,
         charge = charge,
         linkColour = linkColour,
-        opacity = opacity
+        opacity = opacity,
+        url = url,
+        pic=pic
     )
 
     # create widget

@@ -79,7 +79,7 @@ HTMLWidgets.widget({
       .data(force.links())
       .enter().append("line")
       .attr("class", "link")
-      .style("stroke", function(d) { return d.colour ; }) // options.linkColour)
+      .style("stroke", function(d) { return d.colour ; }) 
       .style("opacity", options.opacity)
       .style("stroke-width", eval("(" + options.linkWidth + ")"))
       .on("mouseover", function(d) {
@@ -108,11 +108,40 @@ HTMLWidgets.widget({
       .style("opacity", options.opacity)
       .style("stroke-width", "1.5px");
 
-    node.append("svg:text")
+    //node.append("svg:text")
+    //  .attr("class", "nodetext")
+    //  .attr("dx", 12)
+    //  .attr("dy", ".35em")
+    //  .text(function(d) { return d.name })
+    //  .style("font", options.fontsize + "px serif")
+    //  .style("opacity", 0)
+    //  .style("pointer-events", "none");
+      
+      
+      node.append("svg:a").attr("xlink:href", function(d){ return "" + d.url })
+        .attr("xlink:show","new")
+        //.attr("xlink:target","_blank")
+        .append("image")
+        .attr("xlink:href", function(d){ return d.pic;
+        })
+        .on("error", function(d) {
+        //console.log('The image ' + d.pic + ' failed to load');
+        d3.select(this).style("visibility", "hidden");
+        })
+        //.attr("xlink:target","_blank")
+        .attr("id","img")
+        .attr("x", -12.5)
+        .attr("y", -12.5)
+        .attr("width", 25)
+        .attr("height", 25)
+        .style("pointer-events", "all");
+      
+    node//.append("svg:a")
+      .append("text")
       .attr("class", "nodetext")
-      .attr("dx", 12)
+      .text(function(d) { return d.name; })
       .attr("dy", ".35em")
-      .text(function(d) { return d.name })
+      .attr("dx", 6)
       .style("font", options.fontsize + "px serif")
       .style("opacity", 0)
       .style("pointer-events", "none");
@@ -134,9 +163,16 @@ HTMLWidgets.widget({
       d3.select(this).select("circle").transition()
         .duration(750)
         .attr("r", 16);
+      d3.select(this).select("image").transition()
+        .duration(750)
+      .attr("width", 90)
+      .attr("x", -4)
+      .attr("y", -6)
+      .attr("height", 90);
       d3.select(this).select("text").transition()
         .duration(750)
         .attr("x", 13)
+        .attr("y", -13)
         .style("stroke-width", ".5px")
         .style("font", options.clickTextSize + "px serif")
         .style("opacity", 1);
@@ -146,6 +182,12 @@ HTMLWidgets.widget({
       d3.select(this).select("circle").transition()
         .duration(750)
         .attr("r", 8);
+      d3.select(this).select("image").transition()
+        .duration(750)
+      .attr("width", 30)
+      .attr("height", 30)
+      .attr("x", -12.5)
+      .attr("y", -12.5);
       d3.select(this).select("text").transition()
         .style("opacity", 0);
     }
