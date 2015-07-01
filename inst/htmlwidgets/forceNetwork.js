@@ -26,7 +26,7 @@ HTMLWidgets.widget({
 
   // Compute the node radius  using the javascript math expression specified    
     function nodeSize(d) {
-            if(eval(options.nodesize)){
+            if(options.nodesize){
                     return eval(options.radiusCalculation);
                     
             }else{
@@ -140,6 +140,22 @@ HTMLWidgets.widget({
       .style("opacity", 0)
       .style("pointer-events", "none");
 
+	// Add the option for a bounded box
+	function nodeBoxX(d,width) {
+		if(options.bounded){
+            var dx = Math.max(nodeSize(d), Math.min(width - nodeSize(d), d.x));		
+			return dx;                    
+        }else{
+            return d.x}                    
+    }
+	function nodeBoxY(d,width) {
+		if(options.bounded){
+            var dy = Math.max(nodeSize(d), Math.min(height - nodeSize(d), d.y));	
+			return dy;                    
+        }else{
+            return d.y}                    
+    }
+	
     function tick() {
       link
         .attr("x1", function(d) { return d.source.x; })
@@ -148,8 +164,8 @@ HTMLWidgets.widget({
         .attr("y2", function(d) { return d.target.y; });
 
       node
-        .attr("transform", function(d) {
-          return "translate(" + d.x + "," + d.y + ")";
+		.attr("transform", function(d) {
+          return "translate(" + nodeBoxX(d,width) + "," + nodeBoxY(d,height) + ")";
         });
     }
 
@@ -174,7 +190,7 @@ HTMLWidgets.widget({
     }
 	
 	// add legend option
-    if(eval(options.legend)){
+    if(options.legend){
         var legendRectSize = 18;                                  
         var legendSpacing = 4;
         var legend = svg.selectAll('.legend')                     

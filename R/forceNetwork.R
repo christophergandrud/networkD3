@@ -46,7 +46,8 @@
 #' graph elements to be.
 #' @param zoom logical value to enable (\code{TRUE}) or disable (\code{FALSE})
 #' zooming
-#'
+#' @param bounded logical value to enable (\code{TRUE}) or disable (\code{FALSE})
+#' the bounding box
 #' @examples
 #' #### Tabular data example.
 #' # Load data
@@ -81,6 +82,12 @@
 #'              Target = "target", Value = "value", NodeID = "name",
 #'              Group = "group", opacity = 0.4, zoom = TRUE)
 #' }
+#' 
+#' # Create a bounded graph 
+#' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+#'              Target = "target", Value = "value", NodeID = "name",
+#'              Group = "group", opacity = 0.4, bounded = TRUE)
+#' }
 #'
 
 #' @source
@@ -94,7 +101,8 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, Nodesize,
                          fontsize = 7, linkDistance = 50, legend = FALSE, 
                          linkWidth = "function(d) { return Math.sqrt(d.value); }", 
                          radiusCalculation = " Math.sqrt(d.nodesize)+6", 
-                         charge = -120, linkColour = "#666",opacity = 0.6, zoom = FALSE)
+                         charge = -120, linkColour = "#666",opacity = 0.6, zoom = FALSE,
+                         bounded = FALSE)
 {
         # Subset data frames for network graph
         if (!is.data.frame(Links)){
@@ -114,16 +122,13 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, Nodesize,
         if (!missing(Nodesize)){
                 NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group], Nodes[, Nodesize])
                 names(NodesDF) <- c("name", "group", 'nodesize')
-                nodesize = 'true'
+                nodesize = TRUE
         }else{
                 NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
                 names(NodesDF) <- c("name", "group") 
-                nodesize = 'false'
+                nodesize = FALSE
         }
-        if (legend){
-                legend = 'true'
-        }
-        
+
         # create options
         options = list(
                 NodeID = NodeID,
@@ -139,7 +144,8 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, Nodesize,
                 zoom = zoom,
                 legend = legend,
                 nodesize = nodesize,
-                radiusCalculation = radiusCalculation
+                radiusCalculation = radiusCalculation,
+                bounded = bounded
         )
         
         # create widget
