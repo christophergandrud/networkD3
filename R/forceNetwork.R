@@ -36,8 +36,8 @@
 #' possibly to weight by \code{Value}. The default is
 #' \code{linkWidth = "function(d) { return Math.sqrt(d.value); }"}.
 #' @param radiusCalculation character string. A javascript mathematical expression,
-#' to weight the radius by \code{Nodesize}. The default value is 
-#' \code{radiusCalculation = "Math.sqrt(d.nodesize)+6"}. 
+#' to weight the radius by \code{Nodesize}. The default value is
+#' \code{radiusCalculation = "Math.sqrt(d.nodesize)+6"}.
 #' @param charge numeric value indicating either the strength of the node
 #' repulsion (negative value) or attraction (positive value).
 #' @param linkColour character string specifying the colour you want the link
@@ -62,8 +62,8 @@
 #' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
 #'              Nodesize = 'size', radiusCalculation = " Math.sqrt(d.nodesize)+6",
-#'              Group = "group", opacity = 0.4, legend = T) 
-#' 
+#'              Group = "group", opacity = 0.4, legend = T)
+#'
 #' \dontrun{
 #' #### JSON Data Example
 #' # Load data JSON formated data into two R data frames
@@ -81,9 +81,9 @@
 #' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
 #'              Group = "group", opacity = 0.4, zoom = TRUE)
-#' }
-#' 
-#' # Create a bounded graph 
+#'
+#'
+#' # Create a bounded graph
 #' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
 #'              Group = "group", opacity = 0.4, bounded = TRUE)
@@ -98,9 +98,9 @@
 #' @export
 forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, Nodesize,
                          Group, height = NULL, width = NULL, colourScale = "d3.scale.category20()",
-                         fontsize = 7, linkDistance = 50, legend = FALSE, 
-                         linkWidth = "function(d) { return Math.sqrt(d.value); }", 
-                         radiusCalculation = " Math.sqrt(d.nodesize)+6", 
+                         fontsize = 7, linkDistance = 50, legend = FALSE,
+                         linkWidth = "function(d) { return Math.sqrt(d.value); }",
+                         radiusCalculation = " Math.sqrt(d.nodesize)+6",
                          charge = -120, linkColour = "#666",opacity = 0.6, zoom = FALSE,
                          bounded = FALSE)
 {
@@ -125,7 +125,7 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, Nodesize,
                 nodesize = TRUE
         }else{
                 NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
-                names(NodesDF) <- c("name", "group") 
+                names(NodesDF) <- c("name", "group")
                 nodesize = FALSE
         }
 
@@ -147,7 +147,7 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, Nodesize,
                 radiusCalculation = radiusCalculation,
                 bounded = bounded
         )
-        
+
         # create widget
         htmlwidgets::createWidget(
                 name = "forceNetwork",

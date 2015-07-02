@@ -9,11 +9,12 @@ specifically for force directed networks
 \url{https://github.com/mbostock/d3/wiki/Force-Layout}.
 }
 \usage{
-forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Group,
+forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Nodesize, Group,
   height = NULL, width = NULL, colourScale = "d3.scale.category20()",
-  fontsize = 7, linkDistance = 50,
-  linkWidth = "function(d) { return Math.sqrt(d.value); }", charge = -120,
-  linkColour = "#666", opacity = 0.6, zoom = FALSE)
+  fontsize = 7, linkDistance = 50, legend = FALSE,
+  linkWidth = "function(d) { return Math.sqrt(d.value); }",
+  radiusCalculation = " Math.sqrt(d.nodesize)+6", charge = -120,
+  linkColour = "#666", opacity = 0.6, zoom = FALSE, bounded = FALSE)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -36,6 +37,9 @@ variable is allowed.}
 frame for how wide the links are.}
 
 \item{NodeID}{character string specifying the node IDs in the \code{Nodes}
+data frame.}
+
+\item{Nodesize}{integer specifying the node radius in the \code{Nodes}
 data frame.}
 
 \item{Group}{character string specifying the group of each node in the
@@ -62,6 +66,10 @@ pixels (arbitrary relative to the diagram's size). Or a JavaScript function,
 possibly to weight by \code{Value}. The default is
 \code{linkWidth = "function(d) { return Math.sqrt(d.value); }"}.}
 
+\item{radiusCalculation}{character string. A javascript mathematical expression,
+to weight the radius by \code{Nodesize}. The default value is
+\code{radiusCalculation = "Math.sqrt(d.nodesize)+6"}.}
+
 \item{charge}{numeric value indicating either the strength of the node
 repulsion (negative value) or attraction (positive value).}
 
@@ -73,6 +81,9 @@ graph elements to be.}
 
 \item{zoom}{logical value to enable (\code{TRUE}) or disable (\code{FALSE})
 zooming}
+
+\item{bounded}{logical value to enable (\code{TRUE}) or disable (\code{FALSE})
+the bounding box}
 }
 \description{
 Create a D3 JavaScript force directed network graph.
@@ -82,11 +93,16 @@ Create a D3 JavaScript force directed network graph.
 # Load data
 data(MisLinks)
 data(MisNodes)
-
 # Create graph
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4)
+
+# Create graph with legend and varying radius
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Nodesize = 'size', radiusCalculation = " Math.sqrt(d.nodesize)+6",
+             Group = "group", opacity = 0.4, legend = T)
 
 \dontrun{
 #### JSON Data Example
@@ -105,6 +121,12 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4, zoom = TRUE)
+
+
+# Create a bounded graph
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Group = "group", opacity = 0.4, bounded = TRUE)
 }
 }
 
