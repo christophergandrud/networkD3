@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{JS}
 \alias{JS}
-\title{Character strings to evaluate as JavaScript}
+\title{Create character strings that will be evaluated as JavaScript}
 \source{
 A direct import of \code{JS} from Ramnath Vaidyanathan, Yihui Xie,
 JJ Allaire, Joe Cheng and Kenton Russell (2015). \link{htmlwidgets}: HTML
@@ -15,6 +15,6 @@ JS(...)
 \item{...}{character string to evaluate}
 }
 \description{
-Character strings to evaluate as JavaScript
+Create character strings that will be evaluated as JavaScript
 }
 
