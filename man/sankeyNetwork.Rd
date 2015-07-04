@@ -10,7 +10,7 @@ specifically for Sankey diagrams \url{http://bost.ocks.org/mike/sankey/}.
 \usage{
 sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, height = NULL,
   width = NULL, colourScale = JS("d3.scale.category20()"), fontSize = 7,
-  nodeWidth = 15, nodePadding = 10)
+  fontFamily = "serif", nodeWidth = 15, nodePadding = 10)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -44,6 +44,8 @@ scale for the nodes. See
 \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.}
 
 \item{fontSize}{numeric font size in pixels for the node text labels.}
+
+\item{fontFamily}{font family for the node text labels.}
 
 \item{nodeWidth}{numeric width of each node.}
 
