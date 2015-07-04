@@ -2,6 +2,7 @@
 
 ## Version 0.1.7.1
 
+- Add fontFamily option for forceNetwork and simpleNetwork, and remove hard coded serif from sankeyNetwork and treeNetwork
 
 ## Version 0.1.7
 
