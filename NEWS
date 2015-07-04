@@ -1,5 +1,8 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.1.7.1
+
+
 ## Version 0.1.7
 
 - Include `JS` from htmlwidgets, to make it easier for users to pass arbitrary 
