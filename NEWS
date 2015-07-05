@@ -1,5 +1,11 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.1.3-1
+
+- Added `bounded` argument to `forceNetwork` to allow the user to created a
+bounding box for the plot. See http://bl.ocks.org/mbostock/1129492.
+Thank you to Charles Sese.
+
 ## Version 0.1.3
 
 - `zoom` argument added to `simpleNetwork` and `forceNetwork` to allow zooming.

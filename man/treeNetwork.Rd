@@ -51,7 +51,8 @@ Create Reingold-Tilford Tree network diagrams.
 #### Create tree from JSON formatted data
 ## Download JSON data
 library(RCurl)
-Flare <- getURL("https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/flare.json")
+URL <- paste0('https://raw.githubusercontent.com/christophergandrud/',
+             'networkD3/master/JSONdata/flare.json')
 
 ## Convert to list format
 Flare <- rjson::fromJSON(Flare)

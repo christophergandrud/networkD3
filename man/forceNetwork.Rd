@@ -61,13 +61,15 @@ diagram's size). Or a JavaScript function, possibly to weight by
 \code{Value}. For example:
 \code{linkDistance = "function(d){return d.value * 10}"}.}
 
+\item{legend}{logical. Whether or not to include a node colour legend.}
+
 \item{linkWidth}{numeric or character string. Can be a numeric fixed width in
 pixels (arbitrary relative to the diagram's size). Or a JavaScript function,
 possibly to weight by \code{Value}. The default is
 \code{linkWidth = "function(d) { return Math.sqrt(d.value); }"}.}
 
-\item{radiusCalculation}{character string. A javascript mathematical expression,
-to weight the radius by \code{Nodesize}. The default value is
+\item{radiusCalculation}{character string. A javascript mathematical
+expression, to weight the radius by \code{Nodesize}. The default value is
 \code{radiusCalculation = "Math.sqrt(d.nodesize)+6"}.}
 
 \item{charge}{numeric value indicating either the strength of the node
@@ -82,8 +84,9 @@ graph elements to be.}
 \item{zoom}{logical value to enable (\code{TRUE}) or disable (\code{FALSE})
 zooming}
 
-\item{bounded}{logical value to enable (\code{TRUE}) or disable (\code{FALSE})
-the bounding box}
+\item{bounded}{logical value to enable (\code{TRUE}) or disable
+(\code{FALSE}) the bounding box limiting the graph's extent. See
+\url{http://bl.ocks.org/mbostock/1129492}.}
 }
 \description{
 Create a D3 JavaScript force directed network graph.
@@ -101,14 +104,17 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 # Create graph with legend and varying radius
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
-             Nodesize = 'size', radiusCalculation = " Math.sqrt(d.nodesize)+6",
-             Group = "group", opacity = 0.4, legend = T)
+             Nodesize = 'size',
+             radiusCalculation = " Math.sqrt(d.nodesize)+6",
+             Group = "group", opacity = 0.4, legend = TRUE)
 
 \dontrun{
 #### JSON Data Example
 # Load data JSON formated data into two R data frames
 library(RCurl)
-MisJson <- getURL("https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/flare.json")
+URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
+              "networkD3/master/JSONdata/miserables.json")
+
 MisLinks <- JSONtoDF(jsonStr = MisJson, array = "links")
 MisNodes <- JSONtoDF(jsonStr = MisJson, array = "nodes")
 
