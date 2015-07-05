@@ -118,7 +118,7 @@ HTMLWidgets.widget({
     node.append("text")
       .attr("x", 12)
       .attr("dy", ".35em")
-      .style("font", x.options.fontSize + "px serif")
+      .style("font", x.options.fontSize + "px " + x.options.fontFamily)
       .style("fill", x.options.textColour)
       .style("opacity", x.options.opacity)
       .style("pointer-events", "none")
@@ -158,7 +158,7 @@ HTMLWidgets.widget({
         .style("stroke-width", ".5px")
         .style("opacity", 1)
         .style("fill", x.options.nodeClickColour)
-        .style("font", x.options.clickTextSize + "px serif");
+        .style("font", x.options.clickTextSize + "px " + x.options.fontFamily);
       d3.select(this).select("circle").transition()
         .duration(750)
         .style("fill", x.options.nodeClickColour)
@@ -178,7 +178,7 @@ HTMLWidgets.widget({
         .style("fill", x.options.nodeClickColour)
         .style("stroke", "none")
         .style("opacity", x.options.opacity)
-        .style("font", x.options.fontSize + "px serif");
+        .style("font", x.options.fontSize + "px " + x.options.fontFamily);
     }
   },
 });

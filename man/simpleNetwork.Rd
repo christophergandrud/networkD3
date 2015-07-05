@@ -11,7 +11,7 @@ D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
 \usage{
 simpleNetwork(Data, Source = NULL, Target = NULL, height = NULL,
   width = NULL, linkDistance = 50, charge = -200, fontSize = 7,
-  linkColour = "#666", nodeColour = "#3182bd",
+  fontFamily = "serif", linkColour = "#666", nodeColour = "#3182bd",
   nodeClickColour = "#E34A33", textColour = "#3182bd", opacity = 0.6,
   zoom = F)
 }
@@ -41,6 +41,8 @@ arbitrary relative to the diagram's size).}
 repulsion (negative value) or attraction (positive value).}
 
 \item{fontSize}{numeric font size in pixels for the node text labels.}
+
+\item{fontFamily}{font family for the node text labels.}
 
 \item{linkColour}{character string specifying the colour you want the link
 lines to be. Multiple formats supported (e.g. hexadecimal).}
@@ -73,5 +75,6 @@ NetworkData <- data.frame(Source, Target)
 
 # Create graph
 simpleNetwork(NetworkData)
+simpleNetwork(NetworkData, fontFamily = "sans serif")
 }
 
