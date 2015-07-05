@@ -72,7 +72,7 @@
 #' library(RCurl)
 #' # Create URL. paste0 used purely to keep within line width.
 #' URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
-#'                "networkD3/master/JSONdata/flare.json")
+#'               "networkD3/master/JSONdata/miserables.json")
 #' MisJson <- getURL(URL)
 #'
 #' MisLinks <- JSONtoDF(jsonStr = MisJson, array = "links")
