@@ -24,17 +24,17 @@ HTMLWidgets.widget({
 
   renderValue: function(el, x, force) {
 
-  // Compute the node radius  using the javascript math expression specified    
+  // Compute the node radius  using the javascript math expression specified
     function nodeSize(d) {
-            if(eval(options.nodesize)){
+            if(options.nodesize){
                     return eval(options.radiusCalculation);
-                    
+
             }else{
                     return 6}
-            
+
     }
-	
-	
+
+
     // alias options
     var options = x.options;
 
@@ -47,7 +47,7 @@ HTMLWidgets.widget({
     var height = el.offsetHeight;
 
     var color = eval(options.colourScale);
-    
+
     // set this up even if zoom = F
     var zoom = d3.behavior.zoom();
 
@@ -60,16 +60,16 @@ HTMLWidgets.widget({
       .charge(options.charge)
       .on("tick", tick)
       .start();
-     
+
     // thanks http://plnkr.co/edit/cxLlvIlmo1Y6vJyPs6N9?p=preview
     //  http://stackoverflow.com/questions/22924253/adding-pan-zoom-to-d3js-force-directed
-  	var drag = force.drag()
-	    .on("dragstart", dragstart)
-	  // allow force drag to work with pan/zoom drag
-	  function dragstart(d) {
-  	  d3.event.sourceEvent.preventDefault();
-  	  d3.event.sourceEvent.stopPropagation();
-  	}
+      var drag = force.drag()
+        .on("dragstart", dragstart)
+      // allow force drag to work with pan/zoom drag
+      function dragstart(d) {
+        d3.event.sourceEvent.preventDefault();
+        d3.event.sourceEvent.stopPropagation();
+      }
 
     // select the svg element and remove existing children
     var svg = d3.select(el).select("svg");
@@ -77,8 +77,8 @@ HTMLWidgets.widget({
     // add two g layers; the first will be zoom target if zoom = T
     //  fine to have two g layers even if zoom = F
     svg = svg
-	    .append("g").attr("class","zoom-layer")
-	    .append("g")
+        .append("g").attr("class","zoom-layer")
+        .append("g")
 
     // add zooming if requested
     if (options.zoom) {
@@ -88,7 +88,7 @@ HTMLWidgets.widget({
           "translate(" + d3.event.translate + ")"+
           " scale(" + d3.event.scale + ")");
       }
-      
+
       d3.select(el).select("svg")
         .attr("pointer-events", "all")
         .call(zoom);
@@ -140,6 +140,22 @@ HTMLWidgets.widget({
       .style("opacity", 0)
       .style("pointer-events", "none");
 
+    // Add the option for a bounded box
+    function nodeBoxX(d,width) {
+        if(options.bounded){
+            var dx = Math.max(nodeSize(d), Math.min(width - nodeSize(d), d.x));
+            return dx;
+        }else{
+            return d.x}
+    }
+    function nodeBoxY(d,width) {
+        if(options.bounded){
+            var dy = Math.max(nodeSize(d), Math.min(height - nodeSize(d), d.y));
+            return dy;
+        }else{
+            return d.y}
+    }
+
     function tick() {
       link
         .attr("x1", function(d) { return d.source.x; })
@@ -149,7 +165,7 @@ HTMLWidgets.widget({
 
       node
         .attr("transform", function(d) {
-          return "translate(" + d.x + "," + d.y + ")";
+          return "translate(" + nodeBoxX(d,width) + "," + nodeBoxY(d,height) + ")";
         });
     }
 
@@ -172,34 +188,34 @@ HTMLWidgets.widget({
       d3.select(this).select("text").transition()
         .style("opacity", 0);
     }
-	
-	// add legend option
-    if(eval(options.legend)){
-        var legendRectSize = 18;                                  
-        var legendSpacing = 4;
-        var legend = svg.selectAll('.legend')                     
-          .data(color.domain())                                   
-          .enter()                                                
-          .append('g')                                            
-          .attr('class', 'legend')                                
-          .attr('transform', function(d, i) {                     
-            var height = legendRectSize + legendSpacing;          
-            var offset =  height * color.domain().length / 2;     
-            var horz = legendRectSize;                       
-            var vert = i * height+4;                       
-            return 'translate(' + horz + ',' + vert + ')';        
-          });                                                   
 
-        legend.append('rect')                                     
-          .attr('width', legendRectSize)                          
-          .attr('height', legendRectSize)                         
-          .style('fill', color)                                   
-          .style('stroke', color);                                
-          
-        legend.append('text')                                     
-          .attr('x', legendRectSize + legendSpacing)              
-          .attr('y', legendRectSize - legendSpacing)              
-          .text(function(d) { return d; }); 
+    // add legend option
+    if(options.legend){
+        var legendRectSize = 18;
+        var legendSpacing = 4;
+        var legend = svg.selectAll('.legend')
+          .data(color.domain())
+          .enter()
+          .append('g')
+          .attr('class', 'legend')
+          .attr('transform', function(d, i) {
+            var height = legendRectSize + legendSpacing;
+            var offset =  height * color.domain().length / 2;
+            var horz = legendRectSize;
+            var vert = i * height+4;
+            return 'translate(' + horz + ',' + vert + ')';
+          });
+
+        legend.append('rect')
+          .attr('width', legendRectSize)
+          .attr('height', legendRectSize)
+          .style('fill', color)
+          .style('stroke', color);
+
+        legend.append('text')
+          .attr('x', legendRectSize + legendSpacing)
+          .attr('y', legendRectSize - legendSpacing)
+          .text(function(d) { return d; });
     }
   },
 });
