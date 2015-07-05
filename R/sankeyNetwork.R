@@ -22,6 +22,7 @@
 #' scale for the nodes. See
 #' \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.
 #' @param fontSize numeric font size in pixels for the node text labels.
+#' @param fontFamily font family for the node text labels.
 #' @param nodeWidth numeric width of each node.
 #' @param nodePadding numeric essentially influences the width height.
 #'
@@ -63,6 +64,7 @@ sankeyNetwork <- function(Links,
                           width = NULL,
                           colourScale = JS("d3.scale.category20()"),
                           fontSize = 7,
+                          fontFamily = "serif",
                           nodeWidth = 15,
                           nodePadding = 10)
 {
@@ -92,6 +94,7 @@ sankeyNetwork <- function(Links,
         NodeID = NodeID,
         colourScale = colourScale,
         fontSize = fontSize,
+        fontFamily = fontFamily,
         nodeWidth = nodeWidth,
         nodePadding = nodePadding
     )

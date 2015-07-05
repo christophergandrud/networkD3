@@ -136,7 +136,7 @@ HTMLWidgets.widget({
       .attr("dx", 12)
       .attr("dy", ".35em")
       .text(function(d) { return d.name })
-      .style("font", options.fontSize + "px serif")
+      .style("font", options.fontSize + "px " + options.fontFamily)
       .style("opacity", 0)
       .style("pointer-events", "none");
 
@@ -177,7 +177,7 @@ HTMLWidgets.widget({
         .duration(750)
         .attr("x", 13)
         .style("stroke-width", ".5px")
-        .style("font", options.clickTextSize + "px serif")
+        .style("font", options.clickTextSize + "px " + options.fontFamily)
         .style("opacity", 1);
     }
 

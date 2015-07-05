@@ -6,6 +6,7 @@
 #' @param width numeric width for the network graph's frame area in pixels (if
 #'   \code{NULL} then width is automatically determined based on context)
 #' @param fontSize numeric font size in pixels for the node text labels.
+#' @param fontFamily font family for the node text labels.
 #' @param linkColour character string specifying the colour you want the link
 #' lines to be. Multiple formats supported (e.g. hexadecimal).
 #' @param nodeColour character string specifying the colour you want the node
@@ -39,6 +40,7 @@
 #' #### Create a tree dendrogram from an R hclust object
 #' hc <- hclust(dist(USArrests), "ave")
 #' treeNetwork(as.treeNetwork(hc))
+#' treeNetwork(as.treeNetwork(hc), fontFamily = "Arial")
 #'
 #' #### Create tree from a hierarchical R list
 #' For an alternative structure see: http://stackoverflow.com/a/30747323/1705044
@@ -89,6 +91,7 @@ treeNetwork <- function(
                           height = NULL,
                           width = NULL,
                           fontSize = 10,
+                          fontFamily = "serif",
                           linkColour = "#ccc",
                           nodeColour = "#fff",
                           nodeStroke = "steelblue",
@@ -106,6 +109,7 @@ treeNetwork <- function(
         height = height,
         width = width,
         fontSize = fontSize,
+        fontFamily = fontFamily,
         linkColour = linkColour,
         nodeColour = nodeColour,
         nodeStroke = nodeStroke,

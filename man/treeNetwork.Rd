@@ -11,8 +11,9 @@ Mike Bostock: \url{http://bl.ocks.org/mbostock/4063550}.
 }
 \usage{
 treeNetwork(List, height = NULL, width = NULL, fontSize = 10,
-  linkColour = "#ccc", nodeColour = "#fff", nodeStroke = "steelblue",
-  textColour = "#111", opacity = 0.9, margin = 0)
+  fontFamily = "serif", linkColour = "#ccc", nodeColour = "#fff",
+  nodeStroke = "steelblue", textColour = "#111", opacity = 0.9,
+  margin = 0)
 }
 \arguments{
 \item{List}{a hierarchical list object with a root node and children.}
@@ -24,6 +25,8 @@ treeNetwork(List, height = NULL, width = NULL, fontSize = 10,
 \code{NULL} then width is automatically determined based on context)}
 
 \item{fontSize}{numeric font size in pixels for the node text labels.}
+
+\item{fontFamily}{font family for the node text labels.}
 
 \item{linkColour}{character string specifying the colour you want the link
 lines to be. Multiple formats supported (e.g. hexadecimal).}
@@ -65,6 +68,7 @@ treeNetwork(List = Flare, fontSize = 10, opacity = 0.9)
 #### Create a tree dendrogram from an R hclust object
 hc <- hclust(dist(USArrests), "ave")
 treeNetwork(as.treeNetwork(hc))
+treeNetwork(as.treeNetwork(hc), fontFamily = "Arial")
 
 #### Create tree from a hierarchical R list
 For an alternative structure see: http://stackoverflow.com/a/30747323/1705044

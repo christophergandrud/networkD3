@@ -21,6 +21,7 @@
 #' @param charge numeric value indicating either the strength of the node
 #'   repulsion (negative value) or attraction (positive value).
 #' @param fontSize numeric font size in pixels for the node text labels.
+#' @param fontFamily font family for the node text labels.
 #' @param linkColour character string specifying the colour you want the link
 #'   lines to be. Multiple formats supported (e.g. hexadecimal).
 #' @param nodeColour character string specifying the colour you want the node
@@ -43,6 +44,7 @@
 #'
 #' # Create graph
 #' simpleNetwork(NetworkData)
+#' simpleNetwork(NetworkData, fontFamily = "sans serif")
 #'
 #' @source D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
 #'   more specifically for directed networks
@@ -57,6 +59,7 @@ simpleNetwork <- function(Data,
                           linkDistance = 50,
                           charge = -200,
                           fontSize = 7,
+                          fontFamily = "serif",
                           linkColour = "#666",
                           nodeColour = "#3182bd",
                           nodeClickColour = "#E34A33",
@@ -80,6 +83,7 @@ simpleNetwork <- function(Data,
         linkDistance = linkDistance,
         charge = charge,
         fontSize = fontSize,
+        fontFamily = fontFamily,
         linkColour = linkColour,
         nodeColour = nodeColour,
         nodeClickColour = nodeClickColour,
