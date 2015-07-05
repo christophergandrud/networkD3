@@ -14,7 +14,8 @@ forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Nodesize, Group,
   fontSize = 7, linkDistance = 50,
   linkWidth = JS("function(d) { return Math.sqrt(d.value); }"),
   radiusCalculation = JS(" Math.sqrt(d.nodesize)+6"), charge = -120,
-  linkColour = "#666", opacity = 0.6, zoom = FALSE, legend = FALSE)
+  linkColour = "#666", opacity = 0.6, zoom = FALSE, legend = FALSE,
+  bounded = FALSE)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -84,6 +85,10 @@ graph elements to be.}
 zooming}
 
 \item{legend}{logical value to enable node colour legends.}
+
+\item{bounded}{logical value to enable (\code{TRUE}) or disable
+(\code{FALSE}) the bounding box limiting the graph's extent. See
+\url{http://bl.ocks.org/mbostock/1129492}.}
 }
 \description{
 Create a D3 JavaScript force directed network graph.
@@ -111,7 +116,7 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 library(RCurl)
 # Create URL. paste0 used purely to keep within line width.
 URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
-               "networkD3/master/JSONdata/flare.json")
+              "networkD3/master/JSONdata/miserables.json")
 MisJson <- getURL(URL)
 
 MisLinks <- JSONtoDF(jsonStr = MisJson, array = "links")
@@ -126,6 +131,12 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4, zoom = TRUE)
+
+
+# Create a bounded graph
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Group = "group", opacity = 0.4, bounded = TRUE)
 }
 }
 \seealso{

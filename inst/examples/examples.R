@@ -14,13 +14,19 @@ data(MisNodes)
 # Create graph
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
-             Group = "group", opacity = 0.4)
+             Group = "group", opacity = 1, zoom = F, bounded = T)
 
 # Create graph with legend and varying radius
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
+             Nodesize = 'size', radiusCalculation = "d.nodesize",
+             Group = "group", opacity = 1, legend = T, bounded = F) 
+
+# Create graph with legend and varying radius and a bounded box
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
              Nodesize = 'size', radiusCalculation = " Math.sqrt(d.nodesize)+6",
-             Group = "group", opacity = 0.4, legend = T) 
+             Group = "group", opacity = 1, legend = T, bounded = T) 
 
 # sankeyNetwork
 library(RCurl)

@@ -1,15 +1,21 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.1.8
+
+- Added `bounded` argument to `forceNetwork` to allow the user to created a
+bounding box for the plot. See http://bl.ocks.org/mbostock/1129492.
+Thank you to Charles Sese.
+
 ## Version 0.1.7
 
-- Include `JS` from htmlwidgets, to make it easier for users to pass arbitrary 
-JS to more arguments. 
+- Include `JS` from htmlwidgets, to make it easier for users to pass arbitrary
+JS to more arguments.
 
 - Other internal code and documentation improvements.
 
 ## Version 0.1.6
 
-- `fontSize` used for all functions rather than `fontsize`. Thank you to 
+- `fontSize` used for all functions rather than `fontsize`. Thank you to
 @Hunter-Github for spotting this inconsistency.
 
 ## Version 0.1.5

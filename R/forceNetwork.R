@@ -48,6 +48,9 @@
 #' @param zoom logical value to enable (\code{TRUE}) or disable (\code{FALSE})
 #' zooming
 #' @param legend logical value to enable node colour legends.
+#' @param bounded logical value to enable (\code{TRUE}) or disable
+#' (\code{FALSE}) the bounding box limiting the graph's extent. See
+#' \url{http://bl.ocks.org/mbostock/1129492}.
 #'
 #' @examples
 #' #### Tabular data example.
@@ -87,6 +90,12 @@
 #' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
 #'              Group = "group", opacity = 0.4, zoom = TRUE)
+#'
+#'
+#' # Create a bounded graph
+#' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+#'              Target = "target", Value = "value", NodeID = "name",
+#'              Group = "group", opacity = 0.4, bounded = TRUE)
 #' }
 #'
 
@@ -116,7 +125,8 @@ forceNetwork <- function(Links,
                          linkColour = "#666",
                          opacity = 0.6,
                          zoom = FALSE,
-                         legend = FALSE)
+                         legend = FALSE,
+                         bounded = FALSE)
 {
         # Hack for UI consistency. Think of improving.
         colourScale <- as.character(colourScale)
@@ -138,19 +148,14 @@ forceNetwork <- function(Links,
                 LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
                 names(LinksDF) <- c("source", "target", "value")
         }
-        if (!missing(Nodesize)) {
-                NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group],
-                                        Nodes[, Nodesize])
+        if (!missing(Nodesize)){
+                NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group], Nodes[, Nodesize])
                 names(NodesDF) <- c("name", "group", "nodesize")
-                nodesize = 'true'
-        }
-        else{
+                nodesize = TRUE
+        }else{
                 NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
                 names(NodesDF) <- c("name", "group")
-                nodesize = 'false'
-        }
-        if (legend) {
-                legend = 'true'
+                nodesize = FALSE
         }
 
         # create options
@@ -168,7 +173,8 @@ forceNetwork <- function(Links,
                 zoom = zoom,
                 legend = legend,
                 nodesize = nodesize,
-                radiusCalculation = radiusCalculation
+                radiusCalculation = radiusCalculation,
+                bounded = bounded
         )
 
         # create widget
