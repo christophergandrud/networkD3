@@ -1,0 +1,5 @@
+dependencies:
+  - name: d3
+    version: 3.5.2
+    src: "htmlwidgets/lib/d3-3.5.2"
+    script: d3.min.js
