@@ -1,15 +1,14 @@
 # All changes to networkD3 are documented here.
 
 
-
 ## Version 0.1.8
 
 - Added `bounded` argument to `forceNetwork` to allow the user to created a
 bounding box for the plot. See http://bl.ocks.org/mbostock/1129492.
-Thank you to Charles Sese.
+Thanks to Charles Sese.
 
-- Add fontFamily option for forceNetwork, simpleNetwork, sankeyNetwork and treeNetwork
-Thanks to Peter Ellis.
+- Add `fontFamily` argument for `forceNetwork`, `simpleNetwork`, 
+`sankeyNetwork`, and `treeNetwork`. Thanks to Peter Ellis.
 
 ## Version 0.1.7
 
