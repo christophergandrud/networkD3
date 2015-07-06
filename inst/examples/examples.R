@@ -39,3 +39,7 @@ sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
 Flare <- RCurl::getURL("https://gist.githubusercontent.com/mbostock/4063550/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json")
 Flare <- rjson::fromJSON(Flare)
 treeNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0)
+
+# clusterNetwork
+hc <- hclust(dist(USArrests), "ave")
+clusterNetwork(as.clusterNetwork(hc))
