@@ -29,6 +29,12 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              fontFamily = "Arial")
 
 
+# With Arial font, and node text faintly visible when not hovered over
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Group = "group", opacity = 1, zoom = F, bounded = T,
+             fontFamily = "Arial", opacityNoHover = 0.3)
+
 # Create graph with legend and varying radius
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
