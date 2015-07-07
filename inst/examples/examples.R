@@ -22,11 +22,12 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 1, zoom = F, bounded = T)
 
-# With a different font
+# With a different font, and dimensions chosen to illustrate bounded box
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 1, zoom = F, bounded = T,
-             fontFamily = "cursive")
+             fontFamily = "cursive",
+             width = 1500, height = 300)
 
 
 # Create graph with legend and varying radius
