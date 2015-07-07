@@ -63,13 +63,11 @@ HTMLWidgets.widget({
       .attr("transform", "translate(" + left + "," + top + ")");
       
     if (x.options.zoom) {
-       zoom.on("zoom", redraw);
-       
-       function redraw() {
+       zoom.on("zoom", function() {
          d3.select(el).select(".zoom-layer").attr("transform",
            "translate(" + d3.event.translate + ")"+
            " scale(" + d3.event.scale + ")");
-       }
+       })
 
        d3.select(el).select("svg")
          .attr("pointer-events", "all")
@@ -116,9 +114,6 @@ HTMLWidgets.widget({
     fxinv = d3.scale.linear().domain([ymin, ymax]).range([0, width]);           
     fx = d3.scale.linear().domain([ymax, ymin]).range([0, width]);
 
-    var diagonal = d3.svg.diagonal()
-      .projection(function(d) { return [fx(d.y), d.x]; });
-
     // draw links
     var link = svg.selectAll(".link")
       .data(links)
@@ -126,8 +121,17 @@ HTMLWidgets.widget({
       .style("fill", "none")
       .style("stroke", "#ccc")
       .style("opacity", "0.55")
-      .style("stroke-width", "1.5px")
-      .attr("d", diagonal);
+      .style("stroke-width", "1.5px");
+      
+    if (x.options.linkType == "elbow") {
+      link.attr("d", function(d, i) {
+        return "M" + fx(d.source.y) + "," + d.source.x
+          + "V" + d.target.x + "H" + fx(d.target.y);
+      });
+    } else {
+      link.attr("d", d3.svg.diagonal()
+        .projection(function(d) { return [fx(d.y), d.x]; }));
+    }
 
     // draw nodes
     var node = svg.selectAll(".node")
