@@ -21,6 +21,8 @@
 #' @param margins numeric value or named list of plot margins 
 #'  (top, right, bottom, left). Set the margin appropriately to accomodate 
 #'  long text labels.
+#' @param linkType character specifying the link type between points. Options 
+#'  are 'elbow' and 'diagonal'.
 #' @param zoom logical enabling plot zoom and pan
 #'
 #'
@@ -51,6 +53,7 @@ clusterNetwork <- function(
   textOpacity = 0.9,
   opacity = 0.9,
   margins = NULL,
+  linkType = c("elbow", "diagonal"),
   zoom = TRUE)
 {
     # validate input
@@ -80,6 +83,7 @@ clusterNetwork <- function(
         nodeStroke = nodeStroke,
         margins = margins,
         opacity = opacity,
+        linkType = linkType[1],
         zoom = zoom
     )
 
