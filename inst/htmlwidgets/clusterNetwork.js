@@ -67,7 +67,7 @@ HTMLWidgets.widget({
          d3.select(el).select(".zoom-layer").attr("transform",
            "translate(" + d3.event.translate + ")"+
            " scale(" + d3.event.scale + ")");
-       })
+       });
 
        d3.select(el).select("svg")
          .attr("pointer-events", "all")
