@@ -7,11 +7,11 @@ target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
 networkData <- data.frame(src, target)
 simpleNetwork(networkData)
 
-# with R's sans serif font (might not be recognised in browser; works in RStudio pane)
-simpleNetwork(networkData, fontFamily = "sans serif")
+# with sans-serif 
+simpleNetwork(networkData, fontFamily = "sans-serif")
 
-# with Arial (works in browser as well):
-simpleNetwork(networkData, fontFamily = "Arial")
+# with another font 
+simpleNetwork(networkData, fontFamily = "fantasy")
 
 # forceNetwork 
 data(MisLinks)
@@ -22,11 +22,11 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 1, zoom = F, bounded = T)
 
-# With Arial font
+# With a different font
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 1, zoom = F, bounded = T,
-             fontFamily = "Arial")
+             fontFamily = "cursive")
 
 
 # Create graph with legend and varying radius
@@ -58,10 +58,10 @@ sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
               Target = "target", Value = "value", NodeID = "name",
               fontSize = 12, nodeWidth = 30)
 
-# And with Arial font
+# And with a different font
 sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
               Target = "target", Value = "value", NodeID = "name",
-              fontSize = 12, nodeWidth = 30, fontFamily = "Arial")
+              fontSize = 12, nodeWidth = 30, fontFamily = "monospace")
 
 
 # treeNetwork
@@ -69,5 +69,5 @@ Flare <- RCurl::getURL("https://gist.githubusercontent.com/mbostock/4063550/raw/
 Flare <- rjson::fromJSON(Flare)
 treeNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0)
 
-# and with Arial font
-treeNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0, fontFamily = "Arial")
+# and with a different font
+treeNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0, fontFamily = "sans-serif")

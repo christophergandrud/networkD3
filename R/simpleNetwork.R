@@ -44,7 +44,7 @@
 #'
 #' # Create graph
 #' simpleNetwork(NetworkData)
-#' simpleNetwork(NetworkData, fontFamily = "sans serif")
+#' simpleNetwork(NetworkData, fontFamily = "sans-serif")
 #'
 #' @source D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
 #'   more specifically for directed networks
