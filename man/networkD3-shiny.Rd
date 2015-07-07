@@ -8,7 +8,7 @@
 \alias{renderSankeyNetwork}
 \alias{renderSimpleNetwork}
 \alias{renderTreeNetwork}
-\alias{renderclusterNetwork}
+\alias{renderClusterNetwork}
 \alias{sankeyNetworkOutput}
 \alias{simpleNetworkOutput}
 \alias{treeNetworkOutput}
@@ -16,7 +16,7 @@
 \usage{
 clusterNetworkOutput(outputId, width = "100\%", height = "800px")
 
-renderclusterNetwork(expr, env = parent.frame(), quoted = FALSE)
+renderClusterNetwork(expr, env = parent.frame(), quoted = FALSE)
 
 forceNetworkOutput(outputId, width = "100\%", height = "500px")
 
