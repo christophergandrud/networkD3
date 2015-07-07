@@ -107,7 +107,7 @@ clusterNetworkOutput <- function(outputId, width = "100%", height = "800px") {
 
 #' @rdname networkD3-shiny
 #' @export
-renderclusterNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
+renderClusterNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
   shinyRenderWidget(expr, clusterNetworkOutput, env, quoted = TRUE)
 }
