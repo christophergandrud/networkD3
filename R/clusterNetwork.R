@@ -32,10 +32,18 @@
 #'
 #' @examples
 #' \dontrun{
-#' clusterNetwork(hc, height = 800, margin = 250)
-#'
+#' hc <- hclust(dist(USArrests), "ave")
+#' 
+#' clusterNetwork(hc, height = 600)
+#' clusterNetwork(hc, treeOrientation = "vertical")
+#' 
+#' clusterNetwork(hc, height = 600, linkType = "diagonal")
+#' clusterNetwork(hc, treeOrientation = "vertical", linkType = "diagonal")
+#' 
 #' clusterNetwork(hc, textColour = c("red", "green", "orange")[cutree(hc, 3)],
-#'                height = 800)
+#'                height = 600)
+#' clusterNetwork(hc, textColour = c("red", "green", "orange")[cutree(hc, 3)],
+#'                treeOrientation = "vertical")
 #' }
 #'
 #' @source Mike Bostock: \url{http://bl.ocks.org/mbostock/4063570}.
