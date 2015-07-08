@@ -16,13 +16,17 @@
 #' @param textOpacity numeric vector or scalar of the proportion opaque you 
 #' would like the text to be before they are clicked. rder should match the 
 #' order of \code{hclust$labels}.
+#' @param textRotate numeric degress to rotate text for node text. Default 
+#' is 0 for horizontal and 65 degrees for vertical.
 #' @param opacity numeric value of the proportion opaque you would like the
 #' graph elements to be.
 #' @param margins numeric value or named list of plot margins 
-#'  (top, right, bottom, left). Set the margin appropriately to accomodate 
-#'  long text labels.
+#' (top, right, bottom, left). Set the margin appropriately to accomodate 
+#' long text labels.
 #' @param linkType character specifying the link type between points. Options 
-#'  are 'elbow' and 'diagonal'.
+#' are 'elbow' and 'diagonal'.
+#' @param treeOrientation character specifying the tree orientation, Options 
+#' are 'vertical' and 'horizontal'.
 #' @param zoom logical enabling plot zoom and pan
 #'
 #'
@@ -51,55 +55,69 @@ clusterNetwork <- function(
   nodeStroke = "steelblue",
   textColour = "#111",
   textOpacity = 0.9,
+  textRotate = NULL,
   opacity = 0.9,
   margins = NULL,
   linkType = c("elbow", "diagonal"),
+  treeOrientation = c("horizontal", "vertical"),
   zoom = TRUE)
 {
-    # validate input
-    if (length(textColour) == 1L)
-      textColour = rep(textColour, length(hc$labels))
-    if (length(textOpacity) == 1L)
-      textOpacity = rep(textOpacity, length(hc$labels))
-    root <- toJSON(as.clusterNetwork(hc, textColour, textOpacity))
-
+  # validate input
+  if (length(textColour) == 1L)
+    textColour = rep(textColour, length(hc$labels))
+  if (length(textOpacity) == 1L)
+    textOpacity = rep(textOpacity, length(hc$labels))
+  
+  linkType = match.arg(linkType[1], c("elbow", "diagonal"))
+  treeOrientation = match.arg(treeOrientation[1], c("horizontal", "vertical"))
+  
+  root <- toJSON(as.clusterNetwork(hc, textColour, textOpacity))
+  
+  if (treeOrientation == "vertical")
+    margins_def = list(top = 40, right = 40, bottom = 150, left = 40)
+  else
     margins_def = list(top = 40, right = 150, bottom = 40, left = 40)
-    if (length(margins) == 1L && is.numeric(margins)) {
-      margins = as.list(setNames(rep(margins, 4), 
-                                 c("top", "right", "bottom", "left")))
-    } else if (is.null(margins)) {
-      margins = margins_def
-    } else {
-      margins = modifyList(margins_def, margins)
-    } 
-    
-    # create options
-    options = list(
-        height = height,
-        width = width,
-        fontSize = fontSize,
-        linkColour = linkColour,
-        nodeColour = nodeColour,
-        nodeStroke = nodeStroke,
-        margins = margins,
-        opacity = opacity,
-        linkType = linkType[1],
-        zoom = zoom
-    )
-
-    # create widget
-    htmlwidgets::createWidget(
-      name = "clusterNetwork",
-      x = list(root = root, options = options),
-      width = width,
-      height = height,
-      htmlwidgets::sizingPolicy(viewer.suppress = TRUE,
-                                browser.fill = TRUE,
-                                browser.padding = 75,
-                                knitr.figure = FALSE,
-                                knitr.defaultWidth = 800,
-                                knitr.defaultHeight = 500),
-      package = "networkD3")
+  if (length(margins) == 1L && is.numeric(margins)) {
+    margins = as.list(setNames(rep(margins, 4), 
+                               c("top", "right", "bottom", "left")))
+  } else if (is.null(margins)) {
+    margins = margins_def
+  } else {
+    margins = modifyList(margins_def, margins)
+  }
+  
+  if (is.null(textRotate))
+    textRotate = ifelse(treeOrientation == "vertical", 65, 0)
+  
+  # create options
+  options = list(
+    height = height,
+    width = width,
+    fontSize = fontSize,
+    linkColour = linkColour,
+    nodeColour = nodeColour,
+    nodeStroke = nodeStroke,
+    textRotate = textRotate,
+    margins = margins,
+    opacity = opacity,
+    linkType = linkType,
+    treeOrientation = treeOrientation,
+    zoom = zoom
+  )
+  
+  # create widget
+  htmlwidgets::createWidget(
+    name = "clusterNetwork",
+    x = list(root = root, options = options),
+    width = width,
+    height = height,
+    htmlwidgets::sizingPolicy(viewer.suppress = TRUE,
+                              browser.fill = TRUE,
+                              browser.padding = 75,
+                              knitr.figure = FALSE,
+                              knitr.defaultWidth = 800,
+                              knitr.defaultHeight = 500),
+    package = "networkD3")
 }
 
 #' @rdname networkD3-shiny

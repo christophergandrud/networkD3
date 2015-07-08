@@ -30,7 +30,11 @@ HTMLWidgets.widget({
     height = height - top - bottom;
     width = width - right - left;
 
-    tree.size([height, width]);
+    if (s.attr("treeOrientation") == "horizontal") {
+      tree.size([height, width]); 
+    } else {
+      tree.size([width, height]);
+    }
     
     var svg = d3.select(el).selectAll("svg").select("g")
       .attr("transform", "translate(" + left + "," + top + ")");
@@ -40,7 +44,8 @@ HTMLWidgets.widget({
   renderValue: function(el, x, tree) {
 
     var s = d3.select(el).selectAll("svg")
-      .attr("margins", x.options.margins);
+      .attr("margins", x.options.margins)
+      .attr("treeOrientation", x.options.treeOrientation);
 
     var top = parseInt(x.options.margins.top),
       right = parseInt(x.options.margins.right),
@@ -50,7 +55,11 @@ HTMLWidgets.widget({
     var height = parseInt(s.attr("height")) - top - bottom,
       width = parseInt(s.attr("width")) - right - left;
     
-    tree.size([height, width]);
+    if (s.attr("treeOrientation") == "horizontal") {
+      tree.size([height, width]); 
+    } else {
+      tree.size([width, height]);
+    }
 
     var zoom = d3.behavior.zoom();
 
@@ -111,8 +120,13 @@ HTMLWidgets.widget({
          ymin = d.y;           
     });
     
-    fxinv = d3.scale.linear().domain([ymin, ymax]).range([0, width]);           
-    fx = d3.scale.linear().domain([ymax, ymin]).range([0, width]);
+    if (s.attr("treeOrientation") == "horizontal") {
+      fxinv = d3.scale.linear().domain([ymin, ymax]).range([0, width]);
+      fx = d3.scale.linear().domain([ymax, ymin]).range([0, width]);
+    } else {
+      fxinv = d3.scale.linear().domain([ymin, ymax]).range([0, height]);
+      fx = d3.scale.linear().domain([ymax, ymin]).range([0, height]);
+    }
 
     // draw links
     var link = svg.selectAll(".link")
@@ -124,13 +138,25 @@ HTMLWidgets.widget({
       .style("stroke-width", "1.5px");
       
     if (x.options.linkType == "elbow") {
-      link.attr("d", function(d, i) {
-        return "M" + fx(d.source.y) + "," + d.source.x
-          + "V" + d.target.x + "H" + fx(d.target.y);
-      });
+      if (s.attr("treeOrientation") == "horizontal") {
+        link.attr("d", function(d, i) {
+          return "M" + fx(d.source.y) + "," + d.source.x
+            + "V" + d.target.x + "H" + fx(d.target.y);
+        });
+      } else {
+        link.attr("d", function(d, i) {
+          return "M" + d.source.x + "," + fx(d.source.y)
+            + "H" + d.target.x + "V" + fx(d.target.y);
+        });
+      }
     } else {
-      link.attr("d", d3.svg.diagonal()
-        .projection(function(d) { return [fx(d.y), d.x]; }));
+      if (s.attr("treeOrientation") == "horizontal") {
+        link.attr("d", d3.svg.diagonal()
+          .projection(function(d) { return [fx(d.y), d.x]; }));
+      } else {
+        link.attr("d", d3.svg.diagonal()
+          .projection(function(d) { return [d.x, fx(d.y)]; }));
+      }
     }
 
     // draw nodes
@@ -138,9 +164,14 @@ HTMLWidgets.widget({
       .data(nodes)
       .enter().append("g")
       .attr("class", "node")
-      .attr("transform", function(d) { return "translate(" + fx(d.y) + "," + d.x + ")"; })
       .on("mouseover", mouseover)
       .on("mouseout", mouseout);
+      
+    if (s.attr("treeOrientation") == "horizontal") {
+      node.attr("transform", function(d) { return "translate(" + fx(d.y) + "," + d.x + ")"; });
+    } else {
+      node.attr("transform", function(d) { return "translate(" + d.x + "," + fx(d.y) + ")"; });
+    }
 
     // node circles
     node.append("circle")
@@ -152,13 +183,23 @@ HTMLWidgets.widget({
 
     // node text
     node.append("text")
-      .attr("dx", function(d) { return d.children ? -8 : 8; })
-      .attr("dy", ".31em")
-      .attr("text-anchor", function(d) { return d.children ? "end" : "start"; })
+      .attr("transform", "rotate(" + x.options.textRotate + ")")
       .style("font", x.options.fontSize + "px serif")
       .style("opacity", function(d) { return d.textOpacity; })
       .style("fill", function(d) { return d.textColour; })
       .text(function(d) { return d.name; });
+      
+    if (s.attr("treeOrientation") == "horizontal") {
+      node.select("text")
+        .attr("dx", function(d) { return d.children ? -8 : 8; })
+        .attr("dy", ".31em")
+        .attr("text-anchor", function(d) { return d.children ? "end" : "start"; });
+    } else {
+      node.select("text")
+        .attr("x", function(d) { return d.children ? -8 : 8; })
+        .attr("dy", ".31em")
+        .attr("text-anchor", "start");
+    }
 
     // mouseover event handler
     function mouseover() {
@@ -168,9 +209,6 @@ HTMLWidgets.widget({
         
       d3.select(this).select("text").transition()
         .duration(750)
-        .attr("dx", function(d) { return d.children ? -8 : 8; })
-        .attr("dy", ".31em")
-        .attr("text-anchor", function(d) { return d.children ? "end" : "start"; })
         .style("stroke-width", ".5px")
         .style("font", "25px serif")
         .style("opacity", 1);
@@ -184,9 +222,6 @@ HTMLWidgets.widget({
         
       d3.select(this).select("text").transition()
         .duration(750)
-        .attr("dx", function(d) { return d.children ? -8 : 8; })
-        .attr("dy", ".31em")
-        .attr("text-anchor", function(d) { return d.children ? "end" : "start"; })
         .style("font", x.options.fontSize + "px serif")
         .style("opacity", x.options.opacity);
     }
