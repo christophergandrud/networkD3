@@ -15,7 +15,7 @@ forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Nodesize, Group,
   linkWidth = JS("function(d) { return Math.sqrt(d.value); }"),
   radiusCalculation = JS(" Math.sqrt(d.nodesize)+6"), charge = -120,
   linkColour = "#666", opacity = 0.6, zoom = FALSE, legend = FALSE,
-  bounded = FALSE)
+  bounded = FALSE, opacityNoHover = 0)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -91,6 +91,9 @@ zooming}
 \item{bounded}{logical value to enable (\code{TRUE}) or disable
 (\code{FALSE}) the bounding box limiting the graph's extent. See
 \url{http://bl.ocks.org/mbostock/1129492}.}
+
+\item{opacityNoHover}{numeric value of the opacity proportion for node labels
+text when the mouse is not hovering over them}
 }
 \description{
 Create a D3 JavaScript force directed network graph.
@@ -139,6 +142,12 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4, bounded = TRUE)
+
+# Create graph with node text faintly visible when no hovering
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Group = "group", opacity = 0.4, bounded = TRUE,
+             opacityNoHover = TRUE)
 }
 }
 \seealso{

@@ -137,7 +137,7 @@ HTMLWidgets.widget({
       .attr("dy", ".35em")
       .text(function(d) { return d.name })
       .style("font", options.fontSize + "px " + options.fontFamily)
-      .style("opacity", 0)
+      .style("opacity", options.opacityNoHover)
       .style("pointer-events", "none");
 
     // Add the option for a bounded box
@@ -186,7 +186,10 @@ HTMLWidgets.widget({
         .duration(750)
         .attr("r", function(d){return nodeSize(d)+2;});
       d3.select(this).select("text").transition()
-        .style("opacity", 0);
+        .duration(1250)
+        .attr("x", 0)
+        .style("font", options.fontSize + "px " + options.fontFamily) 
+        .style("opacity", options.opacityNoHover);
     }
 
     // add legend option

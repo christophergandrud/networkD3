@@ -52,6 +52,8 @@
 #' @param bounded logical value to enable (\code{TRUE}) or disable
 #' (\code{FALSE}) the bounding box limiting the graph's extent. See
 #' \url{http://bl.ocks.org/mbostock/1129492}.
+#' @param opacityNoHover numeric value of the opacity proportion for node labels 
+#' text when the mouse is not hovering over them
 #'
 #' @examples
 #' #### Tabular data example.
@@ -97,6 +99,12 @@
 #' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
 #'              Group = "group", opacity = 0.4, bounded = TRUE)
+#'              
+#' # Create graph with node text faintly visible when no hovering
+#' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+#'              Target = "target", Value = "value", NodeID = "name",
+#'              Group = "group", opacity = 0.4, bounded = TRUE,
+#'              opacityNoHover = TRUE)
 #' }
 #'
 
@@ -128,7 +136,8 @@ forceNetwork <- function(Links,
                          opacity = 0.6,
                          zoom = FALSE,
                          legend = FALSE,
-                         bounded = FALSE)
+                         bounded = FALSE,
+                         opacityNoHover = 0)
 {
         # Hack for UI consistency. Think of improving.
         colourScale <- as.character(colourScale)
@@ -177,7 +186,8 @@ forceNetwork <- function(Links,
                 legend = legend,
                 nodesize = nodesize,
                 radiusCalculation = radiusCalculation,
-                bounded = bounded
+                bounded = bounded,
+                opacityNoHover = opacityNoHover
         )
 
         # create widget

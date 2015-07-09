@@ -7,8 +7,11 @@
 bounding box for the plot. See http://bl.ocks.org/mbostock/1129492.
 Thanks to Charles Sese.
 
-- Add `fontFamily` argument for `forceNetwork`, `simpleNetwork`, 
+- Added `fontFamily` argument to `forceNetwork`, `simpleNetwork`, 
 `sankeyNetwork`, and `treeNetwork`. Thanks to Peter Ellis.
+
+- Added `opacityNoHover` argument to `forceNetwork` to set the opacity of node
+labels when nodes are not hovered over. Thanks to Peter Ellis.
 
 ## Version 0.1.7
 
