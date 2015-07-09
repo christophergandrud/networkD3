@@ -11,8 +11,9 @@ Fabio Nelli: \url{http://www.meccanismocomplesso.org/en/dendrogramma-d3-parte1/}
 \usage{
 clusterNetwork(hc, height = 500, width = 800, fontSize = 10,
   linkColour = "#ccc", nodeColour = "#fff", nodeStroke = "steelblue",
-  textColour = "#111", textOpacity = 0.9, opacity = 0.9, margin = 200,
-  enableZoom = TRUE)
+  textColour = "#111", textOpacity = 0.9, textRotate = NULL,
+  opacity = 0.9, margins = NULL, linkType = c("elbow", "diagonal"),
+  treeOrientation = c("horizontal", "vertical"), zoom = TRUE)
 }
 \arguments{
 \item{hc}{a hierarchical (\code{hclust}) cluster object.}
@@ -40,23 +41,41 @@ the text to be before they are clicked. Order should match the order of
 would like the text to be before they are clicked. rder should match the
 order of \code{hclust$labels}.}
 
+\item{textRotate}{numeric degress to rotate text for node text. Default
+is 0 for horizontal and 65 degrees for vertical.}
+
 \item{opacity}{numeric value of the proportion opaque you would like the
 graph elements to be.}
 
-\item{margin}{integer value of the plot width margin. Set the margin
-appropriately to accomodate long text labels.}
+\item{margins}{numeric value or named list of plot margins
+(top, right, bottom, left). Set the margin appropriately to accomodate
+long text labels.}
 
-\item{enableZoom}{logical enabling plot zoom and pan}
+\item{linkType}{character specifying the link type between points. Options
+are 'elbow' and 'diagonal'.}
+
+\item{treeOrientation}{character specifying the tree orientation, Options
+are 'vertical' and 'horizontal'.}
+
+\item{zoom}{logical enabling plot zoom and pan}
 }
 \description{
 Create hierarchical cluster network diagrams.
 }
 \examples{
 \dontrun{
-clusterNetwork(hc, height = 800, margin = 250)
+hc <- hclust(dist(USArrests), "ave")
+
+clusterNetwork(hc, height = 600)
+clusterNetwork(hc, treeOrientation = "vertical")
+
+clusterNetwork(hc, height = 600, linkType = "diagonal")
+clusterNetwork(hc, treeOrientation = "vertical", linkType = "diagonal")
 
 clusterNetwork(hc, textColour = c("red", "green", "orange")[cutree(hc, 3)],
-               height = 800, margin = 250)
+               height = 600)
+clusterNetwork(hc, textColour = c("red", "green", "orange")[cutree(hc, 3)],
+               treeOrientation = "vertical")
 }
 }
 
