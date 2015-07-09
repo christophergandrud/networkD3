@@ -148,7 +148,7 @@ HTMLWidgets.widget({
         }else{
             return d.x}
     }
-    function nodeBoxY(d,width) {
+    function nodeBoxY(d, height) {
         if(options.bounded){
             var dy = Math.max(nodeSize(d), Math.min(height - nodeSize(d), d.y));
             return dy;

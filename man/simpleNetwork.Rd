@@ -75,6 +75,6 @@ NetworkData <- data.frame(Source, Target)
 
 # Create graph
 simpleNetwork(NetworkData)
-simpleNetwork(NetworkData, fontFamily = "sans serif")
+simpleNetwork(NetworkData, fontFamily = "sans-serif")
 }
 
