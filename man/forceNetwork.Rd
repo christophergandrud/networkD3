@@ -92,8 +92,8 @@ zooming}
 (\code{FALSE}) the bounding box limiting the graph's extent. See
 \url{http://bl.ocks.org/mbostock/1129492}.}
 
-\item{opacityNoHover}{numeric value of the proportion opaque for node labels text
-when the mouse is not hovering over them}
+\item{opacityNoHover}{numeric value of the opacity proportion for node labels
+text when the mouse is not hovering over them}
 }
 \description{
 Create a D3 JavaScript force directed network graph.
