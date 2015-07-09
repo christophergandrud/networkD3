@@ -4,11 +4,11 @@
 \alias{clusterNetworkOutput}
 \alias{forceNetworkOutput}
 \alias{networkD3-shiny}
+\alias{renderClusterNetwork}
 \alias{renderForceNetwork}
 \alias{renderSankeyNetwork}
 \alias{renderSimpleNetwork}
 \alias{renderTreeNetwork}
-\alias{renderClusterNetwork}
 \alias{sankeyNetworkOutput}
 \alias{simpleNetworkOutput}
 \alias{treeNetworkOutput}
