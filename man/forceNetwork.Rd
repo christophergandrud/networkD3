@@ -84,7 +84,7 @@ lines to be. Multiple formats supported (e.g. hexadecimal).}
 graph elements to be.}
 
 \item{zoom}{logical value to enable (\code{TRUE}) or disable (\code{FALSE})
-zooming}
+zooming.}
 
 \item{legend}{logical value to enable node colour legends.}
 
@@ -93,9 +93,10 @@ zooming}
 \url{http://bl.ocks.org/mbostock/1129492}.}
 
 \item{opacityNoHover}{numeric value of the opacity proportion for node labels
-text when the mouse is not hovering over them}
+text when the mouse is not hovering over them.}
 
-\item{clickAction}{A JavaScript expression to evaluate when a node is clicked}
+\item{clickAction}{character string with a JavaScript expression to evaluate
+when a node is clicked.}
 }
 \description{
 Create a D3 JavaScript force directed network graph.
@@ -162,9 +163,6 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 1, zoom = F, bounded = T,
              clickAction = MyClickScript)
-
-
-
 }
 }
 \seealso{

@@ -47,15 +47,16 @@
 #' @param opacity numeric value of the proportion opaque you would like the
 #' graph elements to be.
 #' @param zoom logical value to enable (\code{TRUE}) or disable (\code{FALSE})
-#' zooming
+#' zooming.
 #' @param legend logical value to enable node colour legends.
 #' @param bounded logical value to enable (\code{TRUE}) or disable
 #' (\code{FALSE}) the bounding box limiting the graph's extent. See
 #' \url{http://bl.ocks.org/mbostock/1129492}.
-#' @param opacityNoHover numeric value of the opacity proportion for node labels 
-#' text when the mouse is not hovering over them
-#' @param clickAction A JavaScript expression to evaluate when a node is clicked
-#' 
+#' @param opacityNoHover numeric value of the opacity proportion for node labels
+#' text when the mouse is not hovering over them.
+#' @param clickAction character string with a JavaScript expression to evaluate
+#' when a node is clicked.
+#'
 #' @examples
 #' #### Tabular data example.
 #' # Load data
@@ -100,27 +101,24 @@
 #' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
 #'              Group = "group", opacity = 0.4, bounded = TRUE)
-#'              
+#'
 #' # Create graph with node text faintly visible when no hovering
 #' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
 #'              Group = "group", opacity = 0.4, bounded = TRUE,
 #'              opacityNoHover = TRUE)
-#'              
-#'              
-#' # Create graph with alert pop-up when a node is clicked.  You're 
+#'
+#'
+#' # Create graph with alert pop-up when a node is clicked.  You're
 #' # unlikely to want to do exactly this, but you might use
 #' # Shiny.onInputChange() to allocate d.XXX to an element of input
 #' # for use in a Shiny app.
-#' MyClickScript <- 'alert("You clicked " + d.name + " which is in row " + 
+#' MyClickScript <- 'alert("You clicked " + d.name + " which is in row " +
 #'        (d.index + 1) +  " of your original R data frame");'
 #' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
 #'              Group = "group", opacity = 1, zoom = F, bounded = T,
 #'              clickAction = MyClickScript)
-#'              
-#'              
-#'              
 #' }
 #'
 
