@@ -123,6 +123,7 @@ HTMLWidgets.widget({
       .style("opacity", options.opacity)
       .on("mouseover", mouseover)
       .on("mouseout", mouseout)
+      .on("click", click)
       .call(force.drag);
 
     node.append("circle")
@@ -190,6 +191,10 @@ HTMLWidgets.widget({
         .attr("x", 0)
         .style("font", options.fontSize + "px " + options.fontFamily) 
         .style("opacity", options.opacityNoHover);
+    }
+    
+    function click(d) {
+      return eval(options.clickAction)
     }
 
     // add legend option

@@ -15,7 +15,7 @@ forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Nodesize, Group,
   linkWidth = JS("function(d) { return Math.sqrt(d.value); }"),
   radiusCalculation = JS(" Math.sqrt(d.nodesize)+6"), charge = -120,
   linkColour = "#666", opacity = 0.6, zoom = FALSE, legend = FALSE,
-  bounded = FALSE, opacityNoHover = 0)
+  bounded = FALSE, opacityNoHover = 0, clickAction = NULL)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -94,6 +94,8 @@ zooming}
 
 \item{opacityNoHover}{numeric value of the opacity proportion for node labels
 text when the mouse is not hovering over them}
+
+\item{clickAction}{A JavaScript expression to evaluate when a node is clicked}
 }
 \description{
 Create a D3 JavaScript force directed network graph.
@@ -148,6 +150,21 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4, bounded = TRUE,
              opacityNoHover = TRUE)
+
+
+# Create graph with alert pop-up when a node is clicked.  You're
+# unlikely to want to do exactly this, but you might use
+# Shiny.onInputChange() to allocate d.XXX to an element of input
+# for use in a Shiny app.
+MyClickScript <- 'alert("You clicked " + d.name + " which is in row " +
+       (d.index + 1) +  " of your original R data frame");'
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Group = "group", opacity = 1, zoom = F, bounded = T,
+             clickAction = MyClickScript)
+
+
+
 }
 }
 \seealso{

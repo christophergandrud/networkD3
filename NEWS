@@ -3,7 +3,11 @@
 
 ## Version 0.1.8
 
-- Added `bounded` argument to `forceNetwork` to allow the user to created a
+- Added `clickAction` argument to `forceNetwork` to allow the user to
+pass a JavaScript expression through to be activated on click of a node.
+Thanks to Peter Ellis.
+
+- Added `bounded` argument to `forceNetwork` to allow the user to create a
 bounding box for the plot. See http://bl.ocks.org/mbostock/1129492.
 Thanks to Charles Sese.
 

@@ -22,6 +22,43 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 1, zoom = F, bounded = T)
 
+# with a simple click action - make the circles bigger when clicked
+MyClickScript <- 
+  '      d3.select(this).select("circle").transition()
+        .duration(750)
+        .attr("r", 30)'
+
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Group = "group", opacity = 1, zoom = F, bounded = T,
+             clickAction = MyClickScript)
+
+# showing how you can re-use the name of the clicked-on node (which is 'd')
+# You are unlikely to want to do this pop-up alert, but you might want 
+# instead to use Shiny.onInputChange() to allocate d.XXX to an element
+# input$XXX for user in a Shiny app.
+MyClickScript <- 'alert("You clicked " + d.name + " which is in row " + (d.index + 1) +
+                        " of your original R data frame");'
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Group = "group", opacity = 1, zoom = F, bounded = T,
+             clickAction = MyClickScript)
+
+
+
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Group = "group", opacity = 1, zoom = F, bounded = T,
+             clickAction = "alert('Ouch!')")
+
+
+
+
+
+#
+
+
+
 # With a different font, and dimensions chosen to illustrate bounded box
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
@@ -30,11 +67,11 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              width = 1500, height = 300)
 
 
-# With Arial font, and node text faintly visible when not hovered over
+# With a different font, and node text faintly visible when not hovered over
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 1, zoom = F, bounded = T,
-             fontFamily = "Arial", opacityNoHover = 0.3)
+             fontFamily = "cursive", opacityNoHover = 0.3)
 
 # Create graph with legend and varying radius
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
