@@ -9,16 +9,17 @@ as.treeNetwork(d, root)
 \arguments{
 \item{d}{An object of R class \code{hclust} or \code{dendrogram}.}
 
-\item{root}{An optional name for the root node. If missing, use the first argument
-variable name.}
+\item{root}{An optional name for the root node. If missing, use the first
+argument variable name.}
 }
 \description{
-\code{as.treeNetwork} converts an R hclust or dendrogram object into a list suitable
-for use by the \code{treeNetwork} function.
+\code{as.treeNetwork} converts an R hclust or dendrogram object into a list
+suitable for use by the \code{treeNetwork} function.
 }
 \details{
 \code{as.treeNetwork} coverts R objects of class \code{hclust} or
-\code{dendrogram} into a list suitable for use with the \code{treeNetwork} function.
+\code{dendrogram} into a list suitable for use with the \code{treeNetwork}
+function.
 }
 \examples{
 # Create a hierarchical cluster object and display with treeNetwork

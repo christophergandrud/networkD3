@@ -149,42 +149,42 @@ renderTreeNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
 
 #' Convert an R hclust or dendrogram object into a treeNetwork list.
 #'
-#' \code{as.treeNetwork} converts an R hclust or dendrogram object into a list suitable
-#' for use by the \code{treeNetwork} function.
+#' \code{as.treeNetwork} converts an R hclust or dendrogram object into a list
+#' suitable for use by the \code{treeNetwork} function.
 #'
 #' @param d An object of R class \code{hclust} or \code{dendrogram}.
-#' @param root An optional name for the root node. If missing, use the first argument
-#' variable name.
+#' @param root An optional name for the root node. If missing, use the first
+#' argument variable name.
 #'
 #' @details \code{as.treeNetwork} coverts R objects of class \code{hclust} or
-#' \code{dendrogram} into a list suitable for use with the \code{treeNetwork} function.
-#'
+#' \code{dendrogram} into a list suitable for use with the \code{treeNetwork}
+#' function.
 #' @examples
 #' # Create a hierarchical cluster object and display with treeNetwork
 #' ## dontrun
 #' hc <- hclust(dist(USArrests), "ave")
 #' treeNetwork(as.treeNetwork(hc))
 #'
+#' @importFrom stats as.dendrogram
+#'
 #' @export
 
 as.treeNetwork <- function(d, root)
 {
-  if(missing(root)) root <- as.character(match.call()[[2]])
-  if("hclust" %in% class(d)) d <- as.dendrogram(d)
-  if(!("dendrogram" %in% class(d)))
-    stop("d must be a object of class hclust or dendrogram")
-  ul <- function(x, level=1)
-  {
-    if(is.list(x))
-    {
-      return(lapply(x, function(y)
-      {
+    if(missing(root)) root <- as.character(match.call()[[2]])
+    if("hclust" %in% class(d)) d <- as.dendrogram(d)
+    if(!("dendrogram" %in% class(d)))
+        stop("d must be a object of class hclust or dendrogram")
+    ul <- function(x, level = 1) {
+        if(is.list(x)) {
+            return(lapply(x, function(y)
+        {
         name <- ""
-        if(!is.list(y)) name <- attr(y,"label")
-        list(name=name, children=ul(y,level+1))
-      }))
+        if(!is.list(y)) name <- attr(y, "label")
+            list(name=name, children=ul(y, level + 1))
+        }))
     }
-    list(name=attr(x,"label"))
-  }
-  list(name=root,children=ul(d))
+    list(name = attr(x,"label"))
+    }
+    list(name = root, children = ul(d))
 }
