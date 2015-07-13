@@ -13,7 +13,8 @@ Authors@R: c(
     person("B.W.", "Lewis", role = "ctb"),
     person("Kevin", "Kuo", role = "ctb"),
     person("Charles", "Sese", role = "ctb"),
-    person("Peter", "Ellis", role = "ctb")
+    person("Peter", "Ellis", role = "ctb"),
+    person("Jonathan", "Owen", role = "ctb")
     )
 URL: http://cran.r-project.org/package=networkD3
 BugReports: https://github.com/christophergandrud/networkD3/issues

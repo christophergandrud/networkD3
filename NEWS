@@ -1,6 +1,11 @@
 # All changes to networkD3 are documented here.
 
 
+## Version 0.1.9
+
+- Added `clusterTree` to create hierarchical cluster network diagrams.
+Thanks to Jonathan Owen.
+
 ## Version 0.1.8
 
 - Added `clickAction` argument to `forceNetwork` to allow the user to

@@ -13,7 +13,7 @@ clusterNetwork(hc, height = 500, width = 800, fontSize = 10,
   linkColour = "#ccc", nodeColour = "#fff", nodeStroke = "steelblue",
   textColour = "#111", textOpacity = 0.9, textRotate = NULL,
   opacity = 0.9, margins = NULL, linkType = c("elbow", "diagonal"),
-  treeOrientation = c("horizontal", "vertical"), zoom = TRUE)
+  treeOrientation = c("horizontal", "vertical"), zoom = FALSE)
 }
 \arguments{
 \item{hc}{a hierarchical (\code{hclust}) cluster object.}
@@ -57,7 +57,7 @@ are 'elbow' and 'diagonal'.}
 \item{treeOrientation}{character specifying the tree orientation, Options
 are 'vertical' and 'horizontal'.}
 
-\item{zoom}{logical enabling plot zoom and pan}
+\item{zoom}{logical enabling plot zoom and pan.}
 }
 \description{
 Create hierarchical cluster network diagrams.
