@@ -115,3 +115,17 @@ treeNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0)
 
 # and with a different font
 treeNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0, fontFamily = "sans-serif")
+
+# dendroNetwork
+hc <- hclust(dist(USArrests), "ave")
+ 
+dendroNetwork(hc, height = 600)
+dendroNetwork(hc, treeOrientation = "vertical")
+
+dendroNetwork(hc, height = 600, linkType = "diagonal")
+dendroNetwork(hc, treeOrientation = "vertical", linkType = "diagonal")
+ 
+dendroNetwork(hc, textColour = c("red", "green", "orange")[cutree(hc, 3)],
+              height = 600)
+dendroNetwork(hc, textColour = c("red", "green", "orange")[cutree(hc, 3)],
+              treeOrientation = "vertical")
