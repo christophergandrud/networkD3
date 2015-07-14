@@ -1,0 +1,13 @@
+dependencies:
+  - name: d3
+    version: 3.5.2
+    src: "htmlwidgets/lib/d3-3.5.2"
+    script: d3.min.js
+  - name: radial
+    version: 0.1
+    src: "htmlwidgets/lib/radial"
+    stylesheet: radial.css
+  - name: TreeColors
+    version: 0.1.0
+    src: "htmlwidgets/lib/TreeColors"
+    script: TreeColors.min.js

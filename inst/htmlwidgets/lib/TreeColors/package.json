@@ -1,0 +1,39 @@
+{
+  "name": "treecolors",
+  "version": "0.1.0",
+  "description": "A javascript implementation of the color scheme proposed in the paper \"TreeColors: Color Schemes for Tree-Structured Data\"",
+  "homepage": "http://e-.github.io/TreeColors.js/demo/",
+  "author": {
+    "name": "Jaemin Jo",
+    "email": "jmjo@hcil.snu.ac.kr",
+    "url": "http://www.jaeminjo.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:e-/TreeColors.js.git"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "treecolors",
+    "tree",
+    "color scheme",
+    "hierarchical data",
+    "hcl",
+    "perception"
+  ],
+  "devDependencies": {
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-nodeunit": "^0.4.1",
+    "grunt-contrib-uglify": "^0.8.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "load-grunt-tasks": "^1.0.0",
+    "time-grunt": "^1.0.0"
+  },
+  "scripts": {
+    "test": "grunt"
+  }
+}
