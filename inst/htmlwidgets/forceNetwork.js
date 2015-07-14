@@ -41,7 +41,8 @@ HTMLWidgets.widget({
     // convert links and nodes data frames to d3 friendly format
     var links = HTMLWidgets.dataframeToD3(x.links);
     var nodes = HTMLWidgets.dataframeToD3(x.nodes);
-
+    var linkstrengths = x.linkstrengths;
+    
     // get the width and height
     var width = el.offsetWidth;
     var height = el.offsetHeight;
@@ -55,6 +56,7 @@ HTMLWidgets.widget({
     force
       .nodes(d3.values(nodes))
       .links(links)
+      .linkStrength(function(l,idx){return linkstrengths[idx]})
       .size([width, height])
       .linkDistance(options.linkDistance)
       .charge(options.charge)

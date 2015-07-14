@@ -14,6 +14,8 @@
 #' \code{Links} data frame.
 #' @param Value character string naming the variable in the \code{Links} data
 #' frame for how wide the links are.
+#' @param LinkStrength character string naming the variable in the \code{Links} data
+#' frame for how strong the link should be.
 #' @param NodeID character string specifying the node IDs in the \code{Nodes}
 #' data frame.
 #' @param Nodesize character string specifying the a column in the \code{Nodes}
@@ -137,6 +139,7 @@ forceNetwork <- function(Links,
                          NodeID,
                          Nodesize,
                          Group,
+                         LinkStrength=0.1,
                          height = NULL,
                          width = NULL,
                          colourScale = JS("d3.scale.category20()"),
@@ -165,6 +168,13 @@ forceNetwork <- function(Links,
         }
         if (!is.data.frame(Nodes)) {
                 stop("Nodes must be a data frame class object.")
+        }
+        #check for links collumns, scale to 0:1 or provide a default value
+        if (!is.numeric(LinkStrength)){
+          linkstrengths <- as.numeric(Links[,LinkStrength])
+          linkstrengths <- linkstrengths/max(linkstrengths)
+        }else{
+          linkstrengths <- rep(LinkStrength, dim(Links)[[1]])
         }
         if (missing(Value)) {
                 LinksDF <- data.frame(Links[, Source], Links[, Target])
@@ -209,7 +219,7 @@ forceNetwork <- function(Links,
         # create widget
         htmlwidgets::createWidget(
                 name = "forceNetwork",
-                x = list(links = LinksDF, nodes = NodesDF, options = options),
+                x = list(links = LinksDF, nodes = NodesDF, linkstrengths=linkstrengths,options = options),
                 width = width,
                 height = height,
                 htmlwidgets::sizingPolicy(padding = 0, browser.fill = TRUE),
