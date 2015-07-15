@@ -1,6 +1,19 @@
 # All changes to networkD3 are documented here.
 
 
+## Version 0.2
+
+- Added `clusterNetwork` to create hierarchical cluster network diagrams.
+
+- `treeNetwork` is DEPRECATED.
+
+- Placed functionality from `treeNetwork` to `radialNetwork` and
+`diagonalNetwork`. The new function has the same functionality, but has been
+renamed to be more accurately descriptive and avoid confusion with
+`clusterNetwork`.
+
+Thanks to Jonathan Owen.
+
 ## Version 0.1.8
 
 - Added `clickAction` argument to `forceNetwork` to allow the user to
@@ -11,7 +24,7 @@ Thanks to Peter Ellis.
 bounding box for the plot. See http://bl.ocks.org/mbostock/1129492.
 Thanks to Charles Sese.
 
-- Added `fontFamily` argument to `forceNetwork`, `simpleNetwork`, 
+- Added `fontFamily` argument to `forceNetwork`, `simpleNetwork`,
 `sankeyNetwork`, and `treeNetwork`. Thanks to Peter Ellis.
 
 - Added `opacityNoHover` argument to `forceNetwork` to set the opacity of node

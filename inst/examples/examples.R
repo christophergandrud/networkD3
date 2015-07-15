@@ -118,7 +118,25 @@ radialNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0)
 radialNetwork(as.radialNetwork(hc))
 
 # and with a different font
+<<<<<<< HEAD
 radialNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0, fontFamily = "sans-serif")
 
 diagonalNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0)
 diagonalNetwork(as.radialNetwork(hc), height = 700, margin = 50)
+=======
+treeNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0, fontFamily = "sans-serif")
+
+# clusterNetwork
+hc <- hclust(dist(USArrests), "ave")
+ 
+clusterNetwork(hc, height = 600)
+clusterNetwork(hc, treeOrientation = "vertical")
+
+clusterNetwork(hc, height = 600, linkType = "diagonal")
+clusterNetwork(hc, treeOrientation = "vertical", linkType = "diagonal")
+ 
+clusterNetwork(hc, textColour = c("red", "green", "orange")[cutree(hc, 3)],
+               height = 600)
+clusterNetwork(hc, textColour = c("red", "green", "orange")[cutree(hc, 3)],
+               treeOrientation = "vertical")
+>>>>>>> trueDendro
