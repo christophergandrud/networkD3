@@ -35,12 +35,12 @@
 #' Flare <- rjson::fromJSON(Flare)
 #'
 #' ## Recreate Bostock example from http://bl.ocks.org/mbostock/4063550
-#' treeNetwork(List = Flare, fontSize = 10, opacity = 0.9)
+#' radialNetwork(List = Flare, fontSize = 10, opacity = 0.9)
 #'
 #' #### Create a tree dendrogram from an R hclust object
 #' hc <- hclust(dist(USArrests), "ave")
-#' treeNetwork(as.treeNetwork(hc))
-#' treeNetwork(as.treeNetwork(hc), fontFamily = "cursive")
+#' radialNetwork(as.radialNetwork(hc))
+#' radialNetwork(as.radialNetwork(hc), fontFamily = "cursive")
 #'
 #' #### Create tree from a hierarchical R list
 #' For an alternative structure see: http://stackoverflow.com/a/30747323/1705044
@@ -75,7 +75,7 @@
 #'                     children = list(list(name = "Whitehorse")))
 #' ))
 #'
-#' treeNetwork(List = CanadaPC, fontSize = 10)
+#' radialNetwork(List = CanadaPC, fontSize = 10)
 #' }
 #'
 #' @source Reingold. E. M., and Tilford, J. S. (1981). Tidier Drawings of Trees.
@@ -86,7 +86,7 @@
 #' @importFrom rjson toJSON
 #' @export
 #'
-treeNetwork <- function(
+radialNetwork <- function(
                           List,
                           height = NULL,
                           width = NULL,
@@ -120,7 +120,7 @@ treeNetwork <- function(
 
     # create widget
     htmlwidgets::createWidget(
-      name = "treeNetwork",
+      name = "radialNetwork",
       x = list(root = root, options = options),
       width = width,
       height = height,
@@ -135,41 +135,41 @@ treeNetwork <- function(
 
 #' @rdname networkD3-shiny
 #' @export
-treeNetworkOutput <- function(outputId, width = "100%", height = "800px") {
-    shinyWidgetOutput(outputId, "treeNetwork", width, height,
+radialNetworkOutput <- function(outputId, width = "100%", height = "800px") {
+    shinyWidgetOutput(outputId, "radialNetwork", width, height,
                         package = "networkD3")
 }
 
 #' @rdname networkD3-shiny
 #' @export
-renderTreeNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
+renderRadialNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
     if (!quoted) { expr <- substitute(expr) } # force quoted
-    shinyRenderWidget(expr, treeNetworkOutput, env, quoted = TRUE)
+    shinyRenderWidget(expr, radialNetworkOutput, env, quoted = TRUE)
 }
 
-#' Convert an R hclust or dendrogram object into a treeNetwork list.
+#' Convert an R hclust or dendrogram object into a radialNetwork list.
 #'
-#' \code{as.treeNetwork} converts an R hclust or dendrogram object into a list
-#' suitable for use by the \code{treeNetwork} function.
+#' \code{as.radialNetwork} converts an R hclust or dendrogram object into a list
+#' suitable for use by the \code{radialNetwork} function.
 #'
 #' @param d An object of R class \code{hclust} or \code{dendrogram}.
 #' @param root An optional name for the root node. If missing, use the first
 #' argument variable name.
 #'
-#' @details \code{as.treeNetwork} coverts R objects of class \code{hclust} or
-#' \code{dendrogram} into a list suitable for use with the \code{treeNetwork}
+#' @details \code{as.radialNetwork} coverts R objects of class \code{hclust} or
+#' \code{dendrogram} into a list suitable for use with the \code{radialNetwork}
 #' function.
 #' @examples
-#' # Create a hierarchical cluster object and display with treeNetwork
+#' # Create a hierarchical cluster object and display with radialNetwork
 #' ## dontrun
 #' hc <- hclust(dist(USArrests), "ave")
-#' treeNetwork(as.treeNetwork(hc))
+#' radialNetwork(as.radialNetwork(hc))
 #'
 #' @importFrom stats as.dendrogram
 #'
 #' @export
 
-as.treeNetwork <- function(d, root)
+as.radialNetwork <- function(d, root)
 {
     if(missing(root)) root <- as.character(match.call()[[2]])
     if("hclust" %in% class(d)) d <- as.dendrogram(d)

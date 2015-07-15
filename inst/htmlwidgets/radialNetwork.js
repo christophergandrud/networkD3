@@ -1,6 +1,6 @@
 HTMLWidgets.widget({
 
-  name: "treeNetwork",
+  name: "radialNetwork",
   type: "output",
 
   initialize: function(el, width, height) {
