@@ -44,20 +44,10 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Group = "group", opacity = 1, zoom = F, bounded = T,
              clickAction = MyClickScript)
 
-
-
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 1, zoom = F, bounded = T,
              clickAction = "alert('Ouch!')")
-
-
-
-
-
-#
-
-
 
 # With a different font, and dimensions chosen to illustrate bounded box
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
@@ -65,7 +55,6 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Group = "group", opacity = 1, zoom = F, bounded = T,
              fontFamily = "cursive",
              width = 1500, height = 300)
-
 
 # With a different font, and node text faintly visible when not hovered over
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
@@ -84,9 +73,6 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Nodesize = 'size', radiusCalculation = " Math.sqrt(d.nodesize)+6",
              Group = "group", opacity = 1, legend = T, bounded = T) 
-
-
-
 
 
 # sankeyNetwork
@@ -122,6 +108,7 @@ radialNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0, fontFamily =
 
 diagonalNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0)
 diagonalNetwork(as.radialNetwork(hc), height = 700, margin = 50)
+
 
 # dendroNetwork
 hc <- hclust(dist(USArrests), "ave")
