@@ -167,6 +167,32 @@ sankeyNetwork(Links = EngLinks, Nodes = EngNodes,
             width = 700, fontSize = 12, nodeWidth = 30)
 ```
 
+<a href="#sankey"><h3 id="sankey"><code>> radialNetwork</code></h3></a>
+
+From version 0.2, tree diagrams can be created using `radialNetwork` or `diagonalNetwork`.
+
+```{r}
+URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
+              "networkD3/master/JSONdata/flare.json")
+Flare <- getURL(URL)
+
+## Convert to list format
+Flare <- rjson::fromJSON(Flare)
+
+radialNetwork(List = Flare, fontSize = 10, opacity = 0.9)
+
+diagonalNetwork(List = Flare, fontSize = 10, opacity = 0.9)
+```
+
+<a href="#sankey"><h3 id="sankey"><code>> dendroNetwork</code></h3></a>
+
+From version 0.2, it is also possible to create dendrograms using `dendroNetwork`.
+
+```{r}
+hc <- hclust(dist(USArrests), "ave")
+
+dendroNetwork(hc, height = 600)
+```
 
 <h2 id="networkD3output"><i class="fa fa-floppy-o"></i> Output</h2>
 
