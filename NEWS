@@ -3,14 +3,17 @@
 
 ## Version 0.2
 
-- Added `clusterNetwork` to create hierarchical cluster network diagrams.
+- Added `dendroNetwork` to create hierarchical cluster network diagrams 
+(dendrograms).
 
 - `treeNetwork` is DEPRECATED.
 
-- Placed functionality from `treeNetwork` to `radialNetwork` and
-`diagonalNetwork`. The new function has the same functionality, but has been
-renamed to be more accurately descriptive and avoid confusion with
-`clusterNetwork`.
+- Placed functionality from `treeNetwork` to `radialNetwork`. The new 
+`radialNetwork` function has the same functionality, but has been renamed to be
+more accurately descriptive and avoid confusion with `dendroNetwork`.
+
+- Added 'diagonalNetwork`, which creates tree network diagrams using diagonal
+instead of radial nodes.
 
 Thanks to Jonathan Owen.
 
