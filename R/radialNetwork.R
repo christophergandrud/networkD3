@@ -124,12 +124,7 @@ radialNetwork <- function(
       x = list(root = root, options = options),
       width = width,
       height = height,
-      htmlwidgets::sizingPolicy(viewer.suppress = TRUE,
-                                browser.fill = TRUE,
-                                browser.padding = 75,
-                                knitr.figure = FALSE,
-                                knitr.defaultWidth = 800,
-                                knitr.defaultHeight = 500),
+      htmlwidgets::sizingPolicy(padding = 0, browser.fill = TRUE),
       package = "networkD3")
 }
 
