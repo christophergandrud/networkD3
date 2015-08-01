@@ -49,8 +49,8 @@ HTMLWidgets.widget({
     var innerRadius = Math.min(x.options.width, x.options.height) * .41;
     var outerRadius = innerRadius * 1.1;
 
-    var fill = x.options.color_scale
-          ?d3.scale.ordinal().domain(x.matrix.length).range(x.options.color_scale)
+    var fill = x.options.colour_scale
+          ?d3.scale.ordinal().domain(x.matrix.length).range(x.options.colour_scale)
           :(x.matrix.length>10?d3.scale.category20():d3.scale.category10());
 
     s.append("g").selectAll("path")
