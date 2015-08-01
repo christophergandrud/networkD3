@@ -8,10 +8,10 @@
 #'   \code{NULL} then width is automatically determined based on context)
 #' @param initial_opacity specify the opacity before the user mouses over 
 #'        the link
-#' @param color_scale specify the hexadecimal colors in which to display
-#'        the different categories. If there are fewer colors than categories,
-#'        the last color is repeated as necessary (if \code{NULL} then defaults
-#'        to D3 color scale)
+#' @param colour_scale specify the hexadecimal colours in which to display
+#'        the different categories. If there are fewer colours than categories,
+#'        the last colour is repeated as necessary (if \code{NULL} then defaults
+#'        to D3 colour scale)
 #' @param padding specify the amount of space between adjacent categories
 #'        on the outside of the graph
 #' @param fontSize numeric font size in pixels for the node text labels.
@@ -20,7 +20,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' #### Data about hair color preferences, from 
+#' #### Data about hair colour preferences, from 
 #' ## https://github.com/mbostock/d3/wiki/Chord-Layout
 #' 
 #' hairColourData <- matrix(c(11975,  1951,  8010, 1013,
@@ -32,7 +32,7 @@
 #' chordDiagram(data = hairColourData, 
 #'              width = 500, 
 #'              height = 500,
-#'              color_scale = c("#000000", 
+#'              colour_scale = c("#000000", 
 #'                              "#FFDD89", 
 #'                              "#957244", 
 #'                              "#F26223"))

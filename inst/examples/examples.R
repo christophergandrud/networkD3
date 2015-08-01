@@ -118,12 +118,12 @@ radialNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0)
 radialNetwork(as.radialNetwork(hc))
 
 # and with a different font
-<<<<<<< HEAD
+
 radialNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0, fontFamily = "sans-serif")
 
 diagonalNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0)
 diagonalNetwork(as.radialNetwork(hc), height = 700, margin = 50)
-=======
+
 treeNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0, fontFamily = "sans-serif")
 
 # clusterNetwork
@@ -139,4 +139,14 @@ clusterNetwork(hc, textColour = c("red", "green", "orange")[cutree(hc, 3)],
                height = 600)
 clusterNetwork(hc, textColour = c("red", "green", "orange")[cutree(hc, 3)],
                treeOrientation = "vertical")
->>>>>>> trueDendro
+
+# chordDiagram
+hairColourData <- matrix(c(11975,  1951,  8010, 1013,
+                           5871, 10048, 16145,  990,
+                           8916,  2060,  8090,  940,
+                           2868,  6171,  8045, 6907), nrow = 4)
+                              
+chordDiagram(data = hairColourData, 
+             width = 500, 
+             height = 500,
+             colour_scale = c("#000000", "#FFDD89", "#957244", "#F26223"))
