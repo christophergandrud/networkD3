@@ -33,10 +33,12 @@ HTMLWidgets.widget({
     para.innerHTML = ".chord path { fill-opacity: "+x.options.initial_opacity+"; stroke: #000; stroke-width: .5px; }"
     document.getElementsByTagName("head")[0].appendChild(para);
     // x is a list with a matrix and a title
-    console.log(x.matrix)
+
+    var parsedMatrix = JSON.parse(x.matrix);
     chord.padding(.05)
         .sortSubgroups(d3.descending)
-        .matrix(x.matrix);
+        .matrix(parsedMatrix);
+
     // Returns an event handler for fading a given chord group.
   function fade(opacity) {
     return function(g, i) {
@@ -55,9 +57,10 @@ HTMLWidgets.widget({
     var innerRadius = Math.min(x.options.width, x.options.height) * .41;
     var outerRadius = innerRadius * 1.1;
 
-    var fill = d3.scale.ordinal()
-    .domain(d3.range(4))
-    .range(["#000000", "#FFDD89", "#957244", "#F26223"]);
+
+    var fill = x.options.color_scale
+          ?d3.scale.ordinal().domain(parsedMatrix.length).range(x.options.color_scale)
+          :(parsedMatrix.length>10?d3.scale.category20():d3.scale.category10());
 
     s.append("g").selectAll("path")
     .data(chord.groups)
