@@ -1,24 +1,21 @@
 #' Create Reingold-Tilford Tree network diagrams.
 #'
-#' @param List a hierarchical list object with a root node and children.
+#' @param Data A square matrix or data frame whose (n, m) entry represents
+#'        the strength of the link from group n to group m
 #' @param height height for the network graph's frame area in pixels (if
 #'   \code{NULL} then height is automatically determined based on context)
 #' @param width numeric width for the network graph's frame area in pixels (if
 #'   \code{NULL} then width is automatically determined based on context)
+#' @param initial_opacity specify the opacity before the user mouses over 
+#'        the link
+#' @param color_scale specify the hexadecimal colors in which to display
+#'        the different categories. If there are fewer colors than categories,
+#'        the last color is repeated as necessary (if \code{NULL} then defaults
+#'        to D3 color scale)
+#' @param padding specify the amount of space between adjacent categories
+#'        on the outside of the graph
 #' @param fontSize numeric font size in pixels for the node text labels.
 #' @param fontFamily font family for the node text labels.
-#' @param linkColour character string specifying the colour you want the link
-#' lines to be. Multiple formats supported (e.g. hexadecimal).
-#' @param nodeColour character string specifying the colour you want the node
-#' circles to be. Multiple formats supported (e.g. hexadecimal).
-#' @param nodeStroke character string specifying the colour you want the node
-#' perimeter to be. Multiple formats supported (e.g. hexadecimal).
-#' @param textColour character string specifying the colour you want the text to
-#' be before they are clicked. Multiple formats supported (e.g. hexadecimal).
-#' @param opacity numeric value of the proportion opaque you would like the
-#' graph elements to be.
-#' @param margin integer value of the plot margin. Set the margin
-#' appropriately to accomodate long text labels.
 #'
 #'
 #' @examples
@@ -78,18 +75,15 @@
 #' radialNetwork(List = CanadaPC, fontSize = 10)
 #' }
 #'
-#' @source Reingold. E. M., and Tilford, J. S. (1981). Tidier Drawings of Trees.
-#' IEEE Transactions on Software Engineering, SE-7(2), 223-228.
+#' @source 
 #'
-#' Mike Bostock: \url{http://bl.ocks.org/mbostock/4063550}.
+#' Mike Bostock: \url{https://github.com/mbostock/d3/wiki/Chord-Layout}.
 #'
-#' @importFrom rjson toJSON
 #' @export
 #'
-chordDiagram <- function(matrix,
-                         width = 1000,
+chordDiagram <- function(data,
                          height = 1000,
-                         title = "Chord Diagram",
+                         width = 1000,
                          initial_opacity = 0.8,
                          color_scale = c("#111", "#222", "#333", "#444", "#555"),
                          padding = 0.05,
@@ -107,30 +101,30 @@ chordDiagram <- function(matrix,
     font_family = font_family
   )
   
-  if (!is.matrix(matrix) && !is.data.frame(matrix))
+  if (!is.matrix(data) && !is.data.frame(data))
   {
     stop("Data must be of type matrix or data frame")
   }
   
-  if (nrow(matrix) != ncol(matrix))
+  if (nrow(data) != ncol(data))
   {
     stop(paste("Data must have the same number of rows and columns; given ",
-               nrow(matrix),
+               nrow(data),
                "rows and",
-               ncol(matrix),
+               ncol(data),
                "columns",
                sep = " "))
   }
   
-  if (is.data.frame(matrix))
+  if (is.data.frame(data))
   {
-    matrix = data.matrix(matrix)
+    data = data.matrix(data)
   }
   
   # create widget
   htmlwidgets::createWidget(
     name = "chordDiagram",
-    x = list(matrix = matrix, options = options),
+    x = list(matrix = data, options = options),
     width = width,
     height = height,
     htmlwidgets::sizingPolicy(viewer.suppress = TRUE,
