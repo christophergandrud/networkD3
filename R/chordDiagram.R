@@ -133,3 +133,18 @@ chordDiagram <- function(matrix,
                               knitr.defaultHeight = 500),
     package = "networkD3")
 }
+
+#' @rdname networkD3-shiny
+#' @export
+sankeyNetworkOutput <- function(outputId, width = "100%", height = "500px") {
+  shinyWidgetOutput(outputId, "sankeyNetwork", width, height,
+                    package = "networkD3")
+}
+
+#' @rdname networkD3-shiny
+#' @export
+renderSankeyNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
+  if (!quoted) { expr <- substitute(expr) } # force quoted
+  shinyRenderWidget(expr, sankeyNetworkOutput, env, quoted = TRUE)
+}
+
