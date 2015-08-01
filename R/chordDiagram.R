@@ -89,13 +89,14 @@
 chordDiagram <- function(matrix,
                          width = 1000,
                          height = 1000,
-                         title = "Chord Diagram")
+                         title = "Chord Diagram", initial_opacity = 0.8)
 { 
   
   options <- list(
     width = width,
     height = height,
-    title = title
+    title = title,
+    initial_opacity = initial_opacity
   )
   # create widget
   htmlwidgets::createWidget(
