@@ -33,10 +33,12 @@ HTMLWidgets.widget({
     para.innerHTML = ".chord path { fill-opacity: "+x.options.initial_opacity+"; stroke: #000; stroke-width: .5px; }"
     document.getElementsByTagName("head")[0].appendChild(para);
     // x is a list with a matrix and a title
+
     var parsedMatrix = JSON.parse(x.matrix);
     chord.padding(.05)
         .sortSubgroups(d3.descending)
         .matrix(parsedMatrix);
+
     // Returns an event handler for fading a given chord group.
   function fade(opacity) {
     return function(g, i) {
