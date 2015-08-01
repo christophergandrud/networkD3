@@ -25,7 +25,7 @@ HTMLWidgets.widget({
   },
 
   renderValue: function(el, x, chord) {
-    
+
     // Returns an event handler for fading a given chord group.
     function fade(opacity) {
       return function(g, i) {
@@ -55,12 +55,25 @@ HTMLWidgets.widget({
 
     s.append("g").selectAll("path")
       .data(chord.groups)
-      .enter().append("path")
-      .style("fill", function(d) { return fill(d.index); })
+      .enter().append("g")
+      .attr("class", "pie-slice")
+      .append("path")
+      .style("fill", function(d) {
+        return fill(d.index);
+        })
       .style("stroke", function(d) { return fill(d.index); })
       .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
       .on("mouseover", fade(.1))
       .on("mouseout", fade(1));
+
+    if(x.options.labels){
+    d3.selectAll(".pie-slice")
+    .append("text")
+    .text(function(d) { return x.options.labels[d.index]; })
+    .attr("transform", function(d){
+        return "rotate("+((d.endAngle+d.startAngle)/2* 180 / Math.PI - 90)+")"+"translate("+(outerRadius+15)+",0)";
+    });
+  }
 
     var ticks = s.append("g").selectAll("g")
       .data(chord.groups)
@@ -95,7 +108,7 @@ HTMLWidgets.widget({
       .attr("d", d3.svg.chord().radius(innerRadius))
       .style("fill", function(d) { return fill(d.target.index); })
       .style("fill-opacity", x.initial_opacity);
-      
+
     function groupTicks(d) {
       var k = (d.endAngle - d.startAngle) / d.value;
       return d3.range(0, d.value, 1000).map(function(v, i) {

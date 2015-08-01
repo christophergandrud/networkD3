@@ -71,7 +71,8 @@ chordDiagram <- function(data,
                                          "#9edae5"),
                          padding = 0.05,
                          font_size = 15,
-                         font_family = "serif")
+                         font_family = "serif",
+                         labels = c())
 { 
   options <- list(
     width = width,
@@ -81,7 +82,8 @@ chordDiagram <- function(data,
     colour_scale = colour_scale,
     padding = padding,
     font_size = font_size,
-    font_family = font_family
+    font_family = font_family,
+    labels = labels
   )
   
   if (!is.matrix(data) && !is.data.frame(data))
@@ -97,6 +99,10 @@ chordDiagram <- function(data,
                ncol(data),
                "columns",
                sep = " "))
+  }
+  
+  if(length(labels)!=0 && length(labels)!=ncol(data)){
+    stop(paste("Length of labels vector should be the same as the number of rows"))
   }
   
   if (is.data.frame(data))
