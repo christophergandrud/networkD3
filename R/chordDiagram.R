@@ -86,42 +86,15 @@
 #' @importFrom rjson toJSON
 #' @export
 #'
-radialNetwork <- function(
-  List,
-  height = NULL,
-  width = NULL,
-  fontSize = 10,
-  fontFamily = "serif",
-  linkColour = "#ccc",
-  nodeColour = "#fff",
-  nodeStroke = "steelblue",
-  textColour = "#111",
-  opacity = 0.9,
-  margin = 0)
-{
-  # validate input
-  if (!is.list(List))
-    stop("List must be a list object.")
-  root <- toJSON(List)
-  
-  # create options
-  options = list(
-    height = height,
-    width = width,
-    fontSize = fontSize,
-    fontFamily = fontFamily,
-    linkColour = linkColour,
-    nodeColour = nodeColour,
-    nodeStroke = nodeStroke,
-    textColour = textColour,
-    margin = margin,
-    opacity = opacity
-  )
-  
+chordDiagram <- function(matrix,
+                         width = 500,
+                         height = 500,
+                         title = "Chord Diagram")
+{ 
   # create widget
   htmlwidgets::createWidget(
-    name = "radialNetwork",
-    x = list(root = root, options = options),
+    name = "chordDiagram",
+    x = list(matrix = matrix, title = title),
     width = width,
     height = height,
     htmlwidgets::sizingPolicy(viewer.suppress = TRUE,
@@ -132,60 +105,3 @@ radialNetwork <- function(
                               knitr.defaultHeight = 500),
     package = "networkD3")
 }
-
-#' @rdname networkD3-shiny
-#' @export
-radialNetworkOutput <- function(outputId, width = "100%", height = "800px") {
-  shinyWidgetOutput(outputId, "radialNetwork", width, height,
-                    package = "networkD3")
-}
-
-#' @rdname networkD3-shiny
-#' @export
-renderRadialNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
-  if (!quoted) { expr <- substitute(expr) } # force quoted
-  shinyRenderWidget(expr, radialNetworkOutput, env, quoted = TRUE)
-}
-
-#' Convert an R hclust or dendrogram object into a radialNetwork list.
-#'
-#' \code{as.radialNetwork} converts an R hclust or dendrogram object into a list
-#' suitable for use by the \code{radialNetwork} function.
-#'
-#' @param d An object of R class \code{hclust} or \code{dendrogram}.
-#' @param root An optional name for the root node. If missing, use the first
-#' argument variable name.
-#'
-#' @details \code{as.radialNetwork} coverts R objects of class \code{hclust} or
-#' \code{dendrogram} into a list suitable for use with the \code{radialNetwork}
-#' function.
-#' @examples
-#' # Create a hierarchical cluster object and display with radialNetwork
-#' ## dontrun
-#' hc <- hclust(dist(USArrests), "ave")
-#' radialNetwork(as.radialNetwork(hc))
-#'
-#' @importFrom stats as.dendrogram
-#'
-#' @export
-
-as.radialNetwork <- function(d, root)
-{
-  if(missing(root)) root <- as.character(match.call()[[2]])
-  if("hclust" %in% class(d)) d <- as.dendrogram(d)
-  if(!("dendrogram" %in% class(d)))
-    stop("d must be a object of class hclust or dendrogram")
-  ul <- function(x, level = 1) {
-    if(is.list(x)) {
-      return(lapply(x, function(y)
-      {
-        name <- ""
-        if(!is.list(y)) name <- attr(y, "label")
-        list(name=name, children=ul(y, level + 1))
-      }))
-    }
-    list(name = attr(x,"label"))
-  }
-  list(name = root, children = ul(d))
-}
-

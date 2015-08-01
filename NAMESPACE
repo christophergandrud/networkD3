@@ -3,6 +3,7 @@
 export(JS)
 export(JSONtoDF)
 export(as.radialNetwork)
+export(chordDiagram)
 export(clusterNetwork)
 export(clusterNetworkOutput)
 export(diagonalNetwork)
