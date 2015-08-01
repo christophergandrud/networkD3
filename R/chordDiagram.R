@@ -89,14 +89,22 @@
 chordDiagram <- function(matrix,
                          width = 1000,
                          height = 1000,
-                         title = "Chord Diagram", initial_opacity = 0.8, color_scale)
+                         title = "Chord Diagram",
+                         initial_opacity = 0.8,
+                         color_scale = c("#111", "#222", "#333", "#444", "#555"),
+                         padding = 0.05,
+                         font_size = 7,
+                         font_family = "serif")
 { 
   options <- list(
     width = width,
     height = height,
     title = title,
     initial_opacity = initial_opacity,
-    color_scale = color_scale
+    color_scale = color_scale,
+    padding = padding,
+    font_size = font_size,
+    font_family = font_family
   )
   
   if (!is.matrix(matrix) && !is.data.frame(matrix))
