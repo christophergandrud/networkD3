@@ -97,6 +97,27 @@ chordDiagram <- function(matrix,
     title = title,
     initial_opacity = initial_opacity
   )
+  
+  if (!is.matrix(matrix) && !is.data.frame(matrix))
+  {
+    stop("Data must be of type matrix or data frame")
+  }
+  
+  if (nrow(matrix) != ncol(matrix))
+  {
+    stop(paste("Data must have the same number of rows and columns; given ",
+               nrow(matrix),
+               "rows and",
+               ncol(matrix),
+               "columns",
+               sep = " "))
+  }
+  
+  if (is.data.frame(matrix))
+  {
+    matrix = data.matrix(matrix)
+  }
+  
   # create widget
   htmlwidgets::createWidget(
     name = "chordDiagram",
