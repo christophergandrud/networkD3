@@ -20,59 +20,23 @@
 #'
 #' @examples
 #' \dontrun{
-#' #### Create tree from JSON formatted data
-#' ## Download JSON data
-#' library(RCurl)
-#' # Create URL. paste0 used purely to keep within line width.
-#' URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
-#'               "networkD3/master/JSONdata/flare.json")
-#' Flare <- getURL(URL)
-#'
-#' ## Convert to list format
-#' Flare <- rjson::fromJSON(Flare)
-#'
-#' ## Recreate Bostock example from http://bl.ocks.org/mbostock/4063550
-#' radialNetwork(List = Flare, fontSize = 10, opacity = 0.9)
-#'
-#' #### Create a tree dendrogram from an R hclust object
-#' hc <- hclust(dist(USArrests), "ave")
-#' radialNetwork(as.radialNetwork(hc))
-#' radialNetwork(as.radialNetwork(hc), fontFamily = "cursive")
-#'
-#' #### Create tree from a hierarchical R list
-#' For an alternative structure see: http://stackoverflow.com/a/30747323/1705044
-#' CanadaPC <- list(name = "Canada", children = list(list(name = "Newfoundland",
-#'                     children = list(list(name = "St. John's"))),
-#'                list(name = "PEI",
-#'                     children = list(list(name = "Charlottetown"))),
-#'                list(name = "Nova Scotia",
-#'                     children = list(list(name = "Halifax"))),
-#'                list(name = "New Brunswick",
-#'                     children = list(list(name = "Fredericton"))),
-#'                list(name = "Quebec",
-#'                     children = list(list(name = "Montreal"),
-#'                                     list(name = "Quebec City"))),
-#'                list(name = "Ontario",
-#'                     children = list(list(name = "Toronto"),
-#'                                     list(name = "Ottawa"))),
-#'                list(name = "Manitoba",
-#'                     children = list(list(name = "Winnipeg"))),
-#'                list(name = "Saskatchewan",
-#'                     children = list(list(name = "Regina"))),
-#'                list(name = "Nunavuet",
-#'                     children = list(list(name = "Iqaluit"))),
-#'                list(name = "NWT",
-#'                     children = list(list(name = "Yellowknife"))),
-#'                list(name = "Alberta",
-#'                     children = list(list(name = "Edmonton"))),
-#'                list(name = "British Columbia",
-#'                     children = list(list(name = "Victoria"),
-#'                                     list(name = "Vancouver"))),
-#'                list(name = "Yukon",
-#'                     children = list(list(name = "Whitehorse")))
-#' ))
-#'
-#' radialNetwork(List = CanadaPC, fontSize = 10)
+#' #### Data about hair color preferences, from 
+#' ## https://github.com/mbostock/d3/wiki/Chord-Layout
+#' 
+#' hairColourData <- matrix(c(11975,  1951,  8010, 1013,
+#'                             5871, 10048, 16145,  990,
+#'                             8916,  2060,  8090,  940,
+#'                             2868,  6171,  8045, 6907),
+#'                             nrow = 4)
+#'                             
+#' chordDiagram(data = hairColourData, 
+#'              width = 500, 
+#'              height = 500,
+#'              color_scale = c("#000000", 
+#'                              "#FFDD89", 
+#'                              "#957244", 
+#'                              "#F26223"))
+#' 
 #' }
 #'
 #' @source 
