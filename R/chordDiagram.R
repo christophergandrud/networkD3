@@ -150,8 +150,8 @@ chordDiagram <- function(data,
                               browser.fill = TRUE,
                               browser.padding = 75,
                               knitr.figure = FALSE,
-                              knitr.defaultWidth = 800,
-                              knitr.defaultHeight = 500),
+                              knitr.defaultWidth = 100,
+                              knitr.defaultHeight = 100),
     package = "networkD3")
 }
 
@@ -159,7 +159,6 @@ chordDiagram <- function(data,
 #' @export
 chordDiagramOutput <- function(outputId, width = "100%", height = "500px") {
   shinyWidgetOutput(outputId, "chordDiagram", width, height,
-                    package = "networkD3")
 }
 
 #' @rdname networkD3-shiny

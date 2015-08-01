@@ -7,7 +7,6 @@ HTMLWidgets.widget({
 
     var diameter = Math.min(parseInt(width),parseInt(height));
 
-    d3.select(el).append('h1');
     d3.select(el).append("svg")
       .attr("width", width)
       .attr("height", height)
@@ -15,28 +14,18 @@ HTMLWidgets.widget({
       .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
     return d3.layout.chord();
-
   },
 
   resize: function(el, width, height, chord) {
     var diameter = Math.min(parseInt(width),parseInt(height));
-    var s = d3.select(el).selectAll("svg");
-    s.attr("width", width).attr("height", height);
-    //chord.size([360, diameter/2 - parseInt(s.attr("margin"))]);
-    var svg = d3.select(el).selectAll("svg").select("g");
-    svg.attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+    d3.select(el).selectAll("svg")
+      .attr("width", width).attr("height", height);
+    d3.select(el).selectAll("svg").select("g")
+      .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
   },
 
   renderValue: function(el, x, chord) {
-
-    var para = document.createElement("style");
-    para.innerHTML = ".chord path { fill-opacity: "+x.options.initial_opacity+"; stroke: #000; stroke-width: .5px; }"
-    document.getElementsByTagName("head")[0].appendChild(para);
-
-    chord.padding(x.options.padding)
-        .sortSubgroups(d3.descending)
-        .matrix(x.matrix);
-
+    
     // Returns an event handler for fading a given chord group.
     function fade(opacity) {
       return function(g, i) {
@@ -46,6 +35,14 @@ HTMLWidgets.widget({
           .style("opacity", opacity);
       };
     }
+
+    var para = document.createElement("style");
+    para.innerHTML = ".chord path { fill-opacity: "+x.options.initial_opacity+"; stroke: #000; stroke-width: .5px; }"
+    document.getElementsByTagName("head")[0].appendChild(para);
+
+    chord.padding(x.options.padding)
+        .sortSubgroups(d3.descending)
+        .matrix(x.matrix);
 
     var s = d3.select(el).select("g");
     var diameter = Math.min(parseInt(s.attr("width")),parseInt(s.attr("height")));
