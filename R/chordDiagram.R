@@ -49,7 +49,7 @@ chordDiagram <- function(data,
                          height = 1000,
                          width = 1000,
                          initial_opacity = 0.8,
-                         color_scale = c("#1f77b4", 
+                         colour_scale = c("#1f77b4", 
                                          "#aec7e8", 
                                          "#ff7f0e", 
                                          "#ffbb78", 
@@ -70,7 +70,7 @@ chordDiagram <- function(data,
                                          "#17becf", 
                                          "#9edae5"),
                          padding = 0.05,
-                         font_size = 7,
+                         font_size = 15,
                          font_family = "serif")
 { 
   options <- list(
@@ -78,7 +78,7 @@ chordDiagram <- function(data,
     height = height,
     title = title,
     initial_opacity = initial_opacity,
-    color_scale = color_scale,
+    colour_scale = colour_scale,
     padding = padding,
     font_size = font_size,
     font_family = font_family
@@ -114,16 +114,15 @@ chordDiagram <- function(data,
                               browser.fill = TRUE,
                               browser.padding = 75,
                               knitr.figure = FALSE,
-                              knitr.defaultWidth = 800,
-                              knitr.defaultHeight = 500),
+                              knitr.defaultWidth = 500,
+                              knitr.defaultHeight = 800),
     package = "networkD3")
 }
 
 #' @rdname networkD3-shiny
 #' @export
 chordDiagramOutput <- function(outputId, width = "100%", height = "500px") {
-  shinyWidgetOutput(outputId, "chordDiagram", width, height,
-                    package = "networkD3")
+  shinyWidgetOutput(outputId, "chordDiagram", width, height, package = "networkD3")
 }
 
 #' @rdname networkD3-shiny
