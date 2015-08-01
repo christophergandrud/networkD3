@@ -91,7 +91,6 @@ chordDiagram <- function(matrix,
                          height = 1000,
                          title = "Chord Diagram", initial_opacity = 0.8)
 { 
-  
   options <- list(
     width = width,
     height = height,
