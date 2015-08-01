@@ -16,6 +16,7 @@
 #'        on the outside of the graph
 #' @param fontSize numeric font size in pixels for the node text labels.
 #' @param fontFamily font family for the node text labels.
+#' @param labels vector containing labels of the categories
 #'
 #'
 #' @examples
@@ -35,7 +36,8 @@
 #'              colour_scale = c("#000000", 
 #'                              "#FFDD89", 
 #'                              "#957244", 
-#'                              "#F26223"))
+#'                              "#F26223"),
+#'              labels = c("red", "brown", "blond", "gray"))
 #' 
 #' }
 #'
