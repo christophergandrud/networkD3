@@ -84,7 +84,7 @@ HTMLWidgets.widget({
       .attr("dy", ".35em")
       .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180)translate(-16)" : null; })
       .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
-      .style("font", x.options.fontSize + "px " + x.options.fontFamily)
+      .style("font", x.options.font_size + "px " + x.options.font_family)
       .text(function(d) { return d.label; });
 
     s.append("g")

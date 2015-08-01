@@ -106,7 +106,7 @@ chordDiagram <- function(data,
                                          "#17becf", 
                                          "#9edae5"),
                          padding = 0.05,
-                         font_size = 7,
+                         font_size = 15,
                          font_family = "serif")
 { 
   options <- list(
