@@ -87,14 +87,20 @@
 #' @export
 #'
 chordDiagram <- function(matrix,
-                         width = 500,
-                         height = 500,
+                         width = 1000,
+                         height = 1000,
                          title = "Chord Diagram")
 { 
+  
+  options <- list(
+    width = width,
+    height = height,
+    title = title
+  )
   # create widget
   htmlwidgets::createWidget(
     name = "chordDiagram",
-    x = list(matrix = matrix, title = title),
+    x = list(matrix = matrix, options = options),
     width = width,
     height = height,
     htmlwidgets::sizingPolicy(viewer.suppress = TRUE,
