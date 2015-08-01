@@ -85,7 +85,26 @@ chordDiagram <- function(data,
                          height = 1000,
                          width = 1000,
                          initial_opacity = 0.8,
-                         color_scale = c("#111", "#222", "#333", "#444", "#555"),
+                         color_scale = c("#1f77b4", 
+                                         "#aec7e8", 
+                                         "#ff7f0e", 
+                                         "#ffbb78", 
+                                         "#2ca02c", 
+                                         "#98df8a", 
+                                         "#d62728", 
+                                         "#ff9896", 
+                                         "#9467bd", 
+                                         "#c5b0d5", 
+                                         "#8c564b", 
+                                         "#c49c94", 
+                                         "#e377c2", 
+                                         "#f7b6d2", 
+                                         "#7f7f7f", 
+                                         "#c7c7c7", 
+                                         "#bcbd22", 
+                                         "#dbdb8d", 
+                                         "#17becf", 
+                                         "#9edae5"),
                          padding = 0.05,
                          font_size = 7,
                          font_family = "serif")
@@ -135,3 +154,18 @@ chordDiagram <- function(data,
                               knitr.defaultHeight = 500),
     package = "networkD3")
 }
+
+#' @rdname networkD3-shiny
+#' @export
+chordDiagramOutput <- function(outputId, width = "100%", height = "500px") {
+  shinyWidgetOutput(outputId, "chordDiagram", width, height,
+                    package = "networkD3")
+}
+
+#' @rdname networkD3-shiny
+#' @export
+renderChordDiagram <- function(expr, env = parent.frame(), quoted = FALSE) {
+  if (!quoted) { expr <- substitute(expr) } # force quoted
+  shinyRenderWidget(expr, chordDiagramOutput, env, quoted = TRUE)
+}
+
