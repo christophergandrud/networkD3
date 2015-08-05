@@ -26,6 +26,7 @@ HTMLWidgets.widget({
 
     // alias options
     var options = x.options;
+
     // convert links and nodes data frames to d3 friendly format
     var links = HTMLWidgets.dataframeToD3(x.links);
     var nodes = HTMLWidgets.dataframeToD3(x.nodes);
@@ -79,7 +80,7 @@ HTMLWidgets.widget({
       .data(force.links())
       .enter().append("line")
       .attr("class", "link")
-      .style("stroke", function(d) { return d.colour ; }) // options.linkColour)
+      .style("stroke", options.linkColour)
       .style("opacity", options.opacity)
       .style("stroke-width", eval("(" + options.linkWidth + ")"))
       .on("mouseover", function(d) {

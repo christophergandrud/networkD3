@@ -87,12 +87,11 @@ forceNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
     if (missing(Value)){
         LinksDF <- data.frame(Links[, Source], Links[, Target])
         names(LinksDF) <- c("source", "target")
-    } else if (!missing(Value)){
+    }
+    else if (!missing(Value)){
         LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
         names(LinksDF) <- c("source", "target", "value")
     }
-    LinksDF <- data.frame(LinksDF, colour=linkColour)
-    LinksDF$colour = as.character(LinksDF$colour)
     NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
     names(NodesDF) <- c("name", "group")
 
