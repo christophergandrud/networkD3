@@ -24,6 +24,17 @@ HTMLWidgets.widget({
 
   renderValue: function(el, x, force) {
 
+  // Compute the node radius  using the javascript math expression specified
+    function nodeSize(d) {
+            if(options.nodesize){
+                    return eval(options.radiusCalculation);
+
+            }else{
+                    return 6}
+
+    }
+
+
     // alias options
     var options = x.options;
 
@@ -37,6 +48,9 @@ HTMLWidgets.widget({
 
     var color = eval(options.colourScale);
 
+    // set this up even if zoom = F
+    var zoom = d3.behavior.zoom();
+
     // create d3 force layout
     force
       .nodes(d3.values(nodes))
@@ -47,32 +61,40 @@ HTMLWidgets.widget({
       .on("tick", tick)
       .start();
 
+    // thanks http://plnkr.co/edit/cxLlvIlmo1Y6vJyPs6N9?p=preview
+    //  http://stackoverflow.com/questions/22924253/adding-pan-zoom-to-d3js-force-directed
+      var drag = force.drag()
+        .on("dragstart", dragstart)
+      // allow force drag to work with pan/zoom drag
+      function dragstart(d) {
+        d3.event.sourceEvent.preventDefault();
+        d3.event.sourceEvent.stopPropagation();
+      }
+
     // select the svg element and remove existing children
     var svg = d3.select(el).select("svg");
     svg.selectAll("*").remove();
+    // add two g layers; the first will be zoom target if zoom = T
+    //  fine to have two g layers even if zoom = F
+    svg = svg
+        .append("g").attr("class","zoom-layer")
+        .append("g")
 
     // add zooming if requested
     if (options.zoom) {
-      svg
-        .attr("pointer-events", "all")
-        .call(d3.behavior.zoom().on("zoom", redraw));
-
-      var vis = svg.append("svg:g");
-
-      vis.append("svg:rect")
-        .attr("width", width)
-        .attr("height", height)
-        .attr("fill", 'white');
-
+      zoom.on("zoom", redraw)
       function redraw() {
-        vis.attr("transform",
+        d3.select(el).select(".zoom-layer").attr("transform",
           "translate(" + d3.event.translate + ")"+
           " scale(" + d3.event.scale + ")");
-    }
+      }
+
+      d3.select(el).select("svg")
+        .attr("pointer-events", "all")
+        .call(zoom);
+
     } else {
-      svg
-        .attr("pointer-events", "auto")
-        .call(d3.behavior.zoom().on("zoom", null));
+      zoom.on("zoom", null);
     }
 
     // draw links
@@ -101,10 +123,11 @@ HTMLWidgets.widget({
       .style("opacity", options.opacity)
       .on("mouseover", mouseover)
       .on("mouseout", mouseout)
+      .on("click", click)
       .call(force.drag);
 
     node.append("circle")
-      .attr("r", 6)
+      .attr("r", function(d){return nodeSize(d);})
       .style("stroke", "#fff")
       .style("opacity", options.opacity)
       .style("stroke-width", "1.5px");
@@ -114,9 +137,25 @@ HTMLWidgets.widget({
       .attr("dx", 12)
       .attr("dy", ".35em")
       .text(function(d) { return d.name })
-      .style("font", options.fontsize + "px serif")
-      .style("opacity", 0)
+      .style("font", options.fontSize + "px " + options.fontFamily)
+      .style("opacity", options.opacityNoHover)
       .style("pointer-events", "none");
+
+    // Add the option for a bounded box
+    function nodeBoxX(d,width) {
+        if(options.bounded){
+            var dx = Math.max(nodeSize(d), Math.min(width - nodeSize(d), d.x));
+            return dx;
+        }else{
+            return d.x}
+    }
+    function nodeBoxY(d, height) {
+        if(options.bounded){
+            var dy = Math.max(nodeSize(d), Math.min(height - nodeSize(d), d.y));
+            return dy;
+        }else{
+            return d.y}
+    }
 
     function tick() {
       link
@@ -127,28 +166,64 @@ HTMLWidgets.widget({
 
       node
         .attr("transform", function(d) {
-          return "translate(" + d.x + "," + d.y + ")";
+          return "translate(" + nodeBoxX(d,width) + "," + nodeBoxY(d,height) + ")";
         });
     }
 
     function mouseover() {
       d3.select(this).select("circle").transition()
         .duration(750)
-        .attr("r", 16);
+        .attr("r", function(d){return nodeSize(d)+5;});
       d3.select(this).select("text").transition()
         .duration(750)
         .attr("x", 13)
         .style("stroke-width", ".5px")
-        .style("font", options.clickTextSize + "px serif")
+        .style("font", options.clickTextSize + "px " + options.fontFamily)
         .style("opacity", 1);
     }
 
     function mouseout() {
       d3.select(this).select("circle").transition()
         .duration(750)
-        .attr("r", 8);
+        .attr("r", function(d){return nodeSize(d)+2;});
       d3.select(this).select("text").transition()
-        .style("opacity", 0);
+        .duration(1250)
+        .attr("x", 0)
+        .style("font", options.fontSize + "px " + options.fontFamily) 
+        .style("opacity", options.opacityNoHover);
+    }
+    
+    function click(d) {
+      return eval(options.clickAction)
+    }
+
+    // add legend option
+    if(options.legend){
+        var legendRectSize = 18;
+        var legendSpacing = 4;
+        var legend = svg.selectAll('.legend')
+          .data(color.domain())
+          .enter()
+          .append('g')
+          .attr('class', 'legend')
+          .attr('transform', function(d, i) {
+            var height = legendRectSize + legendSpacing;
+            var offset =  height * color.domain().length / 2;
+            var horz = legendRectSize;
+            var vert = i * height+4;
+            return 'translate(' + horz + ',' + vert + ')';
+          });
+
+        legend.append('rect')
+          .attr('width', legendRectSize)
+          .attr('height', legendRectSize)
+          .style('fill', color)
+          .style('stroke', color);
+
+        legend.append('text')
+          .attr('x', legendRectSize + legendSpacing)
+          .attr('y', legendRectSize - legendSpacing)
+          .text(function(d) { return d; });
     }
   },
 });

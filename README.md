@@ -1,6 +1,6 @@
-# Tools for creating D3 JavaScript network graphs from R
+# D3 JavaScript Network Graphs from R
 
-Version 0.1.2.1 [![Build Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://travis-ci.org/christophergandrud/networkD3)
+Version 0.1.8 [![Build Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://travis-ci.org/christophergandrud/networkD3) ![CRAN Downloads](http://cranlogs.r-pkg.org/badges/last-month/networkD3)
 
 This is a port of Christopher Gandrud's
 [d3Network](http://christophergandrud.github.io/d3Network/) package to the
@@ -8,14 +8,6 @@ This is a port of Christopher Gandrud's
 
 This README includes information on set up and a number of basic examples.
 For more information see the package's [main page](http://christophergandrud.github.io/networkD3/).
-
-## Installation
-
-You can install **networkD3** from GitHub as follows:
-
-```S
-devtools::install_github('christophergandrud/networkD3')
-```
 
 ## Usage
 
@@ -60,7 +52,7 @@ EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
 # Plot
 sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
             Target = "target", Value = "value", NodeID = "name",
-            fontsize = 12, nodeWidth = 30)
+            fontSize = 12, nodeWidth = 30)
 ```
 
 ### Saving to an external file

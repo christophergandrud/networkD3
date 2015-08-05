@@ -1,6 +1,6 @@
 HTMLWidgets.widget({
 
-  name: "treeNetwork",
+  name: "radialNetwork",
   type: "output",
 
   initialize: function(el, width, height) {
@@ -84,7 +84,7 @@ HTMLWidgets.widget({
         .attr("dy", ".31em")
         .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
         .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
-        .style("font", x.options.fontSize + "px serif")
+        .style("font", x.options.fontSize + "px " + x.options.fontFamily)
         .style("opacity", x.options.opacity)
         .style("fill", x.options.textColour)
         .text(function(d) { return d.name; });
@@ -100,7 +100,7 @@ HTMLWidgets.widget({
         .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
         .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
         .style("stroke-width", ".5px")
-        .style("font", "25px serif")
+        .style("font", "25px " + x.options.fontFamily)
         .style("opacity", 1);
     }
 
@@ -114,7 +114,7 @@ HTMLWidgets.widget({
         .attr("dy", ".31em")
         .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
         .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
-        .style("font", x.options.fontSize + "px serif")
+        .style("font", x.options.fontSize + "px " + x.options.fontFamily)
         .style("opacity", x.options.opacity);
     }
 

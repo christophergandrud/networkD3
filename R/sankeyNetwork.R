@@ -21,7 +21,8 @@
 #' @param colourScale character string specifying the categorical colour
 #' scale for the nodes. See
 #' \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.
-#' @param fontsize numeric font size in pixels for the node text labels.
+#' @param fontSize numeric font size in pixels for the node text labels.
+#' @param fontFamily font family for the node text labels.
 #' @param nodeWidth numeric width of each node.
 #' @param nodePadding numeric essentially influences the width height.
 #'
@@ -30,8 +31,12 @@
 #' # Recreate Bostock Sankey diagram: http://bost.ocks.org/mike/sankey/
 #' # Load energy projection data
 #' library(RCurl)
-#' URL <- "https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/energy.json"
+#' # Create URL. paste0 used purely to keep within line width.
+
+#' URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
+#'               "networkD3/master/JSONdata/energy.json")
 #' Energy <- getURL(URL, ssl.verifypeer = FALSE)
+#'
 #' # Convert to data frame
 #' EngLinks <- JSONtoDF(jsonStr = Energy, array = "links")
 #' EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
@@ -39,30 +44,45 @@
 #' # Plot
 #' sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
-#               fontsize = 12, nodeWidth = 30)
+#'               fontSize = 12, nodeWidth = 30)
 #' }
 #' @source
 #' D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
 #' specifically for Sankey diagrams \url{http://bost.ocks.org/mike/sankey/}.
 #'
+#' @seealso \code{\link{JS}}
+#'
 #' @export
 
-sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
-    height = NULL, width = NULL, colourScale = "d3.scale.category20()",
-    fontsize = 7, nodeWidth = 15, nodePadding = 10)
+sankeyNetwork <- function(Links,
+                          Nodes,
+                          Source,
+                          Target,
+                          Value,
+                          NodeID,
+                          height = NULL,
+                          width = NULL,
+                          colourScale = JS("d3.scale.category20()"),
+                          fontSize = 7,
+                          fontFamily = "serif",
+                          nodeWidth = 15,
+                          nodePadding = 10)
 {
+    # Hack for UI consistency. Think of improving.
+    colourScale <- as.character(colourScale)
+
     # Subset data frames for network graph
-    if (!is.data.frame(Links)){
+    if (!is.data.frame(Links)) {
         stop("Links must be a data frame class object.")
     }
-    if (!is.data.frame(Nodes)){
+    if (!is.data.frame(Nodes)) {
         stop("Nodes must be a data frame class object.")
     }
-    if (missing(Value)){
+    if (missing(Value)) {
         LinksDF <- data.frame(Links[, Source], Links[, Target])
         names(LinksDF) <- c("source", "target")
     }
-    else if (!missing(Value)){
+    else if (!missing(Value)) {
         LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
         names(LinksDF) <- c("source", "target", "value")
     }
@@ -73,7 +93,8 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
     options = list(
         NodeID = NodeID,
         colourScale = colourScale,
-        fontsize = fontsize,
+        fontSize = fontSize,
+        fontFamily = fontFamily,
         nodeWidth = nodeWidth,
         nodePadding = nodePadding
     )
@@ -97,7 +118,8 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
 #' @rdname networkD3-shiny
 #' @export
 sankeyNetworkOutput <- function(outputId, width = "100%", height = "500px") {
-    shinyWidgetOutput(outputId, "sankeyNetwork", width, height, package = "networkD3")
+    shinyWidgetOutput(outputId, "sankeyNetwork", width, height,
+                      package = "networkD3")
 }
 
 #' @rdname networkD3-shiny

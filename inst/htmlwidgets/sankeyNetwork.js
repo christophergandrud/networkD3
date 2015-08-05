@@ -118,7 +118,7 @@ HTMLWidgets.widget({
             .attr("text-anchor", "end")
             .attr("transform", null)
             .text(function(d) { return d.name; })
-            .style("font", options.fontsize + "px serif")
+            .style("font", options.fontSize + "px " + x.options.fontFamily)
             .filter(function(d) { return d.x < width / 2; })
             .attr("x", 6 + sankey.nodeWidth())
             .attr("text-anchor", "start");
