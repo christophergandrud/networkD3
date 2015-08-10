@@ -183,7 +183,8 @@ Flare$children = Flare$children[1:3]
 
 radialNetwork(List = Flare, fontSize = 10, opacity = 0.9)
 
-diagonalNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin = 200)
+diagonalNetwork(List = Flare, fontSize = 10, opacity = 0.9, 
+                margin = 200)
 ```
 
 <a href="#sankey"><h3 id="sankey"><code>> dendroNetwork</code></h3></a>
