@@ -176,12 +176,14 @@ URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
               "networkD3/master/JSONdata/flare.json")
 Flare <- getURL(URL)
 
-## Convert to list format
+# Convert to list format
 Flare <- rjson::fromJSON(Flare)
+# Use subset of data for more readable diagram
+Flare$children = Flare$children[1:3]
 
 radialNetwork(List = Flare, fontSize = 10, opacity = 0.9)
 
-diagonalNetwork(List = Flare, fontSize = 10, opacity = 0.9)
+diagonalNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin = 200)
 ```
 
 <a href="#sankey"><h3 id="sankey"><code>> dendroNetwork</code></h3></a>
