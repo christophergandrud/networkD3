@@ -12,7 +12,7 @@
 `radialNetwork` function has the same functionality, but has been renamed to be
 more accurately descriptive and avoid confusion with `dendroNetwork`.
 
-- Added 'diagonalNetwork`, which creates tree network diagrams using diagonal
+- Added `diagonalNetwork`, which creates tree network diagrams using diagonal
 instead of radial nodes.
 
 Thanks to Jonathan Owen.
