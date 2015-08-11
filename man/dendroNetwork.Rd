@@ -13,7 +13,7 @@ dendroNetwork(hc, height = 500, width = 800, fontSize = 10,
   linkColour = "#ccc", nodeColour = "#fff", nodeStroke = "steelblue",
   textColour = "#111", textOpacity = 0.9, textRotate = NULL,
   opacity = 0.9, margins = NULL, linkType = c("elbow", "diagonal"),
-  treeOrientation = c("horizontal", "vertical"), zoom = TRUE)
+  treeOrientation = c("horizontal", "vertical"), zoom = FALSE)
 }
 \arguments{
 \item{hc}{a hierarchical (\code{hclust}) cluster object.}
