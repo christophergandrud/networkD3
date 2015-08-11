@@ -17,7 +17,7 @@ opts_chunk$set(tidy=FALSE)
 opts_chunk$set(message=FALSE)
 ```
 
-<!----------------------------- Header ------------------------------>
+<!-- Header -->
 <div class="rect1"></div>
 <div class="topbar"><code>networkD3</code>:</div> <div class="topbarsub">D3 JavaScript Network Graphs from R</div>
 
@@ -58,7 +58,7 @@ Issues/suggestions <a href="https://github.com/christophergandrud/networkD3/issu
 
 <br><br><br><br><br>
 
-<!------------- About --------------------------------------------------------->
+<!-- About -->
 
 <h2><i class="fa fa-thumb-tack"></i> About</h2>
 
@@ -81,7 +81,7 @@ It currently supports three types of network graphs:
 
 - **[Reingold-Tilford Tree graphs](http://bl.ocks.org/mbostock/4339184)** with `treeNetwork`
 
-<!------------- Install ------------------------------------------------------->
+<!-- Install -->
 
 <h2><i class="fa fa-download"></i> Install</h2>
 
@@ -94,7 +94,7 @@ can also export the graphs to the clipboard or a PNG/JPEG/TIFF/etc. file.
 The package can be downloaded from
 [CRAN](http://cran.r-project.org/web/packages/networkD3/index.html).
 
-<!------------- Usage --------------------------------------------------------->
+<!-- Usage  -->
 
 <h2><i class="fa fa-code"></i> Usage</h2>
 
