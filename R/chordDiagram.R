@@ -6,9 +6,9 @@
 #'   \code{NULL} then height is automatically determined based on context)
 #' @param width numeric width for the network graph's frame area in pixels (if
 #'   \code{NULL} then width is automatically determined based on context)
-#' @param initial_opacity specify the opacity before the user mouses over 
+#' @param initialOpacity specify the opacity before the user mouses over 
 #'        the link
-#' @param colour_scale specify the hexadecimal colours in which to display
+#' @param colourScale specify the hexadecimal colours in which to display
 #'        the different categories. If there are fewer colours than categories,
 #'        the last colour is repeated as necessary (if \code{NULL} then defaults
 #'        to D3 colour scale)
@@ -33,7 +33,7 @@
 #' chordDiagram(data = hairColourData, 
 #'              width = 500, 
 #'              height = 500,
-#'              colour_scale = c("#000000", 
+#'              colourScale = c("#000000", 
 #'                              "#FFDD89", 
 #'                              "#957244", 
 #'                              "#F26223"),
@@ -50,8 +50,8 @@
 chordDiagram <- function(data,
                          height = 1000,
                          width = 1000,
-                         initial_opacity = 0.8,
-                         colour_scale = c("#1f77b4", 
+                         initialOpacity = 0.8,
+                         colourScale = c("#1f77b4", 
                                          "#aec7e8", 
                                          "#ff7f0e", 
                                          "#ffbb78", 
@@ -72,19 +72,19 @@ chordDiagram <- function(data,
                                          "#17becf", 
                                          "#9edae5"),
                          padding = 0.05,
-                         font_size = 15,
-                         font_family = "serif",
+                         fontSize = 15,
+                         fontFamily = "serif",
                          labels = c())
 { 
   options <- list(
     width = width,
     height = height,
     title = title,
-    initial_opacity = initial_opacity,
-    colour_scale = colour_scale,
+    initial_opacity = initialOpacity,
+    colour_scale = colourScale,
     padding = padding,
-    font_size = font_size,
-    font_family = font_family,
+    font_size = fontSize,
+    font_family = fontFamily,
     labels = labels
   )
   
