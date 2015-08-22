@@ -1,5 +1,8 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.2.1
+
+- Added `chordDiagram` to show directed relationships among entities
 
 ## Version 0.2
 
