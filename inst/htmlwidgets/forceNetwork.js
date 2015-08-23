@@ -82,12 +82,12 @@ HTMLWidgets.widget({
 
     // add zooming if requested
     if (options.zoom) {
-      zoom.on("zoom", redraw)
       function redraw() {
         d3.select(el).select(".zoom-layer").attr("transform",
           "translate(" + d3.event.translate + ")"+
           " scale(" + d3.event.scale + ")");
       }
+      zoom.on("zoom", redraw)
 
       d3.select(el).select("svg")
         .attr("pointer-events", "all")
