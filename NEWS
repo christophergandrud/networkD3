@@ -4,6 +4,9 @@
 
 - Fixed an issue with `forceNetwork` on Firefox. Thanks to @agoldst.
 
+- Fixed an issue where `forceNetwork` node size would not return to 
+default after mouseover. Thanks to Pascal Pernot.
+
 ## Version 0.2
 
 - Added `dendroNetwork` to create hierarchical cluster network diagrams 
