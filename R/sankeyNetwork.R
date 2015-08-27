@@ -98,7 +98,7 @@ sankeyNetwork <- function(Links,
         fontFamily = fontFamily,
         nodeWidth = nodeWidth,
         nodePadding = nodePadding,
-        unit = NULL
+        unit = unit
     )
 
     # create widget
