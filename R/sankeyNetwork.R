@@ -66,7 +66,8 @@ sankeyNetwork <- function(Links,
                           fontSize = 7,
                           fontFamily = "serif",
                           nodeWidth = 15,
-                          nodePadding = 10)
+                          nodePadding = 10,
+                          unit = NULL)
 {
     # Hack for UI consistency. Think of improving.
     colourScale <- as.character(colourScale)
@@ -96,7 +97,8 @@ sankeyNetwork <- function(Links,
         fontSize = fontSize,
         fontFamily = fontFamily,
         nodeWidth = nodeWidth,
-        nodePadding = nodePadding
+        nodePadding = nodePadding,
+        unit = unit
     )
 
     # create widget

@@ -45,7 +45,7 @@ HTMLWidgets.widget({
         var color = eval(options.colourScale);
 
         var formatNumber = d3.format(",.0f"),
-        format = function(d) { return formatNumber(d); }
+        format = function(d) { return formatNumber(d) + (options.unit ? " " + options.unit : ""); }
 
         // create d3 sankey layout
         sankey
