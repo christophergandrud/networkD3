@@ -48,9 +48,10 @@
 #' @export
 #'
 chordDiagram <- function(data,
-                         height = 1000,
-                         width = 1000,
+                         height = 500,
+                         width = 500,
                          initialOpacity = 0.8,
+                         useTicks = 0,
                          colourScale = c("#1f77b4", 
                                          "#aec7e8", 
                                          "#ff7f0e", 
@@ -71,21 +72,25 @@ chordDiagram <- function(data,
                                          "#dbdb8d", 
                                          "#17becf", 
                                          "#9edae5"),
-                         padding = 0.05,
-                         fontSize = 15,
-                         fontFamily = "serif",
-                         labels = c())
+                         padding = 0.1,
+                         fontSize = 14,
+                         fontFamily = "sans-serif",
+                         labels = c(),
+                         labelDistance = 30)
+
 { 
   options <- list(
     width = width,
     height = height,
     title = title,
+    use_ticks = useTicks,
     initial_opacity = initialOpacity,
     colour_scale = colourScale,
     padding = padding,
     font_size = fontSize,
     font_family = fontFamily,
-    labels = labels
+    labels = labels,
+    label_distance = labelDistance
   )
   
   if (!is.matrix(data) && !is.data.frame(data))
@@ -123,7 +128,7 @@ chordDiagram <- function(data,
                               browser.padding = 75,
                               knitr.figure = FALSE,
                               knitr.defaultWidth = 500,
-                              knitr.defaultHeight = 800),
+                              knitr.defaultHeight = 500),
     package = "networkD3")
 }
 

@@ -4,24 +4,24 @@ HTMLWidgets.widget({
   type: "output",
 
   initialize: function(el, width, height) {
-
-    var diameter = Math.min(parseInt(width),parseInt(height));
+    var x = width + 50;
+    var y = height + 50;
 
     d3.select(el).append("svg")
-      .attr("width", width)
-      .attr("height", height)
+      .attr("width", x)
+      .attr("height", y)
       .append("g")
-      .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+      .attr("transform", "translate(" + x / 2 + "," + y / 2 + ")");
 
     return d3.layout.chord();
   },
 
   resize: function(el, width, height, chord) {
-    var diameter = Math.min(parseInt(width),parseInt(height));
-    d3.select(el).selectAll("svg")
-      .attr("width", width).attr("height", height);
+    var x = width + 50;
+    var y = height + 50;
+    d3.select(el).selectAll("svg").attr("width", x).attr("height", y);
     d3.select(el).selectAll("svg").select("g")
-      .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+      .attr("transform", "translate(" + x / 2 + "," + y / 2 + ")");
   },
 
   renderValue: function(el, x, chord) {
@@ -37,7 +37,7 @@ HTMLWidgets.widget({
     }
 
     var para = document.createElement("style");
-    para.innerHTML = ".chord path { fill-opacity: "+x.options.initial_opacity+"; stroke: #000; stroke-width: .5px; }"
+    para.innerHTML = ".chord path { fill-opacity: "+ x.options.initial_opacity +"; stroke: #000; stroke-width: .0px; }"
     document.getElementsByTagName("head")[0].appendChild(para);
 
     chord.padding(x.options.padding)
@@ -45,8 +45,8 @@ HTMLWidgets.widget({
         .matrix(x.matrix);
 
     var s = d3.select(el).select("g");
-    var diameter = Math.min(parseInt(s.attr("width")),parseInt(s.attr("height")));
-    var innerRadius = Math.min(x.options.width, x.options.height) * .41;
+    var diameter = Math.min(x.options.width, x.options.height);
+    var innerRadius = Math.min(x.options.width, x.options.height) * .31;
     var outerRadius = innerRadius * 1.1;
 
     var fill = x.options.colour_scale
@@ -65,40 +65,51 @@ HTMLWidgets.widget({
       .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
       .on("mouseover", fade(.1))
       .on("mouseout", fade(1));
+      
+      if(x.options.labels) {
+        // Forumulas taken from http://sdk.gooddata.com/gooddata-js/example/chord-chart-to-analyze-sales/
+        s.append("g").selectAll(".arc")
+          .data(chord.groups)
+          .enter().append("svg:text")
+          .attr("dy", ".35em")
+          .attr("text-anchor", function(d) { return ((d.startAngle + d.endAngle) / 2) > Math.PI ? "end" : null; })
+          .attr("transform", function(d) {
+            return "rotate(" + (((d.startAngle + d.endAngle) / 2) * 180 / Math.PI - 90) + ")"
+                + "translate(" + (x.options.height / 2 - x.options.label_distance) + ")"
+                + (((d.startAngle + d.endAngle) / 2) > Math.PI ? "rotate(180)" : "");
+          }).text(function(d) {
+              return x.options.labels[d.index];
+          }).attr("font-size", x.options.font_size + "px")
+          .attr("font-family", x.options.font_family);
+      }
 
-    if(x.options.labels){
-    d3.selectAll(".pie-slice")
-    .append("text")
-    .text(function(d) { return x.options.labels[d.index]; })
-    .attr("transform", function(d){
-        return "rotate("+((d.endAngle+d.startAngle)/2* 180 / Math.PI - 90)+")"+"translate("+(outerRadius+15)+",0)";
-    });
-  }
-
-    var ticks = s.append("g").selectAll("g")
-      .data(chord.groups)
-      .enter().append("g").selectAll("g")
-      .data(groupTicks)
-      .enter().append("g")
-      .attr("transform", function(d) {
-        return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
-            + "translate(" + outerRadius + ",0)";
-      });
-
-    ticks.append("line")
-      .attr("x1", 1)
-      .attr("y1", 0)
-      .attr("x2", 5)
-      .attr("y2", 0)
-      .style("stroke", "#000");
-
-    ticks.append("text")
-      .attr("x", 8)
-      .attr("dy", ".35em")
-      .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180)translate(-16)" : null; })
-      .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
-      .style("font", x.options.font_size + "px " + x.options.font_family)
-      .text(function(d) { return d.label; });
+    if(x.options.use_ticks) {
+      var ticks = s.append("g").selectAll("g")
+        .data(chord.groups)
+        .enter().append("g").selectAll("g")
+        .data(groupTicks)
+        .enter().append("g")
+        .attr("transform", function(d) {
+          return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+              + "translate(" + outerRadius + ",0)";
+        });
+  
+      ticks.append("line")
+        .attr("x1", 1)
+        .attr("y1", 0)
+        .attr("x2", 5)
+        .attr("y2", 0)
+        .style("stroke", "#000");
+  
+      ticks.append("text")
+        .attr("x", 8)
+        .attr("dy", ".35em")
+        .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180)translate(-16)" : null; })
+        .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+        .text(function(d) { return d.label; })
+        .attr("font-size", x.options.font_size + "px")
+        .attr("font-family", x.options.font_family);
+    }
 
     s.append("g")
       .attr("class", "chord")
