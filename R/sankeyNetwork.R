@@ -61,6 +61,12 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID,
     if (!is.data.frame(Nodes)) {
         stop("Nodes must be a data frame class object.")
     }
+    # if Source or Target are missing assume
+    #  Source is the first column
+    #  Target is the second column
+    if(missing(Source)) Source = 1
+    if(missing(Target)) Target = 2
+    
     if (missing(Value)) {
         LinksDF <- data.frame(Links[, Source], Links[, Target])
         names(LinksDF) <- c("source", "target")
