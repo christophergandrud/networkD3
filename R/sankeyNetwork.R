@@ -31,21 +31,13 @@
 #' \dontrun{
 #' # Recreate Bostock Sankey diagram: http://bost.ocks.org/mike/sankey/
 #' # Load energy projection data
-#' library(RCurl)
-#' # Create URL. paste0 used purely to keep within line width.
-
 #' URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
 #'               "networkD3/master/JSONdata/energy.json")
-#' Energy <- getURL(URL, ssl.verifypeer = FALSE)
-#'
-#' # Convert to data frame
-#' EngLinks <- JSONtoDF(jsonStr = Energy, array = "links")
-#' EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
-#'
+#' Energy <- jsonlite::fromJSON(URL)
 #' # Plot
-#' sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
+#' sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
-#               units = "TWh", fontsize = 12, nodeWidth = 30)
+#'              units = "TWh", fontSize = 12, nodeWidth = 30)
 #' }
 #' @source
 #' D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
@@ -57,7 +49,7 @@
 
 sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, 
     units = "", height = NULL, width = NULL, colourScale = "d3.scale.category20()",
-    fontsize = 7, nodeWidth = 15, nodePadding = 10)
+    fontSize = 7, fontFamily = NULL, nodeWidth = 15, nodePadding = 10)
 {
     # Hack for UI consistency. Think of improving.
     colourScale <- as.character(colourScale)
