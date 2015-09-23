@@ -47,9 +47,20 @@
 #'
 #' @export
 
-sankeyNetwork <- function(Links, Nodes, Source, Target, Value, NodeID, 
-    units = "", height = NULL, width = NULL, colourScale = "d3.scale.category20()",
-    fontSize = 7, fontFamily = NULL, nodeWidth = 15, nodePadding = 10)
+sankeyNetwork <- function(Links,
+                          Nodes,
+                          Source,
+                          Target,
+                          Value,
+                          NodeID,
+                          height = NULL,
+                          width = NULL,
+                          units = "",
+                          colourScale = JS("d3.scale.category20()"),
+                          fontSize = 7,
+                          fontFamily = NULL,
+                          nodeWidth = 15,
+                          nodePadding = 10)
 {
     # Hack for UI consistency. Think of improving.
     colourScale <- as.character(colourScale)
