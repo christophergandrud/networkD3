@@ -9,8 +9,8 @@ specifically for Sankey diagrams \url{http://bost.ocks.org/mike/sankey/}.
 }
 \usage{
 sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, height = NULL,
-  width = NULL, colourScale = JS("d3.scale.category20()"), fontSize = 7,
-  fontFamily = "serif", nodeWidth = 15, nodePadding = 10)
+  width = NULL, units = "", colourScale = JS("d3.scale.category20()"),
+  fontSize = 7, fontFamily = NULL, nodeWidth = 15, nodePadding = 10)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -38,6 +38,8 @@ data frame.}
 \item{height}{numeric height for the network graph's frame area in pixels.}
 
 \item{width}{numeric width for the network graph's frame area in pixels.}
+
+\item{units}{character string describing physical units (if any) for Value}
 
 \item{colourScale}{character string specifying the categorical colour
 scale for the nodes. See
@@ -71,7 +73,6 @@ EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
 # Plot
 sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
-              fontSize = 12, nodeWidth = 30)
 }
 }
 \seealso{
