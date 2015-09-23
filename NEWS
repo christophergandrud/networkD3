@@ -1,5 +1,9 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.2.2
+- Added NodeGroup and LinkGroup parameters to sankeyNetwork so links
+are colorised.
+
 ## Version 0.2.1
 
 - Fixed an issue with `forceNetwork` on Firefox. Thanks to @agoldst.

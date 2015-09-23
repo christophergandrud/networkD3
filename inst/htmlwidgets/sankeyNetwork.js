@@ -43,6 +43,31 @@ HTMLWidgets.widget({
         var height = el.offsetHeight;
 
         var color = eval(options.colourScale);
+        
+        var color_node = function color_node(d){
+          if (d.group){
+            return color(d.group.replace(/ .*/, ""));
+          } else {
+            return "#cccccc";
+          }
+        }
+        
+        var color_link = function color_link(d){
+          if (d.group){
+            return color(d.group.replace(/ .*/, ""));
+          } else {
+            return "#000000";
+          }
+        }
+        
+        var opacity_link = function opacity_link(d){
+          if (d.group){
+            return 0.7;
+          } else {
+            return 0.2;
+          }
+        }
+
 
         var formatNumber = d3.format(",.0f"),
         format = function(d) { return formatNumber(d); }
@@ -71,16 +96,16 @@ HTMLWidgets.widget({
             .attr("d", path)
             .style("stroke-width", function(d) { return Math.max(1, d.dy); })
             .style("fill", "none")
-            .style("stroke", "#000")
-            .style("stroke-opacity", 0.2)
+            .style("stroke", color_link)
+            .style("stroke-opacity", opacity_link)
             .sort(function(a, b) { return b.dy - a.dy; })
             .on("mouseover", function(d) {
                 d3.select(this)
-                .style("stroke-opacity", 0.5);
+                .style("stroke-opacity", function(d){return opacity_link(d) + 0.3});
             })
             .on("mouseout", function(d) {
                 d3.select(this)
-                .style("stroke-opacity", 0.2);
+                .style("stroke-opacity", opacity_link);
             });
 
         // draw nodes
@@ -104,7 +129,7 @@ HTMLWidgets.widget({
             .attr("height", function(d) { return d.dy; })
             .attr("width", sankey.nodeWidth())
             .style("fill", function(d) {
-                return d.color = color(d.name.replace(/ .*/, "")); })
+                return d.color = color_node(d); })
             .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
             .style("opacity", 0.9)
             .style("cursor", "move")

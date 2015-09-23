@@ -16,6 +16,10 @@
 #' frame for how far away the nodes are from one another.
 #' @param NodeID character string specifying the node IDs in the \code{Nodes}
 #' data frame.
+#' @param NodeGroup character string specifying the node groups in the 
+#' \code{Nodes}. Used to color the nodes in the network.
+#' @param LinkGroup character string specifying the groups in the 
+#' \code{Links}. Used to color the links in the network.
 #' @param units character string describing physical units (if any) for Value
 #' @param height numeric height for the network graph's frame area in pixels.
 #' @param width numeric width for the network graph's frame area in pixels.
@@ -61,6 +65,8 @@ sankeyNetwork <- function(Links,
                           Target,
                           Value,
                           NodeID,
+                          NodeGroup = NodeID,
+                          LinkGroup = NULL,
                           height = NULL,
                           width = NULL,
                           units = "",
@@ -90,10 +96,21 @@ sankeyNetwork <- function(Links,
     }
     NodesDF <- data.frame(Nodes[, NodeID])
     names(NodesDF) <- c("name")
-
+    
+    # add node group if specified
+    if (is.character(NodeGroup)){
+      NodesDF$group <- Nodes[, NodeGroup]
+    }
+    
+    if (is.character(LinkGroup)){
+      LinksDF$group <- Links[, LinkGroup]
+    }
+    
     # create options
     options = list(
         NodeID = NodeID,
+        NodeGroup = NodeGroup,
+        LinkGroup = LinkGroup,
         colourScale = colourScale,
         fontSize = fontSize,
         fontFamily = fontFamily,

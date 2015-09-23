@@ -8,9 +8,10 @@ D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
 specifically for Sankey diagrams \url{http://bost.ocks.org/mike/sankey/}.
 }
 \usage{
-sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, height = NULL,
-  width = NULL, units = "", colourScale = JS("d3.scale.category20()"),
-  fontSize = 7, fontFamily = NULL, nodeWidth = 15, nodePadding = 10)
+sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, NodeGroup = NodeID,
+  LinkGroup = NULL, height = NULL, width = NULL, units = "",
+  colourScale = JS("d3.scale.category20()"), fontSize = 7,
+  fontFamily = NULL, nodeWidth = 15, nodePadding = 10)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -34,6 +35,12 @@ frame for how far away the nodes are from one another.}
 
 \item{NodeID}{character string specifying the node IDs in the \code{Nodes}
 data frame.}
+
+\item{NodeGroup}{character string specifying the node groups in the
+\code{Nodes}. Used to color the nodes in the network.}
+
+\item{LinkGroup}{character string specifying the groups in the
+\code{Links}. Used to color the links in the network.}
 
 \item{height}{numeric height for the network graph's frame area in pixels.}
 
