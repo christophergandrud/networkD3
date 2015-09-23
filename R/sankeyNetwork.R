@@ -31,21 +31,13 @@
 #' \dontrun{
 #' # Recreate Bostock Sankey diagram: http://bost.ocks.org/mike/sankey/
 #' # Load energy projection data
-#' library(RCurl)
-#' # Create URL. paste0 used purely to keep within line width.
-
 #' URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
 #'               "networkD3/master/JSONdata/energy.json")
-#' Energy <- getURL(URL, ssl.verifypeer = FALSE)
-#'
-#' # Convert to data frame
-#' EngLinks <- JSONtoDF(jsonStr = Energy, array = "links")
-#' EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
-#'
+#' Energy <- jsonlite::fromJSON(URL)
 #' # Plot
-#' sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
+#' sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
-#               units = "TWh", fontSize = 12, nodeWidth = 30)
+#'              units = "TWh", fontSize = 12, nodeWidth = 30)
 #' }
 #' @source
 #' D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
@@ -80,6 +72,12 @@ sankeyNetwork <- function(Links,
     if (!is.data.frame(Nodes)) {
         stop("Nodes must be a data frame class object.")
     }
+    # if Source or Target are missing assume
+    #  Source is the first column
+    #  Target is the second column
+    if(missing(Source)) Source = 1
+    if(missing(Target)) Target = 2
+    
     if (missing(Value)) {
         LinksDF <- data.frame(Links[, Source], Links[, Target])
         names(LinksDF) <- c("source", "target")

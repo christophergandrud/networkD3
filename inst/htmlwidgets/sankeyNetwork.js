@@ -112,14 +112,14 @@ HTMLWidgets.widget({
             .text(function(d) { return d.name + "\n" + format(d.value) + 
                 " " + options.units; });
 
-        node.append("svg:text")
+        node.append("text")
             .attr("x", -6)
             .attr("y", function(d) { return d.dy / 2; })
             .attr("dy", ".35em")
             .attr("text-anchor", "end")
             .attr("transform", null)
             .text(function(d) { return d.name; })
-            .style("font", options.fontSize + "px")
+            .style("font-size", options.fontSize + "px")
             .style("font-family", options.fontFamily ? options.fontFamily : "inherit")
             .filter(function(d) { return d.x < width / 2; })
             .attr("x", 6 + sankey.nodeWidth())
