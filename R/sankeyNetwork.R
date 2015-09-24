@@ -86,6 +86,10 @@ sankeyNetwork <- function(Links,
         LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
         names(LinksDF) <- c("source", "target", "value")
     }
+    
+    # if NodeID is missing assume
+    #  NodeID is the first column
+    if(missing(NodeID)) NodeID = 1
     NodesDF <- data.frame(Nodes[, NodeID])
     names(NodesDF) <- c("name")
 
