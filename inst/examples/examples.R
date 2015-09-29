@@ -76,27 +76,25 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 
 
 # sankeyNetwork
-library(RCurl)
-URL <- "https://raw.githubusercontent.com/christophergandrud/d3Network/sankey/JSONdata/energy.json"
-Energy <- getURL(URL, ssl.verifypeer = FALSE)
-# Convert to data frame
-EngLinks <- JSONtoDF(jsonStr = Energy, array = "links")
-EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
+URL <- "https://cdn.rawgit.com/christophergandrud/networkD3/master/JSONdata/energy.json"
+Energy <- jsonlite::fromJSON(URL)
 
 # Plot
-sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
+sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
               Target = "target", Value = "value", NodeID = "name",
               fontSize = 12, nodeWidth = 30)
 
 # And with a different font
-sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
+sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
               Target = "target", Value = "value", NodeID = "name",
               fontSize = 12, nodeWidth = 30, fontFamily = "monospace")
 
 
 # radialNetwork
-Flare <- RCurl::getURL("https://gist.githubusercontent.com/mbostock/4063550/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json")
-Flare <- rjson::fromJSON(Flare)
+Flare <- jsonlite::fromJSON(
+  "https://gist.githubusercontent.com/mbostock/4063550/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json",
+  simplifyDataFrame = FALSE
+)
 
 hc <- hclust(dist(USArrests), "ave")
 
