@@ -53,14 +53,12 @@ Create Reingold-Tilford Tree network diagrams.
 \dontrun{
 #### Create tree from JSON formatted data
 ## Download JSON data
-library(RCurl)
 # Create URL. paste0 used purely to keep within line width.
-URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
-              "networkD3/master/JSONdata/flare.json")
-Flare <- getURL(URL)
+URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
+              "master/JSONdata//flare.json")
 
 ## Convert to list format
-Flare <- rjson::fromJSON(Flare)
+Flare <- jsonlite::fromJSON(URL, simplifyDataFrame = FALSE)
 
 ## Recreate Bostock example from http://bl.ocks.org/mbostock/4063550
 radialNetwork(List = Flare, fontSize = 10, opacity = 0.9)

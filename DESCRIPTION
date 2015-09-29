@@ -23,9 +23,7 @@ Depends:
     R (>= 3.0.0)
 Imports:
     htmlwidgets (>= 0.3.2),
-    plyr,
-    rjson
+    jsonlite
 Suggests:
-    htmltools (>= 0.2.6),
-    RCurl
+    htmltools (>= 0.2.6)
 Enhances: knitr, shiny

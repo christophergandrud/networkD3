@@ -50,7 +50,6 @@
 #'
 #' Fabio Nelli: \url{http://www.meccanismocomplesso.org/en/dendrogramma-d3-parte1/}
 #'
-#' @importFrom rjson toJSON
 #' @importFrom stats setNames
 #' @importFrom utils modifyList
 #' @export

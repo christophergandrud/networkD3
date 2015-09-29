@@ -121,33 +121,30 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 \dontrun{
 #### JSON Data Example
 # Load data JSON formated data into two R data frames
-library(RCurl)
 # Create URL. paste0 used purely to keep within line width.
-URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
-              "networkD3/master/JSONdata/miserables.json")
-MisJson <- getURL(URL)
+URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
+              "master/JSONdata/miserables.json")
 
-MisLinks <- JSONtoDF(jsonStr = MisJson, array = "links")
-MisNodes <- JSONtoDF(jsonStr = MisJson, array = "nodes")
+MisJson <- jsonlite::fromJSON(URL)
 
 # Create graph
-forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+forceNetwork(Links = MisJson$links, Nodes = MisJson$nodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4)
 
 # Create graph with zooming
-forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+forceNetwork(Links = MisJson$links, Nodes = MisJson$nodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4, zoom = TRUE)
 
 
 # Create a bounded graph
-forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+forceNetwork(Links = MisJson$links, Nodes = MisJson$nodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4, bounded = TRUE)
 
 # Create graph with node text faintly visible when no hovering
-forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+forceNetwork(Links = MisJson$links, Nodes = MisJson$nodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4, bounded = TRUE,
              opacityNoHover = TRUE)
