@@ -22,8 +22,7 @@ License: GPL (>= 3)
 Depends:
     R (>= 3.0.0)
 Imports:
-    htmlwidgets (>= 0.3.2),
-    jsonlite
+    htmlwidgets (>= 0.3.2)
 Suggests:
     htmltools (>= 0.2.6)
 Enhances: knitr, shiny
