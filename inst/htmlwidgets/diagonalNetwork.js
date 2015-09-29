@@ -50,7 +50,7 @@ HTMLWidgets.widget({
 
     var svg = d3.select(el).selectAll("g");
 
-    var root = JSON.parse(x.root);
+    var root = x.root;
     var nodes = tree.nodes(root),
       links = tree.links(nodes);
 

@@ -99,7 +99,7 @@ diagonalNetwork <- function(
     # validate input
     if (!is.list(List))
       stop("List must be a list object.")
-    root <- toJSON(List)
+    root <- List
 
     # create options
     options = list(

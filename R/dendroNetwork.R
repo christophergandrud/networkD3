@@ -81,7 +81,7 @@ dendroNetwork <- function(
         treeOrientation = match.arg(treeOrientation[1],
                             c("horizontal", "vertical"))
 
-    root <- toJSON(as.dendroNetwork(hc, textColour, textOpacity))
+    root <- as.dendroNetwork(hc, textColour, textOpacity)
 
     if (treeOrientation == "vertical")
         margins_def = list(top = 40, right = 40, bottom = 150, left = 40)
