@@ -17,8 +17,12 @@
 #' be before they are clicked. Multiple formats supported (e.g. hexadecimal).
 #' @param opacity numeric value of the proportion opaque you would like the
 #' graph elements to be.
-#' @param margin integer value of the plot margin. Set the margin
-#' appropriately to accomodate long text labels.
+#' @param margin an integer or a named \code{list}/\code{vector} of integers
+#' for the plot margins. If using a named \code{list}/\code{vector},
+#' the positions \code{top}, \code{right}, \code{bottom}, \code{left}
+#' are valid.  If a single integer is provided, then the value will be
+#' assigned to the right margin. Set the margin appropriately
+#' to accomodate long text labels.
 #'
 #'
 #' @examples
@@ -94,12 +98,14 @@ radialNetwork <- function(
                           nodeStroke = "steelblue",
                           textColour = "#111",
                           opacity = 0.9,
-                          margin = 0)
+                          margin = NULL)
 {
     # validate input
     if (!is.list(List))
       stop("List must be a list object.")
     root <- List
+    
+    margin <- margin_handler(margin)
 
     # create options
     options = list(
