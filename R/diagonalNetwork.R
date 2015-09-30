@@ -94,12 +94,32 @@ diagonalNetwork <- function(
                           nodeStroke = "steelblue",
                           textColour = "#111",
                           opacity = 0.9,
-                          margin = 0)
+                          margin = NULL)
 {
     # validate input
     if (!is.list(List))
       stop("List must be a list object.")
     root <- List
+    
+    # margin can be either a single value or a list with any of
+    #    top, right, bottom, left
+    # if margin is a single value, then we will stick
+    #    with the original behavior of networkD3 and make it right
+    if(!is.null(margin) && length(margin) == 1){
+      margin <- list(
+        top = NULL,
+        right = margin,
+        bottom = NULL,
+        left = NULL
+      )
+    }
+    # if margin is a list, then  use the values supplied with NULL as default
+    if(!is.null(margin) && length(margin) > 1){
+      margin <- modifyList(
+        list(top = NULL, right = NULL, bottom = NULL, left = NULL),
+        margin
+      )
+    }
 
     # create options
     options = list(
