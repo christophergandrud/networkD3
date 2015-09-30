@@ -45,7 +45,7 @@ HTMLWidgets.widget({
         margin[ky] = x.options.margin[ky];
       }
       // set the margin on the svg with css style
-      s.style(["margin-",ky].join("-"), margin[ky]);
+      s.style(["margin",ky].join("-"), margin[ky]);
     });
       
     
