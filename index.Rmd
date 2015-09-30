@@ -150,21 +150,15 @@ with `sankeyNetwork`. Here is an example using downloaded JSON data:
 
 ```{r}
 # Load energy projection data
-library(RCurl)
-URL <- "https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/energy.json"
-Energy <- getURL(URL, ssl.verifypeer = FALSE)
-
-# Convert to data frame
-EngLinks <- JSONtoDF(jsonStr = Energy,
-                    array = "links")
-EngNodes <- JSONtoDF(jsonStr = Energy,
-                    array = "nodes")
-
+# Load energy projection data
+URL <- paste0(
+        "https://cdn.rawgit.com/christophergandrud/networkD3/",
+        "master/JSONdata/energy.json")
+Energy <- jsonlite::fromJSON(URL)
 # Plot
-sankeyNetwork(Links = EngLinks, Nodes = EngNodes,
-            Source = "source", Target = "target",
-            Value = "value", NodeID = "name",
-            width = 700, fontSize = 12, nodeWidth = 30)
+sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             units = "TWh", fontSize = 12, nodeWidth = 30)
 ```
 
 <a href="#sankey"><h3 id="sankey"><code>> radialNetwork</code></h3></a>
@@ -172,12 +166,13 @@ sankeyNetwork(Links = EngLinks, Nodes = EngNodes,
 From version 0.2, tree diagrams can be created using `radialNetwork` or `diagonalNetwork`.
 
 ```{r}
-URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
-              "networkD3/master/JSONdata/flare.json")
-Flare <- getURL(URL)
+URL <- paste0(
+        "https://cdn.rawgit.com/christophergandrud/networkD3/",
+        "master/JSONdata//flare.json")
 
-# Convert to list format
-Flare <- rjson::fromJSON(Flare)
+## Convert to list format
+Flare <- jsonlite::fromJSON(URL, simplifyDataFrame = FALSE)
+
 # Use subset of data for more readable diagram
 Flare$children = Flare$children[1:3]
 
