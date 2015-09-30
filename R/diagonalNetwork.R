@@ -25,14 +25,12 @@
 #' \dontrun{
 #' #### Create tree from JSON formatted data
 #' ## Download JSON data
-#' library(RCurl)
 #' # Create URL. paste0 used purely to keep within line width.
-#' URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
-#'               "networkD3/master/JSONdata/flare.json")
-#' Flare <- getURL(URL)
-#'
+#' URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
+#'               "master/JSONdata//flare.json")
+#'               
 #' ## Convert to list format
-#' Flare <- rjson::fromJSON(Flare)
+#' Flare <- jsonlite::fromJSON(URL, simplifyDataFrame = FALSE)
 #'
 #' ## Recreate Bostock example from http://bl.ocks.org/mbostock/4063550
 #' diagonalNetwork(List = Flare, fontSize = 10, opacity = 0.9)
@@ -83,7 +81,6 @@
 #'
 #' Mike Bostock: \url{http://bl.ocks.org/mbostock/4339083}.
 #'
-#' @importFrom rjson toJSON
 #' @export
 #'
 diagonalNetwork <- function(
@@ -102,7 +99,7 @@ diagonalNetwork <- function(
     # validate input
     if (!is.list(List))
       stop("List must be a list object.")
-    root <- toJSON(List)
+    root <- List
 
     # create options
     options = list(

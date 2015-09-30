@@ -86,7 +86,7 @@ HTMLWidgets.widget({
        zoom.on("zoom", null);
      }
 
-    var root = JSON.parse(x.root);
+    var root = x.root;
     
     var xs = [];   
     var ys = [];   
