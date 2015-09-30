@@ -119,29 +119,35 @@ HTMLWidgets.widget({
         "viewBox",
         [
           d3.min(
-            s.selectAll("text")[0].map(function(d){
-              return d.__data__.y - (d.getBBox().width - d.getBBox().x);
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().left
             })
-          ),
+          ) - margin.left,
           d3.min(
-            s.selectAll("text")[0].map(function(d){
-              return d.__data__.x - d.getBBox().height;
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().top
             })
-          ),
+          ) - margin.top,
           d3.max(
-            s.selectAll("text")[0].map(function(d){
-              return d.__data__.y + (d.getBBox().width + d.getBBox().x);
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().right
             })
-          ) - d3.min(
-            s.selectAll("text")[0].map(function(d){
-              return d.__data__.y - (d.getBBox().width - d.getBBox().x);
+          ) -
+          d3.min(
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().left
             })
           ) + margin.left + margin.right,
           d3.max(
-            s.selectAll("text")[0].map(function(d){
-              return d.__data__.x + d.getBBox().height;
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().bottom
             })
-          ) + margin.top + margin.bottom       
+          ) -
+          d3.min(
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().top
+            })
+          ) + margin.top + margin.bottom
         ].join(",")
       );        
 
