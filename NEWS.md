@@ -1,5 +1,15 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.2.2
+
+- sankeyNetwork
+  - Removes forced font family in favor of inherited from css or specified through the fontFamily argument
+  - Fixes issue with backslashes in the label for links
+  - Puts unicode right arrow in the tooltip
+  - Adds argument to specify units for the tooltip label
+  - Handles cycles by updating this forked https://github.com/soxofaan/d3-plugin-captain-sankey
+  - Makes assumptions that `Source` is column 1 and `Target` is column 2 if not provided
+
 ## Version 0.2.1
 
 - Fixed an issue with `forceNetwork` on Firefox. Thanks to @agoldst.

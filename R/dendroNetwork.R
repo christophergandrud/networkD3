@@ -147,9 +147,9 @@ dendroNetwork <- function(
         stop("hc must be a object of class hclust")
 
     if (length(textColour) != length(hc$labels))
-        stop("textColour lenght must match label length")
+        stop("textColour length must match label length")
     if (length(textOpacity) != length(hc$labels))
-        stop("textOpacity lenght must match label length")
+        stop("textOpacity length must match label length")
 
     ul <- function(lev)
     {
