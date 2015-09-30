@@ -5,10 +5,14 @@ HTMLWidgets.widget({
 
   initialize: function(el, width, height) {
 
-    var diameter = Math.min(parseInt(width),parseInt(height));
+    var diameter = Math.min(
+      el.getBoundingClientRect().width,
+      el.getBoundingClientRect().height
+    );
+    
     d3.select(el).append("svg")
-      .attr("width", width)
-      .attr("height", height)
+      .style("width", "100%")
+      .style("height", "100%")
       .append("g")
       .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")"
                          + " scale("+diameter/800+","+diameter/800+")");
@@ -17,6 +21,8 @@ HTMLWidgets.widget({
   },
 
   resize: function(el, width, height, tree) {
+    // resize now handled by svg viewBox attribute
+    /*
     var diameter = Math.min(parseInt(width),parseInt(height));
     var s = d3.select(el).selectAll("svg");
     s.attr("width", width).attr("height", height);
@@ -24,6 +30,7 @@ HTMLWidgets.widget({
     var svg = d3.select(el).selectAll("svg").select("g");
     svg.attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")"
                          + " scale("+diameter/800+","+diameter/800+")");
+    */
 
   },
 
@@ -44,12 +51,13 @@ HTMLWidgets.widget({
         margin[ky] = x.options.margin[ky];
       }
       // set the margin on the svg with css style
-      s.style(["margin",ky].join("-"), margin[ky]);
+      // commenting this out since not correct
+      //s.style(["margin",ky].join("-"), margin[ky]);
     });
 
     var diameter = Math.min(
-      parseInt(s.attr("width")) - margin.right - margin.left,
-      parseInt(s.attr("height")) - margin.top - margin.bottom
+      s.node().getBoundingClientRect().width - margin.right - margin.left,
+      s.node().getBoundingClientRect().height - margin.top - margin.bottom
     );
 
     tree.size([360, diameter/2])
@@ -59,7 +67,7 @@ HTMLWidgets.widget({
     s.attr("pointer-events", "all").selectAll("*").remove();
     s.append("g")
      .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")"
-                         + " scale("+diameter/800+","+diameter/800+")");
+                         + " scale("+1+","+1+")");
 
     var svg = d3.select(el).selectAll("g");
 
@@ -106,6 +114,44 @@ HTMLWidgets.widget({
         .style("opacity", x.options.opacity)
         .style("fill", x.options.textColour)
         .text(function(d) { return d.name; });
+        
+    // adjust viewBox to fit the bounds of our tree
+    s.attr(
+        "viewBox",
+        [
+          d3.min(
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().left
+            })
+          ) - margin.left,
+          d3.min(
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().top
+            })
+          ) - margin.top,
+          d3.max(
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().right
+            })
+          ) -
+          d3.min(
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().left
+            })
+          ) + margin.left + margin.right,
+          d3.max(
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().bottom
+            })
+          ) -
+          d3.min(
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().top
+            })
+          ) + margin.top + margin.bottom
+        ].join(",")
+      );        
+
 
     // mouseover event handler
     function mouseover() {

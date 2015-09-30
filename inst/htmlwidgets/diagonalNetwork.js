@@ -6,8 +6,8 @@ HTMLWidgets.widget({
   initialize: function(el, width, height) {
 
     d3.select(el).append("svg")
-      .attr("width", width)
-      .attr("height", height)
+      .style("width", "100%")
+      .style("height", "100%")
       .append("g")
       .attr("transform", "translate(40,0)");
     return d3.layout.tree();
@@ -15,6 +15,8 @@ HTMLWidgets.widget({
   },
 
   resize: function(el, width, height, tree) {
+    // resize now handled by svg viewBox attribute
+    /*
     var s = d3.select(el).selectAll("svg");
     s.attr("width", width).attr("height", height);
     
@@ -25,6 +27,7 @@ HTMLWidgets.widget({
     tree.size([height, width]);
     var svg = d3.select(el).selectAll("svg").select("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    */
 
   },
 
@@ -45,12 +48,13 @@ HTMLWidgets.widget({
         margin[ky] = x.options.margin[ky];
       }
       // set the margin on the svg with css style
-      s.style(["margin",ky].join("-"), margin[ky]);
+      // commenting this out since not correct
+      // s.style(["margin",ky].join("-"), margin[ky]);
     });
       
     
-    width = s.attr("width") - margin.right - margin.left;
-    height = s.attr("height") - margin.top - margin.bottom;
+    width = s.node().getBoundingClientRect().width - margin.right - margin.left;
+    height = s.node().getBoundingClientRect().height - margin.top - margin.bottom;
     
     tree.size([height, width])
       .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
@@ -109,6 +113,37 @@ HTMLWidgets.widget({
         .style("opacity", x.options.opacity)
         .style("fill", x.options.textColour)
         .text(function(d) { return d.name; });
+        
+    // adjust viewBox to fit the bounds of our tree
+    s.attr(
+        "viewBox",
+        [
+          d3.min(
+            s.selectAll("text")[0].map(function(d){
+              return d.__data__.y - (d.getBBox().width - d.getBBox().x);
+            })
+          ),
+          d3.min(
+            s.selectAll("text")[0].map(function(d){
+              return d.__data__.x - d.getBBox().height;
+            })
+          ),
+          d3.max(
+            s.selectAll("text")[0].map(function(d){
+              return d.__data__.y + (d.getBBox().width + d.getBBox().x);
+            })
+          ) - d3.min(
+            s.selectAll("text")[0].map(function(d){
+              return d.__data__.y - (d.getBBox().width - d.getBBox().x);
+            })
+          ) + margin.left + margin.right,
+          d3.max(
+            s.selectAll("text")[0].map(function(d){
+              return d.__data__.x + d.getBBox().height;
+            })
+          ) + margin.top + margin.bottom       
+        ].join(",")
+      );        
 
     // mouseover event handler
     function mouseover() {
