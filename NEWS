@@ -2,10 +2,13 @@
 
 ## Version 0.2.3
 
-  - Internal improvements to reduce dependencies: longer depends on RCurl, 
+- `viewBox` svg attribute handles resizing for `diagonalNetwork` and 
+`radialNetwork`
+
+- Internal improvements to reduce dependencies: longer depends on RCurl, 
   plyr, and rjson.
   
-  - Updated examples: 
+- Updated examples: 
     + Using jsonlite makes JSONtoDF obsolete with the `fromJSON` function.
     + All Github data links now use the CDN link from 
     [rawgit](https://rawgit.com/), so the examples  should be more inline with 
