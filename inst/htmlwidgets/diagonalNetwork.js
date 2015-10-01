@@ -34,9 +34,21 @@ HTMLWidgets.widget({
 
     var s = d3.select(el).selectAll("svg");
     
-    s.attr("margin", x.options.margin);
-    var margin = {top: 20, right: 20 + parseInt(s.attr("margin")), bottom: 20, 
-      left: 20};
+    // margin handling
+    //   set our default margin to be 20
+    //   will override with x.options.margin if provided
+    var margin = {top: 20, right: 20, bottom: 20, left: 20};
+    //   go through each key of x.options.margin
+    //   use this value if provided from the R side
+    Object.keys(x.options.margin).map(function(ky){
+      if(x.options.margin[ky] !== null) {
+        margin[ky] = x.options.margin[ky];
+      }
+      // set the margin on the svg with css style
+      s.style(["margin",ky].join("-"), margin[ky]);
+    });
+      
+    
     width = s.attr("width") - margin.right - margin.left;
     height = s.attr("height") - margin.top - margin.bottom;
     

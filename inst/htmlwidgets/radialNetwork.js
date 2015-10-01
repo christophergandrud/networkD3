@@ -32,9 +32,27 @@ HTMLWidgets.widget({
     // JSON array with the d3Tree root data
 
     var s = d3.select(el).selectAll("svg");
-    var diameter = Math.min(parseInt(s.attr("width")),parseInt(s.attr("height")));
-    s.attr("margin", x.options.margin);
-    tree.size([360, diameter/2 - parseInt(s.attr("margin"))])
+
+    // margin handling
+    //   set our default margin to be 20
+    //   will override with x.options.margin if provided
+    var margin = {top: 20, right: 20, bottom: 20, left: 20};
+    //   go through each key of x.options.margin
+    //   use this value if provided from the R side
+    Object.keys(x.options.margin).map(function(ky){
+      if(x.options.margin[ky] !== null) {
+        margin[ky] = x.options.margin[ky];
+      }
+      // set the margin on the svg with css style
+      s.style(["margin",ky].join("-"), margin[ky]);
+    });
+
+    var diameter = Math.min(
+      parseInt(s.attr("width")) - margin.right - margin.left,
+      parseInt(s.attr("height")) - margin.top - margin.bottom
+    );
+
+    tree.size([360, diameter/2])
         .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
 
     // select the svg group element and remove existing children
