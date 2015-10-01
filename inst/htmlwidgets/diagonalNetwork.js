@@ -122,12 +122,12 @@ HTMLWidgets.widget({
             s.selectAll('.node text')[0].map(function(d){
               return d.getBoundingClientRect().left
             })
-          ) - margin.left,
+          ) - s.node().getBoundingClientRect().left - margin.right,
           d3.min(
             s.selectAll('.node text')[0].map(function(d){
               return d.getBoundingClientRect().top
             })
-          ) - margin.top,
+          ) - s.node().getBoundingClientRect().top - margin.top,
           d3.max(
             s.selectAll('.node text')[0].map(function(d){
               return d.getBoundingClientRect().right
