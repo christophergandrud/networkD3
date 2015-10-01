@@ -13,7 +13,7 @@ Mike Bostock: \url{http://bl.ocks.org/mbostock/4339083}.
 diagonalNetwork(List, height = NULL, width = NULL, fontSize = 10,
   fontFamily = "serif", linkColour = "#ccc", nodeColour = "#fff",
   nodeStroke = "steelblue", textColour = "#111", opacity = 0.9,
-  margin = 0)
+  margin = NULL)
 }
 \arguments{
 \item{List}{a hierarchical list object with a root node and children.}
@@ -43,8 +43,12 @@ be before they are clicked. Multiple formats supported (e.g. hexadecimal).}
 \item{opacity}{numeric value of the proportion opaque you would like the
 graph elements to be.}
 
-\item{margin}{integer value of the plot margin. Set the margin
-appropriately to accomodate long text labels.}
+\item{margin}{an integer or a named \code{list}/\code{vector} of integers
+for the plot margins. If using a named \code{list}/\code{vector},
+the positions \code{top}, \code{right}, \code{bottom}, \code{left}
+are valid.  If a single integer is provided, then the value will be
+assigned to the right margin. Set the margin appropriately
+to accomodate long text labels.}
 }
 \description{
 Create Reingold-Tilford Tree network diagrams.
