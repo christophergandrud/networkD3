@@ -1,15 +1,21 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.2.4
+
+- More robust margin argument for `diagonalNetwork` and `radialNetwork` allows for a single value or specification of `top`, `right`, `bottom`, and `left` by named `vector` or `list`
+
+- Responsive sizing using the `viewBox` attribute of `svg` for `diagonalNetwork` and `radialNetwork` should allow for fitting in the container with no fiddling
+
 ## Version 0.2.3
 
-  - Internal improvements to reduce dependencies: longer depends on RCurl, 
-  plyr, and rjson.
-  
-  - Updated examples: 
-    + Using jsonlite makes JSONtoDF obsolete with the `fromJSON` function.
-    + All Github data links now use the CDN link from 
-    [rawgit](https://rawgit.com/), so the examples  should be more inline with 
-    Github raw policies
+- Internal improvements to reduce dependencies: longer depends on RCurl, 
+plyr, and rjson.
+
+- Updated examples: 
+  + Using jsonlite makes JSONtoDF obsolete with the `fromJSON` function.
+  + All Github data links now use the CDN link from 
+  [rawgit](https://rawgit.com/), so the examples  should be more inline with 
+  Github raw policies
 
 ## Version 0.2.2
 
