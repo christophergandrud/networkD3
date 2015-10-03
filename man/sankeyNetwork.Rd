@@ -9,8 +9,8 @@ specifically for Sankey diagrams \url{http://bost.ocks.org/mike/sankey/}.
 }
 \usage{
 sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, height = NULL,
-  width = NULL, colourScale = JS("d3.scale.category20()"), fontSize = 7,
-  fontFamily = "serif", nodeWidth = 15, nodePadding = 10)
+  width = NULL, units = "", colourScale = JS("d3.scale.category20()"),
+  fontSize = 7, fontFamily = NULL, nodeWidth = 15, nodePadding = 10)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -39,6 +39,8 @@ data frame.}
 
 \item{width}{numeric width for the network graph's frame area in pixels.}
 
+\item{units}{character string describing physical units (if any) for Value}
+
 \item{colourScale}{character string specifying the categorical colour
 scale for the nodes. See
 \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.}
@@ -58,20 +60,13 @@ Create a D3 JavaScript Sankey diagram
 \dontrun{
 # Recreate Bostock Sankey diagram: http://bost.ocks.org/mike/sankey/
 # Load energy projection data
-library(RCurl)
-# Create URL. paste0 used purely to keep within line width.
-URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
-              "networkD3/master/JSONdata/energy.json")
-Energy <- getURL(URL, ssl.verifypeer = FALSE)
-
-# Convert to data frame
-EngLinks <- JSONtoDF(jsonStr = Energy, array = "links")
-EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
-
+URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
+              "master/JSONdata/energy.json")
+Energy <- jsonlite::fromJSON(URL)
 # Plot
-sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
+sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
-              fontSize = 12, nodeWidth = 30)
+             units = "TWh", fontSize = 12, nodeWidth = 30)
 }
 }
 \seealso{

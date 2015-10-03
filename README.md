@@ -1,6 +1,6 @@
 # D3 JavaScript Network Graphs from R
 
-Version 0.1.8 [![Build Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://travis-ci.org/christophergandrud/networkD3) ![CRAN Downloads](http://cranlogs.r-pkg.org/badges/last-month/networkD3)
+Version 0.2.4 [![Build Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://travis-ci.org/christophergandrud/networkD3) ![CRAN Downloads](http://cranlogs.r-pkg.org/badges/last-month/networkD3)
 
 This is a port of Christopher Gandrud's
 [d3Network](http://christophergandrud.github.io/d3Network/) package to the
@@ -40,19 +40,16 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 Here's `sankeyNetwork` using a downloaded JSON data file:
 
 ```S
+# Recreate Bostock Sankey diagram: http://bost.ocks.org/mike/sankey/
 # Load energy projection data
-library(RCurl)
-URL <- "https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/energy.json"
-Energy <- getURL(URL, ssl.verifypeer = FALSE)
-
-# Convert to data frame
-EngLinks <- JSONtoDF(jsonStr = Energy, array = "links")
-EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
+URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
+              "master/JSONdata/energy.json")
+Energy <- jsonlite::fromJSON(URL)
 
 # Plot
-sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
-            Target = "target", Value = "value", NodeID = "name",
-            fontSize = 12, nodeWidth = 30)
+sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             units = "TWh", fontSize = 12, nodeWidth = 30)
 ```
 
 ### Saving to an external file

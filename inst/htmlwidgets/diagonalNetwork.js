@@ -6,8 +6,8 @@ HTMLWidgets.widget({
   initialize: function(el, width, height) {
 
     d3.select(el).append("svg")
-      .attr("width", width)
-      .attr("height", height)
+      .style("width", "100%")
+      .style("height", "100%")
       .append("g")
       .attr("transform", "translate(40,0)");
     return d3.layout.tree();
@@ -15,6 +15,8 @@ HTMLWidgets.widget({
   },
 
   resize: function(el, width, height, tree) {
+    // resize now handled by svg viewBox attribute
+    /*
     var s = d3.select(el).selectAll("svg");
     s.attr("width", width).attr("height", height);
     
@@ -25,6 +27,7 @@ HTMLWidgets.widget({
     tree.size([height, width]);
     var svg = d3.select(el).selectAll("svg").select("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    */
 
   },
 
@@ -34,11 +37,24 @@ HTMLWidgets.widget({
 
     var s = d3.select(el).selectAll("svg");
     
-    s.attr("margin", x.options.margin);
-    var margin = {top: 20, right: 20 + parseInt(s.attr("margin")), bottom: 20, 
-      left: 20};
-    width = s.attr("width") - margin.right - margin.left;
-    height = s.attr("height") - margin.top - margin.bottom;
+    // margin handling
+    //   set our default margin to be 20
+    //   will override with x.options.margin if provided
+    var margin = {top: 20, right: 20, bottom: 20, left: 20};
+    //   go through each key of x.options.margin
+    //   use this value if provided from the R side
+    Object.keys(x.options.margin).map(function(ky){
+      if(x.options.margin[ky] !== null) {
+        margin[ky] = x.options.margin[ky];
+      }
+      // set the margin on the svg with css style
+      // commenting this out since not correct
+      // s.style(["margin",ky].join("-"), margin[ky]);
+    });
+      
+    
+    width = s.node().getBoundingClientRect().width - margin.right - margin.left;
+    height = s.node().getBoundingClientRect().height - margin.top - margin.bottom;
     
     tree.size([height, width])
       .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
@@ -50,7 +66,7 @@ HTMLWidgets.widget({
 
     var svg = d3.select(el).selectAll("g");
 
-    var root = JSON.parse(x.root);
+    var root = x.root;
     var nodes = tree.nodes(root),
       links = tree.links(nodes);
 
@@ -97,6 +113,43 @@ HTMLWidgets.widget({
         .style("opacity", x.options.opacity)
         .style("fill", x.options.textColour)
         .text(function(d) { return d.name; });
+        
+    // adjust viewBox to fit the bounds of our tree
+    s.attr(
+        "viewBox",
+        [
+          d3.min(
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().left
+            })
+          ) - s.node().getBoundingClientRect().left - margin.right,
+          d3.min(
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().top
+            })
+          ) - s.node().getBoundingClientRect().top - margin.top,
+          d3.max(
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().right
+            })
+          ) -
+          d3.min(
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().left
+            })
+          ) + margin.left + margin.right,
+          d3.max(
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().bottom
+            })
+          ) -
+          d3.min(
+            s.selectAll('.node text')[0].map(function(d){
+              return d.getBoundingClientRect().top
+            })
+          ) + margin.top + margin.bottom
+        ].join(",")
+      );        
 
     // mouseover event handler
     function mouseover() {

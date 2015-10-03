@@ -16,6 +16,7 @@
 #' frame for how far away the nodes are from one another.
 #' @param NodeID character string specifying the node IDs in the \code{Nodes}
 #' data frame.
+#' @param units character string describing physical units (if any) for Value
 #' @param height numeric height for the network graph's frame area in pixels.
 #' @param width numeric width for the network graph's frame area in pixels.
 #' @param colourScale character string specifying the categorical colour
@@ -30,21 +31,13 @@
 #' \dontrun{
 #' # Recreate Bostock Sankey diagram: http://bost.ocks.org/mike/sankey/
 #' # Load energy projection data
-#' library(RCurl)
-#' # Create URL. paste0 used purely to keep within line width.
-
-#' URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
-#'               "networkD3/master/JSONdata/energy.json")
-#' Energy <- getURL(URL, ssl.verifypeer = FALSE)
-#'
-#' # Convert to data frame
-#' EngLinks <- JSONtoDF(jsonStr = Energy, array = "links")
-#' EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
-#'
+#' URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
+#'               "master/JSONdata/energy.json")
+#' Energy <- jsonlite::fromJSON(URL)
 #' # Plot
-#' sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
+#' sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
-#'               fontSize = 12, nodeWidth = 30)
+#'              units = "TWh", fontSize = 12, nodeWidth = 30)
 #' }
 #' @source
 #' D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
@@ -62,9 +55,10 @@ sankeyNetwork <- function(Links,
                           NodeID,
                           height = NULL,
                           width = NULL,
+                          units = "",
                           colourScale = JS("d3.scale.category20()"),
                           fontSize = 7,
-                          fontFamily = "serif",
+                          fontFamily = NULL,
                           nodeWidth = 15,
                           nodePadding = 10)
 {
@@ -78,6 +72,12 @@ sankeyNetwork <- function(Links,
     if (!is.data.frame(Nodes)) {
         stop("Nodes must be a data frame class object.")
     }
+    # if Source or Target are missing assume
+    #  Source is the first column
+    #  Target is the second column
+    if(missing(Source)) Source = 1
+    if(missing(Target)) Target = 2
+    
     if (missing(Value)) {
         LinksDF <- data.frame(Links[, Source], Links[, Target])
         names(LinksDF) <- c("source", "target")
@@ -86,6 +86,10 @@ sankeyNetwork <- function(Links,
         LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
         names(LinksDF) <- c("source", "target", "value")
     }
+    
+    # if NodeID is missing assume
+    #  NodeID is the first column
+    if(missing(NodeID)) NodeID = 1
     NodesDF <- data.frame(Nodes[, NodeID])
     names(NodesDF) <- c("name")
 
@@ -96,7 +100,8 @@ sankeyNetwork <- function(Links,
         fontSize = fontSize,
         fontFamily = fontFamily,
         nodeWidth = nodeWidth,
-        nodePadding = nodePadding
+        nodePadding = nodePadding,
+        units = units
     )
 
     # create widget
@@ -105,12 +110,7 @@ sankeyNetwork <- function(Links,
         x = list(links = LinksDF, nodes = NodesDF, options = options),
         width = width,
         height = height,
-        htmlwidgets::sizingPolicy(viewer.suppress = TRUE,
-                                  knitr.figure = FALSE,
-                                  browser.fill = TRUE,
-                                  browser.padding = 75,
-                                  knitr.defaultWidth = 800,
-                                  knitr.defaultHeight = 500),
+        htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE),
         package = "networkD3"
     )
 }

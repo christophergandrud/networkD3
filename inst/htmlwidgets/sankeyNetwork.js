@@ -95,10 +95,10 @@ HTMLWidgets.widget({
             .on("dragstart", function() { this.parentNode.appendChild(this); })
             .on("drag", dragmove));
 
-
+        // note: u2192 is right-arrow
         link.append("title")
-            .text(function(d) { return d.source.name + d.target.name +
-                "\\n" + format(d.value); });
+            .text(function(d) { return d.source.name + " \u2192 " + d.target.name +
+                "\n" + format(d.value) + " " + options.units; });
 
         node.append("rect")
             .attr("height", function(d) { return d.dy; })
@@ -109,16 +109,18 @@ HTMLWidgets.widget({
             .style("opacity", 0.9)
             .style("cursor", "move")
             .append("title")
-            .text(function(d) { return d.name + "\\n" + format(d.value); });
+            .text(function(d) { return d.name + "\n" + format(d.value) + 
+                " " + options.units; });
 
-        node.append("svg:text")
+        node.append("text")
             .attr("x", -6)
             .attr("y", function(d) { return d.dy / 2; })
             .attr("dy", ".35em")
             .attr("text-anchor", "end")
             .attr("transform", null)
             .text(function(d) { return d.name; })
-            .style("font", options.fontSize + "px " + x.options.fontFamily)
+            .style("font-size", options.fontSize + "px")
+            .style("font-family", options.fontFamily ? options.fontFamily : "inherit")
             .filter(function(d) { return d.x < width / 2; })
             .attr("x", 6 + sankey.nodeWidth())
             .attr("text-anchor", "start");

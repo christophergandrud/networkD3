@@ -1,19 +1,62 @@
 # All changes to networkD3 are documented here.
 
-## Version 0.2.1
+## Version 0.2.5
 
 - Added `chordDiagram` to show directed relationships among entities
 
+## Version 0.2.4
+
+- More robust margin argument for `diagonalNetwork` and `radialNetwork` allows 
+for a single value or specification of `top`, `right`, `bottom`, and `left` by 
+named `vector` or `list`.
+
+- Responsive sizing using the `viewBox` attribute of `svg` for `diagonalNetwork` 
+and `radialNetwork` should allow for fitting in the container with no fiddling.
+
+## Version 0.2.3
+
+- Internal improvements to reduce dependencies: longer depends on RCurl, 
+plyr, and rjson.
+
+- Updated examples: 
+  + Using jsonlite makes JSONtoDF obsolete with the `fromJSON` function.
+  + All Github data links now use the CDN link from 
+  [rawgit](https://rawgit.com/), so the examples  should be more inline with 
+  Github raw policies
+
+## Version 0.2.2
+
+- sankeyNetwork
+  - Removes forced font family in favor of inherited from css or specified 
+  through the fontFamily argument
+  - Fixes issue with backslashes in the label for links
+  - Puts unicode right arrow in the tooltip
+  - Adds argument to specify units for the tooltip label
+  - Handles cycles by updating this forked 
+  https://github.com/soxofaan/d3-plugin-captain-sankey
+  - Makes assumptions that `Source` is column 1 and `Target` is column 2 if not 
+  provided
+
+## Version 0.2.1
+
+- Fixed an issue with `forceNetwork` on Firefox. Thanks to @agoldst.
+
+- Fixed an issue where `forceNetwork` node size would not return to 
+default after mouseover. Thanks to Pascal Pernot.
+
 ## Version 0.2
 
-- Added `clusterNetwork` to create hierarchical cluster network diagrams.
+- Added `dendroNetwork` to create hierarchical cluster network diagrams 
+(dendrograms).
 
 - `treeNetwork` is DEPRECATED.
 
-- Placed functionality from `treeNetwork` to `radialNetwork` and
-`diagonalNetwork`. The new function has the same functionality, but has been
-renamed to be more accurately descriptive and avoid confusion with
-`clusterNetwork`.
+- Placed functionality from `treeNetwork` to `radialNetwork`. The new 
+`radialNetwork` function has the same functionality, but has been renamed to be
+more accurately descriptive and avoid confusion with `dendroNetwork`.
+
+- Added `diagonalNetwork`, which creates tree network diagrams using diagonal
+instead of radial nodes.
 
 Thanks to Jonathan Owen.
 

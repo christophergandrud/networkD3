@@ -1,6 +1,6 @@
 HTMLWidgets.widget({
 
-  name: "clusterNetwork",
+  name: "dendroNetwork",
   type: "output",
 
   initialize: function(el, width, height) {
@@ -54,7 +54,7 @@ HTMLWidgets.widget({
 
     var height = parseInt(s.attr("height")) - top - bottom,
       width = parseInt(s.attr("width")) - right - left;
-    
+
     if (s.attr("treeOrientation") == "horizontal") {
       tree.size([height, width]); 
     } else {
@@ -86,7 +86,7 @@ HTMLWidgets.widget({
        zoom.on("zoom", null);
      }
 
-    var root = JSON.parse(x.root);
+    var root = x.root;
     
     var xs = [];   
     var ys = [];   
@@ -119,7 +119,7 @@ HTMLWidgets.widget({
       if(d.y < ymin)                           
          ymin = d.y;           
     });
-    
+
     if (s.attr("treeOrientation") == "horizontal") {
       fxinv = d3.scale.linear().domain([ymin, ymax]).range([0, width]);
       fx = d3.scale.linear().domain([ymax, ymin]).range([0, width]);
