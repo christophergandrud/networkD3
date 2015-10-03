@@ -30,7 +30,7 @@
 #'                             2868,  6171,  8045, 6907),
 #'                             nrow = 4)
 #'                             
-#' chordDiagram(data = hairColourData, 
+#' chordNetwork(data = hairColourData, 
 #'              width = 500, 
 #'              height = 500,
 #'              colourScale = c("#000000", 
@@ -47,7 +47,7 @@
 #'
 #' @export
 #'
-chordDiagram <- function(data,
+chordNetwork <- function(data,
                          height = 500,
                          width = 500,
                          initialOpacity = 0.8,
@@ -119,7 +119,7 @@ chordDiagram <- function(data,
   
   # create widget
   htmlwidgets::createWidget(
-    name = "chordDiagram",
+    name = "chordNetwork",
     x = list(matrix = data, options = options),
     width = width,
     height = height,
@@ -134,14 +134,14 @@ chordDiagram <- function(data,
 
 #' @rdname networkD3-shiny
 #' @export
-chordDiagramOutput <- function(outputId, width = "100%", height = "500px") {
-  shinyWidgetOutput(outputId, "chordDiagram", width, height, package = "networkD3")
+chordNetworkOutput <- function(outputId, width = "100%", height = "500px") {
+  shinyWidgetOutput(outputId, "chordNetwork", width, height, package = "networkD3")
 }
 
 #' @rdname networkD3-shiny
 #' @export
-renderChordDiagram <- function(expr, env = parent.frame(), quoted = FALSE) {
+renderchordNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
-  shinyRenderWidget(expr, chordDiagramOutput, env, quoted = TRUE)
+  shinyRenderWidget(expr, chordNetworkOutput, env, quoted = TRUE)
 }
 
