@@ -1,6 +1,6 @@
 HTMLWidgets.widget({
 
-  name: "chordDiagram",
+  name: "chordNetwork",
   type: "output",
 
   initialize: function(el, width, height) {
