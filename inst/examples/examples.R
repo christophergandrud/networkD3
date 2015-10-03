@@ -131,4 +131,4 @@ hairColourData <- matrix(c(11975,  1951,  8010, 1013,
 chordDiagram(data = hairColourData, 
              width = 500, 
              height = 500,
-             colour_scale = c("#000000", "#FFDD89", "#957244", "#F26223"))
+             colourScale = c("#000000", "#FFDD89", "#957244", "#F26223"))
