@@ -135,6 +135,45 @@ HTMLWidgets.widget({
             .filter(function(d) { return d.x < width / 2; })
             .attr("x", 6 + sankey.nodeWidth())
             .attr("text-anchor", "start");
+            
+            
+        // adjust viewBox to fit the bounds of our tree
+        svg.attr(
+            "viewBox",
+            [
+              d3.min(
+                svg.selectAll('*')[0].map(function(d){
+                  return d.getBoundingClientRect().left
+                })
+              ) - svg.node().getBoundingClientRect().left,
+              d3.min(
+                svg.selectAll('*')[0].map(function(d){
+                  return d.getBoundingClientRect().top
+                })
+              ) - svg.node().getBoundingClientRect().top,
+              d3.max(
+                svg.selectAll('*')[0].map(function(d){
+                  return d.getBoundingClientRect().right
+                })
+              ) -
+              d3.min(
+                svg.selectAll('*')[0].map(function(d){
+                  return d.getBoundingClientRect().left
+                })
+              ),
+              d3.max(
+                svg.selectAll('*')[0].map(function(d){
+                  return d.getBoundingClientRect().bottom
+                })
+              ) -
+              d3.min(
+                svg.selectAll('*')[0].map(function(d){
+                  return d.getBoundingClientRect().top
+                })
+              )
+            ].join(",")
+          );        
+        
 
         function dragmove(d) {
             d3.select(this).attr("transform", "translate(" + d.x + "," +
