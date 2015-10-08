@@ -30,7 +30,7 @@
 #'                             2868,  6171,  8045, 6907),
 #'                             nrow = 4)
 #'                             
-#' chordNetwork(data = hairColourData, 
+#' chordNetwork(Data = hairColourData, 
 #'              width = 500, 
 #'              height = 500,
 #'              colourScale = c("#000000", 
@@ -47,7 +47,7 @@
 #'
 #' @export
 #'
-chordNetwork <- function(data,
+chordNetwork <- function(Data,
                          height = 500,
                          width = 500,
                          initialOpacity = 0.8,
@@ -93,34 +93,34 @@ chordNetwork <- function(data,
     label_distance = labelDistance
   )
   
-  if (!is.matrix(data) && !is.data.frame(data))
+  if (!is.matrix(Data) && !is.data.frame(Data))
   {
     stop("Data must be of type matrix or data frame")
   }
   
-  if (nrow(data) != ncol(data))
+  if (nrow(Data) != ncol(Data))
   {
     stop(paste("Data must have the same number of rows and columns; given ",
-               nrow(data),
+               nrow(Data),
                "rows and",
-               ncol(data),
+               ncol(Data),
                "columns",
                sep = " "))
   }
   
-  if(length(labels)!=0 && length(labels)!=ncol(data)){
+  if(length(labels)!=0 && length(labels)!=ncol(Data)){
     stop(paste("Length of labels vector should be the same as the number of rows"))
   }
   
-  if (is.data.frame(data))
+  if (is.data.frame(Data))
   {
-    data = data.matrix(data)
+    Data = data.matrix(Data)
   }
   
   # create widget
   htmlwidgets::createWidget(
     name = "chordNetwork",
-    x = list(matrix = data, options = options),
+    x = list(matrix = Data, options = options),
     width = width,
     height = height,
     htmlwidgets::sizingPolicy(viewer.suppress = TRUE,
