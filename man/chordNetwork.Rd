@@ -7,7 +7,7 @@
 Mike Bostock: \url{https://github.com/mbostock/d3/wiki/Chord-Layout}.
 }
 \usage{
-chordNetwork(data, height = 500, width = 500, initialOpacity = 0.8,
+chordNetwork(Data, height = 500, width = 500, initialOpacity = 0.8,
   useTicks = 0, colourScale = c("#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78",
   "#2ca02c", "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b",
   "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d",
@@ -15,6 +15,9 @@ chordNetwork(data, height = 500, width = 500, initialOpacity = 0.8,
   fontFamily = "sans-serif", labels = c(), labelDistance = 30)
 }
 \arguments{
+\item{Data}{A square matrix or data frame whose (n, m) entry represents
+the strength of the link from group n to group m}
+
 \item{height}{height for the network graph's frame area in pixels (if
 \code{NULL} then height is automatically determined based on context)}
 
@@ -23,6 +26,9 @@ chordNetwork(data, height = 500, width = 500, initialOpacity = 0.8,
 
 \item{initialOpacity}{specify the opacity before the user mouses over
 the link}
+
+\item{useTicks}{integer number of ticks on the radial axis.
+The default is `0` which means no ticks will be drawn.}
 
 \item{colourScale}{specify the hexadecimal colours in which to display
 the different categories. If there are fewer colours than categories,
@@ -38,8 +44,8 @@ on the outside of the graph}
 
 \item{labels}{vector containing labels of the categories}
 
-\item{Data}{A square matrix or data frame whose (n, m) entry represents
-the strength of the link from group n to group m}
+\item{labelDistance}{integer distance in pixels (px) between
+       text labels and outer radius.  The default is `30`.}
 }
 \description{
 Create Reingold-Tilford Tree network diagrams.
@@ -55,7 +61,7 @@ hairColourData <- matrix(c(11975,  1951,  8010, 1013,
                             2868,  6171,  8045, 6907),
                             nrow = 4)
 
-chordNetwork(data = hairColourData,
+chordNetwork(Data = hairColourData,
              width = 500,
              height = 500,
              colourScale = c("#000000",

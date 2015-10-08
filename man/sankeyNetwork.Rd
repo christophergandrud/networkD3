@@ -8,9 +8,10 @@ D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
 specifically for Sankey diagrams \url{http://bost.ocks.org/mike/sankey/}.
 }
 \usage{
-sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, height = NULL,
-  width = NULL, units = "", colourScale = JS("d3.scale.category20()"),
-  fontSize = 7, fontFamily = NULL, nodeWidth = 15, nodePadding = 10)
+sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, units = "",
+  colourScale = JS("d3.scale.category20()"), fontSize = 7,
+  fontFamily = NULL, nodeWidth = 15, nodePadding = 10, margin = NULL,
+  height = NULL, width = NULL)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -35,10 +36,6 @@ frame for how far away the nodes are from one another.}
 \item{NodeID}{character string specifying the node IDs in the \code{Nodes}
 data frame.}
 
-\item{height}{numeric height for the network graph's frame area in pixels.}
-
-\item{width}{numeric width for the network graph's frame area in pixels.}
-
 \item{units}{character string describing physical units (if any) for Value}
 
 \item{colourScale}{character string specifying the categorical colour
@@ -52,6 +49,17 @@ scale for the nodes. See
 \item{nodeWidth}{numeric width of each node.}
 
 \item{nodePadding}{numeric essentially influences the width height.}
+
+\item{margin}{an integer or a named \code{list}/\code{vector} of integers
+for the plot margins. If using a named \code{list}/\code{vector},
+the positions \code{top}, \code{right}, \code{bottom}, \code{left}
+are valid.  If a single integer is provided, then the value will be
+assigned to the right margin. Set the margin appropriately
+to accomodate long text labels.}
+
+\item{height}{numeric height for the network graph's frame area in pixels.}
+
+\item{width}{numeric width for the network graph's frame area in pixels.}
 }
 \description{
 Create a D3 JavaScript Sankey diagram

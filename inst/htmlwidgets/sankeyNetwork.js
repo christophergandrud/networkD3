@@ -7,8 +7,8 @@ HTMLWidgets.widget({
     initialize: function(el, width, height) {
 
         d3.select(el).append("svg")
-            .attr("width", width)
-            .attr("height", height + height * 0.05);
+            .style("width", "100%")
+            .style("height", "100%");
 
         return {
           sankey: d3.sankey(),
@@ -17,12 +17,13 @@ HTMLWidgets.widget({
     },
 
     resize: function(el, width, height, instance) {
-
+        /*  handle resizing now through the viewBox
         d3.select(el).select("svg")
             .attr("width", width)
             .attr("height", height + height * 0.05);
 
         this.renderValue(el, instance.x, instance);
+        */ 
     },
 
     renderValue: function(el, x, instance) {
@@ -37,10 +38,26 @@ HTMLWidgets.widget({
         // convert links and nodes data frames to d3 friendly format
         var links = HTMLWidgets.dataframeToD3(x.links);
         var nodes = HTMLWidgets.dataframeToD3(x.nodes);
+        
+    
+        // margin handling
+        //   set our default margin to be 20
+        //   will override with x.options.margin if provided
+        var margin = {top: 20, right: 20, bottom: 20, left: 20};
+        //   go through each key of x.options.margin
+        //   use this value if provided from the R side
+        Object.keys(x.options.margin).map(function(ky){
+          if(x.options.margin[ky] !== null) {
+            margin[ky] = x.options.margin[ky];
+          }
+          // set the margin on the svg with css style
+          // commenting this out since not correct
+          // s.style(["margin",ky].join("-"), margin[ky]);
+        });        
 
         // get the width and height
-        var width = el.offsetWidth;
-        var height = el.offsetHeight;
+        var width = el.getBoundingClientRect().width - margin.right - margin.left;
+        var height = el.getBoundingClientRect().height - margin.top - margin.bottom;
 
         var color = eval(options.colourScale);
 
@@ -56,9 +73,11 @@ HTMLWidgets.widget({
             .nodePadding(options.nodePadding)
             .layout(32);
 
-        // select the svg element and remove existing childern
-        var svg = d3.select(el).select("svg");
-        svg.selectAll("*").remove();
+        // select the svg element and remove existing children
+        d3.select(el).select("svg").selectAll("*").remove();
+        // append g for our container to transform by margin
+        var svg = d3.select(el).select("svg").append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");;
 
         // draw path
         var path = sankey.link();
@@ -66,8 +85,11 @@ HTMLWidgets.widget({
         // draw links
         var link = svg.selectAll(".link")
             .data(sankey.links())
-            .enter().append("path")
+
+        link.enter().append("path")
             .attr("class", "link")
+        
+        link
             .attr("d", path)
             .style("stroke-width", function(d) { return Math.max(1, d.dy); })
             .style("fill", "none")
@@ -82,11 +104,19 @@ HTMLWidgets.widget({
                 d3.select(this)
                 .style("stroke-opacity", 0.2);
             });
+            
+        // add backwards class to cycles
+        link.classed('backwards', function (d) { return d.target.x < d.source.x; });
+        
+        svg.selectAll(".link.backwards")
+            .style("stroke-dasharray","9,1")
+            .style("stroke","#402")
 
         // draw nodes
         var node = svg.selectAll(".node")
             .data(sankey.nodes())
-            .enter().append("g")
+            
+        node.enter().append("g")
             .attr("class", "node")
             .attr("transform", function(d) { return "translate(" +
                                             d.x + "," + d.y + ")"; })
@@ -124,6 +154,46 @@ HTMLWidgets.widget({
             .filter(function(d) { return d.x < width / 2; })
             .attr("x", 6 + sankey.nodeWidth())
             .attr("text-anchor", "start");
+            
+            
+        // adjust viewBox to fit the bounds of our tree
+        var s = d3.select(svg[0][0].parentNode);
+        s.attr(
+            "viewBox",
+            [
+              d3.min(
+                s.selectAll('*')[0].map(function(d){
+                  return d.getBoundingClientRect().left
+                })
+              ) - s.node().getBoundingClientRect().left - margin.right,
+              d3.min(
+                s.selectAll('*')[0].map(function(d){
+                  return d.getBoundingClientRect().top
+                })
+              ) - s.node().getBoundingClientRect().top - margin.top,
+              d3.max(
+                s.selectAll('*')[0].map(function(d){
+                  return d.getBoundingClientRect().right
+                })
+              ) -
+              d3.min(
+                s.selectAll('*')[0].map(function(d){
+                  return d.getBoundingClientRect().left
+                })
+              )  + margin.left + margin.right,
+              d3.max(
+                s.selectAll('*')[0].map(function(d){
+                  return d.getBoundingClientRect().bottom
+                })
+              ) -
+              d3.min(
+                s.selectAll('*')[0].map(function(d){
+                  return d.getBoundingClientRect().top
+                })
+              ) + margin.top + margin.bottom
+            ].join(",")
+          );        
+        
 
         function dragmove(d) {
             d3.select(this).attr("transform", "translate(" + d.x + "," +

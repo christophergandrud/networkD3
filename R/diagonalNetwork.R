@@ -41,8 +41,8 @@
 #'
 #' #### Create a tree dendrogram from an R hclust object
 #' hc <- hclust(dist(USArrests), "ave")
-#' diagonalNetwork(as.diagonalNetwork(hc))
-#' diagonalNetwork(as.diagonalNetwork(hc), fontFamily = "cursive")
+#' diagonalNetwork(as.radialNetwork(hc))
+#' diagonalNetwork(as.radialNetwork(hc), fontFamily = "cursive")
 #'
 #' #### Create tree from a hierarchical R list
 #' For an alternative structure see: http://stackoverflow.com/a/30747323/1705044

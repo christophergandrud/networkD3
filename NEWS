@@ -1,5 +1,13 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.2.6
+
+- `sankeyNetwork` fully supports cycles
+- `sankeyNetwork` gets same responsive sizing and better fitting introduced
+in 0.2.4 for `diagonalNetwork` and `radialNetwork`
+- `sankeyNetwork` gets same full margin control introduced
+in 0.2.4 for `diagonalNetwork` and `radialNetwork`
+
 ## Version 0.2.5
 
 - Added `chordDiagram` to show directed relationships among entities
