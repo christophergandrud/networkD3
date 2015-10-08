@@ -27,6 +27,9 @@ the strength of the link from group n to group m}
 \item{initialOpacity}{specify the opacity before the user mouses over
 the link}
 
+\item{useTicks}{integer number of ticks on the radial axis.
+The default is `0` which means no ticks will be drawn.}
+
 \item{colourScale}{specify the hexadecimal colours in which to display
 the different categories. If there are fewer colours than categories,
 the last colour is repeated as necessary (if \code{NULL} then defaults
@@ -40,6 +43,9 @@ on the outside of the graph}
 \item{fontFamily}{font family for the node text labels.}
 
 \item{labels}{vector containing labels of the categories}
+
+\item{labelDistance}{integer distance in pixels (px) between
+       text labels and outer radius.  The default is `30`.}
 }
 \description{
 Create Reingold-Tilford Tree network diagrams.

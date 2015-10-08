@@ -17,6 +17,10 @@
 #' @param fontSize numeric font size in pixels for the node text labels.
 #' @param fontFamily font family for the node text labels.
 #' @param labels vector containing labels of the categories
+#' @param useTicks integer number of ticks on the radial axis.
+#'        The default is `0` which means no ticks will be drawn.
+#' @param labelDistance integer distance in pixels (px) between
+#'        text labels and outer radius.  The default is `30`.
 #'
 #'
 #' @examples
