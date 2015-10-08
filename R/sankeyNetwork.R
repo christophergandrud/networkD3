@@ -17,8 +17,6 @@
 #' @param NodeID character string specifying the node IDs in the \code{Nodes}
 #' data frame.
 #' @param units character string describing physical units (if any) for Value
-#' @param height numeric height for the network graph's frame area in pixels.
-#' @param width numeric width for the network graph's frame area in pixels.
 #' @param colourScale character string specifying the categorical colour
 #' scale for the nodes. See
 #' \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.
@@ -26,7 +24,15 @@
 #' @param fontFamily font family for the node text labels.
 #' @param nodeWidth numeric width of each node.
 #' @param nodePadding numeric essentially influences the width height.
-#'
+#' @param margin an integer or a named \code{list}/\code{vector} of integers
+#' for the plot margins. If using a named \code{list}/\code{vector},
+#' the positions \code{top}, \code{right}, \code{bottom}, \code{left}
+#' are valid.  If a single integer is provided, then the value will be
+#' assigned to the right margin. Set the margin appropriately
+#' to accomodate long text labels.
+#' @param height numeric height for the network graph's frame area in pixels.
+#' @param width numeric width for the network graph's frame area in pixels.
+#' 
 #' @examples
 #' \dontrun{
 #' # Recreate Bostock Sankey diagram: http://bost.ocks.org/mike/sankey/
@@ -53,14 +59,16 @@ sankeyNetwork <- function(Links,
                           Target,
                           Value,
                           NodeID,
-                          height = NULL,
-                          width = NULL,
                           units = "",
                           colourScale = JS("d3.scale.category20()"),
                           fontSize = 7,
                           fontFamily = NULL,
                           nodeWidth = 15,
-                          nodePadding = 10)
+                          nodePadding = 10,
+                          margin = NULL,
+                          height = NULL,
+                          width = NULL
+                         )
 {
     # Hack for UI consistency. Think of improving.
     colourScale <- as.character(colourScale)
@@ -92,6 +100,8 @@ sankeyNetwork <- function(Links,
     if(missing(NodeID)) NodeID = 1
     NodesDF <- data.frame(Nodes[, NodeID])
     names(NodesDF) <- c("name")
+    
+    margin <- margin_handler(margin)    
 
     # create options
     options = list(
@@ -101,7 +111,8 @@ sankeyNetwork <- function(Links,
         fontFamily = fontFamily,
         nodeWidth = nodeWidth,
         nodePadding = nodePadding,
-        units = units
+        units = units,
+        margin = margin
     )
 
     # create widget
