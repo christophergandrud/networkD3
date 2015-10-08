@@ -39,8 +39,8 @@ HTMLWidgets.widget({
         var nodes = HTMLWidgets.dataframeToD3(x.nodes);
 
         // get the width and height
-        var width = el.offsetWidth;
-        var height = el.offsetHeight;
+        var width = el.getBoundingClientRect().width;
+        var height = el.getBoundingClientRect().height;
 
         var color = eval(options.colourScale);
 
@@ -66,8 +66,11 @@ HTMLWidgets.widget({
         // draw links
         var link = svg.selectAll(".link")
             .data(sankey.links())
-            .enter().append("path")
+
+        link.enter().append("path")
             .attr("class", "link")
+        
+        link
             .attr("d", path)
             .style("stroke-width", function(d) { return Math.max(1, d.dy); })
             .style("fill", "none")
@@ -82,11 +85,19 @@ HTMLWidgets.widget({
                 d3.select(this)
                 .style("stroke-opacity", 0.2);
             });
+            
+        // add backwards class to cycles
+        link.classed('backwards', function (d) { return d.target.x < d.source.x; });
+        
+        svg.selectAll(".link.backwards")
+            .style("stroke-dasharray","9,1")
+            .style("stroke","#402")
 
         // draw nodes
         var node = svg.selectAll(".node")
             .data(sankey.nodes())
-            .enter().append("g")
+            
+        node.enter().append("g")
             .attr("class", "node")
             .attr("transform", function(d) { return "translate(" +
                                             d.x + "," + d.y + ")"; })
