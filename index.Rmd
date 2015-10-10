@@ -37,8 +37,8 @@ Issues/suggestions <a href="https://github.com/christophergandrud/networkD3/issu
 </strong>
 </p>
 
-[Christopher Gandrud](http://christophergandrud.blogspot.com/) &
-[JJ Allaire](https://github.com/jjallaire)
+[Christopher Gandrud](http://christophergandrud.blogspot.com/),
+[JJ Allaire](https://github.com/jjallaire), & [Kent Russell](http://buildingwidgets.com)
 
 `r Sys.Date()`
 
