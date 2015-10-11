@@ -86,7 +86,6 @@ chordNetwork <- function(Data,
   options <- list(
     width = width,
     height = height,
-    title = title,
     use_ticks = useTicks,
     initial_opacity = initialOpacity,
     colour_scale = colourScale,
@@ -139,13 +138,14 @@ chordNetwork <- function(Data,
 #' @rdname networkD3-shiny
 #' @export
 chordNetworkOutput <- function(outputId, width = "100%", height = "500px") {
-  shinyWidgetOutput(outputId, "chordNetwork", width, height, package = "networkD3")
+    shinyWidgetOutput(outputId, "chordNetwork", width, height, 
+                      package = "networkD3")
 }
 
 #' @rdname networkD3-shiny
 #' @export
 renderchordNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
-  if (!quoted) { expr <- substitute(expr) } # force quoted
-  shinyRenderWidget(expr, chordNetworkOutput, env, quoted = TRUE)
+    if (!quoted) { expr <- substitute(expr) } # force quoted
+    shinyRenderWidget(expr, chordNetworkOutput, env, quoted = TRUE)
 }
 
