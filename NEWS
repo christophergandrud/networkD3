@@ -1,5 +1,9 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.2.7
+
+- Fixed an issue with sankey viewBox sizing. 
+
 ## Version 0.2.6
 
 - `sankeyNetwork` fully supports cycles
