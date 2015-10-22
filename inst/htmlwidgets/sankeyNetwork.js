@@ -162,32 +162,32 @@ HTMLWidgets.widget({
             "viewBox",
             [
               d3.min(
-                s.selectAll('*')[0].map(function(d){
+                s.selectAll('g')[0].map(function(d){
                   return d.getBoundingClientRect().left
                 })
               ) - s.node().getBoundingClientRect().left - margin.right,
               d3.min(
-                s.selectAll('*')[0].map(function(d){
+                s.selectAll('g')[0].map(function(d){
                   return d.getBoundingClientRect().top
                 })
               ) - s.node().getBoundingClientRect().top - margin.top,
               d3.max(
-                s.selectAll('*')[0].map(function(d){
+                s.selectAll('g')[0].map(function(d){
                   return d.getBoundingClientRect().right
                 })
               ) -
               d3.min(
-                s.selectAll('*')[0].map(function(d){
+                s.selectAll('g')[0].map(function(d){
                   return d.getBoundingClientRect().left
                 })
               )  + margin.left + margin.right,
               d3.max(
-                s.selectAll('*')[0].map(function(d){
+                s.selectAll('g')[0].map(function(d){
                   return d.getBoundingClientRect().bottom
                 })
               ) -
               d3.min(
-                s.selectAll('*')[0].map(function(d){
+                s.selectAll('g')[0].map(function(d){
                   return d.getBoundingClientRect().top
                 })
               ) + margin.top + margin.bottom
