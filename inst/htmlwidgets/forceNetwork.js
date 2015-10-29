@@ -223,7 +223,8 @@ HTMLWidgets.widget({
         legend.append('text')
           .attr('x', legendRectSize + legendSpacing)
           .attr('y', legendRectSize - legendSpacing)
-          .text(function(d) { return d; });
+          .text(function(d) { return d; })
+          .style("font", options.fontSize + "px " + options.fontFamily);
     }
   },
 });
