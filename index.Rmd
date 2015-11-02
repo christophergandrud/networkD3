@@ -29,7 +29,8 @@ Fork me on <a href="https://github.com/christophergandrud/networkD3"><i class="f
 </strong>
 </p>
 
-v`r packageVersion('networkD3')`
+v`r packageVersion('networkD3')` [![CRAN Version](http://www.r-pkg.org/badges/version/networkD3)](http://cran.r-project.org/package=networkD3)
+
 
 <p class="pull-right">
 <strong>
