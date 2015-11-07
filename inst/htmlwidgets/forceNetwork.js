@@ -178,7 +178,7 @@ HTMLWidgets.widget({
         .duration(750)
         .attr("x", 13)
         .style("stroke-width", ".5px")
-        .style("font", options.clickTextSize + "px " + options.fontFamily)
+        .style("font", options.clickTextSize + "px ")
         .style("opacity", 1);
     }
 
@@ -189,7 +189,7 @@ HTMLWidgets.widget({
       d3.select(this).select("text").transition()
         .duration(1250)
         .attr("x", 0)
-        .style("font", options.fontSize + "px " + options.fontFamily) 
+        .style("font", options.fontSize + "px ") 
         .style("opacity", options.opacityNoHover);
     }
     
@@ -225,5 +225,8 @@ HTMLWidgets.widget({
           .attr('y', legendRectSize - legendSpacing)
           .text(function(d) { return d; });
     }
+    
+    // make font-family consistent across all elements
+    d3.select(el).selectAll('text').style('font-family', options.fontFamily);
   },
 });
