@@ -1,5 +1,10 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.2.8
+
+- `fontFamily` is now applied to legends in `forceNetwork`. Thanks to Casey 
+Shannon. 
+
 ## Version 0.2.7
 
 - Fixed an issue with sankey viewBox sizing. 
