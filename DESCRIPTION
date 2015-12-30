@@ -29,3 +29,4 @@ Suggests:
     htmltools (>= 0.2.6),
     RCurl
 Enhances: knitr, shiny
+RoxygenNote: 5.0.1
