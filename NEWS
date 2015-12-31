@@ -2,8 +2,8 @@
 
 ## Version 0.2.8
 
--Added NodeGroup and LinkGroup parameters to sankeyNetwork so links are
-colourised. Thanks to Edwin de Jonge.
+-Added `NodeGroup` and `LinkGroup` parameters to `sankeyNetwork` so links
+can be colourised. Thanks to Edwin de Jonge.
 
 - `fontFamily` is now applied to legends in `forceNetwork`. Thanks to Casey
 Shannon.
