@@ -46,7 +46,7 @@ plyr, and rjson.
 
   + All Github data links now use the CDN link from
   [rawgit](https://rawgit.com/), so the examples  should be more inline with
-  Github raw policies
+  Github raw policies.
 
 ## Version 0.2.2
 
