@@ -17,22 +17,24 @@
 #' be before they are clicked. Multiple formats supported (e.g. hexadecimal).
 #' @param opacity numeric value of the proportion opaque you would like the
 #' graph elements to be.
-#' @param margin integer value of the plot margin. Set the margin
-#' appropriately to accomodate long text labels.
+#' @param margin an integer or a named \code{list}/\code{vector} of integers
+#' for the plot margins. If using a named \code{list}/\code{vector},
+#' the positions \code{top}, \code{right}, \code{bottom}, \code{left}
+#' are valid.  If a single integer is provided, then the value will be
+#' assigned to the right margin. Set the margin appropriately
+#' to accomodate long text labels.
 #'
 #'
 #' @examples
 #' \dontrun{
 #' #### Create tree from JSON formatted data
 #' ## Download JSON data
-#' library(RCurl)
 #' # Create URL. paste0 used purely to keep within line width.
-#' URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
-#'               "networkD3/master/JSONdata/flare.json")
-#' Flare <- getURL(URL)
-#'
+#' URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
+#'               "master/JSONdata//flare.json")
+#'               
 #' ## Convert to list format
-#' Flare <- rjson::fromJSON(Flare)
+#' Flare <- jsonlite::fromJSON(URL, simplifyDataFrame = FALSE)
 #'
 #' ## Recreate Bostock example from http://bl.ocks.org/mbostock/4063550
 #' radialNetwork(List = Flare, fontSize = 10, opacity = 0.9)
@@ -83,7 +85,6 @@
 #'
 #' Mike Bostock: \url{http://bl.ocks.org/mbostock/4063550}.
 #'
-#' @importFrom rjson toJSON
 #' @export
 #'
 radialNetwork <- function(
@@ -97,12 +98,14 @@ radialNetwork <- function(
                           nodeStroke = "steelblue",
                           textColour = "#111",
                           opacity = 0.9,
-                          margin = 0)
+                          margin = NULL)
 {
     # validate input
     if (!is.list(List))
       stop("List must be a list object.")
-    root <- toJSON(List)
+    root <- List
+    
+    margin <- margin_handler(margin)
 
     # create options
     options = list(

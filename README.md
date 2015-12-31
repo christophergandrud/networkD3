@@ -1,10 +1,10 @@
 # D3 JavaScript Network Graphs from R
 
-Version 0.2.1 [![Build Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://travis-ci.org/christophergandrud/networkD3) ![CRAN Downloads](http://cranlogs.r-pkg.org/badges/last-month/networkD3)
-
-This is a port of Christopher Gandrud's
-[d3Network](http://christophergandrud.github.io/d3Network/) package to the
-[htmlwidgets](https://github.com/ramnathv/htmlwidgets) framework.
+Version 0.2.8 
+[![CRAN Version](http://www.r-pkg.org/badges/version/networkD3)](http://cran.r-project.org/package=networkD3)
+[![Build Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://travis-ci.org/christophergandrud/networkD3) 
+![CRAN Monthly Downloads](http://cranlogs.r-pkg.org/badges/last-month/networkD3)
+![CRAN Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/networkD3)
 
 This README includes information on set up and a number of basic examples.
 For more information see the package's [main page](http://christophergandrud.github.io/networkD3/).
@@ -13,7 +13,7 @@ For more information see the package's [main page](http://christophergandrud.git
 
 Here's an example of `simpleNetwork`:
 
-```S
+```R
 # Create fake data
 src <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
 target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
@@ -25,7 +25,7 @@ simpleNetwork(networkData)
 
 Here's `forceNetwork`:
 
-```S
+```R
 # Load data
 data(MisLinks)
 data(MisNodes)
@@ -39,28 +39,31 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 
 Here's `sankeyNetwork` using a downloaded JSON data file:
 
-```S
+```R
+# Recreate Bostock Sankey diagram: http://bost.ocks.org/mike/sankey/
 # Load energy projection data
-library(RCurl)
-URL <- "https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/energy.json"
-Energy <- getURL(URL, ssl.verifypeer = FALSE)
-
-# Convert to data frame
-EngLinks <- JSONtoDF(jsonStr = Energy, array = "links")
-EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
+URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
+              "master/JSONdata/energy.json")
+Energy <- jsonlite::fromJSON(URL)
 
 # Plot
-sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
-            Target = "target", Value = "value", NodeID = "name",
-            fontSize = 12, nodeWidth = 30)
+sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             units = "TWh", fontSize = 12, nodeWidth = 30)
 ```
 
 ### Saving to an external file
 
 Use `saveNetwork` to save a network to stand alone HTML file:
 
-```S
+```R
 library(magrittr)
 
 simpleNetwork(networkData) %>% saveNetwork(file = 'Net1.html')
 ```
+
+## Note
+
+networkD3 began as a port of
+[d3Network](http://christophergandrud.github.io/d3Network/) package to the
+[htmlwidgets](https://github.com/ramnathv/htmlwidgets) framework. d3Network is no longer supported.

@@ -3,3 +3,4 @@
 ^JSONdata
 .travis.yml
 .sass-cache
+^.*\.o$

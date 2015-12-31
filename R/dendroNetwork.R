@@ -50,7 +50,6 @@
 #'
 #' Fabio Nelli: \url{http://www.meccanismocomplesso.org/en/dendrogramma-d3-parte1/}
 #'
-#' @importFrom rjson toJSON
 #' @importFrom stats setNames
 #' @importFrom utils modifyList
 #' @export
@@ -82,7 +81,7 @@ dendroNetwork <- function(
         treeOrientation = match.arg(treeOrientation[1],
                             c("horizontal", "vertical"))
 
-    root <- toJSON(as.dendroNetwork(hc, textColour, textOpacity))
+    root <- as.dendroNetwork(hc, textColour, textOpacity)
 
     if (treeOrientation == "vertical")
         margins_def = list(top = 40, right = 40, bottom = 150, left = 40)
@@ -147,9 +146,9 @@ dendroNetwork <- function(
         stop("hc must be a object of class hclust")
 
     if (length(textColour) != length(hc$labels))
-        stop("textColour lenght must match label length")
+        stop("textColour length must match label length")
     if (length(textOpacity) != length(hc$labels))
-        stop("textOpacity lenght must match label length")
+        stop("textOpacity length must match label length")
 
     ul <- function(lev)
     {
