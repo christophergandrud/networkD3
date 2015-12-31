@@ -8,6 +8,9 @@ can be colourised. Thanks to Edwin de Jonge.
 - `fontFamily` is now applied to legends in `forceNetwork`. Thanks to Casey
 Shannon.
 
+- Improved bounding behaviour with `forceNetwork`. Now bounds both the links and
+nodes. Thanks to Koba Khitalishvili.
+
 ## Version 0.2.7
 
 - Fixed an issue with sankey viewBox sizing.
