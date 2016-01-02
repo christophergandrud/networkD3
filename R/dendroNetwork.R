@@ -27,22 +27,22 @@
 #' are 'elbow' and 'diagonal'.
 #' @param treeOrientation character specifying the tree orientation, Options
 #' are 'vertical' and 'horizontal'.
-#' @param zoom logical enabling plot zoom and pan.
+#' @param zoom logical enabling plot zoom and pan
 #'
 #'
 #' @examples
 #' \dontrun{
 #' hc <- hclust(dist(USArrests), "ave")
 #'
-#' clusterNetwork(hc, height = 600)
-#' clusterNetwork(hc, treeOrientation = "vertical")
+#' dendroNetwork(hc, height = 600)
+#' dendroNetwork(hc, treeOrientation = "vertical")
 #'
-#' clusterNetwork(hc, height = 600, linkType = "diagonal")
-#' clusterNetwork(hc, treeOrientation = "vertical", linkType = "diagonal")
+#' dendroNetwork(hc, height = 600, linkType = "diagonal")
+#' dendroNetwork(hc, treeOrientation = "vertical", linkType = "diagonal")
 #'
-#' clusterNetwork(hc, textColour = c("red", "green", "orange")[cutree(hc, 3)],
+#' dendroNetwork(hc, textColour = c("red", "green", "orange")[cutree(hc, 3)],
 #'                height = 600)
-#' clusterNetwork(hc, textColour = c("red", "green", "orange")[cutree(hc, 3)],
+#' dendroNetwork(hc, textColour = c("red", "green", "orange")[cutree(hc, 3)],
 #'                treeOrientation = "vertical")
 #' }
 #'
@@ -50,10 +50,11 @@
 #'
 #' Fabio Nelli: \url{http://www.meccanismocomplesso.org/en/dendrogramma-d3-parte1/}
 #'
-#' @importFrom rjson toJSON
+#' @importFrom stats setNames
+#' @importFrom utils modifyList
 #' @export
 #'
-clusterNetwork <- function(
+dendroNetwork <- function(
     hc,
     height = 500,
     width = 800,
@@ -72,87 +73,82 @@ clusterNetwork <- function(
 {
     # validate input
     if (length(textColour) == 1L)
-    textColour = rep(textColour, length(hc$labels))
+        textColour = rep(textColour, length(hc$labels))
     if (length(textOpacity) == 1L)
-    textOpacity = rep(textOpacity, length(hc$labels))
+        textOpacity = rep(textOpacity, length(hc$labels))
 
-    linkType = match.arg(linkType[1], c("elbow", "diagonal"))
-    treeOrientation = match.arg(treeOrientation[1], c("horizontal", "vertical"))
+        linkType = match.arg(linkType[1], c("elbow", "diagonal"))
+        treeOrientation = match.arg(treeOrientation[1],
+                            c("horizontal", "vertical"))
 
-    root <- toJSON(as.clusterNetwork(hc, textColour, textOpacity))
+    root <- as.dendroNetwork(hc, textColour, textOpacity)
 
     if (treeOrientation == "vertical")
-    margins_def = list(top = 40, right = 40, bottom = 150, left = 40)
+        margins_def = list(top = 40, right = 40, bottom = 150, left = 40)
     else
-    margins_def = list(top = 40, right = 150, bottom = 40, left = 40)
+        margins_def = list(top = 40, right = 150, bottom = 40, left = 40)
+
     if (length(margins) == 1L && is.numeric(margins)) {
-    margins = as.list(setNames(rep(margins, 4),
+        margins = as.list(setNames(rep(margins, 4),
                                c("top", "right", "bottom", "left")))
     } else if (is.null(margins)) {
-    margins = margins_def
+        margins = margins_def
     } else {
-    margins = modifyList(margins_def, margins)
+        margins = modifyList(margins_def, margins)
     }
 
     if (is.null(textRotate))
-    textRotate = ifelse(treeOrientation == "vertical", 65, 0)
+        textRotate = ifelse(treeOrientation == "vertical", 65, 0)
 
     # create options
     options = list(
-    height = height,
-    width = width,
-    fontSize = fontSize,
-    linkColour = linkColour,
-    nodeColour = nodeColour,
-    nodeStroke = nodeStroke,
-    textRotate = textRotate,
-    margins = margins,
-    opacity = opacity,
-    linkType = linkType,
-    treeOrientation = treeOrientation,
-    zoom = zoom
+        height = height,
+        width = width,
+        fontSize = fontSize,
+        linkColour = linkColour,
+        nodeColour = nodeColour,
+        nodeStroke = nodeStroke,
+        textRotate = textRotate,
+        margins = margins,
+        opacity = opacity,
+        linkType = linkType,
+        treeOrientation = treeOrientation,
+        zoom = zoom
     )
 
     # create widget
     htmlwidgets::createWidget(
-        name = "clusterNetwork",
-        x = list(root = root, options = options),
+    name = "dendroNetwork",
+    x = list(root = root, options = options),
         width = width,
         height = height,
-        htmlwidgets::sizingPolicy(viewer.suppress = TRUE,
-                                  browser.fill = TRUE,
-                                  browser.padding = 75,
-                                  knitr.figure = FALSE,
-                                  knitr.defaultWidth = 800,
-                                  knitr.defaultHeight = 500),
+        htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE),
         package = "networkD3")
     }
 
     #' @rdname networkD3-shiny
     #' @export
-    clusterNetworkOutput <- function(outputId, width = "100%",
-                                     height = "800px") {
-    shinyWidgetOutput(outputId, "clusterNetwork", width, height,
+    dendroNetworkOutput <- function(outputId, width = "100%", height = "800px") {
+    shinyWidgetOutput(outputId, "dendroNetwork", width, height,
                     package = "networkD3")
     }
 
     #' @rdname networkD3-shiny
     #' @export
-    renderClusterNetwork <- function(expr, env = parent.frame(),
-        quoted = FALSE) {
+    renderDendroNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
     if (!quoted) { expr <- substitute(expr) } # force quoted
-        shinyRenderWidget(expr, clusterNetworkOutput, env, quoted = TRUE)
+        shinyRenderWidget(expr, dendroNetworkOutput, env, quoted = TRUE)
     }
 
-    as.clusterNetwork <- function(hc, textColour, textOpacity)
+    as.dendroNetwork <- function(hc, textColour, textOpacity)
     {
     if (!("hclust" %in% class(hc)))
         stop("hc must be a object of class hclust")
 
     if (length(textColour) != length(hc$labels))
-        stop("textColour lenght must match label length")
+        stop("textColour length must match label length")
     if (length(textOpacity) != length(hc$labels))
-        stop("textOpacity lenght must match label length")
+        stop("textOpacity length must match label length")
 
     ul <- function(lev)
     {
@@ -160,11 +156,11 @@ clusterNetwork <- function(
         val <- abs(hc$merge[lev, ][i])
         if (hc$merge[lev, ][i] < 0)
             list(name = hc$labels[val], y = 0, textColour = textColour[val],
-                 textOpacity = textOpacity[val])
+                textOpacity = textOpacity[val])
         else
             ul(val)
     })
-        list(name = "", y = hc$height[lev], children = child)
+    list(name = "", y = hc$height[lev], children = child)
     }
     ul(nrow(hc$merge))
 }

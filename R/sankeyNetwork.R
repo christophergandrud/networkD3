@@ -14,10 +14,13 @@
 #' \code{Links} data frame.
 #' @param Value character string naming the variable in the \code{Links} data
 #' frame for how far away the nodes are from one another.
-#' @param NodeID character string specifying the node IDs in the \code{Nodes}
+#' @param NodeID character string specifying the node IDs in the \code{Nodes}.
 #' data frame.
-#' @param height numeric height for the network graph's frame area in pixels.
-#' @param width numeric width for the network graph's frame area in pixels.
+#' @param NodeGroup character string specifying the node groups in the
+#' \code{Nodes}. Used to color the nodes in the network.
+#' @param LinkGroup character string specifying the groups in the
+#' \code{Links}. Used to color the links in the network.
+#' @param units character string describing physical units (if any) for Value
 #' @param colourScale character string specifying the categorical colour
 #' scale for the nodes. See
 #' \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.
@@ -25,26 +28,35 @@
 #' @param fontFamily font family for the node text labels.
 #' @param nodeWidth numeric width of each node.
 #' @param nodePadding numeric essentially influences the width height.
+#' @param margin an integer or a named \code{list}/\code{vector} of integers
+#' for the plot margins. If using a named \code{list}/\code{vector},
+#' the positions \code{top}, \code{right}, \code{bottom}, \code{left}
+#' are valid.  If a single integer is provided, then the value will be
+#' assigned to the right margin. Set the margin appropriately
+#' to accomodate long text labels.
+#' @param height numeric height for the network graph's frame area in pixels.
+#' @param width numeric width for the network graph's frame area in pixels.
 #'
 #' @examples
 #' \dontrun{
 #' # Recreate Bostock Sankey diagram: http://bost.ocks.org/mike/sankey/
 #' # Load energy projection data
-#' library(RCurl)
-#' # Create URL. paste0 used purely to keep within line width.
-
-#' URL <- paste0("https://raw.githubusercontent.com/christophergandrud/",
-#'               "networkD3/master/JSONdata/energy.json")
-#' Energy <- getURL(URL, ssl.verifypeer = FALSE)
-#'
-#' # Convert to data frame
-#' EngLinks <- JSONtoDF(jsonStr = Energy, array = "links")
-#' EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
-#'
+#' URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
+#'               "master/JSONdata/energy.json")
+#' energy <- jsonlite::fromJSON(URL)
 #' # Plot
-#' sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
+#' sankeyNetwork(Links = energy$links, Nodes = energy$nodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
-#'               fontSize = 12, nodeWidth = 30)
+#'              units = "TWh", fontSize = 12, nodeWidth = 30)
+#'              
+#' # Colour links
+#' energy$links$energy_type <- sub(" .*", "", 
+#'                                energy$nodes[energy$links$source + 1, "name"])
+#' sankeyNetwork(Links = energy$links, Nodes = energy$nodes, Source = "source",
+#' Target = "target", Value = "value", NodeID = "name", 
+#' LinkGroup = "energy_type", NodeGroup = NULL
+#' )
+#' 
 #' }
 #' @source
 #' D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
@@ -60,13 +72,18 @@ sankeyNetwork <- function(Links,
                           Target,
                           Value,
                           NodeID,
-                          height = NULL,
-                          width = NULL,
+                          NodeGroup = NodeID,
+                          LinkGroup = NULL,
+                          units = "",
                           colourScale = JS("d3.scale.category20()"),
                           fontSize = 7,
-                          fontFamily = "serif",
+                          fontFamily = NULL,
                           nodeWidth = 15,
-                          nodePadding = 10)
+                          nodePadding = 10,
+                          margin = NULL,
+                          height = NULL,
+                          width = NULL
+                         )
 {
     # Hack for UI consistency. Think of improving.
     colourScale <- as.character(colourScale)
@@ -78,6 +95,12 @@ sankeyNetwork <- function(Links,
     if (!is.data.frame(Nodes)) {
         stop("Nodes must be a data frame class object.")
     }
+    # if Source or Target are missing assume
+    #  Source is the first column
+    #  Target is the second column
+    if(missing(Source)) Source = 1
+    if(missing(Target)) Target = 2
+
     if (missing(Value)) {
         LinksDF <- data.frame(Links[, Source], Links[, Target])
         names(LinksDF) <- c("source", "target")
@@ -86,17 +109,36 @@ sankeyNetwork <- function(Links,
         LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
         names(LinksDF) <- c("source", "target", "value")
     }
+
+    # if NodeID is missing assume
+    #  NodeID is the first column
+    if(missing(NodeID)) NodeID = 1
     NodesDF <- data.frame(Nodes[, NodeID])
     names(NodesDF) <- c("name")
+
+    # add node group if specified
+    if (is.character(NodeGroup)){
+      NodesDF$group <- Nodes[, NodeGroup]
+    }
+
+    if (is.character(LinkGroup)){
+      LinksDF$group <- Links[, LinkGroup]
+    }
+
+    margin <- margin_handler(margin)
 
     # create options
     options = list(
         NodeID = NodeID,
+        NodeGroup = NodeGroup,
+        LinkGroup = LinkGroup,
         colourScale = colourScale,
         fontSize = fontSize,
         fontFamily = fontFamily,
         nodeWidth = nodeWidth,
-        nodePadding = nodePadding
+        nodePadding = nodePadding,
+        units = units,
+        margin = margin
     )
 
     # create widget
@@ -105,12 +147,7 @@ sankeyNetwork <- function(Links,
         x = list(links = LinksDF, nodes = NodesDF, options = options),
         width = width,
         height = height,
-        htmlwidgets::sizingPolicy(viewer.suppress = TRUE,
-                                  knitr.figure = FALSE,
-                                  browser.fill = TRUE,
-                                  browser.padding = 75,
-                                  knitr.defaultWidth = 800,
-                                  knitr.defaultHeight = 500),
+        htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE),
         package = "networkD3"
     )
 }
