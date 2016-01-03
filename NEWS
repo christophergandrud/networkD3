@@ -1,5 +1,13 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.2.9
+
+- `forceNetwork` now allows you to supply a vector of colours to the
+`linkColour`argument. This enables the user to highlight links to specific
+nodes. Thanks to Garth Tarr. 
+
+- Minor documentation improvements.
+
 ## Version 0.2.8
 
 - Added `NodeGroup` and `LinkGroup` parameters to `sankeyNetwork` so links
