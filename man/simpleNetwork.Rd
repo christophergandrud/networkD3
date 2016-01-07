@@ -13,7 +13,7 @@ simpleNetwork(Data, Source = NULL, Target = NULL, height = NULL,
   width = NULL, linkDistance = 50, charge = -200, fontSize = 7,
   fontFamily = "serif", linkColour = "#666", nodeColour = "#3182bd",
   nodeClickColour = "#E34A33", textColour = "#3182bd", opacity = 0.6,
-  zoom = F)
+  zoom = FALSE)
 }
 \arguments{
 \item{Data}{a data frame object with three columns. The first two are the

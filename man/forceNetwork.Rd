@@ -15,7 +15,8 @@ forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Nodesize, Group,
   linkWidth = JS("function(d) { return Math.sqrt(d.value); }"),
   radiusCalculation = JS(" Math.sqrt(d.nodesize)+6"), charge = -120,
   linkColour = "#666", opacity = 0.6, zoom = FALSE, legend = FALSE,
-  bounded = FALSE, opacityNoHover = 0, clickAction = NULL)
+  arrows = FALSE, bounded = FALSE, opacityNoHover = 0,
+  clickAction = NULL)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -63,16 +64,16 @@ scale for the nodes. See
 distance between the links in pixels (actually arbitrary relative to the
 diagram's size). Or a JavaScript function, possibly to weight by
 \code{Value}. For example:
-\code{linkDistance = JS("function(d){return d.value * 10}")}.}
+\code{linkDistance = JS('function(d){return d.value * 10}')}.}
 
 \item{linkWidth}{numeric or character string. Can be a numeric fixed width in
 pixels (arbitrary relative to the diagram's size). Or a JavaScript function,
 possibly to weight by \code{Value}. The default is
-\code{linkWidth = JS("function(d) { return Math.sqrt(d.value); }")}.}
+\code{linkWidth = JS('function(d) { return Math.sqrt(d.value); }')}.}
 
 \item{radiusCalculation}{character string. A javascript mathematical
 expression, to weight the radius by \code{Nodesize}. The default value is
-\code{radiusCalculation = JS("Math.sqrt(d.nodesize)+6")}.}
+\code{radiusCalculation = JS('Math.sqrt(d.nodesize)+6')}.}
 
 \item{charge}{numeric value indicating either the strength of the node
 repulsion (negative value) or attraction (positive value).}
@@ -106,59 +107,59 @@ Create a D3 JavaScript force directed network graph.
 data(MisLinks)
 data(MisNodes)
 # Create graph
-forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
-             Target = "target", Value = "value", NodeID = "name",
-             Group = "group", opacity = 0.4, zoom = TRUE)
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = 'source',
+             Target = 'target', Value = 'value', NodeID = 'name',
+             Group = 'group', opacity = 0.4, zoom = TRUE)
 
 # Create graph with legend and varying node radius
-forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
-             Target = "target", Value = "value", NodeID = "name",
-             Nodesize = "size",
-             radiusCalculation = "Math.sqrt(d.nodesize)+6",
-             Group = "group", opacity = 0.4, legend = TRUE)
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = 'source',
+             Target = 'target', Value = 'value', NodeID = 'name',
+             Nodesize = 'size',
+             radiusCalculation = 'Math.sqrt(d.nodesize)+6',
+             Group = 'group', opacity = 0.4, legend = TRUE)
 
 \dontrun{
 #### JSON Data Example
 # Load data JSON formated data into two R data frames
 # Create URL. paste0 used purely to keep within line width.
-URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
-              "master/JSONdata/miserables.json")
+URL <- paste0('https://cdn.rawgit.com/christophergandrud/networkD3/',
+              'master/JSONdata/miserables.json')
 
 MisJson <- jsonlite::fromJSON(URL)
 
 # Create graph
-forceNetwork(Links = MisJson$links, Nodes = MisJson$nodes, Source = "source",
-             Target = "target", Value = "value", NodeID = "name",
-             Group = "group", opacity = 0.4)
+forceNetwork(Links = MisJson$links, Nodes = MisJson$nodes, Source = 'source',
+             Target = 'target', Value = 'value', NodeID = 'name',
+             Group = 'group', opacity = 0.4)
 
 # Create graph with zooming
-forceNetwork(Links = MisJson$links, Nodes = MisJson$nodes, Source = "source",
-             Target = "target", Value = "value", NodeID = "name",
-             Group = "group", opacity = 0.4, zoom = TRUE)
+forceNetwork(Links = MisJson$links, Nodes = MisJson$nodes, Source = 'source',
+             Target = 'target', Value = 'value', NodeID = 'name',
+             Group = 'group', opacity = 0.4, zoom = TRUE)
 
 
 # Create a bounded graph
-forceNetwork(Links = MisJson$links, Nodes = MisJson$nodes, Source = "source",
-             Target = "target", Value = "value", NodeID = "name",
-             Group = "group", opacity = 0.4, bounded = TRUE)
+forceNetwork(Links = MisJson$links, Nodes = MisJson$nodes, Source = 'source',
+             Target = 'target', Value = 'value', NodeID = 'name',
+             Group = 'group', opacity = 0.4, bounded = TRUE)
 
 # Create graph with node text faintly visible when no hovering
-forceNetwork(Links = MisJson$links, Nodes = MisJson$nodes, Source = "source",
-             Target = "target", Value = "value", NodeID = "name",
-             Group = "group", opacity = 0.4, bounded = TRUE,
+forceNetwork(Links = MisJson$links, Nodes = MisJson$nodes, Source = 'source',
+             Target = 'target', Value = 'value', NodeID = 'name',
+             Group = 'group', opacity = 0.4, bounded = TRUE,
              opacityNoHover = TRUE)
 
 ## Specify colours for specific edges
 # Find links to Valjean (11)
-which(MisNodes == "Valjean", arr = TRUE)[1] - 1
+which(MisNodes == 'Valjean', arr = TRUE)[1] - 1
 ValjeanInds = which(MisLinks == 11, arr = TRUE)[, 1]
 
 # Create a colour vector
-ValjeanCols = ifelse(1:nrow(MisLinks) \%in\% ValjeanInds, "#bf3eff", "#666")
+ValjeanCols = ifelse(1:nrow(MisLinks) \%in\% ValjeanInds, '#bf3eff', '#666')
 
-forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
-             Target = "target", Value = "value", NodeID = "name",
-             Group = "group", opacity = 0.8, linkColour = ValjeanCols)
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = 'source',
+             Target = 'target', Value = 'value', NodeID = 'name',
+             Group = 'group', opacity = 0.8, linkColour = ValjeanCols)
 
 
 ## Create graph with alert pop-up when a node is clicked.  You're
@@ -166,12 +167,12 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 # Shiny.onInputChange() to allocate d.XXX to an element of input
 # for use in a Shiny app.
 
-MyClickScript <- 'alert("You clicked " + d.name + " which is in row " +
-       (d.index + 1) +  " of your original R data frame");'
+MyClickScript <- 'alert('You clicked ' + d.name + ' which is in row ' +
+       (d.index + 1) +  ' of your original R data frame');'
 
-forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
-             Target = "target", Value = "value", NodeID = "name",
-             Group = "group", opacity = 1, zoom = FALSE,
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = 'source',
+             Target = 'target', Value = 'value', NodeID = 'name',
+             Group = 'group', opacity = 1, zoom = FALSE,
              bounded = TRUE, clickAction = MyClickScript)
 }
 

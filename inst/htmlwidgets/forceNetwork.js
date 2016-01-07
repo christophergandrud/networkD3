@@ -97,6 +97,22 @@ HTMLWidgets.widget({
       zoom.on("zoom", null);
     }
 
+    // define arrows for directional networks
+    if(options.arrows) {
+        svg.append("svg:defs").selectAll("marker")
+          .data(force.links())      // Different link/path types can be defined here
+          .enter().append("svg:marker")    // This section adds in the arrows
+            .attr("id", String)
+            .attr("viewBox", "0 -5 10 10")
+            .attr("refX", 15)
+            .attr("refY", -1.5)
+            .attr("markerWidth", 6)
+            .attr("markerHeight", 6)
+            .attr("orient", "auto")
+            .append("svg:path")
+            .attr("d", "M0,-5L10,0L0,5");
+    }
+
     // draw links
     var link = svg.selectAll(".link")
       .data(force.links())
@@ -113,7 +129,10 @@ HTMLWidgets.widget({
       .on("mouseout", function(d) {
           d3.select(this)
             .style("opacity", options.opacity);
-      });
+      })
+      if(options.arrows) {
+        .attr("marker-end", "url(#end)")
+      };
 
     // draw nodes
     var node = svg.selectAll(".node")
@@ -148,9 +167,9 @@ HTMLWidgets.widget({
             d.x = Math.max(nodeSize(d), Math.min(width - nodeSize(d), d.x));
             d.y = Math.max(nodeSize(d), Math.min(height - nodeSize(d), d.y));
         }
-        
+
         return "translate(" + d.x + "," + d.y + ")"});
-        
+
       link
         .attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
@@ -177,10 +196,10 @@ HTMLWidgets.widget({
       d3.select(this).select("text").transition()
         .duration(1250)
         .attr("x", 0)
-        .style("font", options.fontSize + "px ") 
+        .style("font", options.fontSize + "px ")
         .style("opacity", options.opacityNoHover);
     }
-    
+
     function click(d) {
       return eval(options.clickAction)
     }
@@ -213,7 +232,7 @@ HTMLWidgets.widget({
           .attr('y', legendRectSize - legendSpacing)
           .text(function(d) { return d; });
     }
-    
+
     // make font-family consistent across all elements
     d3.select(el).selectAll('text').style('font-family', options.fontFamily);
   },
