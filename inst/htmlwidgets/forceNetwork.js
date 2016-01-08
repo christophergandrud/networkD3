@@ -106,7 +106,7 @@ HTMLWidgets.widget({
         .style("stroke", function(d) { return d.colour ; })
         .style("opacity", options.opacity)
         .style("stroke-width", eval("(" + options.linkWidth + ")"))
-        .style("marker-end",  "url(#suit)") // adds arrows
+        .style("marker-end",  "url(#suit)") // Modified line
         .on("mouseover", function(d) {
             d3.select(this)
               .style("opacity", 1);
@@ -127,6 +127,7 @@ HTMLWidgets.widget({
         //.style("stroke", options.linkColour)
         .style("opacity", options.opacity)
         .style("stroke-width", eval("(" + options.linkWidth + ")"))
+
         .on("mouseover", function(d) {
             d3.select(this)
               .style("opacity", 1);
