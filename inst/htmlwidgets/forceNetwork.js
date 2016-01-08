@@ -103,7 +103,18 @@ HTMLWidgets.widget({
         .data(force.links())
         .enter().append("line")
         .attr("class", "link")
-        .style("marker-end",  "url(#suit)") // Modified line
+        .style("stroke", function(d) { return d.colour ; })
+        .style("opacity", options.opacity)
+        .style("stroke-width", eval("(" + options.linkWidth + ")"))
+        .style("marker-end",  "url(#suit)") // adds arrows
+        .on("mouseover", function(d) {
+            d3.select(this)
+              .style("opacity", 1);
+        })
+        .on("mouseout", function(d) {
+            d3.select(this)
+              .style("opacity", options.opacity)
+        });
     }
 
     else {
@@ -116,7 +127,6 @@ HTMLWidgets.widget({
         //.style("stroke", options.linkColour)
         .style("opacity", options.opacity)
         .style("stroke-width", eval("(" + options.linkWidth + ")"))
-        // if (options.arrows) {.attr("marker-end", "url(#end)")}
         .on("mouseover", function(d) {
             d3.select(this)
               .style("opacity", 1);
@@ -232,7 +242,7 @@ HTMLWidgets.widget({
     // define arrows for directional networks
     if (options.arrows) {
         svg.append("defs").selectAll("marker")
-.data(["suit", "licensing", "resolved"])
+          .data(["suit", "licensing", "resolved"])
           .enter().append("marker")
             .attr("id", function(d) { return d; })
             .attr("viewBox", "0 -5 10 10")
@@ -244,7 +254,7 @@ HTMLWidgets.widget({
           .append("path")
             .attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5")
             .style("stroke", "#4679BD")
-            .style("opacity", "0.6");
+            .style("opacity", options.opacity);
     }
   },
 });
