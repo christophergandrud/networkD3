@@ -2,9 +2,12 @@
 
 ## Version 0.2.9
 
+- `arrows` argument added to `forceNetwork` to show directional link
+arrows.
+
 - `forceNetwork` now allows you to supply a vector of colours to the
 `linkColour`argument. This enables the user to highlight links to specific
-nodes. Thanks to Garth Tarr. 
+nodes. Thanks to Garth Tarr.
 
 - Minor documentation improvements.
 

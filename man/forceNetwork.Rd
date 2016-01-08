@@ -89,6 +89,8 @@ zooming.}
 
 \item{legend}{logical value to enable node colour legends.}
 
+\item{arrows}{logical value to enable directional link arrows.}
+
 \item{bounded}{logical value to enable (\code{TRUE}) or disable
 (\code{FALSE}) the bounding box limiting the graph's extent. See
 \url{http://bl.ocks.org/mbostock/1129492}.}

@@ -49,6 +49,7 @@
 #' @param zoom logical value to enable (\code{TRUE}) or disable (\code{FALSE})
 #' zooming.
 #' @param legend logical value to enable node colour legends.
+#' @param arrows logical value to enable directional link arrows.
 #' @param bounded logical value to enable (\code{TRUE}) or disable
 #' (\code{FALSE}) the bounding box limiting the graph's extent. See
 #' \url{http://bl.ocks.org/mbostock/1129492}.
