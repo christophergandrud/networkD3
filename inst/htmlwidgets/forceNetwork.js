@@ -26,10 +26,10 @@ HTMLWidgets.widget({
 
   // Compute the node radius  using the javascript math expression specified
     function nodeSize(d) {
-            if(options.nodesize){
+            if (options.nodesize) {
                     return eval(options.radiusCalculation);
 
-            }else{
+            } else {
                     return 6}
 
     }
@@ -97,42 +97,35 @@ HTMLWidgets.widget({
       zoom.on("zoom", null);
     }
 
-    // define arrows for directional networks
-    if(options.arrows) {
-        svg.append("svg:defs").selectAll("marker")
-          .data(force.links())      // Different link/path types can be defined here
-          .enter().append("svg:marker")    // This section adds in the arrows
-            .attr("id", String)
-            .attr("viewBox", "0 -5 10 10")
-            .attr("refX", 15)
-            .attr("refY", -1.5)
-            .attr("markerWidth", 6)
-            .attr("markerHeight", 6)
-            .attr("orient", "auto")
-            .append("svg:path")
-            .attr("d", "M0,-5L10,0L0,5");
+    if (options.arrows) {
+    // draw links with arrows
+    var link = svg.selectAll(".link")
+        .data(force.links())
+        .enter().append("line")
+        .attr("class", "link")
+        .style("marker-end",  "url(#suit)") // Modified line
     }
 
-    // draw links
-    var link = svg.selectAll(".link")
-      .data(force.links())
-      .enter().append("line")
-      .attr("class", "link")
-      .style("stroke", function(d) { return d.colour ; })
-      //.style("stroke", options.linkColour)
-      .style("opacity", options.opacity)
-      .style("stroke-width", eval("(" + options.linkWidth + ")"))
-      .on("mouseover", function(d) {
-          d3.select(this)
-            .style("opacity", 1);
-      })
-      .on("mouseout", function(d) {
-          d3.select(this)
-            .style("opacity", options.opacity);
-      })
-      if(options.arrows) {
-        .attr("marker-end", "url(#end)")
-      };
+    else {
+      // draw links without arrows
+      var link = svg.selectAll(".link")
+        .data(force.links())
+        .enter().append("line")
+        .attr("class", "link")
+        .style("stroke", function(d) { return d.colour ; })
+        //.style("stroke", options.linkColour)
+        .style("opacity", options.opacity)
+        .style("stroke-width", eval("(" + options.linkWidth + ")"))
+        // if (options.arrows) {.attr("marker-end", "url(#end)")}
+        .on("mouseover", function(d) {
+            d3.select(this)
+              .style("opacity", 1);
+        })
+        .on("mouseout", function(d) {
+            d3.select(this)
+              .style("opacity", options.opacity)
+        });
+    }
 
     // draw nodes
     var node = svg.selectAll(".node")
@@ -235,5 +228,23 @@ HTMLWidgets.widget({
 
     // make font-family consistent across all elements
     d3.select(el).selectAll('text').style('font-family', options.fontFamily);
+
+    // define arrows for directional networks
+    if (options.arrows) {
+        svg.append("defs").selectAll("marker")
+.data(["suit", "licensing", "resolved"])
+          .enter().append("marker")
+            .attr("id", function(d) { return d; })
+            .attr("viewBox", "0 -5 10 10")
+            .attr("refX", 25)
+            .attr("refY", 0)
+            .attr("markerWidth", 6)
+            .attr("markerHeight", 6)
+            .attr("orient", "auto")
+          .append("path")
+            .attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5")
+            .style("stroke", "#4679BD")
+            .style("opacity", "0.6");
+    }
   },
 });
