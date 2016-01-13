@@ -34,7 +34,7 @@ grouping variable is allowed.}
 frame for how far away the nodes are from one another.}
 
 \item{NodeID}{character string specifying the node IDs in the \code{Nodes}.
-data frame.}
+data frame. Must be 0-indexed.}
 
 \item{NodeGroup}{character string specifying the node groups in the
 \code{Nodes}. Used to color the nodes in the network.}
