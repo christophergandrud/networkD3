@@ -15,7 +15,7 @@
 #' @param Value character string naming the variable in the \code{Links} data
 #' frame for how far away the nodes are from one another.
 #' @param NodeID character string specifying the node IDs in the \code{Nodes}.
-#' data frame.
+#' data frame. Must be 0-indexed.
 #' @param NodeGroup character string specifying the node groups in the
 #' \code{Nodes}. Used to color the nodes in the network.
 #' @param LinkGroup character string specifying the groups in the
