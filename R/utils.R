@@ -113,7 +113,35 @@ margin_handler <- function(margin){
 #' @return A list of link and node data frames or only the link or node data 
 #' frames.
 #' 
-#' @importFrom igraph V as_data_frame
+#' @examples 
+#' \dontrun{
+#' # Load igraph
+#' library(igraph)
+#' 
+#' # Load data
+#' ## Original data from http://results.ref.ac.uk/DownloadSubmissions/ByUoa/21
+#' data('SchoolsJournals')
+#' 
+#' # Convert to igraph
+#' SchoolsJournals <- graph.data.frame(SchoolsJournals, directed = FALSE)
+#' 
+#' # Remove duplicate edges
+#' SchoolsJournals <- simplify(SchoolsJournals)
+#' 
+#' # Find group membership
+#' wt <- cluster_walktrap(SchoolsJournals, steps = 6)
+#' members <- membership(wt)
+#' 
+#' # Convert igraph to list for networkD3
+#' sj_list <- igraph_to_networkD3(SchoolsJournals, group = members)
+#' 
+#' # Plot as a forceDirected Network
+#' forceNetwork(Links = sj_list$links, Nodes = sj_list$nodes, Source = 'source', 
+#'              Target = 'target', NodeID = 'name', Group = 'group', 
+#'              zoom = TRUE, linkDistance = 200)
+#' }
+#' 
+#' @importFrom igraph V as_data_frame graph.data.frame simplify cluster_walktrap membership
 #' @importFrom magrittr %>%
 #' @export
 
