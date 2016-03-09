@@ -98,3 +98,65 @@ margin_handler <- function(margin){
     margin <- list(top = NULL, right = NULL, bottom = NULL, left = NULL)
   } 
 }
+
+
+#' Function to convert igraph graph to a list suitable for networkD3
+#' 
+#' @param g an \code{igraph} class graph object
+#' @param group an object that contains node group values, for example, those
+#' created with igraph's \code{\link{membership}} function.
+#' @param what a character string specifying what to return. If 
+#' \code{what = 'links'} or \code{what = 'nodes'} only the links or nodes are 
+#' returned as data frames, respectively. If \code{what = 'both'} then both 
+#' data frames will be return in a list. 
+#' 
+#' @return A list of link and node data frames or only the link or node data 
+#' frames.
+#' 
+#' @importFrom igraph V as_data_frame
+#' @importFrom magrittr %>%
+#' @export
+
+igraph_to_networkD3 <- function(g, group, what = 'both') {
+    # Sanity check
+    if (!('igraph' %in% class(g))) stop('g must be an igraph class object.',
+                                      call. = FALSE)
+    if (!(what %in% c('both', 'links', 'nodes'))) stop('what must be either "nodes", "links", or "both".',
+                                                     call. = FALSE)
+  
+    # Extract vertices (nodes)
+    temp_nodes <- V(g) %>% as.matrix %>% data.frame
+    temp_nodes$name <- row.names(temp_nodes)
+    names(temp_nodes) <- c('id', 'name')
+  
+    # Convert to base 0 (for JavaScript)
+    temp_nodes$id <- temp_nodes$id - 1
+  
+    # Nodes for output
+    nodes <- temp_nodes$name %>% data.frame %>% setNames('name')
+    # Include grouping variable if applicable
+    if (!missing(group)) {
+      group <- as.matrix(group)
+      if (nrow(nodes) != nrow(group)) stop('group must have the same number of rows as the number of nodes in g.',
+                                          call. = FALSE)
+      nodes <- cbind(nodes, group)
+    }
+    row.names(nodes) <- NULL
+
+    # Convert links from names to numbers 
+    links <- as_data_frame(g, what = 'edges')
+    links <- merge(links, temp_nodes, by.x = 'from', by.y = 'name')
+    links <- merge(links, temp_nodes, by.x = 'to', by.y = 'name')
+    links <- links[, c('id.x', 'id.y')] %>% setNames(c('source', 'target'))
+  
+    # Output requested object
+    if (what == 'both') {
+      return(list(links = links, nodes = nodes))
+    }
+    else if (what == 'links') {
+      return(links)
+    }
+    else if (what == 'nodes') {
+      return(nodes)
+    }
+}
