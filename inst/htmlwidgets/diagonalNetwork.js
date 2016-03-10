@@ -78,7 +78,7 @@ HTMLWidgets.widget({
       .data(links)
       .enter().append("path")
       .style("fill", "none")
-      .style("stroke", "#ccc")
+      .style("stroke", x.options.linkColour)
       .style("opacity", "0.55")
       .style("stroke-width", "1.5px")
       .attr("d", diagonal);
