@@ -50,9 +50,11 @@ HTMLWidgets.widget({
     // create links associative array from nodes
     var links = Array(tmp.length);
     for (var i = 0; i < tmp.length; i++) {
-        // s = {"x" : nodes[tmp[i].source].Nodeaxis, "y" : nodes[tmp[i].source].Noderadius};
-        // t = {"x" : nodes[tmp[i].target].Nodeaxis, "y" : nodes[tmp[i].target].Noderadius};
-        links[i] = { "source" : nodes[tmp[i].source], "target" : nodes[tmp[i].target] };
+        links[i] = { "source" : nodes[tmp[i].source], 
+                     "target" : nodes[tmp[i].target], 
+                     "Linksize" : tmp[i].Linksize,
+                     "Linkcolour" : tmp[i].Linkcolour 
+        };
     }
     
     // map elements
