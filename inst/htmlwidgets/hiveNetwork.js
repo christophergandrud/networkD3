@@ -93,7 +93,7 @@ HTMLWidgets.widget({
           d3.select(this)
             .transition()
             .duration(50)
-            //.style("stroke-width", 3)
+            .style("stroke-width", 3)
             .attr("r", 10)
           
           d3.selectAll(".link")
@@ -122,7 +122,7 @@ HTMLWidgets.widget({
             d3.select(this)
               .transition()
               .duration(50)
-              //.style("stroke-width", 1.5)
+              .style("stroke-width", 1.5)
               .attr("r", 5)
             
             d3.selectAll(".link")
