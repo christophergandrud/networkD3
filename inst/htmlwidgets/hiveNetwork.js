@@ -75,8 +75,8 @@ HTMLWidgets.widget({
         .attr("d", d3.hive.link()
         .angle(function(d) { return angle(d.x); })
         .radius(function(d) { return radius(d.y); }))
-        // .style("stroke", function(d) { return color(d.target.x); })
-        .style("stroke", "#000")
+        .style("stroke", function(d) { return color(d.target.x); })
+        // .style("stroke", "#000")
         .style('stroke-width', '0.5px')
         .style("fill", "none");
         
@@ -107,6 +107,7 @@ HTMLWidgets.widget({
                   return 0.5;
                 }
             })
+            /*
             .style("stroke", function (dl) {
                 if(dl.source == d){
                   return color(d.x);
@@ -116,6 +117,7 @@ HTMLWidgets.widget({
                   return "#000";
                 }
             });
+            */
         })
         .on("mouseleave", function(d){
             d3.select(this)
@@ -126,7 +128,7 @@ HTMLWidgets.widget({
             
             d3.selectAll(".link")
               .style("stroke-width", 0.5)
-              .style("stroke", "#000")
+              // .style("stroke", "#000")
         });
   },
 });
