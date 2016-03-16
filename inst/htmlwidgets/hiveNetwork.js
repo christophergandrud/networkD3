@@ -75,7 +75,7 @@ HTMLWidgets.widget({
         .attr("d", d3.hive.link()
         .angle(function(d) { return angle(d.x); })
         .radius(function(d) { return radius(d.y); }))
-        .style("stroke", function(d) { return color(d.target.x); })
+        .style("stroke", function(d) { return color(d.source.x); })
         // .style("stroke", "#000")
         .style('stroke-width', '0.5px')
         .style("fill", "none");
