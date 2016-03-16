@@ -86,17 +86,15 @@ HTMLWidgets.widget({
         .attr("class", "node")
         .attr("transform", function(d) { return "rotate(" + degrees(angle(d.x)) + ")"; })
         .attr("cx", function(d) { return radius(d.y); })
-        .attr("r", 5)
         .style("fill", function(d) { return color(d.x); })
+        .attr("r", function(d) { return d.Nodesize; })
         .style("stroke", '#000')
-        .style("fill", function(d) { return color(d.Nodecolour); })
-        
         .on("mouseenter", function(d) {
           d3.select(this)
             .transition()
             .duration(50)
             .style("stroke-width", 3)
-            .attr("r", 10)
+            .attr("r", 15)
           
           d3.selectAll(".link")
             .data(links)
@@ -119,13 +117,12 @@ HTMLWidgets.widget({
                 }
             });
         })
-        
-        .on("mouseleave", function(){
+        .on("mouseleave", function(d){
             d3.select(this)
               .transition()
               .duration(50)
               .style("stroke-width", 1.5)
-              .attr("r", 5)
+              .attr("r", function(d) { return d.Nodesize; })
             
             d3.selectAll(".link")
               .style("stroke-width", 0.5)
