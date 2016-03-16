@@ -44,15 +44,15 @@ HTMLWidgets.widget({
     // var options = x.options;
 
     // convert links and nodes data frames to d3 friendly format
-    var links = HTMLWidgets.dataframeToD3(x.links);
+    var tmp = HTMLWidgets.dataframeToD3(x.links);
     var nodes = HTMLWidgets.dataframeToD3(x.nodes);
-
+    
     // create links associative array from nodes
-    var linkmap = Array(links.length);
-    for (var i = 0; i < links.length; i++) {
-        s = {"x" : nodes[links[i].source].Nodeaxis, "y" : nodes[links[i].source].Noderadius};
-        t = {"x" : nodes[links[i].target].Nodeaxis, "y" : nodes[links[i].target].Noderadius};
-        linkmap[i] = { "source" : s, "target" : t};
+    var links = Array(tmp.length);
+    for (var i = 0; i < tmp.length; i++) {
+        // s = {"x" : nodes[tmp[i].source].Nodeaxis, "y" : nodes[tmp[i].source].Noderadius};
+        // t = {"x" : nodes[tmp[i].target].Nodeaxis, "y" : nodes[tmp[i].target].Noderadius};
+        links[i] = { "source" : nodes[tmp[i].source], "target" : nodes[tmp[i].target] };
     }
     
     // map elements
@@ -67,8 +67,7 @@ HTMLWidgets.widget({
         .style('stroke-width', '2px');
 
     svg.selectAll(".link")
-        // .data(links)
-        .data(linkmap)
+        .data(links)
         .enter().append("path")
         .attr("class", "link")
         .attr("d", d3.hive.link()
@@ -83,40 +82,52 @@ HTMLWidgets.widget({
         .data(nodes)
         .enter().append("circle")
         .attr("class", "node")
-        //.attr("transform", function(d) { return "rotate(" + degrees(angle(d.x)) + ")"; })
-        //.attr("cx", function(d) { return radius(d.y); })
-        //.attr("r", 5)
-        //.style("fill", function(d) { return color(d.x); })
+        .attr("transform", function(d) { return "rotate(" + degrees(angle(d.x)) + ")"; })
+        .attr("cx", function(d) { return radius(d.y); })
+        .attr("r", 5)
+        .style("fill", function(d) { return color(d.x); })
         .style("stroke", '#000')
-        .style('stroke-width', '2px')
-        .attr("transform", function(d) { return "rotate(" + degrees(angle(d.Nodeaxis)) + ")"; })
-        .attr("cx", function(d) { return radius(d.Noderadius); })
-        .attr("r", function(d) { return d.Nodesize; })
         .style("fill", function(d) { return color(d.Nodecolour); })
         
-        .on("mouseover", function(d) {
+        .on("mouseenter", function(d) {
           d3.select(this)
             .transition()
-            .duration(150)
-            .style("stroke-width", 3)
+            .duration(50)
+            //.style("stroke-width", 3)
+            .attr("r", 10)
           
           d3.selectAll(".link")
-            .data(linkmap)
+            .data(links)
             .style("stroke-width", function (dl) {
-                console.log(d);
-                if(dl.source == d || dl.target == d){
-                    console.log(dl);
-                    return 5;
+                if(dl.source == d){
+                  return 5;
+                } else if(dl.target == d){
+                  return 5;
+                } else {
+                  return 0.5;
+                }
+            })
+            .style("stroke", function (dl) {
+                if(dl.source == d){
+                  return color(d.x);
+                } else if(dl.target == d){
+                  return color(d.x);
+                } else {
+                  return "#000";
                 }
             });
         })
         
-        .on("mouseout", function(){
+        .on("mouseleave", function(){
             d3.select(this)
-              .style("stroke-width", 1.5)
+              .transition()
+              .duration(50)
+              //.style("stroke-width", 1.5)
+              .attr("r", 5)
             
             d3.selectAll(".link")
-              .style("stroke-width", 1.5)
+              .style("stroke-width", 0.5)
+              .style("stroke", "#000")
         });
   },
 });
