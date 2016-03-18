@@ -7,8 +7,8 @@ HTMLWidgets.widget({
   initialize: function(el, width, height) {
 
     var svg = d3.select(el).append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("viewBox", "0 0 1500 1500")
+        .attr("preserveAspectRatio", "xMidYMid meet")
         .append("g")
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -16,11 +16,7 @@ HTMLWidgets.widget({
   },
 
   resize: function(el, width, height, instance) {
-
-    //d3.select(el).select("svg")
-    //    .attr("width", width)
-    //    .attr("height", height + height * 0.05);
-    //this.renderValue(el, instance.x, instance);
+    // handle with viewBox
   },
 
   renderValue: function(el, x, svg) {
