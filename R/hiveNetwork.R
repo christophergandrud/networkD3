@@ -5,58 +5,70 @@
 #' 2. Limit to ? axis?
 #' 
 #' @export
-hiveNetwork <- function(Links,
-                        Nodes,
-                        Source = NULL,
-                        Target = NULL,
-                        NodeID = NULL,
-                        Nodeaxis = NULL,
-                        Nodesize = NULL,
-                        Nodecolour = NULL,
-                        Linksize = NULL,
-                        Linkcolour = NULL,
+hiveNetwork <- function(nodes,
+                        links,
+                        source = NULL,
+                        target = NULL,
+                        linksize = NULL,
+                        linkcolour = NULL,
+                        nodeID = NULL,
+                        x = NULL,
+                        y = NULL,
+                        nodesize = NULL,
+                        nodecolour = NULL,
                         height = NULL,
                         width = NULL)
 {
   
   # some checks ----
-  if (!is.data.frame(Links))
+  if (!is.data.frame(links))
     stop("Links must be a data frame class object.")
   
-  if (!is.data.frame(Nodes))
+  if (!is.data.frame(nodes))
     stop("Nodes must be a data frame class object.")
   
-  # if (missing(Value)) {
-  #   LinksDF <- data.frame("source" = Links[, Source],
-  #                         "target" = Links[, Target])
-  # }
-  # else if (!missing(Value)) {
-  #   LinksDF <- data.frame("source" = Links[, Source], 
-  #                         "target" = Links[, Target], 
-  #                         "value" = Links[, Value])
-  # }
-  # 
-  # if (!missing(Nodesize)) {
-  #   NodesDF <- data.frame("name" = Nodes[, NodeID],
-  #                         "group" = Nodes[, Group], 
-  #                         "nodesize" = Nodes[, Nodesize])
-  #   nodesize = TRUE
-  # }else {
-  #   NodesDF <- data.frame("name" = Nodes[, NodeID], 
-  #                         "group" = Nodes[, Group])
-  #   nodesize = FALSE
-  # }
+  # helper - rescale attributes to play nice with axis
+  .rescale <- function(x) (x - min(x))/(max(x) - min(x))
   
-  NodesDF <- data.frame(Nodes, stringsAsFactors = F)
-  LinksDF <- data.frame(Links, stringsAsFactors = F)
+  # axis binding
+  if (is.null(nodes$x)) {
+    indeces <- 1:nrow(nodes) - 1
+    indeces <- cbind( indeces %in% links$source & !indeces %in% links$target,
+                      indeces %in% links$source &  indeces %in% links$target,
+                     !indeces %in% links$source &  indeces %in% links$target)
+    nodes$x <- apply(indeces, 1, which)
+  }
+  
+  # radius binding
+  nodes$y <- .rescale(nodes$y)
+  
+  # node size binding
+  if (is.null(nodes$nodesize)) {
+    nodes$nodesize <- 5
+  }
 
+  # node size binding
+  if (is.null(nodes$nodecolour)) {
+    nodes$nodecolour <- nodes$x
+  }
+  
+  # link size binding
+  if (is.null(links$linksize)) {
+    links$linksize <- 0.5
+  }
+  
+  # link colour binding
+  if (is.null(links$linkcolour)) {
+    links$linkcolour <- links$source
+  }
+  
   # create options ----
-  options = list(nlinks = nrow(LinksDF))
+  options = list()
   
   # create widget
   htmlwidgets::createWidget(
     name = "hiveNetwork",
-    x = list(links = LinksDF, nodes = NodesDF, options = options),
+    x = list(links = links, nodes = nodes, options = options),
     width = width,
     height = height,
     htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE),

@@ -44,8 +44,8 @@ HTMLWidgets.widget({
     // var options = x.options;
 
     // convert links and nodes data frames to d3 friendly format
-    var tmp = HTMLWidgets.dataframeToD3(x.links);
     var nodes = HTMLWidgets.dataframeToD3(x.nodes);
+    var tmp = HTMLWidgets.dataframeToD3(x.links);
     
     // create links associative array from nodes
     var links = Array(tmp.length);
@@ -87,14 +87,14 @@ HTMLWidgets.widget({
         .attr("transform", function(d) { return "rotate(" + degrees(angle(d.x)) + ")"; })
         .attr("cx", function(d) { return radius(d.y); })
         .style("fill", function(d) { return color(d.x); })
-        .attr("r", function(d) { return d.Nodesize; })
+        .attr("r", function(d) { return d.nodesize; })
         .style("stroke", '#000')
         .on("mouseenter", function(d) {
           d3.select(this)
             .transition()
             .duration(50)
             .style("stroke-width", 3)
-            .attr("r", 15)
+            .attr("r", 15);
           
           d3.selectAll(".link")
             .data(links)
@@ -106,7 +106,7 @@ HTMLWidgets.widget({
                 } else {
                   return 0.5;
                 }
-            })
+            });
             /*
             .style("stroke", function (dl) {
                 if(dl.source == d){
@@ -124,10 +124,10 @@ HTMLWidgets.widget({
               .transition()
               .duration(50)
               .style("stroke-width", 1.5)
-              .attr("r", function(d) { return d.Nodesize; })
+              .attr("r", function(d) { return d.nodesize; });
             
             d3.selectAll(".link")
-              .style("stroke-width", 0.5)
+              .style("stroke-width", 0.5);
               // .style("stroke", "#000")
         });
   },
