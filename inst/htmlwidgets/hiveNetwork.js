@@ -7,7 +7,7 @@ HTMLWidgets.widget({
   initialize: function(el, width, height) {
 
     var svg = d3.select(el).append("svg")
-        .attr("viewBox", "0 0 1500 1500")
+        .attr("viewBox", "0 0 " + width + " " + height)
         .attr("preserveAspectRatio", "xMidYMid meet")
         .append("g")
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
