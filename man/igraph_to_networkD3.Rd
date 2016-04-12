@@ -36,7 +36,7 @@ members <- membership(wc)
 # Convert to object suitable for networkD3
 karate_d3 <- igraph_to_networkD3(karate, group = members)
 
-# Create force directed graph
+# Create force directed network plot
 forceNetwork(Links = karate_d3$links, Nodes = karate_d3$nodes, 
              Source = 'source', Target = 'target', NodeID = 'name', 
              Group = 'group')
