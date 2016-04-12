@@ -12,23 +12,37 @@ igraph_to_networkD3(g, group, what = "both")
 \item{group}{an object that contains node group values, for example, those
 created with igraph's \code{\link{membership}} function.}
 
-\item{what}{a character string specifying what to return. If 
-\code{what = 'links'} or \code{what = 'nodes'} only the links or nodes are 
-returned as data frames, respectively. If \code{what = 'both'} then both 
+\item{what}{a character string specifying what to return. If
+\code{what = 'links'} or \code{what = 'nodes'} only the links or nodes are
+returned as data frames, respectively. If \code{what = 'both'} then both
 data frames will be return in a list.}
 }
 \value{
-A list of link and node data frames or only the link or node data 
+A list of link and node data frames or only the link or node data
 frames.
 }
 \description{
 Function to convert igraph graph to a list suitable for networkD3
 }
 \examples{
-\dontrun{
 # Load igraph
 library(igraph)
 
+# Use igraph to make the graph and find membership
+karate <- make_graph("Zachary")
+wc <- cluster_walktrap(karate)
+members <- membership(wc)
+
+# Convert to object suitable for networkD3
+karate_d3 <- igraph_to_networkD3(karate, group = members)
+
+# Create force directed graph
+forceNetwork(Links = karate_d3$links, Nodes = karate_d3$nodes, 
+             Source = 'source', Target = 'target', NodeID = 'name', 
+             Group = 'group')
+
+\dontrun{
+# Example with data from data frame
 # Load data
 ## Original data from http://results.ref.ac.uk/DownloadSubmissions/ByUoa/21
 data('SchoolsJournals')
@@ -47,8 +61,8 @@ members <- membership(wt)
 sj_list <- igraph_to_networkD3(SchoolsJournals, group = members)
 
 # Plot as a forceDirected Network
-forceNetwork(Links = sj_list$links, Nodes = sj_list$nodes, Source = 'source', 
-             Target = 'target', NodeID = 'name', Group = 'group', 
+forceNetwork(Links = sj_list$links, Nodes = sj_list$nodes, Source = 'source',
+             Target = 'target', NodeID = 'name', Group = 'group',
              zoom = TRUE, linkDistance = 200)
 }
 

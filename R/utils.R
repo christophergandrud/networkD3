@@ -66,7 +66,7 @@ read_file <- function(doc, ...){
 #'    or a named \code{list} of integers specifying the margins
 #'    (top, right, bottom, and left)
 #'    in \code{px}/\code{pixels} for our htmlwidget.  If only a single
-#'    \code{integer} is provided, then the value will be assumed to be 
+#'    \code{integer} is provided, then the value will be assumed to be
 #'    the \code{right} margin.
 #' @return named \code{list} with top, right, bottom, left margins
 #' @noRd
@@ -96,51 +96,65 @@ margin_handler <- function(margin){
   } else {
     # if margin is null, then make it a list of nulls for each position
     margin <- list(top = NULL, right = NULL, bottom = NULL, left = NULL)
-  } 
+  }
 }
 
 
 #' Function to convert igraph graph to a list suitable for networkD3
-#' 
+#'
 #' @param g an \code{igraph} class graph object
 #' @param group an object that contains node group values, for example, those
 #' created with igraph's \code{\link{membership}} function.
-#' @param what a character string specifying what to return. If 
-#' \code{what = 'links'} or \code{what = 'nodes'} only the links or nodes are 
-#' returned as data frames, respectively. If \code{what = 'both'} then both 
-#' data frames will be return in a list. 
-#' 
-#' @return A list of link and node data frames or only the link or node data 
+#' @param what a character string specifying what to return. If
+#' \code{what = 'links'} or \code{what = 'nodes'} only the links or nodes are
+#' returned as data frames, respectively. If \code{what = 'both'} then both
+#' data frames will be return in a list.
+#'
+#' @return A list of link and node data frames or only the link or node data
 #' frames.
-#' 
-#' @examples 
-#' \dontrun{
+#'
+#' @examples
 #' # Load igraph
 #' library(igraph)
 #' 
+#' # Use igraph to make the graph and find membership
+#' karate <- make_graph("Zachary")
+#' wc <- cluster_walktrap(karate)
+#' members <- membership(wc)
+#' 
+#' # Convert to object suitable for networkD3
+#' karate_d3 <- igraph_to_networkD3(karate, group = members)
+#' 
+#' # Create force directed graph
+#' forceNetwork(Links = karate_d3$links, Nodes = karate_d3$nodes, 
+#'              Source = 'source', Target = 'target', NodeID = 'name', 
+#'              Group = 'group')
+#' 
+#' \dontrun{
+#' # Example with data from data frame
 #' # Load data
 #' ## Original data from http://results.ref.ac.uk/DownloadSubmissions/ByUoa/21
 #' data('SchoolsJournals')
-#' 
+#'
 #' # Convert to igraph
 #' SchoolsJournals <- graph.data.frame(SchoolsJournals, directed = FALSE)
-#' 
+#'
 #' # Remove duplicate edges
 #' SchoolsJournals <- simplify(SchoolsJournals)
-#' 
+#'
 #' # Find group membership
 #' wt <- cluster_walktrap(SchoolsJournals, steps = 6)
 #' members <- membership(wt)
-#' 
+#'
 #' # Convert igraph to list for networkD3
 #' sj_list <- igraph_to_networkD3(SchoolsJournals, group = members)
-#' 
+#'
 #' # Plot as a forceDirected Network
-#' forceNetwork(Links = sj_list$links, Nodes = sj_list$nodes, Source = 'source', 
-#'              Target = 'target', NodeID = 'name', Group = 'group', 
+#' forceNetwork(Links = sj_list$links, Nodes = sj_list$nodes, Source = 'source',
+#'              Target = 'target', NodeID = 'name', Group = 'group',
 #'              zoom = TRUE, linkDistance = 200)
 #' }
-#' 
+#'
 #' @importFrom igraph V as_data_frame graph.data.frame simplify cluster_walktrap membership
 #' @importFrom magrittr %>%
 #' @export
@@ -151,15 +165,15 @@ igraph_to_networkD3 <- function(g, group, what = 'both') {
                                       call. = FALSE)
     if (!(what %in% c('both', 'links', 'nodes'))) stop('what must be either "nodes", "links", or "both".',
                                                      call. = FALSE)
-  
+
     # Extract vertices (nodes)
     temp_nodes <- V(g) %>% as.matrix %>% data.frame
     temp_nodes$name <- row.names(temp_nodes)
     names(temp_nodes) <- c('id', 'name')
-  
+
     # Convert to base 0 (for JavaScript)
     temp_nodes$id <- temp_nodes$id - 1
-  
+
     # Nodes for output
     nodes <- temp_nodes$name %>% data.frame %>% setNames('name')
     # Include grouping variable if applicable
@@ -171,12 +185,12 @@ igraph_to_networkD3 <- function(g, group, what = 'both') {
     }
     row.names(nodes) <- NULL
 
-    # Convert links from names to numbers 
+    # Convert links from names to numbers
     links <- as_data_frame(g, what = 'edges')
     links <- merge(links, temp_nodes, by.x = 'from', by.y = 'name')
     links <- merge(links, temp_nodes, by.x = 'to', by.y = 'name')
     links <- links[, c('id.x', 'id.y')] %>% setNames(c('source', 'target'))
-  
+
     # Output requested object
     if (what == 'both') {
       return(list(links = links, nodes = nodes))
