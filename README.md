@@ -51,6 +51,27 @@ sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              units = "TWh", fontSize = 12, nodeWidth = 30)
 ```
+### Interacting with igraph
+
+You can use [igraph](http://igraph.org/r/) to create network graph data that can be plotted with **networkD3**. The `igraph_to_networkD3` function converts igraph graphs to lists that work well with **networkD3**. For example:
+
+```R
+# Load igraph
+library(igraph)
+
+# Use igraph to make the graph and find membership
+karate <- make_graph("Zachary")
+wc <- cluster_walktrap(karate)
+members <- membership(wc)
+
+# Convert to object suitable for networkD3
+karate_d3 <- igraph_to_networkD3(karate, group = members)
+
+# Create force directed graph
+forceNetwork(Links = karate_d3$links, Nodes = karate_d3$nodes, 
+             Source = 'source', Target = 'target', NodeID = 'name', 
+             Group = 'group')
+```
 
 ### Saving to an external file
 
