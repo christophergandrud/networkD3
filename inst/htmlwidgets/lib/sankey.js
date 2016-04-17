@@ -235,7 +235,17 @@ d3.sankey = function() {
     nodes.forEach(function(node) {
       if (!node.sourceLinks.length) {
         node.x = x - 1;
+      } else {
+        //move node to second from right 
+        var nodes_to_right = 0;
+        node.sourceLinks.forEach(function(n) {
+          nodes_to_right = Math.max(nodes_to_right,n.target.sourceLinks.length)
+          //console.log(node.name,n)
+        })
+         //console.log(node.name,nodes_to_right)
+         if (nodes_to_right==0)node.x = x - 2;
       }
+      
     });
   }
 
