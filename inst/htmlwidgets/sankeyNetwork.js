@@ -148,8 +148,15 @@ HTMLWidgets.widget({
             .call(d3.behavior.drag()
             .origin(function(d) { return d; })
             .on("dragstart", function() { this.parentNode.appendChild(this); })
-            .on("drag", dragmove));
-
+            .on("drag", dragmove))
+            .on("mouseover", function(d) {
+                link.filter(function(d1, i) { return d.targetLinks.includes(d1) | d.sourceLinks.includes(d1); })
+                 .style("stroke-opacity", function(d){return opacity_link(d) + 0.3});
+            })
+            .on("mouseout", function(d) {
+                link.filter(function(d1, i) { return d.targetLinks.includes(d1) | d.sourceLinks.includes(d1); })
+                .style("stroke-opacity", opacity_link);
+            });
         // note: u2192 is right-arrow
         link.append("title")
             .text(function(d) { return d.source.name + " \u2192 " + d.target.name +
