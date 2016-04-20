@@ -36,7 +36,10 @@
 #' to accomodate long text labels.
 #' @param height numeric height for the network graph's frame area in pixels.
 #' @param width numeric width for the network graph's frame area in pixels.
-#'
+#' @param iterations numeric number of iterations in de diagramm layout for 
+#' computation of the depth (y-position) for each node. This runs in the 
+#' browser on the client so don't push it too high.
+#' #'
 #' @examples
 #' \dontrun{
 #' # Recreate Bostock Sankey diagram: http://bost.ocks.org/mike/sankey/
