@@ -1,8 +1,13 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.2.11
+
+- Added the `iterations` argument to `sankeyNetwork`, which adjusts the y-axis
+positioning. Thanks to @giko45.
+
 ## Version 0.2.10
 
--Added the function `igraph_to_networkD3` to convert an `igraph` class object
+- Added the function `igraph_to_networkD3` to convert an `igraph` class object
 to a list that can be used with networkD3.
 
 - Fixed a bug where `linkColour` was not actually passed to the widget for

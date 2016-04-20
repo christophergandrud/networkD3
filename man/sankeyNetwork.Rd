@@ -11,7 +11,7 @@ specifically for Sankey diagrams \url{http://bost.ocks.org/mike/sankey/}.
 sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, NodeGroup = NodeID,
   LinkGroup = NULL, units = "", colourScale = JS("d3.scale.category20()"),
   fontSize = 7, fontFamily = NULL, nodeWidth = 15, nodePadding = 10,
-  margin = NULL, height = NULL, width = NULL)
+  margin = NULL, height = NULL, width = NULL, iterations = 32)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -66,6 +66,10 @@ to accomodate long text labels.}
 \item{height}{numeric height for the network graph's frame area in pixels.}
 
 \item{width}{numeric width for the network graph's frame area in pixels.}
+
+\item{iterations}{numeric. Number of iterations in the diagramm layout for 
+computation of the depth (y-position) of each node. Note: this runs in the 
+browser on the client so don't push it too high.}
 }
 \description{
 Create a D3 JavaScript Sankey diagram
