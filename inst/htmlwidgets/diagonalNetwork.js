@@ -36,6 +36,11 @@ HTMLWidgets.widget({
     // JSON array with the d3Tree root data
 
     var s = d3.select(el).selectAll("svg");
+   
+    // when re-rendering the svg, the viewBox attribute set in the code below, will
+    // be affected by the previously set viewBox. This line ensures, that the 
+    // viewBox will always be calculated right. 
+    s.attr("viewBox", null);
     
     // margin handling
     //   set our default margin to be 20
@@ -56,8 +61,9 @@ HTMLWidgets.widget({
     width = s.node().getBoundingClientRect().width - margin.right - margin.left;
     height = s.node().getBoundingClientRect().height - margin.top - margin.bottom;
     
+    //added Math.max(1, ...) to avoid NaN values when dealing with nodes of depth 0.
     tree.size([height, width])
-      .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+      .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / Math.max(1, a.depth); });
 
     // select the svg group element and remove existing children
     s.attr("pointer-events", "all").selectAll("*").remove();
