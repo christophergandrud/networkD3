@@ -2,6 +2,11 @@
 
 ## Version 0.2.11
 
+- Bug fix for `diagonalNetwork` when using hierarchical lists with singular
+connections. Thanks to @RohdeK. 
+
+- Fix viewbox position when rerendered in shiny. Thanks to @RohdeK.
+
 - Added the `iterations` argument to `sankeyNetwork`, which adjusts the y-axis
 positioning. Thanks to @giko45.
 
