@@ -96,7 +96,8 @@ HTMLWidgets.widget({
             .size([width, height])
             .nodeWidth(options.nodeWidth)
             .nodePadding(options.nodePadding)
-            .layout(options.iterations);
+            .layout(options.iterations)
+            .sinksRight(options.sinksRight);
 
         // select the svg element and remove existing children
         d3.select(el).select("svg").selectAll("*").remove();
