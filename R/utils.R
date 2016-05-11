@@ -189,7 +189,11 @@ igraph_to_networkD3 <- function(g, group, what = 'both') {
     links <- as_data_frame(g, what = 'edges')
     links <- merge(links, temp_nodes, by.x = 'from', by.y = 'name')
     links <- merge(links, temp_nodes, by.x = 'to', by.y = 'name')
-    links <- links[, c('id.x', 'id.y')] %>% setNames(c('source', 'target'))
+    if (ncol(links) == 5) {
+        links <- links[, c('id.x', 'id.y', 'value')] %>% setNames(c('source', 'target', 'value'))
+    else {
+        links <- links[, c('id.x', 'id.y')] %>% setNames(c('source', 'target'))
+    }
 
     # Output requested object
     if (what == 'both') {
