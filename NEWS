@@ -2,6 +2,9 @@
 
 ## Version 0.2.11
 
+- Bug fix for `igraph_to_networkD3` so that it now accepts the value attribute.
+Thanks to Louis Goddard.
+
 - Bug fix for `diagonalNetwork` when using hierarchical lists with singular
 connections. Thanks to @RohdeK. 
 
