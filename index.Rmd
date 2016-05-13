@@ -102,7 +102,7 @@ The package can be downloaded from
 For a full set of examples for each of the functions see
 [this page](https://github.com/christophergandrud/networkD3/blob/master/inst/examples/examples.R).
 
-**Note:** You are probably used to R's 1-based numbering (i.e. counting in R starts from 1). However, **networkD3** plots are created using JavaScript, which is [0-based](http://en.wikipedia.org/wiki/Zero-based_numbering). So, your data links will need to start from 0. See [this data set](https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/energy.json) for example. You can also use [igraph](http://igraph.org/r/) to build your graph data and then use the `igraph_to_networkD3` function to convert this data to a suitable object for **networkD3** plotting. 
+**Note:** You are probably used to R's 1-based numbering (i.e. counting in R starts from 1). However, **networkD3** plots are created using JavaScript, which is [0-based](http://en.wikipedia.org/wiki/Zero-based_numbering). So, your data links will need to start from 0. See [this data set](https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/energy.json) for example. You can also use [igraph](http://igraph.org/r/) to build your graph data and then use the <a href="#igraph"><code>igraph_to_networkD3</code></a> function to convert this data to a suitable object for **networkD3** plotting. 
 
 <a href="#simple"><h3 id="simple"><code>> </code>simpleNetwork</code></h3></a>
 
