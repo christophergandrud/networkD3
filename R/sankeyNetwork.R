@@ -75,6 +75,9 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
     fontFamily = NULL, nodeWidth = 15, nodePadding = 10, margin = NULL, 
     height = NULL, width = NULL, iterations = 32) 
 {
+    # Check if data is zero indexed
+    check_zero(Links[, Source], Links[, Target])
+    
     # Hack for UI consistency. Think of improving.
     colourScale <- as.character(colourScale)
     

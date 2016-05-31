@@ -164,6 +164,9 @@ forceNetwork <- function(Links,
                          opacityNoHover = 0,
                          clickAction = NULL)
 {
+        # Check if data is zero indexed
+        check_zero(Links[, Source], Links[, Target])
+  
         # Hack for UI consistency. Think of improving.
         colourScale <- as.character(colourScale)
         linkWidth <- as.character(linkWidth)
@@ -188,12 +191,13 @@ forceNetwork <- function(Links,
                 NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group], Nodes[, Nodesize])
                 names(NodesDF) <- c("name", "group", "nodesize")
                 nodesize = TRUE
-        }else{
+        } else {
                 NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
                 names(NodesDF) <- c("name", "group")
                 nodesize = FALSE
         }
-        LinksDF <- data.frame(LinksDF, colour=linkColour)
+        
+        LinksDF <- data.frame(LinksDF, colour = linkColour)
         LinksDF$colour = as.character(LinksDF$colour)
 
         # create options

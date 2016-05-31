@@ -2,6 +2,10 @@
 
 ## Version 0.2.11
 
+- `forceNetwork`, `simpleNetwork`, and `sankeyNetwork` generate errors if data
+does not appear to be zero-indexed. Thanks to Peter Meissner for prompting this
+addition.
+
 - Bug fix for `igraph_to_networkD3` so that it now accepts the value attribute.
 Thanks to Louis Goddard.
 

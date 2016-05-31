@@ -208,3 +208,19 @@ igraph_to_networkD3 <- function(g, group, what = 'both') {
       return(nodes)
     }
 }
+
+#' Check if data is 0 indexed
+#' @keywords internal
+#' @noRd
+
+check_zero <- function(Source, Target) {
+    if (!is.factor(Source) && !is.factor(Target)) {
+        SourceTarget <- c(Source, Target)
+        if (is.numeric(SourceTarget) | is.integer(SourceTarget)) {
+            if (!(0 %in% SourceTarget)) 
+                warning(
+                    'It looks like Source/Target is not zero-indexed. This is required in JavaScript and so your plot may not render.', 
+                    call. = FALSE)
+        }
+    }
+}
