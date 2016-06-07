@@ -1,6 +1,6 @@
 # D3 JavaScript Network Graphs from R
 
-Version 0.2.11 
+Version 0.2.12 
 [![CRAN Version](http://www.r-pkg.org/badges/version/networkD3)](http://cran.r-project.org/package=networkD3)
 [![Build Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://travis-ci.org/christophergandrud/networkD3)
 ![CRAN Monthly Downloads](http://cranlogs.r-pkg.org/badges/last-month/networkD3)
@@ -87,4 +87,5 @@ simpleNetwork(networkData) %>% saveNetwork(file = 'Net1.html')
 
 networkD3 began as a port of
 [d3Network](http://christophergandrud.github.io/d3Network/) package to the
-[htmlwidgets](https://github.com/ramnathv/htmlwidgets) framework. d3Network is no longer supported.
+[htmlwidgets](https://github.com/ramnathv/htmlwidgets) framework. d3Network is 
+no longer supported.

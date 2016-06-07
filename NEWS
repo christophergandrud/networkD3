@@ -1,5 +1,10 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.2.12
+
+- Fixed a bug where `Source` and `Target` labels were not properly concatenated
+in `sankeyNetwork` tooltips. Thanks to Tuija Sonkkila for reporting.
+
 ## Version 0.2.11
 
 - `forceNetwork`, `simpleNetwork`, and `sankeyNetwork` generate errors if data
