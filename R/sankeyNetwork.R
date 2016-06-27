@@ -71,7 +71,7 @@
 #' @export
 
 sankeyNetwork <- function(Links, Nodes, Source, Target, Value, 
-    NodeID, NodeGroup = NodeID, LinkGroup = NULL, units = "", 
+    NodeID, NodeDesc, NodeGroup = NodeID, LinkGroup = NULL, units = "", 
     colourScale = JS("d3.scale.category20()"), fontSize = 7, 
     fontFamily = NULL, nodeWidth = 15, nodePadding = 10, margin = NULL, 
     height = NULL, width = NULL, iterations = 32) 
@@ -110,7 +110,11 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
         NodeID = 1
     NodesDF <- data.frame(Nodes[, NodeID])
     names(NodesDF) <- c("name")
-    
+    # add node description if specified
+    if (is.character(NodeDesc)) {
+      NodesDF$desc <- Nodes[, NodeDesc]
+    } else {NodesDF$desc <- Nodes[, NodeID]}
+        
     # add node group if specified
     if (is.character(NodeGroup)) {
         NodesDF$group <- Nodes[, NodeGroup]
