@@ -16,6 +16,8 @@
 #' frame for how far away the nodes are from one another.
 #' @param NodeID character string specifying the node IDs in the \code{Nodes}.
 #' data frame. Must be 0-indexed.
+#' @param NodeDesc character string specifying the description of the node ID in the \code{Nodes}.
+#' data frame.
 #' @param NodeGroup character string specifying the node groups in the
 #' \code{Nodes}. Used to color the nodes in the network.
 #' @param LinkGroup character string specifying the groups in the
@@ -50,7 +52,7 @@
 #' 
 #' # Plot
 #' sankeyNetwork(Links = energy$links, Nodes = energy$nodes, Source = 'source',
-#'              Target = 'target', Value = 'value', NodeID = 'name',
+#'              Target = 'target', Value = 'value', NodeID = 'name', NodeDesc = 'name',
 #'              units = 'TWh', fontSize = 12, nodeWidth = 30)
 #'
 #' # Colour links
