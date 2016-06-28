@@ -16,7 +16,7 @@
 #' frame for how far away the nodes are from one another.
 #' @param NodeID character string specifying the node IDs in the \code{Nodes}.
 #' data frame. Must be 0-indexed.
-#' #' @param NodeDesc character string specifying the description of the Node Id 
+#' @param NodeDesc character string specifying the description of each Node ID 
 #' in the \code{Nodes} data frame. If not specified defaults to NodeID.
 #' @param NodeGroup character string specifying the node groups in the
 #' \code{Nodes}. Used to color the nodes in the network.
