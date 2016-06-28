@@ -114,7 +114,7 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
     names(NodesDF) <- c("name")
     
     # add node description if specified
-    if (!is.missing(NodeDesc)) {
+    if (!missing(NodeDesc)) {
       NodesDF$desc <- Nodes[, NodeDesc]
     } else {NodesDF$desc <- Nodes[, NodeID]}
     
