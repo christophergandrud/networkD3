@@ -171,7 +171,7 @@ HTMLWidgets.widget({
             .style("opacity", 0.9)
             .style("cursor", "move")
             .append("title")
-            .text(function(d) { return d.name + "<br>" + format(d.value) + 
+            .text(function(d) { return d.desc + "\n" + format(d.value) + 
                 " " + options.units; });
 
         node.append("text")
