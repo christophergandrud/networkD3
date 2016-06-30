@@ -190,7 +190,7 @@ igraph_to_networkD3 <- function(g, group, what = 'both') {
     links <- merge(links, temp_nodes, by.x = 'from', by.y = 'name')
     links <- merge(links, temp_nodes, by.x = 'to', by.y = 'name')
     if (ncol(links) == 5) {
-        links <- links[, c('id.x', 'id.y', 'value')] %>% 
+        links <- links[, c(4:5, 3)] %>% 
                       setNames(c('source', 'target', 'value'))
     }
     else {

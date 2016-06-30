@@ -5,6 +5,9 @@
 - Fixed a bug where `Source` and `Target` labels were not properly concatenated
 in `sankeyNetwork` tooltips. Thanks to Tuija Sonkkila for reporting.
 
+- Improved `igraph_to_networkD3` so that it now handles more general weight 
+names. Thanks to Maurits Evers for reporting.
+
 ## Version 0.2.11
 
 - `forceNetwork`, `simpleNetwork`, and `sankeyNetwork` generate errors if data
