@@ -24,6 +24,13 @@ HTMLWidgets.widget({
 
         this.renderValue(el, instance.x, instance);
         */
+        debugger;
+        // with flexdashboard and slides
+        //   sankey might be hidden so height and width 0
+        //   in this instance re-render on resize
+        if( d3.min(instance.sankey.size()) <= 0 ) {
+          this.renderValue(el, instance.x, instance);
+        }
     },
 
     renderValue: function(el, x, instance) {
@@ -100,6 +107,8 @@ HTMLWidgets.widget({
 
         // select the svg element and remove existing children
         d3.select(el).select("svg").selectAll("*").remove();
+        // remove any previously set viewBox attribute
+        d3.select(el).select("svg").attr("viewBox", null);
         // append g for our container to transform by margin
         var svg = d3.select(el).select("svg").append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");;
