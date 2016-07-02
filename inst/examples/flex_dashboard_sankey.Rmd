@@ -2,7 +2,8 @@
 title: "sankey in flex dashboard"
 author: "Kenton Russell"
 output: 
-  flexdashboard::flex_dashboard
+  flexdashboard::flex_dashboard:
+    mathjax: null
 ---
 
 **See [StackOverflow](http://stackoverflow.com/questions/38019858/multi-page-flex-dashboard-plots-with-incorrect-zoom-levels/38127540#38127540)**
