@@ -2,6 +2,9 @@
 
 ## Version 0.2.12
 
+- Add resize to sankeyNetwork for flexdashboard. Thanks to Kenton Russell for
+adding.
+
 - Fixed a bug where `Source` and `Target` labels were not properly concatenated
 in `sankeyNetwork` tooltips. Thanks to Tuija Sonkkila for reporting.
 
