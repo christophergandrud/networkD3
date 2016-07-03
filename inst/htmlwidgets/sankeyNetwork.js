@@ -24,7 +24,7 @@ HTMLWidgets.widget({
 
         this.renderValue(el, instance.x, instance);
         */
-        debugger;
+        
         // with flexdashboard and slides
         //   sankey might be hidden so height and width 0
         //   in this instance re-render on resize
