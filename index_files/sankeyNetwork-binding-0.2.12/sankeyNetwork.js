@@ -23,7 +23,14 @@ HTMLWidgets.widget({
             .attr("height", height + height * 0.05);
 
         this.renderValue(el, instance.x, instance);
-        */ 
+        */
+        debugger;
+        // with flexdashboard and slides
+        //   sankey might be hidden so height and width 0
+        //   in this instance re-render on resize
+        if( d3.min(instance.sankey.size()) <= 0 ) {
+          this.renderValue(el, instance.x, instance);
+        }
     },
 
     renderValue: function(el, x, instance) {
@@ -38,8 +45,8 @@ HTMLWidgets.widget({
         // convert links and nodes data frames to d3 friendly format
         var links = HTMLWidgets.dataframeToD3(x.links);
         var nodes = HTMLWidgets.dataframeToD3(x.nodes);
-        
-    
+
+
         // margin handling
         //   set our default margin to be 20
         //   will override with x.options.margin if provided
@@ -53,14 +60,14 @@ HTMLWidgets.widget({
           // set the margin on the svg with css style
           // commenting this out since not correct
           // s.style(["margin",ky].join("-"), margin[ky]);
-        });        
+        });
 
         // get the width and height
         var width = el.getBoundingClientRect().width - margin.right - margin.left;
         var height = el.getBoundingClientRect().height - margin.top - margin.bottom;
 
         var color = eval(options.colourScale);
-        
+
         var color_node = function color_node(d){
           if (d.group){
             return color(d.group.replace(/ .*/, ""));
@@ -68,7 +75,7 @@ HTMLWidgets.widget({
             return "#cccccc";
           }
         }
-        
+
         var color_link = function color_link(d){
           if (d.group){
             return color(d.group.replace(/ .*/, ""));
@@ -76,7 +83,7 @@ HTMLWidgets.widget({
             return "#000000";
           }
         }
-        
+
         var opacity_link = function opacity_link(d){
           if (d.group){
             return 0.7;
@@ -100,6 +107,8 @@ HTMLWidgets.widget({
 
         // select the svg element and remove existing children
         d3.select(el).select("svg").selectAll("*").remove();
+        // remove any previously set viewBox attribute
+        d3.select(el).select("svg").attr("viewBox", null);
         // append g for our container to transform by margin
         var svg = d3.select(el).select("svg").append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");;
@@ -113,7 +122,7 @@ HTMLWidgets.widget({
 
         link.enter().append("path")
             .attr("class", "link")
-        
+
         link
             .attr("d", path)
             .style("stroke-width", function(d) { return Math.max(1, d.dy); })
@@ -129,10 +138,10 @@ HTMLWidgets.widget({
                 d3.select(this)
                 .style("stroke-opacity", opacity_link);
             });
-            
+
         // add backwards class to cycles
         link.classed('backwards', function (d) { return d.target.x < d.source.x; });
-        
+
         svg.selectAll(".link.backwards")
             .style("stroke-dasharray","9,1")
             .style("stroke","#402")
@@ -140,7 +149,7 @@ HTMLWidgets.widget({
         // draw nodes
         var node = svg.selectAll(".node")
             .data(sankey.nodes())
-            
+
         node.enter().append("g")
             .attr("class", "node")
             .attr("transform", function(d) { return "translate(" +
@@ -171,7 +180,7 @@ HTMLWidgets.widget({
             .style("opacity", 0.9)
             .style("cursor", "move")
             .append("title")
-            .text(function(d) { return d.name + "\n" + format(d.value) + 
+            .text(function(d) { return d.name + "<br>" + format(d.value) + 
                 " " + options.units; });
 
         node.append("text")
@@ -186,8 +195,8 @@ HTMLWidgets.widget({
             .filter(function(d) { return d.x < width / 2; })
             .attr("x", 6 + sankey.nodeWidth())
             .attr("text-anchor", "start");
-            
-            
+
+
         // adjust viewBox to fit the bounds of our tree
         var s = d3.select(svg[0][0].parentNode);
         s.attr(
@@ -224,8 +233,8 @@ HTMLWidgets.widget({
                 })
               ) + margin.top + margin.bottom
             ].join(",")
-          );        
-        
+          );
+
 
         function dragmove(d) {
             d3.select(this).attr("transform", "translate(" + d.x + "," +
