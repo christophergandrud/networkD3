@@ -82,6 +82,10 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
     # Hack for UI consistency. Think of improving.
     colourScale <- as.character(colourScale)
     
+    # If tbl_df convert to plain data.frame
+    Links <- tbl_df_strip(Links)
+    Nodes <- tbl_df_strip(Nodes)
+    
     # Subset data frames for network graph
     if (!is.data.frame(Links)) {
         stop("Links must be a data frame class object.")

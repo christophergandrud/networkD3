@@ -70,7 +70,10 @@ simpleNetwork <- function(Data,
     # validate input
     if (!is.data.frame(Data))
         stop("data must be a data frame class object.")
-  
+
+    # If tbl_df convert to plain data.frame
+    Data <- tbl_df_strip(Data)
+
     # create links data
     if (is.null(Source) && is.null(Target))
         links <- Data[, 1:2]
@@ -80,7 +83,7 @@ simpleNetwork <- function(Data,
 
     # Check if data is zero indexed
     check_zero(links[, 'source'], links[, 'target'])
-    
+
     # create options
     options = list(
         linkDistance = linkDistance,

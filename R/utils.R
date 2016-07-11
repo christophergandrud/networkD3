@@ -224,3 +224,15 @@ check_zero <- function(Source, Target) {
         }
     }
 }
+
+#' Convert dplyr created tbl_df to plain data.frame
+#' @noRd
+
+tbl_df_strip <- function(x) {
+    if('tbl_df' %in% class(x)) {
+        message(paste(deparse(substitute(x)), 
+                      'is a tbl_df. Converting to a plain data frame.'))
+        x <- as.data.frame(x)
+    }
+    return(x)
+}

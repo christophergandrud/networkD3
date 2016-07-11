@@ -1,5 +1,10 @@
 # All changes to networkD3 are documented here.
 
+## Version 0.2.13
+
+- `simpleNetwork`, `forceNetwork`, and `sankeyNetwork` should now work with 
+`tbl_df` link and node data frames. Thanks to @mexindian for suggesting.
+
 ## Version 0.2.12
 
 - Add resize to sankeyNetwork for flexdashboard. Thanks to Kenton Russell for
