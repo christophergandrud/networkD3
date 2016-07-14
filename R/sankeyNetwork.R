@@ -74,7 +74,7 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
     NodeID, NodeGroup = NodeID, LinkGroup = NULL, units = "", 
     colourScale = JS("d3.scale.category20()"), fontSize = 7, 
     fontFamily = NULL, nodeWidth = 15, nodePadding = 10, margin = NULL, 
-    height = NULL, width = NULL, iterations = 32) 
+    height = NULL, width = NULL, iterations = 32, clickAction = NULL) 
 {
     # Check if data is zero indexed
     check_zero(Links[, Source], Links[, Target])
@@ -130,7 +130,7 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
     options = list(NodeID = NodeID, NodeGroup = NodeGroup, LinkGroup = LinkGroup, 
         colourScale = colourScale, fontSize = fontSize, fontFamily = fontFamily, 
         nodeWidth = nodeWidth, nodePadding = nodePadding, units = units, 
-        margin = margin, iterations = iterations)
+        margin = margin, iterations = iterations, clickAction = clickAction)
     
     # create widget
     htmlwidgets::createWidget(name = "sankeyNetwork", x = list(links = LinksDF, 

@@ -137,7 +137,8 @@ HTMLWidgets.widget({
             .on("mouseout", function(d) {
                 d3.select(this)
                 .style("stroke-opacity", opacity_link);
-            });
+            })
+            .on("click", click);
 
         // add backwards class to cycles
         link.classed('backwards', function (d) { return d.target.x < d.source.x; });
@@ -241,6 +242,10 @@ HTMLWidgets.widget({
             (d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))) + ")");
             sankey.relayout();
             link.attr("d", path);
+        }
+        
+        function click(d) {
+          return eval(options.clickAction);
         }
     },
 });
