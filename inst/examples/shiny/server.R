@@ -32,7 +32,7 @@ shinyServer(function(input, output) {
     sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
                   Target = "target", Value = "value", NodeID = "name",
                   fontSize = 12, nodeWidth = 30, 
-                  clickAction="alert(d.source.name+' <-> '+d.target.name);")
+                  clickAction="alert(d.source.name+' -> '+d.target.name);")
   })
 
   output$rt <- renderRadialNetwork({
