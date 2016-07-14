@@ -39,6 +39,8 @@
 #' @param iterations numeric. Number of iterations in the diagramm layout for 
 #' computation of the depth (y-position) of each node. Note: this runs in the 
 #' browser on the client so don't push it too high.
+#' @param clickAction character string with a JavaScript expression to evaluate
+#' when a link is clicked.
 #'
 #' @examples
 #' \dontrun{
