@@ -103,6 +103,7 @@ HTMLWidgets.widget({
             .size([width, height])
             .nodeWidth(options.nodeWidth)
             .nodePadding(options.nodePadding)
+            .sinksRight(options.sinksRight)
             .layout(options.iterations);
 
         // select the svg element and remove existing children
