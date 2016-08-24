@@ -76,7 +76,7 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
     NodeID, NodeGroup = NodeID, LinkGroup = NULL, units = "", 
     colourScale = JS("d3.scale.category20()"), fontSize = 7, 
     fontFamily = NULL, nodeWidth = 15, nodePadding = 10, margin = NULL, 
-    height = NULL, width = NULL, iterations = 32, sinksRight = NULL)
+    height = NULL, width = NULL, iterations = 32, sinksRight = TRUE)
 {
     # Check if data is zero indexed
     check_zero(Links[, Source], Links[, Target])

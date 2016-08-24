@@ -12,7 +12,7 @@ sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, NodeGroup = NodeID,
   LinkGroup = NULL, units = "", colourScale = JS("d3.scale.category20()"),
   fontSize = 7, fontFamily = NULL, nodeWidth = 15, nodePadding = 10,
   margin = NULL, height = NULL, width = NULL, iterations = 32,
-  sinksRight = NULL)
+  sinksRight = TRUE)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
