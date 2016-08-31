@@ -184,7 +184,7 @@ HTMLWidgets.widget({
             .text(function(d) { return d.name; })
             .style("font-size", options.fontSize + "px")
             .style("font-family", options.fontFamily ? options.fontFamily : "inherit")
-            .filter(function(d) { return d.x < width / 2; })
+            .filter(function(d) { return d.x < width / 2 || !options.sinksRight; })
             .attr("x", 6 + sankey.nodeWidth())
             .attr("text-anchor", "start");
             
