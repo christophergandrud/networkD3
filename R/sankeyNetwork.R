@@ -39,6 +39,8 @@
 #' @param iterations numeric. Number of iterations in the diagramm layout for 
 #' computation of the depth (y-position) of each node. Note: this runs in the 
 #' browser on the client so don't push it too high.
+#' @param sinksRight boolean. If \code{TRUE}, the last nodes are moved to the 
+#' right border of the plot.
 #'
 #' @examples
 #' \dontrun{
@@ -74,7 +76,7 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
     NodeID, NodeGroup = NodeID, LinkGroup = NULL, units = "", 
     colourScale = JS("d3.scale.category20()"), fontSize = 7, 
     fontFamily = NULL, nodeWidth = 15, nodePadding = 10, margin = NULL, 
-    height = NULL, width = NULL, iterations = 32) 
+    height = NULL, width = NULL, iterations = 32, sinksRight = TRUE) 
 {
     # Check if data is zero indexed
     check_zero(Links[, Source], Links[, Target])
@@ -130,7 +132,7 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
     options = list(NodeID = NodeID, NodeGroup = NodeGroup, LinkGroup = LinkGroup, 
         colourScale = colourScale, fontSize = fontSize, fontFamily = fontFamily, 
         nodeWidth = nodeWidth, nodePadding = nodePadding, units = units, 
-        margin = margin, iterations = iterations)
+        margin = margin, iterations = iterations, sinksRight = sinksRight)
     
     # create widget
     htmlwidgets::createWidget(name = "sankeyNetwork", x = list(links = LinksDF, 

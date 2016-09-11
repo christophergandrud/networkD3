@@ -31,7 +31,7 @@ shinyServer(function(input, output) {
     Energy <- jsonlite::fromJSON(URL)
     sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
                   Target = "target", Value = "value", NodeID = "name",
-                  fontSize = 12, nodeWidth = 30)
+                  fontSize = 12, nodeWidth = 30, sinksRight = input$sinksRight)
   })
 
   output$rt <- renderRadialNetwork({
