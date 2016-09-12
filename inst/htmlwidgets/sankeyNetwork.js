@@ -178,6 +178,7 @@ HTMLWidgets.widget({
             .style("fill", function(d) {
                 return d.color = color_node(d); })
             .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
+            .style("stroke-width", options.nodeStrokeWidth)
             .style("opacity", 0.9)
             .style("cursor", "move")
             .append("title")

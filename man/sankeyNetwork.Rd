@@ -11,8 +11,8 @@ specifically for Sankey diagrams \url{http://bost.ocks.org/mike/sankey/}.
 sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, NodeGroup = NodeID,
   LinkGroup = NULL, units = "", colourScale = JS("d3.scale.category20()"),
   fontSize = 7, fontFamily = NULL, nodeWidth = 15, nodePadding = 10,
-  margin = NULL, height = NULL, width = NULL, iterations = 32,
-  sinksRight = TRUE)
+  nodeStrokeWidth = 1, margin = NULL, height = NULL, width = NULL,
+  iterations = 32, sinksRight = TRUE)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -56,6 +56,8 @@ scale for the nodes. See
 \item{nodeWidth}{numeric width of each node.}
 
 \item{nodePadding}{numeric essentially influences the width height.}
+
+\item{nodeStrokeWidth}{numeric width of the stroke around nodes.}
 
 \item{margin}{an integer or a named \code{list}/\code{vector} of integers
 for the plot margins. If using a named \code{list}/\code{vector},
