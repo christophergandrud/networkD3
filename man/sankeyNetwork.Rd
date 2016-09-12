@@ -8,7 +8,7 @@ D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
 specifically for Sankey diagrams \url{http://bost.ocks.org/mike/sankey/}.
 }
 \usage{
-sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, NodeGroup = NodeID,
+sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, NodeDesc = NULL, NodeGroup = NodeID,
   LinkGroup = NULL, units = "", colourScale = JS("d3.scale.category20()"),
   fontSize = 7, fontFamily = NULL, nodeWidth = 15, nodePadding = 10,
   margin = NULL, height = NULL, width = NULL, iterations = 32,
@@ -36,6 +36,9 @@ frame for how far away the nodes are from one another.}
 
 \item{NodeID}{character string specifying the node IDs in the \code{Nodes}.
 data frame. Must be 0-indexed.}
+
+\item{NodeDesc}{character string specifying the description of each node ID 
+in the \code{Nodes} data frame. If not specified defaults to NodeID.}
 
 \item{NodeGroup}{character string specifying the node groups in the
 \code{Nodes}. Used to color the nodes in the network.}
