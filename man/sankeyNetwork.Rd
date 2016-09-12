@@ -12,7 +12,7 @@ sankeyNetwork(Links, Nodes, Source, Target, Value, NodeID, NodeGroup = NodeID,
   LinkGroup = NULL, units = "", colourScale = JS("d3.scale.category20()"),
   fontSize = 7, fontFamily = NULL, nodeWidth = 15, nodePadding = 10,
   margin = NULL, height = NULL, width = NULL, iterations = 32,
-  sinksRight = TRUE)
+  sinksRight = TRUE, zoom = FALSE)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -74,6 +74,9 @@ browser on the client so don't push it too high.}
 
 \item{sinksRight}{boolean. If \code{TRUE}, the last nodes are moved to the 
 right border of the plot.}
+
+\item{zoom}{logical value to enable (\code{TRUE}) or disable (\code{FALSE})
+zooming}
 }
 \description{
 Create a D3 JavaScript Sankey diagram

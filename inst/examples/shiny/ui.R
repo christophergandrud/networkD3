@@ -16,6 +16,7 @@ shinyUI(fluidPage(
         tabPanel("Force Network with Legend & Radius", forceNetworkOutput("forceRadius")),
         tabPanel("Sankey Network", 
                  checkboxInput("sinksRight", "sinksRight", value = TRUE),
+                 checkboxInput("zoom", "zoom", value = FALSE),
                  sankeyNetworkOutput("sankey")),
         tabPanel("Reingold-Tilford Tree", radialNetworkOutput("rt"))
       )

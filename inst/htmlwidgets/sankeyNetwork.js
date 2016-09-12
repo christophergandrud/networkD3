@@ -66,8 +66,11 @@ HTMLWidgets.widget({
         var width = el.getBoundingClientRect().width - margin.right - margin.left;
         var height = el.getBoundingClientRect().height - margin.top - margin.bottom;
 
-        var color = eval(options.colourScale);
+        // set this up even if zoom = F
+        var zoom = d3.behavior.zoom();    
 
+        var color = eval(options.colourScale);
+        
         var color_node = function color_node(d){
           if (d.group){
             return color(d.group.replace(/ .*/, ""));
@@ -106,13 +109,33 @@ HTMLWidgets.widget({
             .sinksRight(options.sinksRight)
             .layout(options.iterations);
 
-        // select the svg element and remove existing children
-        d3.select(el).select("svg").selectAll("*").remove();
-        // remove any previously set viewBox attribute
-        d3.select(el).select("svg").attr("viewBox", null);
+        // select the svg element and remove existing children or previously set viewBox attribute
+        var svg = d3.select(el).select("svg");
+        svg.selectAll("*").remove();
+        svg.attr("viewBox", null);
+        
         // append g for our container to transform by margin
-        var svg = d3.select(el).select("svg").append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");;
+        svg = svg
+                .append("g").attr("class","zoom-layer")
+                .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");;
+                
+        // add zooming if requested
+        if (options.zoom) {
+          zoom.on("zoom", redraw)
+          function redraw() {
+            d3.select(el).select(".zoom-layer").attr("transform",
+            "translate(" + d3.event.translate + ")"+
+            " scale(" + d3.event.scale + ")");
+          }
+      
+          d3.select(el).select("svg")
+            .attr("pointer-events", "all")
+            .call(zoom);
+  
+        } else {
+          zoom.on("zoom", null);
+ 
+        }
 
         // draw path
         var path = sankey.link();
