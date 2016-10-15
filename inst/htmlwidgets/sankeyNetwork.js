@@ -131,13 +131,26 @@ HTMLWidgets.widget({
             .style("stroke", color_link)
             .style("stroke-opacity", opacity_link)
             .sort(function(a, b) { return b.dy - a.dy; })
+            .attr("link-name", function(d){
+              return d.linkName;
+             })
             .on("mouseover", function(d) {
+              if (d.linkName) {
+                d3.selectAll("[link-name=" + d.linkName + "]")
+                .style("stroke-opacity", function(d){return opacity_link(d) + 0.3});
+              } else {
                 d3.select(this)
                 .style("stroke-opacity", function(d){return opacity_link(d) + 0.3});
+              }
             })
             .on("mouseout", function(d) {
+              if (d.linkName) {
+                d3.selectAll("[link-name=" + d.linkName + "]")
+                .style("stroke-opacity", opacity_link);
+              } else {
                 d3.select(this)
                 .style("stroke-opacity", opacity_link);
+              }
             });
 
         // add backwards class to cycles
@@ -169,8 +182,15 @@ HTMLWidgets.widget({
             });
         // note: u2192 is right-arrow
         link.append("title")
-            .text(function(d) { return d.source.name + " \u2192 " + d.target.name +
-                "\n" + format(d.value) + " " + options.units; });
+            .text(function(d) {
+              if (d.linkName) {
+                return d.source.name + " \u2192 " + d.target.name +
+                "\n" + format(d.value) + " " + options.units + " (" + d.linkName + ")";
+              } else {
+                return d.source.name + " \u2192 " + d.target.name +
+                "\n" + format(d.value) + " " + options.units;
+              }
+            });
 
         node.append("rect")
             .attr("height", function(d) { return d.dy; })

@@ -73,8 +73,8 @@
 #' @export
 
 sankeyNetwork <- function(Links, Nodes, Source, Target, Value, 
-    NodeID, NodeGroup = NodeID, LinkGroup = NULL, units = "", 
-    colourScale = JS("d3.scale.category20()"), fontSize = 7, 
+    NodeID, NodeGroup = NodeID, LinkGroup = NULL, LinkName = NULL,
+    units = "", colourScale = JS("d3.scale.category20()"), fontSize = 7, 
     fontFamily = NULL, nodeWidth = 15, nodePadding = 10, margin = NULL, 
     height = NULL, width = NULL, iterations = 32, sinksRight = TRUE) 
 {
@@ -124,6 +124,11 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
     
     if (is.character(LinkGroup)) {
         LinksDF$group <- Links[, LinkGroup]
+    }
+        
+     # specify an optional name for an individual link
+    if (is.character(LinkName)) {
+        LinksDF$linkName <- Links[, LinkName]
     }
     
     margin <- margin_handler(margin)
