@@ -136,17 +136,17 @@ HTMLWidgets.widget({
              })
             .on("mouseover", function(d) {
               if (d.linkName) {
-                ds.selectAll("[link-name=" + d.linkName + "]")
+                d3.selectAll("[link-name=" + d.linkName + "]")
                 .style("stroke-opacity", function(d){return opacity_link(d) + 0.3});
               } else {
-                  d3.select(this)
-                  .style("stroke-opacity", function(d){return opacity_link(d) + 0.3});
+                d3.select(this)
+                .style("stroke-opacity", function(d){return opacity_link(d) + 0.3});
               }
             })
             .on("mouseout", function(d) {
               if (d.linkName) {
-                ds.selectAll("[link-name=" + d.linkName + "]")
-                .style("stroke-opacity", function(d){return opacity_link(d) + 0.3});
+                d3.selectAll("[link-name=" + d.linkName + "]")
+                .style("stroke-opacity", opacity_link);
               } else {
                 d3.select(this)
                 .style("stroke-opacity", opacity_link);
