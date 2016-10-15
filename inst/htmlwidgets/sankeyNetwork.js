@@ -131,13 +131,26 @@ HTMLWidgets.widget({
             .style("stroke", color_link)
             .style("stroke-opacity", opacity_link)
             .sort(function(a, b) { return b.dy - a.dy; })
+            .attr("link-name", function(d){
+              return d.linkName;
+             })
             .on("mouseover", function(d) {
-                d3.select(this)
+              if (d.linkName) {
+                ds.selectAll("[link-name=" + d.linkName + "]")
                 .style("stroke-opacity", function(d){return opacity_link(d) + 0.3});
+              } else {
+                  d3.select(this)
+                  .style("stroke-opacity", function(d){return opacity_link(d) + 0.3});
+              }
             })
             .on("mouseout", function(d) {
+              if (d.linkName) {
+                ds.selectAll("[link-name=" + d.linkName + "]")
+                .style("stroke-opacity", function(d){return opacity_link(d) + 0.3});
+              } else {
                 d3.select(this)
                 .style("stroke-opacity", opacity_link);
+              }
             });
 
         // add backwards class to cycles
@@ -170,7 +183,7 @@ HTMLWidgets.widget({
         // note: u2192 is right-arrow
         link.append("title")
             .text(function(d) { return d.source.name + " \u2192 " + d.target.name +
-                "\n" + format(d.value) + " " + options.units; });
+                "\n" + format(d.value) + " " + options.units + " (" + d.linkName + ")"; });
 
         node.append("rect")
             .attr("height", function(d) { return d.dy; })
