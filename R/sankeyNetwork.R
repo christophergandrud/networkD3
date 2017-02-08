@@ -74,7 +74,7 @@
 
 sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
     NodeID, NodeGroup = NodeID, LinkGroup = NULL, units = "",
-    colourScale = JS("d3.scale.category20()"), fontSize = 7,
+    colourScale = JS("d3.scaleOrdinal(d3.schemeCategory20);"), fontSize = 7,
     fontFamily = NULL, nodeWidth = 15, nodePadding = 10, margin = NULL,
     height = NULL, width = NULL, iterations = 32, sinksRight = TRUE)
 {

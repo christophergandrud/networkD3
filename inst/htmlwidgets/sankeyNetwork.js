@@ -24,7 +24,7 @@ HTMLWidgets.widget({
 
         this.renderValue(el, instance.x, instance);
         */
-
+        
         // with flexdashboard and slides
         //   sankey might be hidden so height and width 0
         //   in this instance re-render on resize
@@ -98,7 +98,7 @@ HTMLWidgets.widget({
 
         // create d3 sankey layout
         sankey
-            .nodes(d3.values(nodes))
+            .nodes(nodes)
             .links(links)
             .size([width, height])
             .nodeWidth(options.nodeWidth)
@@ -112,19 +112,16 @@ HTMLWidgets.widget({
         d3.select(el).select("svg").attr("viewBox", null);
         // append g for our container to transform by margin
         var svg = d3.select(el).select("svg").append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");;
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         // draw path
         var path = sankey.link();
 
         // draw links
         var link = svg.selectAll(".link")
-            .data(sankey.links())
-
-        link.enter().append("path")
+            .data(links)
+            .enter().append("path")
             .attr("class", "link")
-
-        link
             .attr("d", path)
             .style("stroke-width", function(d) { return Math.max(1, d.dy); })
             .style("fill", "none")
@@ -149,15 +146,14 @@ HTMLWidgets.widget({
 
         // draw nodes
         var node = svg.selectAll(".node")
-            .data(sankey.nodes())
-
-        node.enter().append("g")
+            .data(nodes)
+            .enter().append("g")
             .attr("class", "node")
             .attr("transform", function(d) { return "translate(" +
                                             d.x + "," + d.y + ")"; })
-            .call(d3.behavior.drag()
-            .origin(function(d) { return d; })
-            .on("dragstart", function() { this.parentNode.appendChild(this); })
+            .call(d3.drag()
+            .subject(function(d) { return d; })
+            .on("start", function() { this.parentNode.appendChild(this); })
             .on("drag", dragmove))
             .on("mouseover", function(d) {
                 link.filter(function(d1, i) { return d.targetLinks.includes(d1) | d.sourceLinks.includes(d1); })
@@ -181,7 +177,7 @@ HTMLWidgets.widget({
             .style("opacity", 0.9)
             .style("cursor", "move")
             .append("title")
-            .text(function(d) { return d.name + "<br>" + format(d.value) +
+            .text(function(d) { return d.name + "<br>" + format(d.value) + 
                 " " + options.units; });
 
         node.append("text")
@@ -199,37 +195,37 @@ HTMLWidgets.widget({
 
 
         // adjust viewBox to fit the bounds of our tree
-        var s = d3.select(svg[0][0].parentNode);
+        var s = d3.select(svg.node().parentNode);
         s.attr(
             "viewBox",
             [
               d3.min(
-                s.selectAll('g')[0].map(function(d){
+                s.selectAll('g').nodes().map(function(d){
                   return d.getBoundingClientRect().left
                 })
               ) - s.node().getBoundingClientRect().left - margin.right,
               d3.min(
-                s.selectAll('g')[0].map(function(d){
+                s.selectAll('g').nodes().map(function(d){
                   return d.getBoundingClientRect().top
                 })
               ) - s.node().getBoundingClientRect().top - margin.top,
               d3.max(
-                s.selectAll('g')[0].map(function(d){
+                s.selectAll('g').nodes().map(function(d){
                   return d.getBoundingClientRect().right
                 })
               ) -
               d3.min(
-                s.selectAll('g')[0].map(function(d){
+                s.selectAll('g').nodes().map(function(d){
                   return d.getBoundingClientRect().left
                 })
               )  + margin.left + margin.right,
               d3.max(
-                s.selectAll('g')[0].map(function(d){
+                s.selectAll('g').nodes().map(function(d){
                   return d.getBoundingClientRect().bottom
                 })
               ) -
               d3.min(
-                s.selectAll('g')[0].map(function(d){
+                s.selectAll('g').nodes().map(function(d){
                   return d.getBoundingClientRect().top
                 })
               ) + margin.top + margin.bottom
