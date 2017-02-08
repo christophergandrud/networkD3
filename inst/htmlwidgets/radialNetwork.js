@@ -16,7 +16,7 @@ HTMLWidgets.widget({
       .append("g")
       .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")"
                          + " scale("+diameter/800+","+diameter/800+")");
-    return d3.layout.tree();
+    return d3.tree();
 
   },
 
@@ -77,16 +77,19 @@ HTMLWidgets.widget({
 
     var svg = d3.select(el).selectAll("g");
 
-    var root = x.root;
-    var nodes = tree.nodes(root),
-        links = tree.links(nodes);
+    var root = d3.hierarchy(x.root);
+    tree(root);
 
-    var diagonal = d3.svg.diagonal.radial()
-                     .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
+    var diagonal = function(d) {
+        return "M" + project(d.x, d.y)
+            + "C" + project(d.x, (d.y + d.parent.y) / 2)
+            + " " + project(d.parent.x, (d.y + d.parent.y) / 2)
+            + " " + project(d.parent.x, d.parent.y);
+      };
 
     // draw links
     var link = svg.selectAll(".link")
-                  .data(links)
+                  .data(root.descendants().slice(1))
                   .enter().append("path")
                   .style("fill", "none")
                   .style("stroke", x.options.linkColour)
@@ -96,7 +99,7 @@ HTMLWidgets.widget({
 
     // draw nodes
     var node = svg.selectAll(".node")
-                  .data(nodes)
+                  .data(root.descendants())
                   .enter().append("g")
                   .attr("class", "node")
                   .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
@@ -119,39 +122,39 @@ HTMLWidgets.widget({
         .style("font", x.options.fontSize + "px " + x.options.fontFamily)
         .style("opacity", x.options.opacity)
         .style("fill", x.options.textColour)
-        .text(function(d) { return d.name; });
+        .text(function(d) { return d.data.name; });
 
     // adjust viewBox to fit the bounds of our tree
     s.attr(
         "viewBox",
         [
           d3.min(
-            s.selectAll('.node text')[0].map(function(d){
+            s.selectAll('.node text').nodes().map(function(d){
               return d.getBoundingClientRect().left
             })
           ) - s.node().getBoundingClientRect().left - margin.right,
           d3.min(
-            s.selectAll('.node text')[0].map(function(d){
+            s.selectAll('.node text').nodes().map(function(d){
               return d.getBoundingClientRect().top
             })
           ) - s.node().getBoundingClientRect().top - margin.top,
           d3.max(
-            s.selectAll('.node text')[0].map(function(d){
+            s.selectAll('.node text').nodes().map(function(d){
               return d.getBoundingClientRect().right
             })
           ) -
           d3.min(
-            s.selectAll('.node text')[0].map(function(d){
+            s.selectAll('.node text').nodes().map(function(d){
               return d.getBoundingClientRect().left
             })
           ) + margin.left + margin.right,
           d3.max(
-            s.selectAll('.node text')[0].map(function(d){
+            s.selectAll('.node text').nodes().map(function(d){
               return d.getBoundingClientRect().bottom
             })
           ) -
           d3.min(
-            s.selectAll('.node text')[0].map(function(d){
+            s.selectAll('.node text').nodes().map(function(d){
               return d.getBoundingClientRect().top
             })
           ) + margin.top + margin.bottom
@@ -188,6 +191,11 @@ HTMLWidgets.widget({
         .style("opacity", x.options.opacity);
     }
 
-
+    // convert to radial coordinate system
+    // taken from: https://bl.ocks.org/mbostock/4063550
+    function project(x, y) {
+      var angle = (x - 90) / 180 * Math.PI, radius = y;
+      return [radius * Math.cos(angle), radius * Math.sin(angle)];
+    }
   },
 });
