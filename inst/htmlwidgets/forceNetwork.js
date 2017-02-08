@@ -10,7 +10,7 @@ HTMLWidgets.widget({
         .attr("width", width)
         .attr("height", height);
 
-    return d3.layout.force();
+    return d3.forceSimulation();
   },
 
   resize: function(el, width, height, force) {
@@ -19,7 +19,9 @@ HTMLWidgets.widget({
         .attr("width", width)
         .attr("height", height);
 
-    force.size([width, height]).resume();
+    force.force("xAxis", d3.forceX(width / 2))
+        .force("yAxis", d3.forceY(height / 2))
+        .restart();
   },
 
   renderValue: function(el, x, force) {
@@ -49,26 +51,34 @@ HTMLWidgets.widget({
     var color = eval(options.colourScale);
 
     // set this up even if zoom = F
-    var zoom = d3.behavior.zoom();
+    var zoom = d3.zoom();
 
     // create d3 force layout
     force
       .nodes(d3.values(nodes))
-      .links(links)
-      .size([width, height])
-      .linkDistance(options.linkDistance)
-      .charge(options.charge)
-      .on("tick", tick)
-      .start();
+      .force("link", d3.forceLink(links).distance(options.linkDistance))
+      .force("xAxis", d3.forceX(width / 2))
+      .force("yAxis", d3.forceY(height / 2))
+      .force("charge", d3.forceManyBody().strength(options.charge))
+      .on("tick", tick);
 
-    // thanks http://plnkr.co/edit/cxLlvIlmo1Y6vJyPs6N9?p=preview
-    //  http://stackoverflow.com/questions/22924253/adding-pan-zoom-to-d3js-force-directed
-      var drag = force.drag()
-        .on("dragstart", dragstart)
-      // allow force drag to work with pan/zoom drag
+      var drag = d3.drag()
+        .on("start", dragstart)
+        .on("drag", dragged)
+        .on("end", dragended)
       function dragstart(d) {
-        d3.event.sourceEvent.preventDefault();
-        d3.event.sourceEvent.stopPropagation();
+        if (!d3.event.active) force.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+      }
+      function dragged(d) {
+        d.fx = d3.event.x;
+        d.fy = d3.event.y;
+      }
+      function dragended(d) {
+        if (!d3.event.active) force.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
       }
 
     // select the svg element and remove existing children
@@ -83,9 +93,8 @@ HTMLWidgets.widget({
     // add zooming if requested
     if (options.zoom) {
       function redraw() {
-        d3.select(el).select(".zoom-layer").attr("transform",
-          "translate(" + d3.event.translate + ")"+
-          " scale(" + d3.event.scale + ")");
+        d3.select(el).select(".zoom-layer")
+          .attr("transform", d3.event.transform);
       }
       zoom.on("zoom", redraw)
 
@@ -99,7 +108,7 @@ HTMLWidgets.widget({
 
     // draw links
     var link = svg.selectAll(".link")
-      .data(force.links())
+      .data(links)
       .enter().append("line")
       .attr("class", "link")
       .style("stroke", function(d) { return d.colour ; })
@@ -125,7 +134,7 @@ HTMLWidgets.widget({
       .on("mouseover", mouseover)
       .on("mouseout", mouseout)
       .on("click", click)
-      .call(force.drag);
+      .call(drag);
 
     node.append("circle")
       .attr("r", function(d){return nodeSize(d);})
