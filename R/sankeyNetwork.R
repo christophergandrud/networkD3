@@ -36,10 +36,10 @@
 #' to accomodate long text labels.
 #' @param height numeric height for the network graph's frame area in pixels.
 #' @param width numeric width for the network graph's frame area in pixels.
-#' @param iterations numeric. Number of iterations in the diagramm layout for 
-#' computation of the depth (y-position) of each node. Note: this runs in the 
+#' @param iterations numeric. Number of iterations in the diagramm layout for
+#' computation of the depth (y-position) of each node. Note: this runs in the
 #' browser on the client so don't push it too high.
-#' @param sinksRight boolean. If \code{TRUE}, the last nodes are moved to the 
+#' @param sinksRight boolean. If \code{TRUE}, the last nodes are moved to the
 #' right border of the plot.
 #'
 #' @examples
@@ -49,7 +49,7 @@
 #' URL <- paste0('https://cdn.rawgit.com/christophergandrud/networkD3/',
 #'               'master/JSONdata/energy.json')
 #' energy <- jsonlite::fromJSON(URL)
-#' 
+#'
 #' # Plot
 #' sankeyNetwork(Links = energy$links, Nodes = energy$nodes, Source = 'source',
 #'              Target = 'target', Value = 'value', NodeID = 'name',
@@ -72,22 +72,22 @@
 #'
 #' @export
 
-sankeyNetwork <- function(Links, Nodes, Source, Target, Value, 
-    NodeID, NodeGroup = NodeID, LinkGroup = NULL, units = "", 
-    colourScale = JS("d3.scale.category20()"), fontSize = 7, 
-    fontFamily = NULL, nodeWidth = 15, nodePadding = 10, margin = NULL, 
-    height = NULL, width = NULL, iterations = 32, sinksRight = TRUE) 
+sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
+    NodeID, NodeGroup = NodeID, LinkGroup = NULL, units = "",
+    colourScale = JS("d3.scale.category20()"), fontSize = 7,
+    fontFamily = NULL, nodeWidth = 15, nodePadding = 10, margin = NULL,
+    height = NULL, width = NULL, iterations = 32, sinksRight = TRUE)
 {
     # Check if data is zero indexed
     check_zero(Links[, Source], Links[, Target])
-    
+
     # Hack for UI consistency. Think of improving.
     colourScale <- as.character(colourScale)
-    
+
     # If tbl_df convert to plain data.frame
     Links <- tbl_df_strip(Links)
     Nodes <- tbl_df_strip(Nodes)
-    
+
     # Subset data frames for network graph
     if (!is.data.frame(Links)) {
         stop("Links must be a data frame class object.")
@@ -97,61 +97,61 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
     }
     # if Source or Target are missing assume Source is the first
     # column Target is the second column
-    if (missing(Source)) 
+    if (missing(Source))
         Source = 1
-    if (missing(Target)) 
+    if (missing(Target))
         Target = 2
-    
+
     if (missing(Value)) {
         LinksDF <- data.frame(Links[, Source], Links[, Target])
         names(LinksDF) <- c("source", "target")
     } else if (!missing(Value)) {
-        LinksDF <- data.frame(Links[, Source], Links[, Target], 
+        LinksDF <- data.frame(Links[, Source], Links[, Target],
             Links[, Value])
         names(LinksDF) <- c("source", "target", "value")
     }
-    
+
     # if NodeID is missing assume NodeID is the first column
-    if (missing(NodeID)) 
+    if (missing(NodeID))
         NodeID = 1
     NodesDF <- data.frame(Nodes[, NodeID])
     names(NodesDF) <- c("name")
-    
+
     # add node group if specified
     if (is.character(NodeGroup)) {
         NodesDF$group <- Nodes[, NodeGroup]
     }
-    
+
     if (is.character(LinkGroup)) {
         LinksDF$group <- Links[, LinkGroup]
     }
-    
+
     margin <- margin_handler(margin)
-    
+
     # create options
-    options = list(NodeID = NodeID, NodeGroup = NodeGroup, LinkGroup = LinkGroup, 
-        colourScale = colourScale, fontSize = fontSize, fontFamily = fontFamily, 
-        nodeWidth = nodeWidth, nodePadding = nodePadding, units = units, 
+    options = list(NodeID = NodeID, NodeGroup = NodeGroup, LinkGroup = LinkGroup,
+        colourScale = colourScale, fontSize = fontSize, fontFamily = fontFamily,
+        nodeWidth = nodeWidth, nodePadding = nodePadding, units = units,
         margin = margin, iterations = iterations, sinksRight = sinksRight)
-    
+
     # create widget
-    htmlwidgets::createWidget(name = "sankeyNetwork", x = list(links = LinksDF, 
-        nodes = NodesDF, options = options), width = width, height = height, 
-        htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE), 
+    htmlwidgets::createWidget(name = "sankeyNetwork", x = list(links = LinksDF,
+        nodes = NodesDF, options = options), width = width, height = height,
+        htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE),
         package = "networkD3")
 }
 
 #' @rdname networkD3-shiny
 #' @export
 sankeyNetworkOutput <- function(outputId, width = "100%", height = "500px") {
-    shinyWidgetOutput(outputId, "sankeyNetwork", width, height, 
+    shinyWidgetOutput(outputId, "sankeyNetwork", width, height,
         package = "networkD3")
 }
 
 #' @rdname networkD3-shiny
 #' @export
 renderSankeyNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
-    if (!quoted) 
+    if (!quoted)
         {
             expr <- substitute(expr)
         }  # force quoted

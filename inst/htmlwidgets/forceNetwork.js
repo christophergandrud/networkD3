@@ -148,9 +148,9 @@ HTMLWidgets.widget({
             d.x = Math.max(nodeSize(d), Math.min(width - nodeSize(d), d.x));
             d.y = Math.max(nodeSize(d), Math.min(height - nodeSize(d), d.y));
         }
-        
+
         return "translate(" + d.x + "," + d.y + ")"});
-        
+
       link
         .attr("x1", function(d) { return d.source.x; })
         .attr("y1", function(d) { return d.source.y; })
@@ -177,10 +177,10 @@ HTMLWidgets.widget({
       d3.select(this).select("text").transition()
         .duration(1250)
         .attr("x", 0)
-        .style("font", options.fontSize + "px ") 
+        .style("font", options.fontSize + "px ")
         .style("opacity", options.opacityNoHover);
     }
-    
+
     function click(d) {
       return eval(options.clickAction)
     }
@@ -213,7 +213,7 @@ HTMLWidgets.widget({
           .attr('y', legendRectSize - legendSpacing)
           .text(function(d) { return d; });
     }
-    
+
     // make font-family consistent across all elements
     d3.select(el).selectAll('text').style('font-family', options.fontFamily);
   },

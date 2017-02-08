@@ -9,7 +9,7 @@ HTMLWidgets.widget({
       el.getBoundingClientRect().width,
       el.getBoundingClientRect().height
     );
-    
+
     d3.select(el).append("svg")
       .style("width", "100%")
       .style("height", "100%")
@@ -39,12 +39,12 @@ HTMLWidgets.widget({
     // JSON array with the d3Tree root data
 
     var s = d3.select(el).selectAll("svg");
-    
+
     // when re-rendering the svg, the viewBox attribute set in the code below, will
-    // be affected by the previously set viewBox. This line ensures, that the 
-    // viewBox will always be calculated right. 
+    // be affected by the previously set viewBox. This line ensures, that the
+    // viewBox will always be calculated right.
     s.attr("viewBox", null);
-    
+
     // margin handling
     //   set our default margin to be 20
     //   will override with x.options.margin if provided
@@ -120,7 +120,7 @@ HTMLWidgets.widget({
         .style("opacity", x.options.opacity)
         .style("fill", x.options.textColour)
         .text(function(d) { return d.name; });
-        
+
     // adjust viewBox to fit the bounds of our tree
     s.attr(
         "viewBox",
@@ -156,7 +156,7 @@ HTMLWidgets.widget({
             })
           ) + margin.top + margin.bottom
         ].join(",")
-      );        
+      );
 
 
     // mouseover event handler

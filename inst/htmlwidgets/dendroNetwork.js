@@ -9,19 +9,19 @@ HTMLWidgets.widget({
       .attr("width", width)
       .attr("height", height)
       .append("g");
-    
+
     return d3.layout.cluster();
 
   },
 
   resize: function(el, width, height, tree) {
-    
+
     var s = d3.select(el).selectAll("svg")
       .attr("width", width)
       .attr("height", height);
-    
+
     var margins = s.attr("margins");
-    
+
     var top = parseInt(margins.top),
       right = parseInt(margins.right),
       bottom = parseInt(margins.bottom),
@@ -31,11 +31,11 @@ HTMLWidgets.widget({
     width = width - right - left;
 
     if (s.attr("treeOrientation") == "horizontal") {
-      tree.size([height, width]); 
+      tree.size([height, width]);
     } else {
       tree.size([width, height]);
     }
-    
+
     var svg = d3.select(el).selectAll("svg").select("g")
       .attr("transform", "translate(" + left + "," + top + ")");
 
@@ -56,7 +56,7 @@ HTMLWidgets.widget({
       width = parseInt(s.attr("width")) - right - left;
 
     if (s.attr("treeOrientation") == "horizontal") {
-      tree.size([height, width]); 
+      tree.size([height, width]);
     } else {
       tree.size([width, height]);
     }
@@ -70,7 +70,7 @@ HTMLWidgets.widget({
       .append("g").attr("class","zoom-layer")
       .append("g")
       .attr("transform", "translate(" + left + "," + top + ")");
-      
+
     if (x.options.zoom) {
        zoom.on("zoom", function() {
          d3.select(el).select(".zoom-layer").attr("transform",
@@ -81,43 +81,43 @@ HTMLWidgets.widget({
        d3.select(el).select("svg")
          .attr("pointer-events", "all")
          .call(zoom);
- 
+
      } else {
        zoom.on("zoom", null);
      }
 
     var root = x.root;
-    
-    var xs = [];   
-    var ys = [];   
-    function getXYfromJSONTree(node){           
-       xs.push(node.x);          
-       ys.push(node.y);           
-       if(typeof node.children != 'undefined') {                   
-          for (var j in node.children) {                           
-             getXYfromJSONTree(node.children[j]);                   
-          }           
-       }   
-    }   
-    var ymax = Number.MIN_VALUE;   
+
+    var xs = [];
+    var ys = [];
+    function getXYfromJSONTree(node){
+       xs.push(node.x);
+       ys.push(node.y);
+       if(typeof node.children != 'undefined') {
+          for (var j in node.children) {
+             getXYfromJSONTree(node.children[j]);
+          }
+       }
+    }
+    var ymax = Number.MIN_VALUE;
     var ymin = Number.MAX_VALUE;
-    
-    getXYfromJSONTree(root);          
-    var nodes = tree.nodes(root);           
-    var links = tree.links(nodes);           
-    nodes.forEach( function(d,i){                   
-      if(typeof xs[i] != 'undefined') {                           
-         d.x = xs[i];                   
-      }                   
-      if(typeof ys[i] != 'undefined') {                           
-         d.y = ys[i];                   
-      }           
-    });           
-    nodes.forEach( function(d) {                   
+
+    getXYfromJSONTree(root);
+    var nodes = tree.nodes(root);
+    var links = tree.links(nodes);
+    nodes.forEach( function(d,i){
+      if(typeof xs[i] != 'undefined') {
+         d.x = xs[i];
+      }
+      if(typeof ys[i] != 'undefined') {
+         d.y = ys[i];
+      }
+    });
+    nodes.forEach( function(d) {
       if(d.y > ymax)
          ymax = d.y;
-      if(d.y < ymin)                           
-         ymin = d.y;           
+      if(d.y < ymin)
+         ymin = d.y;
     });
 
     if (s.attr("treeOrientation") == "horizontal") {
@@ -136,7 +136,7 @@ HTMLWidgets.widget({
       .style("stroke", "#ccc")
       .style("opacity", "0.55")
       .style("stroke-width", "1.5px");
-      
+
     if (x.options.linkType == "elbow") {
       if (s.attr("treeOrientation") == "horizontal") {
         link.attr("d", function(d, i) {
@@ -166,7 +166,7 @@ HTMLWidgets.widget({
       .attr("class", "node")
       .on("mouseover", mouseover)
       .on("mouseout", mouseout);
-      
+
     if (s.attr("treeOrientation") == "horizontal") {
       node.attr("transform", function(d) { return "translate(" + fx(d.y) + "," + d.x + ")"; });
     } else {
@@ -188,7 +188,7 @@ HTMLWidgets.widget({
       .style("opacity", function(d) { return d.textOpacity; })
       .style("fill", function(d) { return d.textColour; })
       .text(function(d) { return d.name; });
-      
+
     if (s.attr("treeOrientation") == "horizontal") {
       node.select("text")
         .attr("dx", function(d) { return d.children ? -8 : 8; })
@@ -206,7 +206,7 @@ HTMLWidgets.widget({
       d3.select(this).select("circle").transition()
         .duration(750)
         .attr("r", 9);
-        
+
       d3.select(this).select("text").transition()
         .duration(750)
         .style("stroke-width", ".5px")
@@ -219,7 +219,7 @@ HTMLWidgets.widget({
       d3.select(this).select("circle").transition()
         .duration(750)
         .attr("r", 4.5);
-        
+
       d3.select(this).select("text").transition()
         .duration(750)
         .style("font", x.options.fontSize + "px serif")

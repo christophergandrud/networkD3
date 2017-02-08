@@ -24,7 +24,7 @@ HTMLWidgets.widget({
 
         this.renderValue(el, instance.x, instance);
         */
-        
+
         // with flexdashboard and slides
         //   sankey might be hidden so height and width 0
         //   in this instance re-render on resize
@@ -181,7 +181,7 @@ HTMLWidgets.widget({
             .style("opacity", 0.9)
             .style("cursor", "move")
             .append("title")
-            .text(function(d) { return d.name + "<br>" + format(d.value) + 
+            .text(function(d) { return d.name + "<br>" + format(d.value) +
                 " " + options.units; });
 
         node.append("text")

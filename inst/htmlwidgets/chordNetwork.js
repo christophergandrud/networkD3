@@ -65,7 +65,7 @@ HTMLWidgets.widget({
       .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
       .on("mouseover", fade(.1))
       .on("mouseout", fade(1));
-      
+
       if(x.options.labels) {
         // Forumulas taken from http://sdk.gooddata.com/gooddata-js/example/chord-chart-to-analyze-sales/
         s.append("g").selectAll(".arc")
@@ -93,14 +93,14 @@ HTMLWidgets.widget({
           return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
               + "translate(" + outerRadius + ",0)";
         });
-  
+
       ticks.append("line")
         .attr("x1", 1)
         .attr("y1", 0)
         .attr("x2", 5)
         .attr("y2", 0)
         .style("stroke", "#000");
-  
+
       ticks.append("text")
         .attr("x", 8)
         .attr("dy", ".35em")

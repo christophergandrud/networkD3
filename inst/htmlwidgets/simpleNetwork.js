@@ -38,9 +38,9 @@ HTMLWidgets.widget({
     // get the width and height
     var width = el.offsetWidth;
     var height = el.offsetHeight;
-    
+
     // set this up even if zoom = F
-    var zoom = d3.behavior.zoom();    
+    var zoom = d3.behavior.zoom();
 
     // create d3 force layout
     force
@@ -51,7 +51,7 @@ HTMLWidgets.widget({
       .charge(x.options.charge)
       .on("tick", tick)
       .start();
-     
+
     // thanks http://plnkr.co/edit/cxLlvIlmo1Y6vJyPs6N9?p=preview
     //  http://stackoverflow.com/questions/22924253/adding-pan-zoom-to-d3js-force-directed
   	var drag = force.drag()
@@ -61,7 +61,7 @@ HTMLWidgets.widget({
   	  d3.event.sourceEvent.preventDefault();
   	  d3.event.sourceEvent.stopPropagation();
   	}
-  	
+
     // select the svg element and remove existing children
     var svg = d3.select(el).select("svg");
     svg.selectAll("*").remove();
@@ -79,7 +79,7 @@ HTMLWidgets.widget({
           "translate(" + d3.event.translate + ")"+
           " scale(" + d3.event.scale + ")");
       }
-      
+
       d3.select(el).select("svg")
         .attr("pointer-events", "all")
         .call(zoom);
