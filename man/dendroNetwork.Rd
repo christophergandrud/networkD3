@@ -79,4 +79,3 @@ dendroNetwork(hc, textColour = c("red", "green", "orange")[cutree(hc, 3)],
 }
 
 }
-

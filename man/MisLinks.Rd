@@ -15,4 +15,3 @@ MisLinks
 A data file of links from Knuth's Les Miserables characters data base.
 }
 \keyword{datasets}
-

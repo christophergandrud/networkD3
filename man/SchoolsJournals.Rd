@@ -17,4 +17,3 @@ Edge list of REF (2014) journal submissions for Politics and International
 Relations
 }
 \keyword{datasets}
-

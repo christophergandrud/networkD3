@@ -2,10 +2,9 @@
 % Please edit documentation in R/networkD3.R
 \docType{package}
 \name{networkD3-package}
-\alias{networkD3}
 \alias{networkD3-package}
+\alias{networkD3}
 \title{Tools for Creating D3 Network Graphs from R}
 \description{
 Creates D3 JavaScript network, tree, dendrogram, and Sankey graphs from R.
 }
-

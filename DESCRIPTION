@@ -31,4 +31,4 @@ Suggests:
     jsonlite,
 Enhances: knitr, shiny
 LazyData: true
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

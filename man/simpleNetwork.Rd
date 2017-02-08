@@ -78,4 +78,3 @@ simpleNetwork(NetworkData)
 simpleNetwork(NetworkData, fontFamily = "sans-serif")
 
 }
-

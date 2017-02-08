@@ -109,4 +109,3 @@ diagonalNetwork(List = CanadaPC, fontSize = 10)
 }
 
 }
-

@@ -28,4 +28,3 @@ hc <- hclust(dist(USArrests), "ave")
 radialNetwork(as.radialNetwork(hc))
 
 }
-

@@ -17,4 +17,3 @@ JS(...)
 \description{
 Create character strings that will be evaluated as JavaScript
 }
-

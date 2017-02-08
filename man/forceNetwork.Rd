@@ -10,8 +10,9 @@ specifically for force directed networks
 }
 \usage{
 forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Nodesize, Group,
-  height = NULL, width = NULL, colourScale = JS("d3.scale.category20()"),
-  fontSize = 7, fontFamily = "serif", linkDistance = 50,
+  height = NULL, width = NULL,
+  colourScale = JS("d3.scaleOrdinal(d3.schemeCategory20);"), fontSize = 7,
+  fontFamily = "serif", linkDistance = 50,
   linkWidth = JS("function(d) { return Math.sqrt(d.value); }"),
   radiusCalculation = JS(" Math.sqrt(d.nodesize)+6"), charge = -120,
   linkColour = "#666", opacity = 0.6, zoom = FALSE, legend = FALSE,
@@ -179,4 +180,3 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 \seealso{
 \code{\link{JS}}.
 }
-
