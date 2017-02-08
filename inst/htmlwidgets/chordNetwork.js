@@ -13,7 +13,7 @@ HTMLWidgets.widget({
       .append("g")
       .attr("transform", "translate(" + x / 2 + "," + y / 2 + ")");
 
-    return d3.layout.chord();
+    return d3.chord();
   },
 
   resize: function(el, width, height, chord) {
@@ -40,21 +40,20 @@ HTMLWidgets.widget({
     para.innerHTML = ".chord path { fill-opacity: "+ x.options.initial_opacity +"; stroke: #000; stroke-width: .0px; }"
     document.getElementsByTagName("head")[0].appendChild(para);
 
-    chord.padding(x.options.padding)
-        .sortSubgroups(d3.descending)
-        .matrix(x.matrix);
+    chord.padAngle(x.options.padding)
+        .sortSubgroups(d3.descending);
 
-    var s = d3.select(el).select("g");
+    var s = d3.select(el).select("g").datum(chord(x.matrix));
     var diameter = Math.min(x.options.width, x.options.height);
     var innerRadius = Math.min(x.options.width, x.options.height) * .31;
     var outerRadius = innerRadius * 1.1;
 
     var fill = x.options.colour_scale
-          ?d3.scale.ordinal().domain(x.matrix.length).range(x.options.colour_scale)
-          :(x.matrix.length>10?d3.scale.category20():d3.scale.category10());
+          ?d3.scaleOrdinal().domain(x.matrix.length).range(x.options.colour_scale)
+          :(x.matrix.length>10?d3.schemeCategory20():d3.schemeCategory10());
 
     s.append("g").selectAll("path")
-      .data(chord.groups)
+      .data(function(chords) { return chords.groups; })
       .enter().append("g")
       .attr("class", "pie-slice")
       .append("path")
@@ -62,14 +61,14 @@ HTMLWidgets.widget({
         return fill(d.index);
         })
       .style("stroke", function(d) { return fill(d.index); })
-      .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
+      .attr("d", d3.arc().innerRadius(innerRadius).outerRadius(outerRadius))
       .on("mouseover", fade(.1))
       .on("mouseout", fade(1));
 
       if(x.options.labels) {
         // Forumulas taken from http://sdk.gooddata.com/gooddata-js/example/chord-chart-to-analyze-sales/
         s.append("g").selectAll(".arc")
-          .data(chord.groups)
+          .data(function(chords) { return chords.groups; })
           .enter().append("svg:text")
           .attr("dy", ".35em")
           .attr("text-anchor", function(d) { return ((d.startAngle + d.endAngle) / 2) > Math.PI ? "end" : null; })
@@ -85,7 +84,7 @@ HTMLWidgets.widget({
 
     if(x.options.use_ticks) {
       var ticks = s.append("g").selectAll("g")
-        .data(chord.groups)
+        .data(function(chords) { return chords.groups; })
         .enter().append("g").selectAll("g")
         .data(groupTicks)
         .enter().append("g")
@@ -114,11 +113,11 @@ HTMLWidgets.widget({
     s.append("g")
       .attr("class", "chord")
       .selectAll("path")
-      .data(chord.chords)
+      .data(function(chords) { return chords; })
       .enter().append("path")
-      .attr("d", d3.svg.chord().radius(innerRadius))
+      .attr("d", d3.ribbon().radius(innerRadius))
       .style("fill", function(d) { return fill(d.target.index); })
-      .style("fill-opacity", x.initial_opacity);
+      .style("fill-opacity", x.options.initial_opacity);
 
     function groupTicks(d) {
       var k = (d.endAngle - d.startAngle) / d.value;
