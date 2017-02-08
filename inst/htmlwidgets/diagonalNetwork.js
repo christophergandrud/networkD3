@@ -10,7 +10,7 @@ HTMLWidgets.widget({
       .style("height", "100%")
       .append("g")
       .attr("transform", "translate(40,0)");
-    return d3.layout.tree();
+    return d3.tree();
 
   },
 
@@ -72,16 +72,19 @@ HTMLWidgets.widget({
 
     var svg = d3.select(el).selectAll("g");
 
-    var root = x.root;
-    var nodes = tree.nodes(root),
-      links = tree.links(nodes);
+    var root = d3.hierarchy(x.root);
+    tree(root);
 
-    var diagonal = d3.svg.diagonal()
-      .projection(function(d) { return [d.y, d.x]; });
+    var diagonal = function(d, i) {
+      return "M" + d.source.y + "," + d.source.x
+                  + "C" + (d.source.y + d.target.y) / 2 + "," + d.source.x
+                  + " " + (d.source.y + d.target.y) / 2 + "," + d.target.x
+                  + " " + d.target.y + "," + d.target.x;
+    };
 
     // draw links
     var link = svg.selectAll(".link")
-      .data(links)
+      .data(root.links())
       .enter().append("path")
       .style("fill", "none")
       .style("stroke", x.options.linkColour)
@@ -91,7 +94,7 @@ HTMLWidgets.widget({
 
     // draw nodes
     var node = svg.selectAll(".node")
-      .data(nodes)
+      .data(root.descendants())
       .enter().append("g")
       .attr("class", "node")
       .attr("transform", function(d) {
@@ -118,39 +121,39 @@ HTMLWidgets.widget({
         .style("font", x.options.fontSize + "px " + x.options.fontFamily)
         .style("opacity", x.options.opacity)
         .style("fill", x.options.textColour)
-        .text(function(d) { return d.name; });
+        .text(function(d) { return d.data.name; });
 
     // adjust viewBox to fit the bounds of our tree
     s.attr(
         "viewBox",
         [
           d3.min(
-            s.selectAll('.node text')[0].map(function(d){
+            s.selectAll('.node text').nodes().map(function(d){
               return d.getBoundingClientRect().left
             })
           ) - s.node().getBoundingClientRect().left - margin.right,
           d3.min(
-            s.selectAll('.node text')[0].map(function(d){
+            s.selectAll('.node text').nodes().map(function(d){
               return d.getBoundingClientRect().top
             })
           ) - s.node().getBoundingClientRect().top - margin.top,
           d3.max(
-            s.selectAll('.node text')[0].map(function(d){
+            s.selectAll('.node text').nodes().map(function(d){
               return d.getBoundingClientRect().right
             })
           ) -
           d3.min(
-            s.selectAll('.node text')[0].map(function(d){
+            s.selectAll('.node text').nodes().map(function(d){
               return d.getBoundingClientRect().left
             })
           ) + margin.left + margin.right,
           d3.max(
-            s.selectAll('.node text')[0].map(function(d){
+            s.selectAll('.node text').nodes().map(function(d){
               return d.getBoundingClientRect().bottom
             })
           ) -
           d3.min(
-            s.selectAll('.node text')[0].map(function(d){
+            s.selectAll('.node text').nodes().map(function(d){
               return d.getBoundingClientRect().top
             })
           ) + margin.top + margin.bottom
