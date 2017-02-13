@@ -39,7 +39,7 @@ Issues/suggestions <a href="https://github.com/christophergandrud/networkD3/issu
 </p>
 
 [Christopher Gandrud](http://christophergandrud.blogspot.com/),
-[JJ Allaire](https://github.com/jjallaire), & [Kent Russell](http://buildingwidgets.com)
+[JJ Allaire](https://github.com/jjallaire), [Kent Russell](http://buildingwidgets.com), & CJ Yetman
 
 `r Sys.Date()`
 
@@ -63,7 +63,7 @@ Issues/suggestions <a href="https://github.com/christophergandrud/networkD3/issu
 
 <h2><i class="fa fa-thumb-tack"></i> About</h2>
 
-This is a port of Christopher Gandrud's R package
+This started as a port of Christopher Gandrud's R package
 [d3Network](http://christophergandrud.github.io/d3Network/) for creating
 [D3](http://d3js.org/) network graphs to the
 [htmlwidgets](https://github.com/ramnathv/htmlwidgets) framework. The
@@ -73,14 +73,16 @@ Pane, [RMarkdown](http://rmarkdown.rstudio.com/), and
 [Shiny web apps](http://shiny.rstudio.com/).
 See <a href="#networkD3output">below</a> for examples.
 
-It currently supports three types of network graphs:
+It currently supports the following types of network graphs:
 
 - **Force directed networks** with <a href="#simple"><code>simpleNetwork</code></a> and
 <a href="#force"><code>forceNetwork</code></a>
 
 - **Sankey diagrams** with <a href="#sankey"><code>sankeyNetwork</code></a>
 
-- **[Reingold-Tilford Tree graphs](http://bl.ocks.org/mbostock/4339184)** with `treeNetwork`
+- **Radial networks** with <a href="#radial"><code>radialNetwork</code></a>
+
+- **Dendro networks** with <a href="#dendro"><code>dendroNetwork</code></a>
 
 <!-- Install -->
 
@@ -162,7 +164,7 @@ sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
              units = "TWh", fontSize = 12, nodeWidth = 30)
 ```
 
-<a href="#sankey"><h3 id="sankey"><code>> radialNetwork</code></h3></a>
+<a href="#radial"><h3 id="radial"><code>> radialNetwork</code></h3></a>
 
 From version 0.2, tree diagrams can be created using `radialNetwork` or `diagonalNetwork`.
 
@@ -182,7 +184,7 @@ radialNetwork(List = Flare, fontSize = 10, opacity = 0.9)
 diagonalNetwork(List = Flare, fontSize = 10, opacity = 0.9)
 ```
 
-<a href="#sankey"><h3 id="sankey"><code>> dendroNetwork</code></h3></a>
+<a href="#dendro"><h3 id="dendro"><code>> dendroNetwork</code></h3></a>
 
 From version 0.2, it is also possible to create dendrograms using `dendroNetwork`.
 
