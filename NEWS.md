@@ -1,5 +1,11 @@
 # All changes to networkD3 are documented here.
 
+## 0.3
+
+- Upgraded to d3.js version 4.5.0 from version 3.5.2. HUGE thanks to CJ Yetman
+who did basically all of the work for this. #143
+
+
 ## 0.2.14
 
 - Explose `sinksRight` option for `sankeyNetwork` so that users can decide

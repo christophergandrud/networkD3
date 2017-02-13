@@ -3,19 +3,20 @@ Type: Package
 Title: D3 JavaScript Network Graphs from R
 Description: Creates 'D3' 'JavaScript' network, tree, dendrogram, and Sankey
     graphs from 'R'.
-Version: 0.2.14
-Date: 2016-09-11
+Version: 0.3
+Date: 2017-02-13
 Authors@R: c(
+    person("J.J.", "Allaire", role = "aut"),
+    person("Peter", "Ellis", role = "ctb"),
     person("Christopher", "Gandrud", email = "christopher.gandrud@gmail.com",
     role = c("aut", "cre")),
-    person("J.J.", "Allaire", role = "aut"),
-    person("Kenton", "Russell", role = "aut"),
-    person("B.W.", "Lewis", role = "ctb"),
     person("Kevin", "Kuo", role = "ctb"),
-    person("Charles", "Sese", role = "ctb"),
-    person("Peter", "Ellis", role = "ctb"),
+    person("B.W.", "Lewis", role = "ctb"),
     person("Jonathan", "Owen", role = "ctb"),
-    person("Jennifer","Rogers", role = "ctb")
+    person("Kenton", "Russell", role = "aut"),
+    person("Jennifer","Rogers", role = "ctb"),
+    person("Charles", "Sese", role = "ctb"),
+    person("CJ", "Yetman", role = "ctb")
     )
 URL: http://cran.r-project.org/package=networkD3
 BugReports: https://github.com/christophergandrud/networkD3/issues
