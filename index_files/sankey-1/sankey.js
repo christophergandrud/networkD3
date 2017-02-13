@@ -164,12 +164,15 @@ d3.sankey = function() {
       }
     }
 
-    // Optionally move pure sinks always to the right.
+    // Optionally move pure sinks always to the right, and scale node breadths
     if (sinksRight) {
       moveSinksRight(x);
+      scaleNodeBreadths((size[0] - nodeWidth) / (x - 1));
+    } else {
+      scaleNodeBreadths((size[0] - nodeWidth) / x);
     }
 
-    scaleNodeBreadths((size[0] - nodeWidth) / (x - 1));
+    
   }
 
   // Find a link that breaks a cycle in the graph (if any).
