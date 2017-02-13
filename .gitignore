@@ -2,4 +2,9 @@
 .Rhistory
 .RData
 .DS_Store
+<<<<<<< HEAD
 .sass-cache/*
+=======
+.sass-cache
+.*.Rnb.cached
+>>>>>>> b2767b3648f674d5ac3074e4ad7f063812f68a74

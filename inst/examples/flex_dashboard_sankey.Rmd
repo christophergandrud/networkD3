@@ -1,0 +1,41 @@
+---
+title: "sankey in flex dashboard"
+author: "Kenton Russell"
+output: 
+  flexdashboard::flex_dashboard:
+    mathjax: null
+---
+
+**See [StackOverflow](http://stackoverflow.com/questions/38019858/multi-page-flex-dashboard-plots-with-incorrect-zoom-levels/38127540#38127540)**
+
+Page 1
+==================
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(networkD3)
+
+URL <- paste0(
+        "https://cdn.rawgit.com/christophergandrud/networkD3/",
+        "master/JSONdata/energy.json")
+Energy <- jsonlite::fromJSON(URL)
+# Plot
+s1<-sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             units = "TWh", fontSize = 12, nodeWidth = 30)
+```
+
+### Page 1
+
+```{r}
+  s1
+
+```
+
+Page 2
+==================
+
+### Page 2
+
+```{r}
+s1
+```

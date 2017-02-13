@@ -1,7 +1,12 @@
-# Tools for creating D3 JavaScript network graphs from R
+# D3 JavaScript Network Graphs from R
 
-Version 0.7
+Version 0.2.13
+[![CRAN Version](http://www.r-pkg.org/badges/version/networkD3)](http://cran.r-project.org/package=networkD3)
+[![Build Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://travis-ci.org/christophergandrud/networkD3)
+![CRAN Monthly Downloads](http://cranlogs.r-pkg.org/badges/last-month/networkD3)
+![CRAN Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/networkD3)
 
+<<<<<<< HEAD
 This is a port of Christopher Gandrud's
 [d3Network](http://christophergandrud.github.io/d3Network/) package to the
 [htmlwidgets](https://github.com/ramnathv/htmlwidgets) framework.
@@ -16,6 +21,10 @@ install_github(c('rstudio/htmltools',
                  'ramnathv/htmlwidgets',
                  'christophergandrud/networkD3'))
 ```
+=======
+This README includes information on set up and a number of basic examples.
+For more information see the package's [main page](http://christophergandrud.github.io/networkD3/).
+>>>>>>> b2767b3648f674d5ac3074e4ad7f063812f68a74
 
 ## Usage
 
@@ -48,16 +57,17 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 Here's `sankeyNetwork` using a downloaded JSON data file:
 
 ```R
+<<<<<<< HEAD
+=======
+# Recreate Bostock Sankey diagram: http://bost.ocks.org/mike/sankey/
+>>>>>>> b2767b3648f674d5ac3074e4ad7f063812f68a74
 # Load energy projection data
-library(RCurl)
-URL <- "https://raw.githubusercontent.com/christophergandrud/networkD3/master/JSONdata/energy.json"
-Energy <- getURL(URL, ssl.verifypeer = FALSE)
-
-# Convert to data frame
-EngLinks <- JSONtoDF(jsonStr = Energy, array = "links")
-EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
+URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
+              "master/JSONdata/energy.json")
+Energy <- jsonlite::fromJSON(URL)
 
 # Plot
+<<<<<<< HEAD
 sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
               Target = "target", Value = "value", NodeID = "name",
               fontsize = 12, nodeWidth = 30)
@@ -89,6 +99,32 @@ Finally, `dendroNetwork` can be used to create a dendrogram:
 hc <- hclust(dist(USArrests), "ave")
 
 dendroNetwork(hc, height = 600)
+=======
+sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             units = "TWh", fontSize = 12, nodeWidth = 30)
+```
+### Interacting with igraph
+
+You can use [igraph](http://igraph.org/r/) to create network graph data that can be plotted with **networkD3**. The `igraph_to_networkD3` function converts igraph graphs to lists that work well with **networkD3**. For example:
+
+```R
+# Load igraph
+library(igraph)
+
+# Use igraph to make the graph and find membership
+karate <- make_graph("Zachary")
+wc <- cluster_walktrap(karate)
+members <- membership(wc)
+
+# Convert to object suitable for networkD3
+karate_d3 <- igraph_to_networkD3(karate, group = members)
+
+# Create force directed network plot
+forceNetwork(Links = karate_d3$links, Nodes = karate_d3$nodes, 
+             Source = 'source', Target = 'target', NodeID = 'name', 
+             Group = 'group')
+>>>>>>> b2767b3648f674d5ac3074e4ad7f063812f68a74
 ```
 
 ### Saving to an external file
@@ -100,3 +136,10 @@ library(magrittr)
 
 simpleNetwork(networkData) %>% saveNetwork(file = 'Net1.html')
 ```
+
+## Note
+
+networkD3 began as a port of
+[d3Network](http://christophergandrud.github.io/d3Network/) package to the
+[htmlwidgets](https://github.com/ramnathv/htmlwidgets) framework. d3Network is 
+no longer supported.

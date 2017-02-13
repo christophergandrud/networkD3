@@ -2,4 +2,5 @@
 ^\.Rproj\.user$
 ^JSONdata
 .travis.yml
-TODO.md
+.sass-cache
+^.*\.o$

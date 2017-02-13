@@ -1,0 +1,64 @@
+---
+title: "R Markdown networkD3"
+output: 
+  html_document:
+    toc: true
+---
+
+## simpleNetwork
+
+```{r}
+library(networkD3)
+src <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
+target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
+networkData <- data.frame(src, target)
+simpleNetwork(networkData)
+```
+
+
+## forceNetwork
+
+```{r}
+data(MisLinks)
+data(MisNodes)
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Group = "group", opacity = 0.4)
+```
+
+
+# sankeyNetwork
+
+```{r}
+URL <- "https://raw.githubusercontent.com/christophergandrud/d3Network/sankey/JSONdata/energy.json"
+Energy <- RCurl::getURL(URL, ssl.verifypeer = FALSE)
+EngLinks <- JSONtoDF(jsonStr = Energy, array = "links")
+EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
+
+sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
+              Target = "target", Value = "value", NodeID = "name",
+              fontSize = 12, nodeWidth = 30)
+```
+
+# diagonalNetwork
+
+```{r}
+Flare <- RCurl::getURL("https://gist.githubusercontent.com/mbostock/4063550/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json")
+Flare <- rjson::fromJSON(Flare)
+diagonalNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0)
+```
+
+# radialNetwork
+
+```{r}
+Flare <- RCurl::getURL("https://gist.githubusercontent.com/mbostock/4063550/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json")
+Flare <- rjson::fromJSON(Flare)
+radialNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0)
+```
+
+# dendroNetwork
+
+```{r}
+hc <- hclust(dist(USArrests), "ave")
+dendroNetwork(hc, height = 600)
+```
