@@ -16,7 +16,7 @@ Authors@R: c(
     person("Kenton", "Russell", role = "aut"),
     person("Jennifer","Rogers", role = "ctb"),
     person("Charles", "Sese", role = "ctb"),
-    person("CJ", "Yetman", role = "ctb")
+    person("CJ", "Yetman", role = "aut")
     )
 URL: http://cran.r-project.org/package=networkD3
 BugReports: https://github.com/christophergandrud/networkD3/issues
