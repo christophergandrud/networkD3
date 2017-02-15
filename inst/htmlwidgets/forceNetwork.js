@@ -134,7 +134,7 @@ HTMLWidgets.widget({
           .enter().append("marker")
             .attr("id", function(d) { return "arrow-" + d.key; })
             .attr("viewBox", "0, -5, 10, 10")
-            .attr("refX", 15)
+            .attr("refX", 0)
             .attr("markerWidth", 4)
             .attr("markerHeight", 4)
             .attr("orient", "auto")
@@ -181,11 +181,22 @@ HTMLWidgets.widget({
 
         return "translate(" + d.x + "," + d.y + ")"});
 
+      function idx(d, type) {
+        var linkWidthFunc = eval("(" + options.linkWidth + ")");
+			  var a = d.target.x - d.source.x;
+			  var b = d.target.y - d.source.y;
+			  var c = Math.sqrt(a**2 + b**2);
+  			if (type == "x1") return (d.source.x + ((nodeSize(d.source) * a) / c));
+  			if (type == "y1") return (d.source.y + ((nodeSize(d.source) * b) / c));
+  			if (type == "x2") return (d.target.x - ((((5 * linkWidthFunc(d)) + nodeSize(d.target)) * a) / c));
+  			if (type == "y2") return (d.target.y - ((((5 * linkWidthFunc(d)) + nodeSize(d.target)) * b) / c));
+		  }
+
       link
-        .attr("x1", function(d) { return d.source.x; })
-        .attr("y1", function(d) { return d.source.y; })
-        .attr("x2", function(d) { return d.target.x; })
-        .attr("y2", function(d) { return d.target.y; });
+        .attr("x1", function(d) { return idx(d, "x1"); })
+        .attr("y1", function(d) { return idx(d, "y1"); })
+        .attr("x2", function(d) { return idx(d, "x2"); })
+        .attr("y2", function(d) { return idx(d, "y2"); });
     }
 
     function mouseover() {
