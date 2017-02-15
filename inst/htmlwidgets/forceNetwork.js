@@ -124,6 +124,27 @@ HTMLWidgets.widget({
             .style("opacity", options.opacity);
       });
 
+    if (options.arrows) {
+      link.style("marker-end",  function(d) { return "url(#arrow-" + d.colour + ")"; });
+
+      var linkColoursArr = d3.nest().key(function(d) { return d.colour; }).entries(links);
+
+      svg.append("defs").selectAll("marker")
+          .data(linkColoursArr)
+          .enter().append("marker")
+            .attr("id", function(d) { return "arrow-" + d.key; })
+            .attr("viewBox", "0, -5, 10, 10")
+            .attr("refX", 15)
+            .attr("markerWidth", 4)
+            .attr("markerHeight", 4)
+            .attr("orient", "auto")
+            .style("fill", "context-fill")
+            .style("fill", function(d) { return d.key; })
+            .style("opacity", options.opacity)
+          .append("path")
+            .attr("d", "M0,-5 L10,0 L0,5");
+    }
+
     // draw nodes
     var node = svg.selectAll(".node")
       .data(force.nodes())
