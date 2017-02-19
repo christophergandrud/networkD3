@@ -52,8 +52,8 @@
 #'
 #' @export
 simpleNetwork <- function(Data,
-                          Source = NULL,
-                          Target = NULL,
+                          Source = 1,
+                          Target = 2,
                           height = NULL,
                           width = NULL,
                           linkDistance = 50,
@@ -71,48 +71,53 @@ simpleNetwork <- function(Data,
     if (!is.data.frame(Data))
         stop("data must be a data frame class object.")
 
-    # If tbl_df convert to plain data.frame
-    Data <- tbl_df_strip(Data)
-
-    # create links data
-    if (is.null(Source) && is.null(Target))
-        links <- Data[, 1:2]
-    else if (!is.null(Source) && !is.null(Target))
-        links <- data.frame(Data[, Source], Data[, Target])
-    names(links) <- c("source", "target")
+    sources <- Data[[Source]]
+    targets <- Data[[Target]]
 
     # Check if data is zero indexed
-    check_zero(links[, 'source'], links[, 'target'])
+    check_zero(sources, targets)
+
+    # create nodes data
+    node_names <- factor(sort(unique(c(as.character(sources), as.character(targets)))))
+    nodes <- data.frame(name = node_names, group = 1, size = 8)
+
+    # create links data
+    links <- data.frame(source = match(sources, node_names) - 1,
+                        target = match(targets, node_names) - 1,
+                        value = 1)
 
     # create options
     options = list(
+        Links = links,
+        Nodes = nodes,
+        Source = 'source',
+        Target = 'target',
+        Value = 'value',
+        NodeID = 'name',
+        Group = 'group',
         linkDistance = linkDistance,
         charge = charge,
         fontSize = fontSize,
         fontFamily = fontFamily,
         linkColour = linkColour,
-        nodeColour = nodeColour,
-        nodeClickColour = nodeClickColour,
-        textColour = textColour,
+        colourScale = JS(paste0("d3.scaleOrdinal(['", nodeColour, "'])")),
+        # nodeClickColour = nodeClickColour,
+        # textColour = textColour,
         opacity = opacity,
-        zoom = zoom
+        zoom = zoom,
+        radiusCalculation = JS("d.nodesize"),
+        Nodesize = 'size',
+        linkWidth = "'1.5px'.toString()",
+        opacityNoHover = 1
     )
 
-    # create widget
-    htmlwidgets::createWidget(
-        name = "simpleNetwork",
-        x = list(links = links, options = options),
-        width = width,
-        height = height,
-        htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE),
-        package = "networkD3"
-    )
+    do.call(forceNetwork, options)
 }
 
 #' @rdname networkD3-shiny
 #' @export
 simpleNetworkOutput <- function(outputId, width = "100%", height = "500px") {
-    shinyWidgetOutput(outputId, "simpleNetwork", width, height,
+    shinyWidgetOutput(outputId, "forceNetwork", width, height,
                         package = "networkD3")
 }
 
