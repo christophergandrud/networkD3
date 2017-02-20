@@ -44,6 +44,17 @@ HTMLWidgets.widget({
     var links = HTMLWidgets.dataframeToD3(x.links);
     var nodes = HTMLWidgets.dataframeToD3(x.nodes);
 
+    // create linkedByIndex to quickly search for node neighbors
+    // adapted from: http://stackoverflow.com/a/8780277/4389763
+    var linkedByIndex = {};
+    links.forEach(function(d) {
+      linkedByIndex[d.source + "," + d.target] = 1;
+      linkedByIndex[d.target + "," + d.source] = 1;
+    });
+    function neighboring(a, b) {
+      return linkedByIndex[a.index + "," + b.index];
+    }
+
     // get the width and height
     var width = el.offsetWidth;
     var height = el.offsetHeight;
@@ -167,7 +178,18 @@ HTMLWidgets.widget({
         .attr("y2", function(d) { return d.target.y; });
     }
 
-    function mouseover() {
+    function mouseover(d) {
+      // unfocus non-connected links and nodes
+      //if (options.focusOnHover) {
+        var unfocusDivisor = 4;
+
+        link.transition().duration(200)
+          .style("opacity", function(l) { return d != l.source && d != l.target ? +options.opacity / unfocusDivisor : +options.opacity });
+
+        node.transition().duration(200)
+          .style("opacity", function(o) { return d.index == o.index || neighboring(d, o) ? +options.opacity : +options.opacity / unfocusDivisor; });
+      //}
+
       d3.select(this).select("circle").transition()
         .duration(750)
         .attr("r", function(d){return nodeSize(d)+5;});
@@ -180,6 +202,9 @@ HTMLWidgets.widget({
     }
 
     function mouseout() {
+      node.style("opacity", +options.opacity);
+      link.style("opacity", +options.opacity);
+
       d3.select(this).select("circle").transition()
         .duration(750)
         .attr("r", function(d){return nodeSize(d);});
