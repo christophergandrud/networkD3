@@ -34,7 +34,7 @@ data(MisNodes)
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4,
-             colourScale = "d3.scale.category20b()")
+             colourScale = JS("d3.scaleOrdinal(d3.schemeCategory20);"))
 ```
 
 Here's `sankeyNetwork` using a downloaded JSON data file:

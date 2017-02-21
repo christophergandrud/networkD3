@@ -1,5 +1,9 @@
 # All changes to networkD3 are documented here.
 
+## 0.3.1
+
+- Improved examples for d3.js v4+
+
 ## 0.3
 
 - Upgraded to d3.js version 4.5.0 from version 3.5.2. HUGE thanks to CJ Yetman
