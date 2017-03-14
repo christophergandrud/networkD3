@@ -185,7 +185,7 @@ HTMLWidgets.widget({
         var linkWidthFunc = eval("(" + options.linkWidth + ")");
 			  var a = d.target.x - d.source.x;
 			  var b = d.target.y - d.source.y;
-			  var c = Math.sqrt(a**2 + b**2);
+			  var c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
   			if (type == "x1") return (d.source.x + ((nodeSize(d.source) * a) / c));
   			if (type == "y1") return (d.source.y + ((nodeSize(d.source) * b) / c));
   			if (type == "x2") return (d.target.x - ((((5 * linkWidthFunc(d)) + nodeSize(d.target)) * a) / c));
