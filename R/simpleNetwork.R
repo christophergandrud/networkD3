@@ -26,11 +26,6 @@
 #'   lines to be. Multiple formats supported (e.g. hexadecimal).
 #' @param nodeColour character string specifying the colour you want the node
 #'   circles to be. Multiple formats supported (e.g. hexadecimal).
-#' @param nodeClickColour character string specifying the colour you want the
-#'   node circles to be when they are clicked. Also changes the colour of the
-#'   text. Multiple formats supported (e.g. hexadecimal).
-#' @param textColour character string specifying the colour you want the text to
-#'   be before they are clicked. Multiple formats supported (e.g. hexadecimal).
 #' @param opacity numeric value of the proportion opaque you would like the
 #'   graph elements to be.
 #' @param zoom logical value to enable (\code{TRUE}) or disable (\code{FALSE})
@@ -62,8 +57,6 @@ simpleNetwork <- function(Data,
                           fontFamily = "serif",
                           linkColour = "#666",
                           nodeColour = "#3182bd",
-                          nodeClickColour = "#E34A33",
-                          textColour = "#3182bd",
                           opacity = 0.6,
                           zoom = F)
 {
@@ -101,8 +94,6 @@ simpleNetwork <- function(Data,
         fontFamily = fontFamily,
         linkColour = linkColour,
         colourScale = JS(paste0("d3.scaleOrdinal(['", nodeColour, "'])")),
-        # nodeClickColour = nodeClickColour,
-        # textColour = textColour,
         opacity = opacity,
         zoom = zoom,
         radiusCalculation = JS("d.nodesize"),
