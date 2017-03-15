@@ -10,7 +10,7 @@ D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
 }
 \usage{
 simpleNetwork(Data, Source = NULL, Target = NULL, height = NULL,
-  width = NULL, linkDistance = 50, charge = -200, fontSize = 7,
+  width = NULL, linkDistance = 50, charge = -30, fontSize = 7,
   fontFamily = "serif", linkColour = "#666", nodeColour = "#3182bd",
   nodeClickColour = "#E34A33", textColour = "#3182bd", opacity = 0.6,
   zoom = F)

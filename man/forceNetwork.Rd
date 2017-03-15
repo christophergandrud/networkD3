@@ -14,7 +14,7 @@ forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Nodesize, Group,
   colourScale = JS("d3.scaleOrdinal(d3.schemeCategory20);"), fontSize = 7,
   fontFamily = "serif", linkDistance = 50,
   linkWidth = JS("function(d) { return Math.sqrt(d.value); }"),
-  radiusCalculation = JS(" Math.sqrt(d.nodesize)+6"), charge = -120,
+  radiusCalculation = JS(" Math.sqrt(d.nodesize)+6"), charge = -30,
   linkColour = "#666", opacity = 0.6, zoom = FALSE, legend = FALSE,
   bounded = FALSE, opacityNoHover = 0, clickAction = NULL)
 }
