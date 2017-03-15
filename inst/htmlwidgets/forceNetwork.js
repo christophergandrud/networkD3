@@ -60,6 +60,8 @@ HTMLWidgets.widget({
       .force("charge", d3.forceManyBody().strength(options.charge))
       .on("tick", tick);
 
+    force.alpha(1).restart();
+
       var drag = d3.drag()
         .on("start", dragstart)
         .on("drag", dragged)
