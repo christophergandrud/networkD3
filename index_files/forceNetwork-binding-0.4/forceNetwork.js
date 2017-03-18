@@ -19,8 +19,7 @@ HTMLWidgets.widget({
         .attr("width", width)
         .attr("height", height);
 
-    force.force("xAxis", d3.forceX(width / 2))
-        .force("yAxis", d3.forceY(height / 2))
+    force.force("center", d3.forceCenter(width / 2, height / 2))
         .restart();
   },
 
@@ -44,6 +43,17 @@ HTMLWidgets.widget({
     var links = HTMLWidgets.dataframeToD3(x.links);
     var nodes = HTMLWidgets.dataframeToD3(x.nodes);
 
+    // create linkedByIndex to quickly search for node neighbors
+    // adapted from: http://stackoverflow.com/a/8780277/4389763
+    var linkedByIndex = {};
+    links.forEach(function(d) {
+      linkedByIndex[d.source + "," + d.target] = 1;
+      linkedByIndex[d.target + "," + d.source] = 1;
+    });
+    function neighboring(a, b) {
+      return linkedByIndex[a.index + "," + b.index];
+    }
+
     // get the width and height
     var width = el.offsetWidth;
     var height = el.offsetHeight;
@@ -57,10 +67,11 @@ HTMLWidgets.widget({
     force
       .nodes(d3.values(nodes))
       .force("link", d3.forceLink(links).distance(options.linkDistance))
-      .force("xAxis", d3.forceX(width / 2))
-      .force("yAxis", d3.forceY(height / 2))
+      .force("center", d3.forceCenter(width / 2, height / 2))
       .force("charge", d3.forceManyBody().strength(options.charge))
       .on("tick", tick);
+
+    force.alpha(1).restart();
 
       var drag = d3.drag()
         .on("start", dragstart)
@@ -124,6 +135,27 @@ HTMLWidgets.widget({
             .style("opacity", options.opacity);
       });
 
+    if (options.arrows) {
+      link.style("marker-end",  function(d) { return "url(#arrow-" + d.colour + ")"; });
+
+      var linkColoursArr = d3.nest().key(function(d) { return d.colour; }).entries(links);
+
+      svg.append("defs").selectAll("marker")
+          .data(linkColoursArr)
+          .enter().append("marker")
+            .attr("id", function(d) { return "arrow-" + d.key; })
+            .attr("viewBox", "0, -5, 10, 10")
+            .attr("refX", 0)
+            .attr("markerWidth", 4)
+            .attr("markerHeight", 4)
+            .attr("orient", "auto")
+            .style("fill", "context-fill")
+            .style("fill", function(d) { return d.key; })
+            .style("opacity", options.opacity)
+          .append("path")
+            .attr("d", "M0,-5 L10,0 L0,5");
+    }
+
     // draw nodes
     var node = svg.selectAll(".node")
       .data(force.nodes())
@@ -160,14 +192,41 @@ HTMLWidgets.widget({
 
         return "translate(" + d.x + "," + d.y + ")"});
 
+      function idx(d, type) {
+        var linkWidthFunc = eval("(" + options.linkWidth + ")");
+			  var a = d.target.x - d.source.x;
+			  var b = d.target.y - d.source.y;
+			  var c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+  			if (type == "x1") return (d.source.x + ((nodeSize(d.source) * a) / c));
+  			if (type == "y1") return (d.source.y + ((nodeSize(d.source) * b) / c));
+  			if (options.arrows) {
+  			  if (type == "x2") return (d.target.x - ((((5 * linkWidthFunc(d)) + nodeSize(d.target)) * a) / c));
+  			  if (type == "y2") return (d.target.y - ((((5 * linkWidthFunc(d)) + nodeSize(d.target)) * b) / c));
+  			} else {
+  			  if (type == "x2") return (d.target.x - ((nodeSize(d.target) * a) / c));
+  			  if (type == "y2") return (d.target.y - ((nodeSize(d.target) * b) / c));
+  			}
+		  }
+
       link
-        .attr("x1", function(d) { return d.source.x; })
-        .attr("y1", function(d) { return d.source.y; })
-        .attr("x2", function(d) { return d.target.x; })
-        .attr("y2", function(d) { return d.target.y; });
+        .attr("x1", function(d) { return idx(d, "x1"); })
+        .attr("y1", function(d) { return idx(d, "y1"); })
+        .attr("x2", function(d) { return idx(d, "x2"); })
+        .attr("y2", function(d) { return idx(d, "y2"); });
     }
 
-    function mouseover() {
+    function mouseover(d) {
+      // unfocus non-connected links and nodes
+      //if (options.focusOnHover) {
+        var unfocusDivisor = 4;
+
+        link.transition().duration(200)
+          .style("opacity", function(l) { return d != l.source && d != l.target ? +options.opacity / unfocusDivisor : +options.opacity });
+
+        node.transition().duration(200)
+          .style("opacity", function(o) { return d.index == o.index || neighboring(d, o) ? +options.opacity : +options.opacity / unfocusDivisor; });
+      //}
+
       d3.select(this).select("circle").transition()
         .duration(750)
         .attr("r", function(d){return nodeSize(d)+5;});
@@ -180,6 +239,9 @@ HTMLWidgets.widget({
     }
 
     function mouseout() {
+      node.style("opacity", +options.opacity);
+      link.style("opacity", +options.opacity);
+
       d3.select(this).select("circle").transition()
         .duration(750)
         .attr("r", function(d){return nodeSize(d);});
