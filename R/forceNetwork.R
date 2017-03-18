@@ -49,6 +49,7 @@
 #' @param zoom logical value to enable (\code{TRUE}) or disable (\code{FALSE})
 #' zooming.
 #' @param legend logical value to enable node colour legends.
+#' @param arrows logical value to enable directional link arrows.
 #' @param bounded logical value to enable (\code{TRUE}) or disable
 #' (\code{FALSE}) the bounding box limiting the graph's extent. See
 #' \url{http://bl.ocks.org/mbostock/1129492}.
@@ -160,6 +161,7 @@ forceNetwork <- function(Links,
                          opacity = 0.6,
                          zoom = FALSE,
                          legend = FALSE,
+                         arrows = FALSE,
                          bounded = FALSE,
                          opacityNoHover = 0,
                          clickAction = NULL)
@@ -219,6 +221,7 @@ forceNetwork <- function(Links,
             opacity = opacity,
             zoom = zoom,
             legend = legend,
+            arrows = arrows,
             nodesize = nodesize,
             radiusCalculation = radiusCalculation,
             bounded = bounded,
