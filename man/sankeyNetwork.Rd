@@ -47,7 +47,7 @@ data frame. Must be 0-indexed.}
 
 \item{colourScale}{character string specifying the categorical colour
 scale for the nodes. See
-\url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.}
+\url{https://github.com/d3/d3/blob/master/API.md#ordinal-scales}.}
 
 \item{fontSize}{numeric font size in pixels for the node text labels.}
 

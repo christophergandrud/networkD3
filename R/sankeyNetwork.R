@@ -23,7 +23,7 @@
 #' @param units character string describing physical units (if any) for Value
 #' @param colourScale character string specifying the categorical colour
 #' scale for the nodes. See
-#' \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.
+#' \url{https://github.com/d3/d3/blob/master/API.md#ordinal-scales}.
 #' @param fontSize numeric font size in pixels for the node text labels.
 #' @param fontFamily font family for the node text labels.
 #' @param nodeWidth numeric width of each node.

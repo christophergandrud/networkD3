@@ -1,10 +1,14 @@
 # D3 JavaScript Network Graphs from R
 
-Version 0.3
+Development version: `r packageVersion("networkD3")`
 [![CRAN Version](http://www.r-pkg.org/badges/version/networkD3)](https://CRAN.R-project.org/package=networkD3)
 [![Build Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://travis-ci.org/christophergandrud/networkD3)
 ![CRAN Monthly Downloads](http://cranlogs.r-pkg.org/badges/last-month/networkD3)
 ![CRAN Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/networkD3)
+
+```{r include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
 
 This README includes information on set up and a number of basic examples.
 For more information see the package's [main page](http://christophergandrud.github.io/networkD3/).
@@ -13,7 +17,7 @@ For more information see the package's [main page](http://christophergandrud.git
 
 Here's an example of `simpleNetwork`:
 
-```R
+```{r}
 library(networkD3)
 
 # Create fake data
@@ -27,7 +31,7 @@ simpleNetwork(networkData)
 
 Here's `forceNetwork`:
 
-```R
+```{r}
 # Load data
 data(MisLinks)
 data(MisNodes)
@@ -35,13 +39,13 @@ data(MisNodes)
 # Plot
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
-             Group = "group", opacity = 0.4,
+             Group = "group", opacity = 0.7,
              colourScale = JS("d3.scaleOrdinal(d3.schemeCategory20);"))
 ```
 
 Here's `sankeyNetwork` using a downloaded JSON data file:
 
-```R
+```{r}
 # Recreate Bostock Sankey diagram: http://bost.ocks.org/mike/sankey/
 # Load energy projection data
 URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
@@ -57,7 +61,7 @@ sankeyNetwork(Links = Energy$links, Nodes = Energy$nodes, Source = "source",
 
 You can use [igraph](http://igraph.org/r/) to create network graph data that can be plotted with **networkD3**. The `igraph_to_networkD3` function converts igraph graphs to lists that work well with **networkD3**. For example:
 
-```R
+```{r}
 # Load igraph
 library(igraph)
 
@@ -79,7 +83,7 @@ forceNetwork(Links = karate_d3$links, Nodes = karate_d3$nodes,
 
 Use `saveNetwork` to save a network to stand alone HTML file:
 
-```R
+```{r eval=FALSE}
 library(magrittr)
 
 simpleNetwork(networkData) %>% saveNetwork(file = 'Net1.html')

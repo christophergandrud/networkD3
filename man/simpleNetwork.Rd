@@ -6,7 +6,7 @@
 \source{
 D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
   more specifically for directed networks
-  \url{https://github.com/mbostock/d3/wiki/Force-Layout}
+  \url{https://github.com/d3/d3/blob/master/API.md#forces-d3-force}
 }
 \usage{
 simpleNetwork(Data, Source = 1, Target = 2, height = NULL, width = NULL,

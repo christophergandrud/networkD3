@@ -25,7 +25,7 @@
 #' @param width numeric width for the network graph's frame area in pixels.
 #' @param colourScale character string specifying the categorical colour
 #' scale for the nodes. See
-#' \url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.
+#' \url{https://github.com/d3/d3/blob/master/API.md#ordinal-scales}.
 #' @param fontSize numeric font size in pixels for the node text labels.
 #' @param fontFamily font family for the node text labels.
 #' @param linkDistance numeric or character string. Either numberic fixed
@@ -73,6 +73,11 @@
 #'              Nodesize = "size",
 #'              radiusCalculation = "Math.sqrt(d.nodesize)+6",
 #'              Group = "group", opacity = 0.4, legend = TRUE)
+#'
+#' # Create graph directed arrows
+#' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+#'              Target = "target", Value = "value", NodeID = "name",
+#'              Group = "group", opacity = 0.4, arrows = TRUE)
 #'
 #' \dontrun{
 #' #### JSON Data Example
@@ -136,7 +141,7 @@
 #' @source
 #' D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
 #' specifically for force directed networks
-#' \url{https://github.com/mbostock/d3/wiki/Force-Layout}.
+#' \url{https://github.com/d3/d3/blob/master/API.md#forces-d3-force}.
 #' @seealso \code{\link{JS}}.
 #'
 #' @export

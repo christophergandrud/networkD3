@@ -6,7 +6,7 @@
 \source{
 D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
 specifically for force directed networks
-\url{https://github.com/mbostock/d3/wiki/Force-Layout}.
+\url{https://github.com/d3/d3/blob/master/API.md#forces-d3-force}.
 }
 \usage{
 forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Nodesize, Group,
@@ -16,7 +16,8 @@ forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Nodesize, Group,
   linkWidth = JS("function(d) { return Math.sqrt(d.value); }"),
   radiusCalculation = JS(" Math.sqrt(d.nodesize)+6"), charge = -30,
   linkColour = "#666", opacity = 0.6, zoom = FALSE, legend = FALSE,
-  bounded = FALSE, opacityNoHover = 0, clickAction = NULL)
+  arrows = FALSE, bounded = FALSE, opacityNoHover = 0,
+  clickAction = NULL)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -54,7 +55,7 @@ data frame with some value to vary the node radius's with. See also
 
 \item{colourScale}{character string specifying the categorical colour
 scale for the nodes. See
-\url{https://github.com/mbostock/d3/wiki/Ordinal-Scales}.}
+\url{https://github.com/d3/d3/blob/master/API.md#ordinal-scales}.}
 
 \item{fontSize}{numeric font size in pixels for the node text labels.}
 
@@ -89,6 +90,8 @@ zooming.}
 
 \item{legend}{logical value to enable node colour legends.}
 
+\item{arrows}{logical value to enable directional link arrows.}
+
 \item{bounded}{logical value to enable (\code{TRUE}) or disable
 (\code{FALSE}) the bounding box limiting the graph's extent. See
 \url{http://bl.ocks.org/mbostock/1129492}.}
@@ -117,6 +120,11 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Nodesize = "size",
              radiusCalculation = "Math.sqrt(d.nodesize)+6",
              Group = "group", opacity = 0.4, legend = TRUE)
+
+# Create graph directed arrows
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Group = "group", opacity = 0.4, arrows = TRUE)
 
 \dontrun{
 #### JSON Data Example
