@@ -165,8 +165,10 @@ HTMLWidgets.widget({
             });
         // note: u2192 is right-arrow
         link.append("title")
-            .text(function(d) { return d.source.name + " \u2192 " + d.target.name +
-                "\n" + format(d.value) + " " + options.units; });
+            .append("foreignObject")
+            .append("xhtml:body")
+            .html(function(d) { return "<pre>" + d.source.name + " \u2192 " + d.target.name +
+                "\n" + format(d.value) + " " + options.units + "</pre>"; });
 
         node.append("rect")
             .attr("height", function(d) { return d.dy; })
@@ -177,8 +179,10 @@ HTMLWidgets.widget({
             .style("opacity", 0.9)
             .style("cursor", "move")
             .append("title")
-            .text(function(d) { return d.name + "<br>" + format(d.value) + 
-                " " + options.units; });
+            .append("foreignObject")
+            .append("xhtml:body")
+            .html(function(d) { return "<pre>" + d.name + "<br>" + format(d.value) + 
+                " " + options.units + "</pre>"; });
 
         node.append("text")
             .attr("x", -6)
