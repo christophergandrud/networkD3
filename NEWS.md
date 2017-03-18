@@ -13,7 +13,7 @@ Please see those for more details.
 - Arrow heads enabled for directed networks in `forceNetwork` with
 `arrows = TRUE`. pull/#182.
 
-## Minor changes and bug fixes
+## Minor changes and bug fixes
 
 - Node titles enclosed in `<pre>` tags. pull/#180
 
@@ -196,7 +196,7 @@ Thanks to Charles Sese.
 - Added `opacityNoHover` argument to `forceNetwork` to set the opacity of node
 labels when nodes are not hovered over. Thanks to Peter Ellis.
 
-## 0.1.7
+## 0.1.7
 
 - Include `JS` from htmlwidgets, to make it easier for users to pass arbitrary
 JS to more arguments.
@@ -208,7 +208,7 @@ JS to more arguments.
 - `fontSize` used for all functions rather than `fontsize`. Thank you to
 @Hunter-Github for spotting this inconsistency.
 
-## 0.1.5
+## 0.1.5
 
 - Minor improvement to treeNetwork documentation.
 Thanks to Steven Beaupré and MrFlick.
@@ -224,7 +224,7 @@ some values.
 
 Thank you to Charles Sese for these additions.
 
-## 0.1.3
+## 0.1.3
 
 - `zoom` argument added to `simpleNetwork` and `forceNetwork` to allow zooming.
 Thanks to @timelyportfolio.
