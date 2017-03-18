@@ -1,7 +1,7 @@
 # D3 JavaScript Network Graphs from R
 
 Version 0.3
-[![CRAN Version](http://www.r-pkg.org/badges/version/networkD3)](http://cran.r-project.org/package=networkD3)
+[![CRAN Version](http://www.r-pkg.org/badges/version/networkD3)](https://CRAN.R-project.org/package=networkD3)
 [![Build Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://travis-ci.org/christophergandrud/networkD3)
 ![CRAN Monthly Downloads](http://cranlogs.r-pkg.org/badges/last-month/networkD3)
 ![CRAN Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/networkD3)
@@ -34,7 +34,7 @@ data(MisNodes)
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 0.4,
-             colourScale = "d3.scale.category20b()")
+             colourScale = JS("d3.scaleOrdinal(d3.schemeCategory20);"))
 ```
 
 Here's `sankeyNetwork` using a downloaded JSON data file:
