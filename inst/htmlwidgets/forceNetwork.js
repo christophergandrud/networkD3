@@ -199,8 +199,13 @@ HTMLWidgets.widget({
 			  var c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
   			if (type == "x1") return (d.source.x + ((nodeSize(d.source) * a) / c));
   			if (type == "y1") return (d.source.y + ((nodeSize(d.source) * b) / c));
-  			if (type == "x2") return (d.target.x - ((((5 * linkWidthFunc(d)) + nodeSize(d.target)) * a) / c));
-  			if (type == "y2") return (d.target.y - ((((5 * linkWidthFunc(d)) + nodeSize(d.target)) * b) / c));
+  			if (options.arrows) {
+  			  if (type == "x2") return (d.target.x - ((((5 * linkWidthFunc(d)) + nodeSize(d.target)) * a) / c));
+  			  if (type == "y2") return (d.target.y - ((((5 * linkWidthFunc(d)) + nodeSize(d.target)) * b) / c));
+  			} else {
+  			  if (type == "x2") return (d.target.x - ((nodeSize(d.target) * a) / c));
+  			  if (type == "y2") return (d.target.y - ((nodeSize(d.target) * b) / c));
+  			}
 		  }
 
       link
