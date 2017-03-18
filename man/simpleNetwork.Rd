@@ -9,11 +9,9 @@ D3.js was created by Michael Bostock. See \url{http://d3js.org/} and,
   \url{https://github.com/mbostock/d3/wiki/Force-Layout}
 }
 \usage{
-simpleNetwork(Data, Source = NULL, Target = NULL, height = NULL,
-  width = NULL, linkDistance = 50, charge = -30, fontSize = 7,
-  fontFamily = "serif", linkColour = "#666", nodeColour = "#3182bd",
-  nodeClickColour = "#E34A33", textColour = "#3182bd", opacity = 0.6,
-  zoom = F)
+simpleNetwork(Data, Source = 1, Target = 2, height = NULL, width = NULL,
+  linkDistance = 50, charge = -30, fontSize = 7, fontFamily = "serif",
+  linkColour = "#666", nodeColour = "#3182bd", opacity = 0.6, zoom = F)
 }
 \arguments{
 \item{Data}{a data frame object with three columns. The first two are the
@@ -49,13 +47,6 @@ lines to be. Multiple formats supported (e.g. hexadecimal).}
 
 \item{nodeColour}{character string specifying the colour you want the node
 circles to be. Multiple formats supported (e.g. hexadecimal).}
-
-\item{nodeClickColour}{character string specifying the colour you want the
-node circles to be when they are clicked. Also changes the colour of the
-text. Multiple formats supported (e.g. hexadecimal).}
-
-\item{textColour}{character string specifying the colour you want the text to
-be before they are clicked. Multiple formats supported (e.g. hexadecimal).}
 
 \item{opacity}{numeric value of the proportion opaque you would like the
 graph elements to be.}
