@@ -1,3 +1,7 @@
+---
+output: md_document
+---
+
 # D3 JavaScript Network Graphs from R
 
 Development version: `r packageVersion("networkD3")`
