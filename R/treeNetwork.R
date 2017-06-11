@@ -13,10 +13,14 @@ treeNetwork <- function(data, width = NULL, height = NULL, elementId = NULL,
                         root = all.names(substitute(data)), ...) {
 
   # convert to the native data format
-  if (dftype == 'leafpathdf') {
-    data <- as.treenetdf(data, dftype = 'leafpathdf', subset = subset, cols = cols, root = root)
+  if (inherits(data, 'data.frame')) {
+    if (dftype == 'leafpathdf') {
+      data <- as.treenetdf(data, dftype = 'leafpathdf', subset = subset, cols = cols, root = root)
+    } else {
+      data <- as.treenetdf(data, cols = cols)
+    }
   } else {
-    data <- as.treenetdf(data, cols = cols)
+    data <- as.treenetdf(data)
   }
 
   default <- function(defaults = NULL) {
