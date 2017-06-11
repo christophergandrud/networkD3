@@ -10,12 +10,14 @@
 
 #########################################################################
 # as.treenetdf
+#' @export
 as.treenetdf <- function(data = NULL, ...) {
   UseMethod("as.treenetdf")
 }
 
 #########################################################################
 # hclust_to_treenetdf
+#' @export
 as.treenetdf.hclust <- function(data, ...) {
   clustparents <-
     unlist(sapply(seq_along(data$height), function(i) {
@@ -41,7 +43,8 @@ as.treenetdf.hclust <- function(data, ...) {
 
 #########################################################################
 # nestedlist_to_treenetdf
-as.treenetdf.list <- function(data=NULL, children_name = 'children', node_name = 'name') {
+#' @export
+as.treenetdf.list <- function(data=NULL, children_name = 'children', node_name = 'name', ...) {
   makelistofdfs <- function(data) {
     children <- data[[children_name]]
     children <-
@@ -87,6 +90,7 @@ as.treenetdf.list <- function(data=NULL, children_name = 'children', node_name =
 
 #########################################################################
 # Node_to_treenetdf
+#' @export
 as.treenetdf.Node <-  function(data = NULL, ...) {
   require(data.tree)
   df <- do.call(data.tree::ToDataFrameNetwork, c(data, direction = 'descend', data$fieldsAll))
@@ -99,6 +103,7 @@ as.treenetdf.Node <-  function(data = NULL, ...) {
 
 #########################################################################
 # phylo_to_treenetdf
+#' @export
 as.treenetdf.phylo <- function(data = NULL, ...) {
   df <- data.frame(nodeId = data$edge[, 2],
                    parentId = data$edge[, 1],
@@ -113,12 +118,14 @@ as.treenetdf.phylo <- function(data = NULL, ...) {
 
 #########################################################################
 # tbl_graph_to_treenetdf
+#' @export
 as.treenetdf.tbl_graph <- function(data = NULL, ...) {
   as.treenetdf.igraph(data)
 }
 
 #########################################################################
 # igraph_to_treenetdf
+#' @export
 as.treenetdf.igraph <- function(data = NULL, ...) {
   require(igraph)
   df <- igraph::as_data_frame(data)
@@ -142,6 +149,7 @@ as.treenetdf.igraph <- function(data = NULL, ...) {
 
 #########################################################################
 # leafpathdf_to_treenetdf
+#' @export
 as.treenetdf.data.frame <- function(data = NULL, subset = names(data), root = NULL, ...) {
   # get root name from name of passed data.frame, even if it was subset in the
   # argument, unless explicitly set
