@@ -10,101 +10,66 @@
 
 #########################################################################
 # as.treenetdf
-
-as.treenetdf <- function(data, dftype = 'treenetdf', subset = names(data), cols = '', root = NULL) {
-  if (inherits(data, 'hclust')) {
-    data <- hclust_to_treenetdf(data)
-
-  } else if (inherits(data, 'list')) {
-    data <- nestedlist_to_treenetdf(data)
-
-  } else if (inherits(data, 'Node')) {
-    data <- Node_to_treenetdf(data)
-
-  } else if (inherits(data, 'phylo')) {
-    data <- phylo_to_treenetdf(data)
-
-  } else if (inherits(data, 'tbl_graph')) {
-    data <- tbl_graph_to_treenetdf(data)
-
-  } else if (inherits(data, 'igraph')) {
-    data <- igraph_to_treenetdf(data)
-
-  } else if (inherits(data, 'data.frame')) {
-    if (dftype == 'leafpathdf') {
-      if (is.null(root)) {
-        root <- all.names(substitute(data))
-        if (length(root) > 1) { root <- root[2] }
-      }
-      data <- leafpathdf_to_treenetdf(data, subset = subset, root = root)
-    }
-  }
-
-  # convert custom column names to native names
-  cols <- cols[cols %in% names(data)]  # only use custom names that exist in data
-  namestoswitch <- names(data) %in% cols
-  names(data)[namestoswitch] <- names(cols)[match(names(data)[namestoswitch], cols)]
-
-  data
+#' @export
+as.treenetdf <- function(data = NULL, ...) {
+  UseMethod("as.treenetdf")
 }
-
 
 #########################################################################
 # hclust_to_treenetdf
-
-hclust_to_treenetdf <- function(hc) {
+#' @export
+as.treenetdf.hclust <- function(data, ...) {
   clustparents <-
-    unlist(sapply(seq_along(hc$height), function(i) {
-      parent <- which(i == hc$merge)
-      parent <- ifelse(parent > nrow(hc$merge), parent - nrow(hc$merge), parent)
+    unlist(sapply(seq_along(data$height), function(i) {
+      parent <- which(i == data$merge)
+      parent <- ifelse(parent > nrow(data$merge), parent - nrow(data$merge), parent)
       as.integer(ifelse(length(parent) == 0, NA_integer_, parent))
     }))
-
+  
   leaveparents <-
-    unlist(sapply(seq_along(hc$labels), function(i) {
-      parent <- which(i * -1 == hc$merge)
-      parent <- ifelse(parent > nrow(hc$merge), parent - nrow(hc$merge), parent)
+    unlist(sapply(seq_along(data$labels), function(i) {
+      parent <- which(i * -1 == data$merge)
+      parent <- ifelse(parent > nrow(data$merge), parent - nrow(data$merge), parent)
       as.integer(ifelse(length(parent) == 0, NA, parent))
     }))
-
+  
   data.frame(
-    nodeId = 1:(length(hc$height) + length(hc$labels)),
+    nodeId = 1:(length(data$height) + length(data$labels)),
     parentId = c(clustparents, leaveparents),
-    name = c(rep('', length(hc$height)), hc$labels),
-    height = c(hc$height, rep(0, length(hc$labels)))
+    name = c(rep('', length(data$height)), data$labels),
+    height = c(data$height, rep(0, length(data$labels)))
   )
 }
 
-
 #########################################################################
 # nestedlist_to_treenetdf
-
-nestedlist_to_treenetdf <- function(hrlist, children_name = 'children', node_name = 'name') {
-  makelistofdfs <- function(hrlist) {
-    children <- hrlist[[children_name]]
+#' @export
+as.treenetdf.list <- function(data=NULL, children_name = 'children', node_name = 'name', ...) {
+  makelistofdfs <- function(data) {
+    children <- data[[children_name]]
     children <-
       lapply(children, function(child) {
-        if ('parentId' %in% names(hrlist)) {
-          child$parentId <- paste0(hrlist$parentId, ':', hrlist[[node_name]])
+        if ('parentId' %in% names(data)) {
+          child$parentId <- paste0(data$parentId, ':', data[[node_name]])
         } else {
-          child$parentId <- hrlist[[node_name]]
+          child$parentId <- data[[node_name]]
         }
-        if ('nodeId' %in% names(hrlist)) {
-          child$nodeId <- paste0(hrlist$nodeId, ':', child[[node_name]])
+        if ('nodeId' %in% names(data)) {
+          child$nodeId <- paste0(data$nodeId, ':', child[[node_name]])
         } else {
-          child$nodeId <- paste0(hrlist[[node_name]], ':', child[[node_name]])
+          child$nodeId <- paste0(data[[node_name]], ':', child[[node_name]])
         }
         return(child)
       })
-
+    
     if (length(children) == 0)
-      return(list(hrlist[names(hrlist)[!names(hrlist) %in% children_name]]))
-
-    c(list(hrlist[names(hrlist)[!names(hrlist) %in% children_name]]),
+      return(list(data[names(data)[!names(data) %in% children_name]]))
+    
+    c(list(data[names(data)[!names(data) %in% children_name]]),
       unlist(recursive = F, lapply(children, makelistofdfs)))
   }
-
-  listoflists <- makelistofdfs(hrlist)
+  
+  listoflists <- makelistofdfs(data)
   col_names <- unique(unlist(sapply(listoflists, names)))
   matrix <-
     sapply(col_names, function(col_name) {
@@ -116,7 +81,7 @@ nestedlist_to_treenetdf <- function(hrlist, children_name = 'children', node_nam
         })
       )
     })
-
+  
   df <- data.frame(matrix, stringsAsFactors = F)
   df$nodeId[is.na(df$nodeId)] <- df[[node_name]][is.na(df$nodeId)]
   df
@@ -124,61 +89,11 @@ nestedlist_to_treenetdf <- function(hrlist, children_name = 'children', node_nam
 
 
 #########################################################################
-# leafpathdf_to_treenetdf
-
-leafpathdf_to_treenetdf <- function(df, subset = names(df), root = NULL) {
-  # get root name from name of passed data.frame, even if it was subset in the
-  # argument, unless explicitly set
-  if (is.null(root)) {
-    root <- all.names(substitute(df))
-    if (length(root) > 1) {
-      root <- root[2]
-    }
-  }
-
-  # subset the df by cols (default, same as it is)
-  df <- df[, subset]
-
-  # add a root col if necessary, otherwise reset root from the data
-  if (length(unique(df[[1]])) != 1) {
-    df <- data.frame(root, df, stringsAsFactors = F)
-  } else {
-    root <- unique(df[[1]])
-  }
-
-  nodelist <-
-    c(setNames(root, root),
-      unlist(
-        sapply(2:ncol(df), function(i) {
-          subdf <- unique(df[, 1:i])
-          sapply(1:nrow(subdf), function(i) setNames(paste(subdf[i, ], collapse = '::'), rev(subdf[i, ])[1]))
-        })
-      )
-    )
-
-  nodeId <- seq_along(nodelist)
-  name <- names(nodelist)
-  parentId <-
-    c(NA_integer_,
-      match(
-        sapply(nodelist[-1], function(x) {
-          elms <- strsplit(x, '::')[[1]]
-          paste(elms[1:max(length(elms) - 1)], collapse = '::')
-        }),
-        nodelist
-      )
-    )
-
-  data.frame(nodeId = nodeId, parentId = parentId, name = name, stringsAsFactors = F)
-}
-
-
-#########################################################################
 # Node_to_treenetdf
-
-Node_to_treenetdf <- function(tree) {
+#' @export
+as.treenetdf.Node <-  function(data = NULL, ...) {
   require(data.tree)
-  df <- do.call(data.tree::ToDataFrameNetwork, c(tree, direction = 'descend', tree$fieldsAll))
+  df <- do.call(data.tree::ToDataFrameNetwork, c(data, direction = 'descend', data$fieldsAll))
   names(df)[1:2] <- c('nodeId', 'parentId')
   rootId <- unique(df$parentId[! df$parentId %in% df$nodeId])
   df <- rbind(c(nodeId = rootId, parentId = NA, rep(NA, ncol(df) - 2)), df)
@@ -186,35 +101,34 @@ Node_to_treenetdf <- function(tree) {
   df
 }
 
-
 #########################################################################
 # phylo_to_treenetdf
-
-phylo_to_treenetdf <- function(tree) {
-  df <- data.frame(nodeId = tree$edge[, 2],
-                   parentId = tree$edge[, 1],
-                   name = tree$tip.label[tree$edge[, 2]],
-                   depth = tree$edge.length,
+#' @export
+as.treenetdf.phylo <- function(data = NULL, ...) {
+  df <- data.frame(nodeId = data$edge[, 2],
+                   parentId = data$edge[, 1],
+                   name = data$tip.label[data$edge[, 2]],
+                   depth = data$edge.length,
                    stringsAsFactors = F)
   rootId <- unique(df$parentId[! df$parentId %in% df$nodeId])
   rbind(c(nodeId = rootId, parentId = NA, name = NA, depth = 1), df)
 }
 
 
+
 #########################################################################
 # tbl_graph_to_treenetdf
-
-tbl_graph_to_treenetdf <- function(graph) {
-  igraph_to_treenetdf(graph)
+#' @export
+as.treenetdf.tbl_graph <- function(data = NULL, ...) {
+  as.treenetdf.igraph(data)
 }
-
 
 #########################################################################
 # igraph_to_treenetdf
-
-igraph_to_treenetdf <- function(graph) {
+#' @export
+as.treenetdf.igraph <- function(data = NULL, ...) {
   require(igraph)
-  df <- igraph::as_data_frame(graph)
+  df <- igraph::as_data_frame(data)
   names(df)[1:2] <- c('nodeId', 'parentId')
   rootId <- unique(df$parentId[! df$parentId %in% df$nodeId])
   if (length(rootId) > 1) {
@@ -231,6 +145,57 @@ igraph_to_treenetdf <- function(graph) {
   }
   df
 }
+
+
+#########################################################################
+# leafpathdf_to_treenetdf
+#' @export
+as.treenetdf.data.frame <- function(data = NULL, subset = names(data), root = NULL, ...) {
+  # get root name from name of passed data.frame, even if it was subset in the
+  # argument, unless explicitly set
+  if (is.null(root)) {
+    root <- all.names(substitute(data))
+    if (length(root) > 1) {
+      root <- root[2]
+    }
+  }
+  
+  # subset the data by cols (default, same as it is)
+  data <- data[, subset]
+  
+  # add a root col if necessary, otherwise reset root from the data
+  if (length(unique(data[[1]])) != 1) {
+    data <- data.frame(root, data, stringsAsFactors = F)
+  } else {
+    root <- unique(data[[1]])
+  }
+  
+  nodelist <-
+    c(setNames(root, root),
+      unlist(
+        sapply(2:ncol(data), function(i) {
+          subdf <- unique(data[, 1:i])
+          sapply(1:nrow(subdf), function(i) setNames(paste(subdf[i, ], collapse = '::'), rev(subdf[i, ])[1]))
+        })
+      )
+    )
+  
+  nodeId <- seq_along(nodelist)
+  name <- names(nodelist)
+  parentId <-
+    c(NA_integer_,
+      match(
+        sapply(nodelist[-1], function(x) {
+          elms <- strsplit(x, '::')[[1]]
+          paste(elms[1:max(length(elms) - 1)], collapse = '::')
+        }),
+        nodelist
+      )
+    )
+  
+  data.frame(nodeId = nodeId, parentId = parentId, name = name, stringsAsFactors = F)
+}
+
 
 
 #########################################################################
