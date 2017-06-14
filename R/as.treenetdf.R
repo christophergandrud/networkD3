@@ -33,12 +33,16 @@ as.treenetdf.hclust <- function(data, ...) {
       as.integer(ifelse(length(parent) == 0, NA, parent))
     }))
   
-  data.frame(
-    nodeId = 1:(length(data$height) + length(data$labels)),
-    parentId = c(clustparents, leaveparents),
-    name = c(rep('', length(data$height)), data$labels),
-    height = c(data$height, rep(0, length(data$labels)))
-  )
+  df <- 
+    data.frame(
+      nodeId = 1:(length(data$height) + length(data$labels)),
+      parentId = c(clustparents, leaveparents),
+      name = c(rep('', length(data$height)), data$labels),
+      height = c(data$height, rep(0, length(data$labels)))
+    )
+  
+  if (require('tibble')) { return(tibble::as.tibble(df)) }
+  return(df)
 }
 
 #########################################################################
@@ -84,7 +88,9 @@ as.treenetdf.list <- function(data=NULL, children_name = 'children', node_name =
   
   df <- data.frame(matrix, stringsAsFactors = F)
   df$nodeId[is.na(df$nodeId)] <- df[[node_name]][is.na(df$nodeId)]
-  df
+  
+  if (require('tibble')) { return(tibble::as.tibble(df)) }
+  return(df)
 }
 
 
@@ -98,7 +104,9 @@ as.treenetdf.Node <-  function(data = NULL, ...) {
   rootId <- unique(df$parentId[! df$parentId %in% df$nodeId])
   df <- rbind(c(nodeId = rootId, parentId = NA, rep(NA, ncol(df) - 2)), df)
   df$name <- df$nodeId
-  df
+  
+  if (require('tibble')) { return(tibble::as.tibble(df)) }
+  return(df)
 }
 
 #########################################################################
@@ -111,7 +119,10 @@ as.treenetdf.phylo <- function(data = NULL, ...) {
                    depth = data$edge.length,
                    stringsAsFactors = F)
   rootId <- unique(df$parentId[! df$parentId %in% df$nodeId])
-  rbind(c(nodeId = rootId, parentId = NA, name = NA, depth = 1), df)
+  df <- rbind(c(nodeId = rootId, parentId = NA, name = NA, depth = 1), df)
+  
+  if (require('tibble')) { return(tibble::as.tibble(df)) }
+  return(df)
 }
 
 
@@ -126,29 +137,31 @@ as.treenetdf.tbl_graph <- function(data = NULL, ...) {
 #########################################################################
 # igraph_to_treenetdf
 #' @export
-as.treenetdf.igraph <- function(data = NULL, ...) {
+as.treenetdf.igraph <- function(data = NULL, root = 'root', ...) {
   require(igraph)
   df <- igraph::as_data_frame(data)
   names(df)[1:2] <- c('nodeId', 'parentId')
   rootId <- unique(df$parentId[! df$parentId %in% df$nodeId])
   if (length(rootId) > 1) {
-    root <- Reduce(function(x, y) {
-      rbind(x, c(nodeId = y, parentId = 'root', setNames(rep(NA, length(names(df)) - 2), names(df)[-(1:2)])))
-    }, rootId, c(nodeId = 'root', parentId = NA, setNames(rep(NA, length(names(df)) - 2), names(df)[-(1:2)])))
-    df <- rbind(root, df, stringsAsFactors = F, make.row.names = F)
+    rootdf <- Reduce(function(x, y) {
+      rbind(x, c(nodeId = y, parentId = root, setNames(rep(NA, length(names(df)) - 2), names(df)[-(1:2)])))
+    }, rootId, c(nodeId = root, parentId = NA, setNames(rep(NA, length(names(df)) - 2), names(df)[-(1:2)])))
+    df <- rbind(rootdf, df, stringsAsFactors = F, make.row.names = F)
     df$name <- df$nodeId
     df$name[1] <- NA
   } else {
-    root <- c(nodeId = rootId, parentId = NA, rep(NA, ncol(df) - 2))
-    df <- rbind(root, df, stringsAsFactors = F, make.row.names = F)
+    rootdf <- c(nodeId = rootId, parentId = NA, rep(NA, ncol(df) - 2))
+    df <- rbind(rootdf, df, stringsAsFactors = F, make.row.names = F)
     df$name <- df$nodeId
   }
-  df
+  
+  if (require('tibble')) { return(tibble::as.tibble(df)) }
+  return(df)
 }
 
 
 #########################################################################
-# leafpathdf_to_treenetdf
+# data.frame_to_treenetdf
 #' @export
 as.treenetdf.data.frame <- function(data = NULL, cols = setNames(names(data), names(data)), dftype = 'treenetdf', subset = names(data), root = NULL, ...) {
   if (dftype == 'treenetdf') {
@@ -156,6 +169,8 @@ as.treenetdf.data.frame <- function(data = NULL, cols = setNames(names(data), na
     cols <- cols[cols %in% names(data)]  # only use custom names that exist in data
     namestoswitch <- names(data) %in% cols
     names(data)[namestoswitch] <- names(cols)[match(names(data)[namestoswitch], cols)]
+    
+    if (require('tibble')) { return(tibble::as.tibble(data)) }
     return(data)
     
   } else if (dftype == 'leafpathdf') {
@@ -201,6 +216,9 @@ as.treenetdf.data.frame <- function(data = NULL, cols = setNames(names(data), na
         )
       )
     
+    if (require('tibble')) {
+      return(tibble::tibble(nodeId = nodeId, parentId = parentId, name = name))
+    }
     return(data.frame(nodeId = nodeId, parentId = parentId, name = name, stringsAsFactors = F))
   }
 }

@@ -8,20 +8,11 @@
 treeNetwork <- function(data, width = NULL, height = NULL, elementId = NULL,
                         margin = NULL, treeType = 'tidy', direction = 'right',
                         linkType = 'diagonal', textRotate = 0, css = NULL,
-                        cols = NULL, defaults = NULL, mouseover = '', mouseout = '',
-                        inbrowser = FALSE, dftype = 'treenetdf', subset = names(data),
-                        root = all.names(substitute(data)), ...) {
+                        defaults = NULL, mouseover = '', mouseout = '',
+                        inbrowser = FALSE, ...) {
 
   # convert to the native data format
-  if (inherits(data, 'data.frame')) {
-    if (dftype == 'leafpathdf') {
-      data <- as.treenetdf(data, dftype = 'leafpathdf', subset = subset, cols = cols, root = root)
-    } else {
-      data <- as.treenetdf(data, cols = cols)
-    }
-  } else {
-    data <- as.treenetdf(data)
-  }
+  data <- as.treenetdf(data, ...)
 
   default <- function(defaults = NULL) {
     defaults_ <-
