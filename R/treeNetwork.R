@@ -12,7 +12,7 @@ treeNetwork <- function(data, width = NULL, height = NULL, elementId = NULL,
                         inbrowser = FALSE, ...) {
 
   # convert to the native data format
-  data <- as.treenetdf(data, ...)
+  data <- as_treenetdf(data, ...)
 
   default <- function(defaults = NULL) {
     defaults_ <-
@@ -80,7 +80,8 @@ treeNetwork <- function(data, width = NULL, height = NULL, elementId = NULL,
 #'
 #' @export
 treeNetworkOutput <- function(outputId, width = '100%', height = '400px'){
-  htmlwidgets::shinyWidgetOutput(outputId, 'treeNetwork', width, height, package = 'networkD3')
+  htmlwidgets::shinyWidgetOutput(outputId, 'treeNetwork', width, height, 
+                                 package = 'networkD3')
 }
 
 #' @rdname treeNetwork-shiny
