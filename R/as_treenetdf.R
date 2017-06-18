@@ -31,8 +31,8 @@ as_treenetdf.hclust <- function(data, ...) {
     clustparents <-
         unlist(sapply(seq_along(data$height), function(i) {
             parent <- which(i == data$merge)
-            parent <- ifelse(parent > nrow(data$merge), parent - nrow(data$merge),
-                       parent)
+            parent <- ifelse(parent > nrow(data$merge), 
+                             parent - nrow(data$merge), parent)
             as.integer(ifelse(length(parent) == 0, NA_integer_, parent))
         }))
 
@@ -241,23 +241,28 @@ as_treenetdf.data.frame <- function(data,
                                     cols = setNames(names(data), names(data)),
                                     df_type = 'treenetdf', subset = names(data),
                                     root, ...) {
-  if (df_type == 'treenetdf') {
-    # convert custom column names to native names
-    cols <- cols[cols %in% names(data)]  # only use custom names that exist in data
-    namestoswitch <- names(data) %in% cols
-    names(data)[namestoswitch] <- names(cols)[match(names(data)[namestoswitch], cols)]
+    if (df_type == 'treenetdf') {
+      # convert custom column names to native names
+      cols <- cols[cols %in% names(data)]  # only use custom names that exist in data
+      namestoswitch <- names(data) %in% cols
+      names(data)[namestoswitch] <- names(cols)[match(names(data)[namestoswitch], 
+                                                    cols)]
 
-    if (pkg_installed('tibble')) { return(tibble::as.tibble(data)) }
-    return(data)
+    if (nrow(na.omit(data[-1, ])) < nrow(data[-1, ])) # assumes root is in first row
+        warning("Missing values found in data. May cause graph to fail.", 
+                call. = FALSE)
+    
+      if (pkg_installed('tibble')) return(tibble::as.tibble(data))
+      return(data)
 
-  } else if (df_type == 'leafpathdf') {
-    # get root name from name of passed data.frame, even if it was subset in the
-    # argument, unless explicitly set
-    if (missing(root)) {
-      root <- all.names(substitute(data))
-      if (length(root) > 1) {
-        root <- root[2]
-      }
+    } else if (df_type == 'leafpathdf') {
+        # get root name from name of passed data.frame, even if it was subset in the
+        # argument, unless explicitly set
+        if (missing(root)) {
+            root <- all.names(substitute(data))
+        if (length(root) > 1) {
+            root <- root[2]
+        }
     }
 
     # subset the data by cols (default, same as it is)
@@ -265,41 +270,42 @@ as_treenetdf.data.frame <- function(data,
 
     # add a root col if necessary, otherwise reset root from the data
     if (length(unique(data[[1]])) != 1) {
-      data <- data.frame(root, data, stringsAsFactors = F)
+        data <- data.frame(root, data, stringsAsFactors = F)
     } else {
-      root <- unique(data[[1]])
+        root <- unique(data[[1]])
     }
 
     nodelist <-
-      c(setNames(root, root),
-        unlist(
-          sapply(2:ncol(data), function(i) {
-            subdf <- unique(data[, 1:i])
-            sapply(1:nrow(subdf), function(i)
-              setNames(paste(subdf[i, ], collapse = '::'), rev(subdf[i, ])[1]))
-          })
+        c(setNames(root, root),
+            unlist(
+                sapply(2:ncol(data), function(i) {
+                    subdf <- unique(data[, 1:i])
+                    sapply(1:nrow(subdf), function(i)
+                    setNames(paste(subdf[i, ], collapse = '::'), 
+                             rev(subdf[i, ])[1]))
+                })
+            )
         )
-      )
 
     nodeId <- seq_along(nodelist)
     name <- names(nodelist)
     parentId <-
-      c(NA_integer_,
-        match(
-          sapply(nodelist[-1], function(x) {
-            elms <- strsplit(x, '::')[[1]]
-            paste(elms[1:max(length(elms) - 1)], collapse = '::')
-          }),
-          nodelist
-        )
-      )
+        c(NA_integer_,
+            match(
+                sapply(nodelist[-1], function(x) {
+                    elms <- strsplit(x, '::')[[1]]
+                    paste(elms[1:max(length(elms) - 1)], collapse = '::')
+                }),
+              nodelist
+          )
+    )
 
-    if (pkg_installed('tibble')) {
-      return(tibble::tibble(nodeId = nodeId, parentId = parentId, name = name))
-    }
+    if (pkg_installed('tibble'))
+        return(tibble::tibble(nodeId = nodeId, parentId = parentId, 
+                              name = name))
     return(data.frame(nodeId = nodeId, parentId = parentId, name = name,
                       stringsAsFactors = F))
-  }
+    }
 }
 
 
