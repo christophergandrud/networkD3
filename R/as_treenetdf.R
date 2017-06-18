@@ -10,9 +10,9 @@
 
 #########################################################################
 #' Convert an object to a \code{treenetdf}
-#' 
+#'
 #' @param data an object to convert to \code{treenetdf}.
-#' 
+#'
 #' @export
 as_treenetdf <- function(data = NULL, ...) {
   UseMethod("as_treenetdf")
@@ -25,7 +25,7 @@ as_treenetdf.hclust <- function(data, ...) {
   clustparents <-
     unlist(sapply(seq_along(data$height), function(i) {
       parent <- which(i == data$merge)
-      parent <- ifelse(parent > nrow(data$merge), parent - nrow(data$merge), 
+      parent <- ifelse(parent > nrow(data$merge), parent - nrow(data$merge),
                        parent)
       as.integer(ifelse(length(parent) == 0, NA_integer_, parent))
     }))
@@ -45,7 +45,7 @@ as_treenetdf.hclust <- function(data, ...) {
       height = c(data$height, rep(0, length(data$labels)))
     )
 
-  if (require('tibble')) { return(tibble::as.tibble(df)) }
+  if (pkg_installed('tibble')) { return(tibble::as.tibble(df)) }
   return(df)
 }
 
@@ -93,17 +93,17 @@ as_treenetdf.list <- function(data=NULL, children_name = 'children', node_name =
   df <- data.frame(matrix, stringsAsFactors = F)
   df$nodeId[is.na(df$nodeId)] <- df[[node_name]][is.na(df$nodeId)]
 
-  if (require('tibble')) { return(tibble::as.tibble(df)) }
+  if (pkg_installed('tibble')) { return(tibble::as.tibble(df)) }
   return(df)
 }
 
 
 #########################################################################
 # Node_to_treenetdf
-# 
+#
 # @importFrom data.tree ToDataFrameNetwork
 # @importFrom tibble as.tibble
-# 
+#
 #' @export
 as_treenetdf.Node <-  function(data = NULL, ...) {
   df <- do.call(data.tree::ToDataFrameNetwork,
@@ -113,13 +113,13 @@ as_treenetdf.Node <-  function(data = NULL, ...) {
   df <- rbind(c(nodeId = rootId, parentId = NA, rep(NA, ncol(df) - 2)), df)
   df$name <- df$nodeId
 
-  if (require('tibble')) { return(tibble::as.tibble(df)) }
+  if (pkg_installed('tibble')) { return(tibble::as.tibble(df)) }
   return(df)
 }
 
 #########################################################################
 # phylo_to_treenetdf
-# 
+#
 # @importFrom tibble as.tibble
 #' @export
 
@@ -127,12 +127,29 @@ as_treenetdf.phylo <- function(data = NULL, ...) {
   df <- data.frame(nodeId = data$edge[, 2],
                    parentId = data$edge[, 1],
                    name = data$tip.label[data$edge[, 2]],
-                   depth = data$edge.length,
+                   edge.length = data$edge.length,
+                   depth = NA,
                    stringsAsFactors = F)
-  rootId <- unique(df$parentId[! df$parentId %in% df$nodeId])
-  df <- rbind(c(nodeId = rootId, parentId = NA, name = NA, depth = 1), df)
 
-  if (require('tibble')) { return(tibble::as.tibble(df)) }
+  rootId <- unique(df$parentId[! df$parentId %in% df$nodeId])
+
+  calc_height <- function(parentId) {
+    childIdxs <- df$parentId == parentId
+    childIds <- df$nodeId[childIdxs]
+
+    parentHeight <- df$depth[df$nodeId == parentId]
+    if (length(parentHeight) == 0) { parentHeight <- 0 }
+    df$depth[childIdxs] <<- df$edge.length[childIdxs] + parentHeight
+
+    if (length(childIds) > 0) { lapply(childIds, calc_height) }
+    invisible(df)
+  }
+  df <- calc_height(rootId)
+
+  df$height <- max(df$depth) - df$depth
+  df <- rbind(c(nodeId = rootId, parentId = NA, name = NA, edge.length = 0, depth = 0, height = max(df$depth)), df)
+
+  if (pkg_installed('tibble')) { return(tibble::as.tibble(df)) }
   return(df)
 }
 
@@ -142,14 +159,14 @@ as_treenetdf.phylo <- function(data = NULL, ...) {
 # tbl_graph_to_treenetdf
 #' @export
 as_treenetdf.tbl_graph <- function(data = NULL, ...) {
-  as_treenetdf.igraph(data)
+    as_treenetdf.igraph(data)
 }
 
 #########################################################################
 # igraph_to_treenetdf
-# 
+#
 # @importFrom igraph as_data_frame
-# 
+#
 #' @export
 as_treenetdf.igraph <- function(data = NULL, root = 'root', ...) {
   df <- igraph::as_data_frame(data)
@@ -157,9 +174,9 @@ as_treenetdf.igraph <- function(data = NULL, root = 'root', ...) {
   rootId <- unique(df$parentId[! df$parentId %in% df$nodeId])
   if (length(rootId) > 1) {
     rootdf <- Reduce(function(x, y) {
-      rbind(x, c(nodeId = y, parentId = root, 
+      rbind(x, c(nodeId = y, parentId = root,
                  setNames(rep(NA, length(names(df)) - 2), names(df)[-(1:2)])))
-    }, rootId, c(nodeId = root, parentId = NA, 
+    }, rootId, c(nodeId = root, parentId = NA,
                  setNames(rep(NA, length(names(df)) - 2), names(df)[-(1:2)])))
     df <- rbind(rootdf, df, stringsAsFactors = F, make.row.names = F)
     df$name <- df$nodeId
@@ -170,17 +187,17 @@ as_treenetdf.igraph <- function(data = NULL, root = 'root', ...) {
     df$name <- df$nodeId
   }
 
-  if (require('tibble')) { return(tibble::as.tibble(df)) }
+  if (pkg_installed('tibble')) { return(tibble::as.tibble(df)) }
   return(df)
 }
 
 
 #########################################################################
-# data.frame_to_treenetdf
+#' data.frame_to_treenetdf
 #' @export
-as_treenetdf.data.frame <- function(data = NULL, 
-                                    cols = setNames(names(data), names(data)), 
-                                    dftype = 'treenetdf', subset = names(data), 
+as_treenetdf.data.frame <- function(data = NULL,
+                                    cols = setNames(names(data), names(data)),
+                                    dftype = 'treenetdf', subset = names(data),
                                     root = NULL, ...) {
   if (dftype == 'treenetdf') {
     # convert custom column names to native names
@@ -188,7 +205,7 @@ as_treenetdf.data.frame <- function(data = NULL,
     namestoswitch <- names(data) %in% cols
     names(data)[namestoswitch] <- names(cols)[match(names(data)[namestoswitch], cols)]
 
-    if (require('tibble')) { return(tibble::as.tibble(data)) }
+    if (pkg_installed('tibble')) { return(tibble::as.tibble(data)) }
     return(data)
 
   } else if (dftype == 'leafpathdf') {
@@ -216,7 +233,7 @@ as_treenetdf.data.frame <- function(data = NULL,
         unlist(
           sapply(2:ncol(data), function(i) {
             subdf <- unique(data[, 1:i])
-            sapply(1:nrow(subdf), function(i) 
+            sapply(1:nrow(subdf), function(i)
               setNames(paste(subdf[i, ], collapse = '::'), rev(subdf[i, ])[1]))
           })
         )
@@ -235,10 +252,10 @@ as_treenetdf.data.frame <- function(data = NULL,
         )
       )
 
-    if (require('tibble')) {
+    if (pkg_installed('tibble')) {
       return(tibble::tibble(nodeId = nodeId, parentId = parentId, name = name))
     }
-    return(data.frame(nodeId = nodeId, parentId = parentId, name = name, 
+    return(data.frame(nodeId = nodeId, parentId = parentId, name = name,
                       stringsAsFactors = F))
   }
 }
@@ -250,7 +267,7 @@ as_treenetdf.data.frame <- function(data = NULL,
 #'
 #' @param df a \code{treenetdf} to convert to a nested list
 #' @param id_col character string indicating the node ID in \code{df}
-#' @param parent_col character string indicating the parent ID in \code{df} 
+#' @param parent_col character string indicating the parent ID in \code{df}
 #'
 #' @importFrom stats na.exclude
 
