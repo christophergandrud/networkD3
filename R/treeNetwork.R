@@ -12,7 +12,7 @@ treeNetwork <- function(data, width = NULL, height = NULL, elementId = NULL,
                         inbrowser = FALSE, ...) {
 
   # convert to the native data format
-  data <- as.treenetdf(data, ...)
+  data <- as_treenetdf(data, ...)
 
   default <- function(defaults = NULL) {
     defaults_ <-

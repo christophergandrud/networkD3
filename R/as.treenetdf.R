@@ -9,16 +9,16 @@
 
 
 #########################################################################
-# as.treenetdf
+# as_treenetdf
 #' @export
-as.treenetdf <- function(data = NULL, ...) {
-  UseMethod("as.treenetdf")
+as_treenetdf <- function(data = NULL, ...) {
+  UseMethod("as_treenetdf")
 }
 
 #########################################################################
 # hclust_to_treenetdf
 #' @export
-as.treenetdf.hclust <- function(data, ...) {
+as_treenetdf.hclust <- function(data, ...) {
   clustparents <-
     unlist(sapply(seq_along(data$height), function(i) {
       parent <- which(i == data$merge)
@@ -48,7 +48,7 @@ as.treenetdf.hclust <- function(data, ...) {
 #########################################################################
 # nestedlist_to_treenetdf
 #' @export
-as.treenetdf.list <- function(data=NULL, children_name = 'children', node_name = 'name', ...) {
+as_treenetdf.list <- function(data=NULL, children_name = 'children', node_name = 'name', ...) {
   makelistofdfs <- function(data) {
     children <- data[[children_name]]
     children <-
@@ -97,7 +97,7 @@ as.treenetdf.list <- function(data=NULL, children_name = 'children', node_name =
 #########################################################################
 # Node_to_treenetdf
 #' @export
-as.treenetdf.Node <-  function(data = NULL, ...) {
+as_treenetdf.Node <-  function(data = NULL, ...) {
   require(data.tree)
   df <- do.call(data.tree::ToDataFrameNetwork, c(data, direction = 'descend', data$fieldsAll))
   names(df)[1:2] <- c('nodeId', 'parentId')
@@ -112,7 +112,7 @@ as.treenetdf.Node <-  function(data = NULL, ...) {
 #########################################################################
 # phylo_to_treenetdf
 #' @export
-as.treenetdf.phylo <- function(data = NULL, ...) {
+as_treenetdf.phylo <- function(data = NULL, ...) {
   df <- data.frame(nodeId = data$edge[, 2],
                    parentId = data$edge[, 1],
                    name = data$tip.label[data$edge[, 2]],
@@ -147,14 +147,14 @@ as.treenetdf.phylo <- function(data = NULL, ...) {
 #########################################################################
 # tbl_graph_to_treenetdf
 #' @export
-as.treenetdf.tbl_graph <- function(data = NULL, ...) {
-  as.treenetdf.igraph(data)
+as_treenetdf.tbl_graph <- function(data = NULL, ...) {
+  as_treenetdf.igraph(data)
 }
 
 #########################################################################
 # igraph_to_treenetdf
 #' @export
-as.treenetdf.igraph <- function(data = NULL, root = 'root', ...) {
+as_treenetdf.igraph <- function(data = NULL, root = 'root', ...) {
   require(igraph)
   df <- igraph::as_data_frame(data)
   names(df)[1:2] <- c('nodeId', 'parentId')
@@ -180,7 +180,7 @@ as.treenetdf.igraph <- function(data = NULL, root = 'root', ...) {
 #########################################################################
 # data.frame_to_treenetdf
 #' @export
-as.treenetdf.data.frame <- function(data = NULL, cols = setNames(names(data), names(data)), dftype = 'treenetdf', subset = names(data), root = NULL, ...) {
+as_treenetdf.data.frame <- function(data = NULL, cols = setNames(names(data), names(data)), dftype = 'treenetdf', subset = names(data), root = NULL, ...) {
   if (dftype == 'treenetdf') {
     # convert custom column names to native names
     cols <- cols[cols %in% names(data)]  # only use custom names that exist in data
