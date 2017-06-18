@@ -2,13 +2,39 @@
 % Please edit documentation in R/treeNetwork.R
 \name{treeNetwork}
 \alias{treeNetwork}
-\title{<Add Title>}
+\title{Create collapsible tree network diagrams.}
 \usage{
-treeNetwork(data, width = NULL, height = NULL, elementId = NULL,
-  margin = NULL, treeType = "tidy", direction = "right",
-  linkType = "diagonal", textRotate = 0, css = NULL, defaults = NULL,
+treeNetwork(data, width = NULL, height = NULL, treeType = "tidy",
+  direction = "right", linkType = "diagonal", defaults = NULL,
   mouseover = "", mouseout = "", inbrowser = FALSE, ...)
 }
+\arguments{
+\item{data}{a tree network description in one of numerous forms (see details)}
+
+\item{width}{numeric width for the network graph's frame area in pixels}
+
+\item{height}{height for the network graph's frame area in pixels}
+
+\item{treeType}{character specifying the tree layout type. Options
+are 'tidy' and 'cluster'.}
+
+\item{direction}{character specifying the direction in which the tree layout
+shoud grow. One of 'right', 'left', 'down', 'up', or 'radial'}
+
+\item{linkType}{character specifying the link type between points. Options
+are 'elbow' and 'diagonal'.}
+
+\item{defaults}{named character vector specifying custom default node and link
+formatting options}
+
+\item{mouseover}{character specifying JavaScript code to be run on mouseover events}
+
+\item{mouseout}{character specifying JavaScript code to be run on mouseout events}
+
+\item{inbrowser}{logical specifying to open the plot in a new browser window}
+
+\item{...}{other arguments that will be passed on to as_treenetdf}
+}
 \description{
-<Add Description>
+Create collapsible tree network diagrams.
 }

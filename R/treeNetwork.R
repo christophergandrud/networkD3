@@ -1,13 +1,31 @@
-#' <Add Title>
+#' Create collapsible tree network diagrams.
 #'
-#' <Add Description>
+#' @param data a tree network description in one of numerous forms (see details)
+#' @param width numeric width for the network graph's frame area in pixels
+#' @param height height for the network graph's frame area in pixels
+#' @param treeType character specifying the tree layout type. Options
+#' are 'tidy' and 'cluster'.
+#' @param direction character specifying the direction in which the tree layout
+#' shoud grow. One of 'right', 'left', 'down', 'up', or 'radial'
+#' @param linkType character specifying the link type between points. Options
+#' are 'elbow' and 'diagonal'.
+#' @param defaults named character vector specifying custom default node and link
+#' formatting options
+#' @param mouseover character specifying JavaScript code to be run on mouseover events
+#' @param mouseout character specifying JavaScript code to be run on mouseout events
+#' @param inbrowser logical specifying to open the plot in a new browser window
+#' @param ... other arguments that will be passed on to as_treenetdf
 #'
-#' @import htmlwidgets
+#' @importFrom jsonlite toJSON
+#' @importFrom htmlwidgets createWidget
+#' @importFrom htmlwidgets sizingPolicy
+#' @importFrom htmlwidgets shinyWidgetOutput
+#' @importFrom htmlwidgets shinyRenderWidget
 #'
 #' @export
-treeNetwork <- function(data, width = NULL, height = NULL, elementId = NULL,
-                        margin = NULL, treeType = 'tidy', direction = 'right',
-                        linkType = 'diagonal', textRotate = 0, css = NULL,
+#' 
+treeNetwork <- function(data, width = NULL, height = NULL, treeType = 'tidy', 
+                        direction = 'right', linkType = 'diagonal', 
                         defaults = NULL, mouseover = '', mouseout = '',
                         inbrowser = FALSE, ...) {
 
@@ -45,9 +63,9 @@ treeNetwork <- function(data, width = NULL, height = NULL, elementId = NULL,
     }
   }
 
-  options <- list(margin = margin, treeType = treeType, direction = direction,
-                  linkType = linkType, textRotate = textRotate,
-                  mouseover = mouseover, mouseout = mouseout)
+  options <- list(treeType = treeType, direction = direction,
+                  linkType = linkType, mouseover = mouseover, 
+                  mouseout = mouseout)
   x <- list(data = jsonlite::toJSON(data), options = options)
 
   # create widget
@@ -57,7 +75,6 @@ treeNetwork <- function(data, width = NULL, height = NULL, elementId = NULL,
     width = width,
     height = height,
     package = 'networkD3',
-    elementId = elementId,
     sizingPolicy = htmlwidgets::sizingPolicy(viewer.suppress = inbrowser)
   )
 }

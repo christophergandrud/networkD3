@@ -26,11 +26,11 @@ Depends:
 Imports:
     htmlwidgets (>= 0.3.2),
     igraph,
-    magrittr
+    magrittr,
+    jsonlite
 Suggests:
     data.tree,
     htmltools (>= 0.2.6),
-    jsonlite,
     tibble
 Enhances: knitr, shiny
 LazyData: true

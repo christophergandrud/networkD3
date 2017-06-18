@@ -2,12 +2,25 @@
 % Please edit documentation in R/as_treenetdf.R
 \name{as_treenetdf.data.frame}
 \alias{as_treenetdf.data.frame}
-\title{data.frame_to_treenetdf}
+\title{Convert a data.frame to a \code{treenetdf}}
 \usage{
-\method{as_treenetdf}{data.frame}(data = NULL, cols = setNames(names(data),
-  names(data)), dftype = "treenetdf", subset = names(data), root = NULL,
-  ...)
+\method{as_treenetdf}{data.frame}(data, cols = setNames(names(data),
+  names(data)), df_type = "treenetdf", subset = names(data), root, ...)
+}
+\arguments{
+\item{data}{an object to convert to \code{treenetdf}.}
+
+\item{cols}{[GET]}
+
+\item{df_type}{type of object to create. Can be \code{treenetdf} or
+\code{leafpathdf}.}
+
+\item{subset}{character vector of column names in \code{data} to subset.}
+
+\item{root}{root name.}
+
+\item{...}{arguments to pass to methods.}
 }
 \description{
-data.frame_to_treenetdf
+Convert a data.frame to a \code{treenetdf}
 }
