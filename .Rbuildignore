@@ -6,3 +6,4 @@
 ^.*\.o$
 ^README\.Rmd$
 ^README-.*\.png$
+dev
