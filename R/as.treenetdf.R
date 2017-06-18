@@ -258,34 +258,3 @@ as_treenetdf.data.frame <- function(data = NULL, cols = stats::setNames(names(da
     return(tibble::tibble(nodeId = nodeId, parentId = parentId, name = name))
   }
 }
-
-
-
-#########################################################################
-# treenetdf_to_nestedlist
-
-treenetdf_to_nestedlist <- function(df, id_col = 'nodeId', parent_col = 'parentId') {
-  stopifnot(anyDuplicated(df[[id_col]]) == 0)  # no duplicate nodeId's
-  stopifnot(!any(df[[id_col]] == df[[parent_col]], na.rm = T))  # no self-referential nodes
-  stopifnot(all(stats::na.exclude(df[[parent_col]]) %in% df[[id_col]]))  # no unidentified parent nodes
-
-  if (sum(is.na(df[[parent_col]])) != 1) {  # mutliple roots or no root
-    stop('mutliple or no roots')
-    # potentially add a root to df and continue
-  }
-
-  rootid <- df[is.na(df[[parent_col]]), id_col]
-
-  makelist <- function(nodeid) {
-    i <- which(df[[id_col]] == nodeid)
-    child_ids <- df[[id_col]][which(df[[parent_col]] == nodeid)]
-
-    if (length(child_ids) == 0)
-      return(as.list(df[i, ]))
-
-    c(as.list(df[i, ]),
-      children = list(lapply(child_ids, makelist)))
-  }
-
-  makelist(rootid)
-}
