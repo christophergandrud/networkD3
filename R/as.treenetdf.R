@@ -116,10 +116,27 @@ as.treenetdf.phylo <- function(data = NULL, ...) {
   df <- data.frame(nodeId = data$edge[, 2],
                    parentId = data$edge[, 1],
                    name = data$tip.label[data$edge[, 2]],
-                   depth = data$edge.length,
+                   edge.length = data$edge.length,
+                   depth = NA,
                    stringsAsFactors = F)
+  
   rootId <- unique(df$parentId[! df$parentId %in% df$nodeId])
-  df <- rbind(c(nodeId = rootId, parentId = NA, name = NA, depth = 1), df)
+  
+  calc_height <- function(parentId) {
+    childIdxs <- df$parentId == parentId
+    childIds <- df$nodeId[childIdxs]
+    
+    parentHeight <- df$depth[df$nodeId == parentId]
+    if (length(parentHeight) == 0) { parentHeight <- 0 }
+    df$depth[childIdxs] <<- df$edge.length[childIdxs] + parentHeight
+    
+    if (length(childIds) > 0) { lapply(childIds, calc_height) }
+    invisible(df)
+  }
+  df <- calc_height(rootId)
+  
+  df$height <- max(df$depth) - df$depth
+  df <- rbind(c(nodeId = rootId, parentId = NA, name = NA, edge.length = 0, depth = 0, height = max(df$depth)), df)
   
   if (require('tibble')) { return(tibble::as.tibble(df)) }
   return(df)
