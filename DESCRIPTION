@@ -27,7 +27,9 @@ Imports:
     htmlwidgets (>= 0.3.2),
     igraph,
     magrittr,
-    jsonlite
+    jsonlite,
+    data.tree,
+    tibble
 Suggests:
     htmltools (>= 0.2.6)
 Enhances: knitr, shiny
