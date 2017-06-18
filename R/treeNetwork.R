@@ -97,7 +97,8 @@ treeNetwork <- function(data, width = NULL, height = NULL, treeType = 'tidy',
 #'
 #' @export
 treeNetworkOutput <- function(outputId, width = '100%', height = '400px'){
-  htmlwidgets::shinyWidgetOutput(outputId, 'treeNetwork', width, height, package = 'networkD3')
+  htmlwidgets::shinyWidgetOutput(outputId, 'treeNetwork', width, height, 
+                                 package = 'networkD3')
 }
 
 #' @rdname treeNetwork-shiny

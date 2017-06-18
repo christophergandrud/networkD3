@@ -1,7 +1,7 @@
 D3 JavaScript Network Graphs from R
 ===================================
 
-Development version: 0.4 [![CRAN
+Development version: 0.4.9000 [![CRAN
 Version](http://www.r-pkg.org/badges/version/networkD3)](https://CRAN.R-project.org/package=networkD3)
 [![Build
 Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://travis-ci.org/christophergandrud/networkD3)

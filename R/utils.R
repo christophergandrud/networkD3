@@ -236,3 +236,14 @@ tbl_df_strip <- function(x) {
     }
     return(x)
 }
+
+
+#' Check if a package is installed
+#' 
+#' @param pkg_name character string name of package
+#' 
+#' @importFrom utils installed.packages
+
+pkg_installed <- function(pkg_name) {
+    pkg_name %in% rownames(installed.packages())
+}
