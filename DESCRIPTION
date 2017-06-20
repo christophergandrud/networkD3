@@ -16,7 +16,7 @@ Authors@R: c(
     person("Kenton", "Russell", role = "aut"),
     person("Jennifer","Rogers", role = "ctb"),
     person("Charles", "Sese", role = "ctb"),
-    person("CJ", "Yetman", role = "aut")
+    person("CJ", "Yetman", email = "cj@cjyetman.com", role = "aut")
     )
 URL: https://CRAN.R-project.org/package=networkD3
 BugReports: https://github.com/christophergandrud/networkD3/issues
