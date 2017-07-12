@@ -18,7 +18,8 @@ Authors@R: c(
     person("Charles", "Sese", role = "ctb"),
     person("CJ", "Yetman", email = "cj@cjyetman.com", role = "aut")
     )
-URL: https://CRAN.R-project.org/package=networkD3
+URL: https://christophergandrud.github.io/networkD3/, 
+    https://github.com/christophergandrud/networkD3
 BugReports: https://github.com/christophergandrud/networkD3/issues
 License: GPL (>= 3)
 Depends:
