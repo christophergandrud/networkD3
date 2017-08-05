@@ -260,7 +260,7 @@ HTMLWidgets.widget({
     if(options.legend){
         var legendRectSize = 18;
         var legendSpacing = 4;
-        var legend = svg.selectAll('.legend')
+        var legend = d3.select(el).select('svg').selectAll('.legend')
           .data(color.domain())
           .enter()
           .append('g')
