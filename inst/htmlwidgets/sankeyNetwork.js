@@ -94,7 +94,10 @@ HTMLWidgets.widget({
 
 
         var formatNumber = d3.format(",.0f"),
-        format = function(d) { return formatNumber(d); }
+        format = function(d) { 
+            if (typeof d === "string") return d;
+            return formatNumber(d); 
+        }
 
         // create d3 sankey layout
         sankey
