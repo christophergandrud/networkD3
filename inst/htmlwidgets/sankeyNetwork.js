@@ -165,7 +165,8 @@ HTMLWidgets.widget({
             });
         // note: u2192 is right-arrow
         link.append("title")
-            .append("xhtml:pre")
+            .append("foreignObject")
+            .append("pre")
             .text(function(d) { return d.source.name + " \u2192 " + d.target.name +
                 "\n" + format(d.value) + " " + options.units; });
 
@@ -178,7 +179,8 @@ HTMLWidgets.widget({
             .style("opacity", 0.9)
             .style("cursor", "move")
             .append("title")
-            .append("xhtml:pre")
+            .append("foreignObject")
+            .append("pre")
             .text(function(d) { return d.name + "\n" + format(d.value) + 
                 " " + options.units; });
 
