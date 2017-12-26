@@ -4,6 +4,12 @@
 [Pull Request](https://github.com/christophergandrud/networkD3/pulls) number.
 Please see those for more details.
 
+# 0.5
+
+## Minor changes and bug fixes
+
+- Sankey tooltip: if link value passed as string, don't round tooltip to integer. Thanks to @octaviancorlade. #147
+
 # 0.4
 
 ## Major changes
