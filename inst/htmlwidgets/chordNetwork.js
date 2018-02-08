@@ -68,7 +68,7 @@ HTMLWidgets.widget({
     if(x.options.group_links){
       s.selectAll("g")
       .on("click", function(d){
-        window.open(x.options.group_links[d.index]);
+        window.open(x.options.group_links[d.index], name=x.options.group_links_window);
       })
       .on("mouseover", function(d){
         d3.select(this).style("cursor", "pointer");

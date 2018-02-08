@@ -23,6 +23,10 @@
 #'        text labels and outer radius.  The default is `30`.
 #' @param groupLinks Character vector of filenames to hyperlink to when a group
 #'        arc is clicked.
+#' @param groupLinksWindow Where to open a linked page. Defaults to
+#'        \code{groupLinksWindow = "_self"} and the links are opened in the
+#'        current browser window. Using \code{groupLinksWindow = "_blank"}
+#'        would cause a new browser (or tab) to be opened.
 #'
 #' @examples
 #' \dontrun{
@@ -44,6 +48,18 @@
 #'                              "#F26223"),
 #'              labels = c("red", "brown", "blond", "gray"))
 #'
+#'
+#'chordNetwork(Data = hairColourData,
+#'              width = 500,
+#'              height = 500,
+#'              colourScale = c("#000000",
+#'                              "#FFDD89",
+#'                              "#957244",
+#'                              "#F26223"),
+#'              labels = c("red", "brown", "blond", "gray"),
+#'              groupLinks=rep("https://CRAN.R-project.org/package=networkD3", 4),
+#'              groupLinksWindow="_self")
+
 #' }
 #'
 #' @source
@@ -82,7 +98,8 @@ chordNetwork <- function(Data,
                          fontFamily = "sans-serif",
                          labels = c(),
                          labelDistance = 30,
-                         groupLinks = NULL)
+                         groupLinks = FALSE,
+                         groupLinksWindow = "_blank")
 
 {
   options <- list(
@@ -96,7 +113,8 @@ chordNetwork <- function(Data,
     font_family = fontFamily,
     labels = labels,
     label_distance = labelDistance,
-    group_links = groupLinks
+    group_links = groupLinks,
+    group_links_window = groupLinksWindow
   )
 
   if (!is.matrix(Data) && !is.data.frame(Data))
