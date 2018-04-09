@@ -11,5 +11,5 @@
 #'
 #' @export
 saveNetwork <- function(network, file, selfcontained = TRUE) {
-    htmlwidgets::saveWidget(network, file, selfcontained)
+  htmlwidgets::saveWidget(network, file, selfcontained)
 }

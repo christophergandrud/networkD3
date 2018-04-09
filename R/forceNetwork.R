@@ -50,13 +50,16 @@
 #' zooming.
 #' @param legend logical value to enable node colour legends.
 #' @param arrows logical value to enable directional link arrows.
+#' @param showLabel logical value to show node label
 #' @param bounded logical value to enable (\code{TRUE}) or disable
 #' (\code{FALSE}) the bounding box limiting the graph's extent. See
 #' \url{http://bl.ocks.org/mbostock/1129492}.
-#' @param opacityNoHover numeric value of the opacity proportion for node labels
-#' text when the mouse is not hovering over them.
-#' @param clickAction character string with a JavaScript expression to evaluate
-#' when a node is clicked.
+#' @param clickCallback character string with a JavaScript expression to evaluate
+#' when click a node.
+#' @param hoverCallback a list of character string with a JavaScript expression to evaluate
+#' when hover a node.
+#' @param unhoverCallback a list of character string with a JavaScript expression to evaluate
+#' when unhover a node.
 #'
 #' @examples
 #' # Load data
@@ -107,8 +110,7 @@
 #' # Create graph with node text faintly visible when no hovering
 #' forceNetwork(Links = MisJson$links, Nodes = MisJson$nodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
-#'              Group = "group", opacity = 0.4, bounded = TRUE,
-#'              opacityNoHover = TRUE)
+#'              Group = "group", opacity = 0.4, bounded = TRUE)
 #'
 #' ## Specify colours for specific edges
 #' # Find links to Valjean (11)
@@ -128,13 +130,13 @@
 #' # Shiny.onInputChange() to allocate d.XXX to an element of input
 #' # for use in a Shiny app.
 #'
-#' MyClickScript <- 'alert("You clicked " + d.name + " which is in row " +
-#'        (d.index + 1) +  " of your original R data frame");'
+#' MyClickScript <- JS('alert("You clicked " + d.name + " which is in row " +
+#'        (d.index + 1) +  " of your original R data frame");')
 #'
 #' forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 #'              Target = "target", Value = "value", NodeID = "name",
 #'              Group = "group", opacity = 1, zoom = FALSE,
-#'              bounded = TRUE, clickAction = MyClickScript)
+#'              bounded = TRUE, clickCallback = MyClickScript)
 #' }
 #'
 
@@ -153,108 +155,185 @@ forceNetwork <- function(Links,
                          NodeID,
                          Nodesize,
                          Group,
-                         height = NULL,
-                         width = NULL,
+                         height = "95vmin",
+                         width = "95vmax",
                          colourScale = JS("d3.scaleOrdinal(d3.schemeCategory20);"),
-                         fontSize = 7,
+                         fontSize = 8,
                          fontFamily = "serif",
                          linkDistance = 50,
                          linkWidth = JS("function(d) { return Math.sqrt(d.value); }"),
-                         radiusCalculation = JS(" Math.sqrt(d.nodesize)+6"),
+                         radiusCalculation = JS(" Math.sqrt(d.nodesize)+8"),
                          charge = -30,
                          linkColour = "#666",
                          opacity = 0.6,
                          zoom = FALSE,
                          legend = FALSE,
                          arrows = FALSE,
+                         showLabel = TRUE,
                          bounded = FALSE,
-                         opacityNoHover = 0,
-                         clickAction = NULL)
-{
-    # Check if data is zero indexed
-    check_zero(Links[, Source], Links[, Target])
+                         clickCallback = NULL,
+                         hoverCallback = JS(
+                           "function mouseover(d) {",
+                           unFocusOtherLinks(unfocusDivisor = 2, duration = 200, opacity = opacity),
+                           unFocusOtherNodes(unfocusDivisor = 2, duration = 200, opacity = opacity),
+                           nodeSizeEffect(plusSize = 5, duration = 300),
+                           labelScaleEffect(fontSize = fontSize * 2.5, offset = fontSize, duration = 300, opacity = 1),
+                           "}"
+                         ),
+                         unhoverCallback = JS(
+                           "function mouseover(d) {",
+                           unFocusOtherLinks(reset = TRUE, opacity = opacity),
+                           unFocusOtherNodes(reset = TRUE, opacity = opacity),
+                           nodeSizeEffect(plusSize = 0, duration = 300),
+                           labelScaleEffect(fontSize = fontSize, offset = 0, duration = 300, opacity = showLabel * opacity),
+                           "}"
+                         )) {
+  # Check if data is zero indexed
+  check_zero(Links[, Source], Links[, Target])
 
-    # If tbl_df convert to plain data.frame
-    Links <- tbl_df_strip(Links)
-    Nodes <- tbl_df_strip(Nodes)
+  # If tbl_df convert to plain data.frame
+  Links <- tbl_df_strip(Links)
+  Nodes <- tbl_df_strip(Nodes)
 
-    # Hack for UI consistency. Think of improving.
-    colourScale <- as.character(colourScale)
-    linkWidth <- as.character(linkWidth)
-    radiusCalculation <- as.character(radiusCalculation)
+  # Hack for UI consistency. Think of improving.
+  colourScale <- as.character(colourScale)
+  linkWidth <- as.character(linkWidth)
+  radiusCalculation <- as.character(radiusCalculation)
 
-    # Subset data frames for network graph
-    if (!is.data.frame(Links)) {
-            stop("Links must be a data frame class object.")
-    }
-    if (!is.data.frame(Nodes)) {
-            stop("Nodes must be a data frame class object.")
-    }
-    if (missing(Value)) {
-            LinksDF <- data.frame(Links[, Source], Links[, Target])
-            names(LinksDF) <- c("source", "target")
-    }
-    else if (!missing(Value)) {
-            LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
-            names(LinksDF) <- c("source", "target", "value")
-    }
-    if (!missing(Nodesize)){
-            NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group], Nodes[, Nodesize])
-            names(NodesDF) <- c("name", "group", "nodesize")
-            nodesize = TRUE
-    } else {
-            NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
-            names(NodesDF) <- c("name", "group")
-            nodesize = FALSE
-    }
+  # Subset data frames for network graph
+  if (!is.data.frame(Links)) {
+    stop("Links must be a data frame class object.")
+  }
+  if (!is.data.frame(Nodes)) {
+    stop("Nodes must be a data frame class object.")
+  }
+  if (missing(Value)) {
+    LinksDF <- data.frame(Links[, Source], Links[, Target])
+    names(LinksDF) <- c("source", "target")
+  }
+  else if (!missing(Value)) {
+    LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
+    names(LinksDF) <- c("source", "target", "value")
+  }
+  if (!missing(Nodesize)) {
+    NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group], Nodes[, Nodesize])
+    names(NodesDF) <- c("name", "group", "nodesize")
+    nodesize <- TRUE
+  } else {
+    NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group])
+    names(NodesDF) <- c("name", "group")
+    nodesize <- FALSE
+  }
 
-    LinksDF <- data.frame(LinksDF, colour = linkColour)
-    LinksDF$colour = as.character(LinksDF$colour)
+  LinksDF <- data.frame(LinksDF, colour = linkColour)
+  LinksDF$colour <- as.character(LinksDF$colour)
 
-    # create options
-    options = list(
-            NodeID = NodeID,
-            Group = Group,
-            colourScale = colourScale,
-            fontSize = fontSize,
-            fontFamily = fontFamily,
-            clickTextSize = fontSize * 2.5,
-            linkDistance = linkDistance,
-            linkWidth = linkWidth,
-            charge = charge,
-            # linkColour = linkColour,
-            opacity = opacity,
-            zoom = zoom,
-            legend = legend,
-            arrows = arrows,
-            nodesize = nodesize,
-            radiusCalculation = radiusCalculation,
-            bounded = bounded,
-            opacityNoHover = opacityNoHover,
-            clickAction = clickAction
-    )
+  # create options
+  options <- list(
+    NodeID = NodeID,
+    Group = Group,
+    colourScale = colourScale,
+    fontSize = fontSize,
+    fontFamily = fontFamily,
+    linkDistance = linkDistance,
+    linkWidth = linkWidth,
+    charge = charge,
+    linkColour = linkColour,
+    opacity = opacity,
+    zoom = zoom,
+    legend = legend,
+    arrows = arrows,
+    showLabel = showLabel,
+    nodesize = nodesize,
+    radiusCalculation = radiusCalculation,
+    bounded = bounded,
+    clickCallback = clickCallback,
+    hoverCallback = hoverCallback,
+    unhoverCallback = unhoverCallback
+  )
 
-    # create widget
-    htmlwidgets::createWidget(
-            name = "forceNetwork",
-            x = list(links = LinksDF, nodes = NodesDF, options = options),
-            width = width,
-            height = height,
-            htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE),
-            package = "networkD3"
-    )
+  # create widget
+  htmlwidgets::createWidget(
+    name = "forceNetwork",
+    x = list(links = LinksDF, nodes = NodesDF, options = options),
+    width = width,
+    height = height,
+    htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE),
+    package = "networkD3"
+  )
 }
+
+
+#' Javascript function to unfocus other nodes
+#'
+#' @param unfocusDivisor a divisor factor of apacity
+#' @param duration the duration of the effect
+#' @param reset reset the effect
+#' @param opacity numeric value of the proportion opaque you would like the
+#' graph elements to be.
+#' @export
+unFocusOtherLinks <- function(unfocusDivisor = 2, duration = 200, opacity = 1, reset = FALSE) {
+  if (reset) return(paste0('d3.selectAll(".link").style("opacity", +', opacity, ');'))
+  paste0(
+    'd3.selectAll(".link").transition().duration(', duration, ')
+      .style("opacity", function(l) { return d != l.source && d != l.target ? +', opacity, " / ", unfocusDivisor, " : +", opacity, ' });'
+  )
+}
+
+#' @rdname unFocusOtherLinks
+unFocusOtherNodes <- function(unfocusDivisor = 2, duration = 200, opacity = 1, reset = FALSE) {
+  if (reset) return(paste0('d3.selectAll(".node").style("opacity", +', opacity, ');'))
+  paste0(
+    'd3.selectAll(".node").transition().duration(', duration, ')
+      .style("opacity", function(o) { return d.index == o.index || d3.neighboring(d,o) ? +', opacity, " : +", opacity, " / ", unfocusDivisor, '; });'
+  )
+}
+
+#' Javascript function to increase node size
+#'
+#' @param plusSize value to increase size node
+#' @param duration the duration of the effect
+#' @export
+nodeSizeEffect <- function(plusSize = 5, duration = 300) {
+  paste0(
+    'd3.select("#node" + d.index).select("circle").transition()
+    .duration(', duration, ')
+    .attr("r", function(n){return d3.nodeSize(n)+', plusSize, ";});"
+  )
+}
+
+#' Javascript function to scale the label
+#'
+#' @param fontSize a scale factor of fontSize
+#' @param offset a value to x-offset label
+#' @param duration the duration of the effect
+#' @param opacity numeric value of the proportion opaque you would like the
+#' graph elements to be.
+#' @export
+labelScaleEffect <- function(fontSize = 14, offset = 13, duration = 300, opacity = 1) {
+  paste0(
+    'd3.select("#node" + d.index).select("text").transition()
+    .duration(', duration, ')
+    .attr("x", ', offset, ')
+    .style("font-size", "', fontSize, 'px")
+    .style("opacity", ', opacity, ");"
+  )
+}
+
 
 #' @rdname networkD3-shiny
 #' @export
-forceNetworkOutput <- function(outputId, width = "100%", height = "500px") {
-        shinyWidgetOutput(outputId, "forceNetwork", width, height,
-                          package = "networkD3")
+forceNetworkOutput <- function(outputId, width = "95vmmax", height = "95vmin") {
+  shinyWidgetOutput(outputId, "forceNetwork", width, height,
+    package = "networkD3"
+  )
 }
 
 #' @rdname networkD3-shiny
 #' @export
 renderForceNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
-        if (!quoted) { expr <- substitute(expr) } # force quoted
-        shinyRenderWidget(expr, forceNetworkOutput, env, quoted = TRUE)
+  if (!quoted) {
+    expr <- substitute(expr)
+  } # force quoted
+  shinyRenderWidget(expr, forceNetworkOutput, env, quoted = TRUE)
 }

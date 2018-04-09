@@ -27,14 +27,15 @@ HTMLWidgets.widget({
 
   // Compute the node radius  using the javascript math expression specified
     function nodeSize(d) {
-            if(options.nodesize){
-                    return eval(options.radiusCalculation);
+        if(options.nodesize){
+            return eval(options.radiusCalculation);
 
-            }else{
-                    return 6}
+        } else{
+            return 6}
 
     }
-
+    
+    d3.nodeSize = nodeSize;
 
     // alias options
     var options = x.options;
@@ -53,6 +54,8 @@ HTMLWidgets.widget({
     function neighboring(a, b) {
       return linkedByIndex[a.index + "," + b.index];
     }
+    
+    d3.neighboring = neighboring;
 
     // get the width and height
     var width = el.offsetWidth;
@@ -68,6 +71,8 @@ HTMLWidgets.widget({
       .nodes(d3.values(nodes))
       .force("link", d3.forceLink(links).distance(options.linkDistance))
       .force("center", d3.forceCenter(width / 2, height / 2))
+      //.force("x", d3.forceX(width / 2).strength(0.015))
+      //.force("y", d3.forceY(height / 2).strength(0.015))
       .force("charge", d3.forceManyBody().strength(options.charge))
       .on("tick", tick);
 
@@ -76,7 +81,7 @@ HTMLWidgets.widget({
       var drag = d3.drag()
         .on("start", dragstart)
         .on("drag", dragged)
-        .on("end", dragended)
+        .on("end", dragended);
       function dragstart(d) {
         if (!d3.event.active) force.alphaTarget(0.3).restart();
         d.fx = d.x;
@@ -99,7 +104,7 @@ HTMLWidgets.widget({
     //  fine to have two g layers even if zoom = F
     svg = svg
         .append("g").attr("class","zoom-layer")
-        .append("g")
+        .append("g");
 
     // add zooming if requested
     if (options.zoom) {
@@ -107,7 +112,7 @@ HTMLWidgets.widget({
         d3.select(el).select(".zoom-layer")
           .attr("transform", d3.event.transform);
       }
-      zoom.on("zoom", redraw)
+      zoom.on("zoom", redraw);
 
       d3.select(el).select("svg")
         .attr("pointer-events", "all")
@@ -122,18 +127,20 @@ HTMLWidgets.widget({
       .data(links)
       .enter().append("line")
       .attr("class", "link")
+      .attr('id', function(d){ return 'link' + d.index; })
       .style("stroke", function(d) { return d.colour ; })
-      //.style("stroke", options.linkColour)
+      .style("stroke", options.linkColour)
       .style("opacity", options.opacity)
       .style("stroke-width", eval("(" + options.linkWidth + ")"))
       .on("mouseover", function(d) {
-          d3.select(this)
+          d3.select("#link" + d.index)
             .style("opacity", 1);
       })
       .on("mouseout", function(d) {
-          d3.select(this)
+          d3.select("#link" + d.index)
             .style("opacity", options.opacity);
       });
+      
 
     if (options.arrows) {
       link.style("marker-end",  function(d) { return "url(#arrow-" + d.colour + ")"; });
@@ -161,11 +168,12 @@ HTMLWidgets.widget({
       .data(force.nodes())
       .enter().append("g")
       .attr("class", "node")
+      .attr('id', function(d){ return 'node' + d.index; })
       .style("fill", function(d) { return color(d.group); })
       .style("opacity", options.opacity)
-      .on("mouseover", mouseover)
-      .on("mouseout", mouseout)
-      .on("click", click)
+      .on("mouseover", options.hoverCallback)
+      .on("mouseout", options.unhoverCallback)
+      .on("click", options.clickCallback)
       .call(drag);
 
     node.append("circle")
@@ -179,8 +187,9 @@ HTMLWidgets.widget({
       .attr("dx", 12)
       .attr("dy", ".35em")
       .text(function(d) { return d.name })
-      .style("font", options.fontSize + "px " + options.fontFamily)
-      .style("opacity", options.opacityNoHover)
+      .style("font-family", options.fontFamily)
+      .style("font-size", options.fontSize + "px")
+      .style("opacity", options.showLabel * options.opacity)
       .style("pointer-events", "none");
 
     function tick() {
@@ -214,48 +223,6 @@ HTMLWidgets.widget({
         .attr("x2", function(d) { return idx(d, "x2"); })
         .attr("y2", function(d) { return idx(d, "y2"); });
     }
-
-    function mouseover(d) {
-      // unfocus non-connected links and nodes
-      //if (options.focusOnHover) {
-        var unfocusDivisor = 4;
-
-        link.transition().duration(200)
-          .style("opacity", function(l) { return d != l.source && d != l.target ? +options.opacity / unfocusDivisor : +options.opacity });
-
-        node.transition().duration(200)
-          .style("opacity", function(o) { return d.index == o.index || neighboring(d, o) ? +options.opacity : +options.opacity / unfocusDivisor; });
-      //}
-
-      d3.select(this).select("circle").transition()
-        .duration(750)
-        .attr("r", function(d){return nodeSize(d)+5;});
-      d3.select(this).select("text").transition()
-        .duration(750)
-        .attr("x", 13)
-        .style("stroke-width", ".5px")
-        .style("font", options.clickTextSize + "px ")
-        .style("opacity", 1);
-    }
-
-    function mouseout() {
-      node.style("opacity", +options.opacity);
-      link.style("opacity", +options.opacity);
-
-      d3.select(this).select("circle").transition()
-        .duration(750)
-        .attr("r", function(d){return nodeSize(d);});
-      d3.select(this).select("text").transition()
-        .duration(1250)
-        .attr("x", 0)
-        .style("font", options.fontSize + "px ")
-        .style("opacity", options.opacityNoHover);
-    }
-
-    function click(d) {
-      return eval(options.clickAction)
-    }
-
     // add legend option
     if(options.legend){
         var legendRectSize = 18;

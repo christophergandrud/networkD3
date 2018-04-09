@@ -31,7 +31,7 @@ MyClickScript <-
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 1, zoom = F, bounded = T,
-             clickAction = MyClickScript)
+             clickCallback = MyClickScript)
 
 # showing how you can re-use the name of the clicked-on node (which is 'd')
 # You are unlikely to want to do this pop-up alert, but you might want 
@@ -42,12 +42,12 @@ MyClickScript <- 'alert("You clicked " + d.name + " which is in row " + (d.index
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 1, zoom = F, bounded = T,
-             clickAction = MyClickScript)
+             clickCallback = MyClickScript)
 
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 1, zoom = F, bounded = T,
-             clickAction = "alert('Ouch!')")
+             clickCallback = "alert('Ouch!')")
 
 # With a different font, and dimensions chosen to illustrate bounded box
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
@@ -60,7 +60,7 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 1, zoom = F, bounded = T,
-             fontFamily = "cursive", opacityNoHover = 0.3)
+             fontFamily = "cursive")
 
 # Create graph with legend and varying radius
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
@@ -149,7 +149,7 @@ hairColourData <- matrix(c(11975,  1951,  8010, 1013,
                            8916,  2060,  8090,  940,
                            2868,  6171,  8045, 6907), nrow = 4)
                               
-chordNetwork(data = hairColourData, 
+chordNetwork(Data = hairColourData, 
              width = 500, 
              height = 500,
              colourScale = c("#000000", "#FFDD89", "#957244", "#F26223"))

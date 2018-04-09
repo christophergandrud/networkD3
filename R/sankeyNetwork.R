@@ -73,87 +73,97 @@
 #' @export
 
 sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
-    NodeID, NodeGroup = NodeID, LinkGroup = NULL, units = "",
-    colourScale = JS("d3.scaleOrdinal(d3.schemeCategory20);"), fontSize = 7,
-    fontFamily = NULL, nodeWidth = 15, nodePadding = 10, margin = NULL,
-    height = NULL, width = NULL, iterations = 32, sinksRight = TRUE)
-{
-    # Check if data is zero indexed
-    check_zero(Links[, Source], Links[, Target])
+                          NodeID, NodeGroup = NodeID, LinkGroup = NULL, units = "",
+                          colourScale = JS("d3.scaleOrdinal(d3.schemeCategory20);"), fontSize = 7,
+                          fontFamily = NULL, nodeWidth = 15, nodePadding = 10, margin = NULL,
+                          height = NULL, width = NULL, iterations = 32, sinksRight = TRUE) {
+  # Check if data is zero indexed
+  check_zero(Links[, Source], Links[, Target])
 
-    # Hack for UI consistency. Think of improving.
-    colourScale <- as.character(colourScale)
+  # Hack for UI consistency. Think of improving.
+  colourScale <- as.character(colourScale)
 
-    # If tbl_df convert to plain data.frame
-    Links <- tbl_df_strip(Links)
-    Nodes <- tbl_df_strip(Nodes)
+  # If tbl_df convert to plain data.frame
+  Links <- tbl_df_strip(Links)
+  Nodes <- tbl_df_strip(Nodes)
 
-    # Subset data frames for network graph
-    if (!is.data.frame(Links)) {
-        stop("Links must be a data frame class object.")
-    }
-    if (!is.data.frame(Nodes)) {
-        stop("Nodes must be a data frame class object.")
-    }
-    # if Source or Target are missing assume Source is the first
-    # column Target is the second column
-    if (missing(Source))
-        Source = 1
-    if (missing(Target))
-        Target = 2
+  # Subset data frames for network graph
+  if (!is.data.frame(Links)) {
+    stop("Links must be a data frame class object.")
+  }
+  if (!is.data.frame(Nodes)) {
+    stop("Nodes must be a data frame class object.")
+  }
+  # if Source or Target are missing assume Source is the first
+  # column Target is the second column
+  if (missing(Source)) {
+    Source <- 1
+  }
+  if (missing(Target)) {
+    Target <- 2
+  }
 
-    if (missing(Value)) {
-        LinksDF <- data.frame(Links[, Source], Links[, Target])
-        names(LinksDF) <- c("source", "target")
-    } else if (!missing(Value)) {
-        LinksDF <- data.frame(Links[, Source], Links[, Target],
-            Links[, Value])
-        names(LinksDF) <- c("source", "target", "value")
-    }
+  if (missing(Value)) {
+    LinksDF <- data.frame(Links[, Source], Links[, Target])
+    names(LinksDF) <- c("source", "target")
+  } else if (!missing(Value)) {
+    LinksDF <- data.frame(
+      Links[, Source], Links[, Target],
+      Links[, Value]
+    )
+    names(LinksDF) <- c("source", "target", "value")
+  }
 
-    # if NodeID is missing assume NodeID is the first column
-    if (missing(NodeID))
-        NodeID = 1
-    NodesDF <- data.frame(Nodes[, NodeID])
-    names(NodesDF) <- c("name")
+  # if NodeID is missing assume NodeID is the first column
+  if (missing(NodeID)) {
+    NodeID <- 1
+  }
+  NodesDF <- data.frame(Nodes[, NodeID])
+  names(NodesDF) <- c("name")
 
-    # add node group if specified
-    if (is.character(NodeGroup)) {
-        NodesDF$group <- Nodes[, NodeGroup]
-    }
+  # add node group if specified
+  if (is.character(NodeGroup)) {
+    NodesDF$group <- Nodes[, NodeGroup]
+  }
 
-    if (is.character(LinkGroup)) {
-        LinksDF$group <- Links[, LinkGroup]
-    }
+  if (is.character(LinkGroup)) {
+    LinksDF$group <- Links[, LinkGroup]
+  }
 
-    margin <- margin_handler(margin)
+  margin <- margin_handler(margin)
 
-    # create options
-    options = list(NodeID = NodeID, NodeGroup = NodeGroup, LinkGroup = LinkGroup,
-        colourScale = colourScale, fontSize = fontSize, fontFamily = fontFamily,
-        nodeWidth = nodeWidth, nodePadding = nodePadding, units = units,
-        margin = margin, iterations = iterations, sinksRight = sinksRight)
+  # create options
+  options <- list(
+    NodeID = NodeID, NodeGroup = NodeGroup, LinkGroup = LinkGroup,
+    colourScale = colourScale, fontSize = fontSize, fontFamily = fontFamily,
+    nodeWidth = nodeWidth, nodePadding = nodePadding, units = units,
+    margin = margin, iterations = iterations, sinksRight = sinksRight
+  )
 
-    # create widget
-    htmlwidgets::createWidget(name = "sankeyNetwork", x = list(links = LinksDF,
-        nodes = NodesDF, options = options), width = width, height = height,
-        htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE),
-        package = "networkD3")
+  # create widget
+  htmlwidgets::createWidget(
+    name = "sankeyNetwork", x = list(
+      links = LinksDF,
+      nodes = NodesDF, options = options
+    ), width = width, height = height,
+    htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE),
+    package = "networkD3"
+  )
 }
 
 #' @rdname networkD3-shiny
 #' @export
 sankeyNetworkOutput <- function(outputId, width = "100%", height = "500px") {
-    shinyWidgetOutput(outputId, "sankeyNetwork", width, height,
-        package = "networkD3")
+  shinyWidgetOutput(outputId, "sankeyNetwork", width, height,
+    package = "networkD3"
+  )
 }
 
 #' @rdname networkD3-shiny
 #' @export
 renderSankeyNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
-    if (!quoted)
-        {
-            expr <- substitute(expr)
-        }  # force quoted
-    shinyRenderWidget(expr, sankeyNetworkOutput, env, quoted = TRUE)
+  if (!quoted) {
+    expr <- substitute(expr)
+  } # force quoted
+  shinyRenderWidget(expr, sankeyNetworkOutput, env, quoted = TRUE)
 }

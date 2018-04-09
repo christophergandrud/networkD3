@@ -32,7 +32,7 @@ diagonalNetworkOutput(outputId, width = "100\%", height = "800px")
 
 renderDiagonalNetwork(expr, env = parent.frame(), quoted = FALSE)
 
-forceNetworkOutput(outputId, width = "100\%", height = "500px")
+forceNetworkOutput(outputId, width = "95vmmax", height = "95vmin")
 
 renderForceNetwork(expr, env = parent.frame(), quoted = FALSE)
 
