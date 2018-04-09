@@ -264,13 +264,14 @@ forceNetwork <- function(Links,
 }
 
 
-#' Javascript function to unfocus other nodes
+#' Javascript callback mouse functions 
 #'
 #' @param unfocusDivisor a divisor factor of apacity
 #' @param duration the duration of the effect
 #' @param reset reset the effect
 #' @param opacity numeric value of the proportion opaque you would like the
 #' graph elements to be.
+#' @name Callbacks
 #' @export
 unFocusOtherLinks <- function(unfocusDivisor = 2, duration = 200, opacity = 1, reset = FALSE) {
   if (reset) return(paste0('d3.selectAll(".link").style("opacity", +', opacity, ');'))
@@ -280,7 +281,8 @@ unFocusOtherLinks <- function(unfocusDivisor = 2, duration = 200, opacity = 1, r
   )
 }
 
-#' @rdname unFocusOtherLinks
+#' @rdname Callbacks
+#' @export
 unFocusOtherNodes <- function(unfocusDivisor = 2, duration = 200, opacity = 1, reset = FALSE) {
   if (reset) return(paste0('d3.selectAll(".node").style("opacity", +', opacity, ');'))
   paste0(
@@ -289,10 +291,8 @@ unFocusOtherNodes <- function(unfocusDivisor = 2, duration = 200, opacity = 1, r
   )
 }
 
-#' Javascript function to increase node size
-#'
+#' @rdname Callbacks
 #' @param plusSize value to increase size node
-#' @param duration the duration of the effect
 #' @export
 nodeSizeEffect <- function(plusSize = 5, duration = 300) {
   paste0(
@@ -302,13 +302,9 @@ nodeSizeEffect <- function(plusSize = 5, duration = 300) {
   )
 }
 
-#' Javascript function to scale the label
-#'
+#' @rdname Callbacks
 #' @param fontSize a scale factor of fontSize
 #' @param offset a value to x-offset label
-#' @param duration the duration of the effect
-#' @param opacity numeric value of the proportion opaque you would like the
-#' graph elements to be.
 #' @export
 labelScaleEffect <- function(fontSize = 14, offset = 13, duration = 300, opacity = 1) {
   paste0(
