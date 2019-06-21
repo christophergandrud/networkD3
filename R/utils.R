@@ -8,15 +8,16 @@
 #'
 #' @export
 
-JS <- function (...)
-{
-    x <- c(...)
-    if (is.null(x))
-        return()
-    if (!is.character(x))
-        stop("The arguments for JS() must be a chraracter vector")
-    x <- paste(x, collapse = "\n")
-    structure(x, class = unique(c("JS_EVAL", oldClass(x))))
+JS <- function(...) {
+  x <- c(...)
+  if (is.null(x)) {
+    return()
+  }
+  if (!is.character(x)) {
+    stop("The arguments for JS() must be a chraracter vector")
+  }
+  x <- paste(x, collapse = "\n")
+  structure(x, class = unique(c("JS_EVAL", oldClass(x))))
 }
 
 
@@ -28,21 +29,24 @@ JS <- function (...)
 #' \url{http://theweiluo.wordpress.com/2011/09/30/r-to-json-for-d3-js-and-protovis/}
 #' @keywords internal
 #' @noRd
-toJSONarray <- function(dtf){
+toJSONarray <- function(dtf) {
   clnms <- colnames(dtf)
 
-  name.value <- function(i){
-    quote <- '';
-    if(class(dtf[, i])!='numeric' && class(dtf[, i])!='integer'){
-      quote <- '"';
+  name.value <- function(i) {
+    quote <- ""
+    if (class(dtf[, i]) != "numeric" && class(dtf[, i]) != "integer") {
+      quote <- '"'
     }
-    paste('"', i, '" : ', quote, dtf[,i], quote, sep='')
+    paste('"', i, '" : ', quote, dtf[, i], quote, sep = "")
   }
-  objs <- apply(sapply(clnms, name.value), 1, function(x){paste(x,
-                                                          collapse=', ')})
-  objs <- paste('{', objs, '}')
+  objs <- apply(sapply(clnms, name.value), 1, function(x) {
+    paste(x,
+      collapse = ", "
+    )
+  })
+  objs <- paste("{", objs, "}")
 
-  res <- paste('[', paste(objs, collapse=', '), ']')
+  res <- paste("[", paste(objs, collapse = ", "), "]")
 
   return(res)
 }
@@ -56,8 +60,8 @@ toJSONarray <- function(dtf){
 #' @return string with document contents
 #' @keywords internal
 #' @noRd
-read_file <- function(doc, ...){
-  paste(readLines(doc, ...), collapse = '\n')
+read_file <- function(doc, ...) {
+  paste(readLines(doc, ...), collapse = "\n")
 }
 
 
@@ -70,21 +74,21 @@ read_file <- function(doc, ...){
 #'    the \code{right} margin.
 #' @return named \code{list} with top, right, bottom, left margins
 #' @noRd
-margin_handler <- function(margin){
+margin_handler <- function(margin) {
   # margin can be either a single value or a list with any of
   #    top, right, bottom, left
   # if margin is a single value, then we will stick
   #    with the original behavior of networkD3 and use it for the right margin
-  if(!is.null(margin) && length(margin) == 1 && is.null(names(margin))){
+  if (!is.null(margin) && length(margin) == 1 && is.null(names(margin))) {
     margin <- list(
       top = NULL,
       right = margin,
       bottom = NULL,
       left = NULL
     )
-  } else if(!is.null(margin)){
+  } else if (!is.null(margin)) {
     # if margin is a named vector then convert to list
-    if(!is.list(margin) && !is.null(names(margin))){
+    if (!is.list(margin) && !is.null(names(margin))) {
       margin <- as.list(margin)
     }
     # if we are here then margin should be a list and
@@ -159,54 +163,63 @@ margin_handler <- function(margin){
 #' @importFrom magrittr %>%
 #' @export
 
-igraph_to_networkD3 <- function(g, group, what = 'both') {
-    # Sanity check
-    if (!('igraph' %in% class(g))) stop('g must be an igraph class object.',
-                                      call. = FALSE)
-    if (!(what %in% c('both', 'links', 'nodes'))) stop('what must be either "nodes", "links", or "both".',
-                                                     call. = FALSE)
+igraph_to_networkD3 <- function(g, group, what = "both") {
+  # Sanity check
+  if (!("igraph" %in% class(g))) {
+    stop("g must be an igraph class object.",
+      call. = FALSE
+    )
+  }
+  if (!(what %in% c("both", "links", "nodes"))) {
+    stop('what must be either "nodes", "links", or "both".',
+      call. = FALSE
+    )
+  }
 
-    # Extract vertices (nodes)
-    temp_nodes <- V(g) %>% as.matrix %>% data.frame
-    temp_nodes$name <- row.names(temp_nodes)
-    names(temp_nodes) <- c('id', 'name')
+  # Extract vertices (nodes)
+  temp_nodes <- V(g) %>% as.matrix() %>% data.frame()
+  temp_nodes$name <- row.names(temp_nodes)
+  names(temp_nodes) <- c("id", "name")
 
-    # Convert to base 0 (for JavaScript)
-    temp_nodes$id <- temp_nodes$id - 1
+  # Convert to base 0 (for JavaScript)
+  temp_nodes$id <- temp_nodes$id - 1
 
-    # Nodes for output
-    nodes <- temp_nodes$name %>% data.frame %>% setNames('name')
-    # Include grouping variable if applicable
-    if (!missing(group)) {
-      group <- as.matrix(group)
-      if (nrow(nodes) != nrow(group)) stop('group must have the same number of rows as the number of nodes in g.',
-                                          call. = FALSE)
-      nodes <- cbind(nodes, group)
+  # Nodes for output
+  nodes <- temp_nodes$name %>% data.frame() %>% setNames("name")
+  # Include grouping variable if applicable
+  if (!missing(group)) {
+    group <- as.matrix(group)
+    if (nrow(nodes) != nrow(group)) {
+      stop("group must have the same number of rows as the number of nodes in g.",
+        call. = FALSE
+      )
     }
-    row.names(nodes) <- NULL
+    nodes <- cbind(nodes, group)
+  }
+  row.names(nodes) <- NULL
 
-    # Convert links from names to numbers
-    links <- as_data_frame(g, what = 'edges')
-    links <- merge(links, temp_nodes, by.x = 'from', by.y = 'name')
-    links <- merge(links, temp_nodes, by.x = 'to', by.y = 'name')
-    if (ncol(links) == 5) {
-        links <- links[, c(4:5, 3)] %>%
-                      setNames(c('source', 'target', 'value'))
-    }
-    else {
-        links <- links[, c('id.x', 'id.y')] %>% setNames(c('source', 'target'))
-    }
+  # Convert links from names to numbers
+  links <- as_data_frame(g, what = "edges")
+  links <- merge(links, temp_nodes, by.x = "from", by.y = "name")
+  links <- merge(links, temp_nodes, by.x = "to", by.y = "name")
+  if (ncol(links) == 5) {
+    links <- links[, c(4:5, 3)] %>%
+      setNames(c("source", "target", "value"))
+  }
+  else {
+    links <- links[, c("id.x", "id.y")] %>% setNames(c("source", "target"))
+  }
 
-    # Output requested object
-    if (what == 'both') {
-      return(list(links = links, nodes = nodes))
-    }
-    else if (what == 'links') {
-      return(links)
-    }
-    else if (what == 'nodes') {
-      return(nodes)
-    }
+  # Output requested object
+  if (what == "both") {
+    return(list(links = links, nodes = nodes))
+  }
+  else if (what == "links") {
+    return(links)
+  }
+  else if (what == "nodes") {
+    return(nodes)
+  }
 }
 
 #' Check if data is 0 indexed
@@ -214,36 +227,40 @@ igraph_to_networkD3 <- function(g, group, what = 'both') {
 #' @noRd
 
 check_zero <- function(Source, Target) {
-    if (!is.factor(Source) && !is.factor(Target)) {
-        SourceTarget <- c(Source, Target)
-        if (is.numeric(SourceTarget) | is.integer(SourceTarget)) {
-            if (!(0 %in% SourceTarget))
-                warning(
-                    'It looks like Source/Target is not zero-indexed. This is required in JavaScript and so your plot may not render.',
-                    call. = FALSE)
-        }
+  if (!is.factor(Source) && !is.factor(Target)) {
+    SourceTarget <- c(Source, Target)
+    if (is.numeric(SourceTarget) | is.integer(SourceTarget)) {
+      if (!(0 %in% SourceTarget)) {
+        warning(
+          "It looks like Source/Target is not zero-indexed. This is required in JavaScript and so your plot may not render.",
+          call. = FALSE
+        )
+      }
     }
+  }
 }
 
 #' Convert dplyr created tbl_df to plain data.frame
 #' @noRd
 
 tbl_df_strip <- function(x) {
-    if('tbl_df' %in% class(x)) {
-        message(paste(deparse(substitute(x)),
-                      'is a tbl_df. Converting to a plain data frame.'))
-        x <- base::as.data.frame(x)
-    }
-    return(x)
+  if ("tbl_df" %in% class(x)) {
+    message(paste(
+      deparse(substitute(x)),
+      "is a tbl_df. Converting to a plain data frame."
+    ))
+    x <- base::as.data.frame(x)
+  }
+  return(x)
 }
 
 
 #' Check if a package is installed
-#' 
+#'
 #' @param pkg_name character string name of package
-#' 
+#'
 #' @importFrom utils installed.packages
 
 pkg_installed <- function(pkg_name) {
-    pkg_name %in% rownames(installed.packages())
+  pkg_name %in% rownames(installed.packages())
 }

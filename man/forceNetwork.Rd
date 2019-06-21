@@ -10,14 +10,22 @@ specifically for force directed networks
 }
 \usage{
 forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Nodesize, Group,
-  height = NULL, width = NULL,
-  colourScale = JS("d3.scaleOrdinal(d3.schemeCategory20);"), fontSize = 7,
+  height = "95vmin", width = "95vmax",
+  colourScale = JS("d3.scaleOrdinal(d3.schemeCategory20);"), fontSize = 8,
   fontFamily = "serif", linkDistance = 50,
   linkWidth = JS("function(d) { return Math.sqrt(d.value); }"),
-  radiusCalculation = JS(" Math.sqrt(d.nodesize)+6"), charge = -30,
+  radiusCalculation = JS(" Math.sqrt(d.nodesize)+8"), charge = -30,
   linkColour = "#666", opacity = 0.6, zoom = FALSE, legend = FALSE,
-  arrows = FALSE, bounded = FALSE, opacityNoHover = 0,
-  clickAction = NULL)
+  arrows = FALSE, showLabel = TRUE, bounded = FALSE,
+  clickCallback = NULL, hoverCallback = JS("function mouseover(d) {",
+  unFocusOtherLinks(unfocusDivisor = 2, duration = 200, opacity = opacity),
+  unFocusOtherNodes(unfocusDivisor = 2, duration = 200, opacity = opacity),
+  nodeSizeEffect(plusSize = 5, duration = 300), labelScaleEffect(fontSize =
+  fontSize * 2.5, offset = fontSize, duration = 300, opacity = 1), "}"),
+  unhoverCallback = JS("function mouseover(d) {", unFocusOtherLinks(reset =
+  TRUE, opacity = opacity), unFocusOtherNodes(reset = TRUE, opacity = opacity),
+  nodeSizeEffect(plusSize = 0, duration = 300), labelScaleEffect(fontSize =
+  fontSize, offset = 0, duration = 300, opacity = showLabel * opacity), "}"))
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
@@ -92,15 +100,20 @@ zooming.}
 
 \item{arrows}{logical value to enable directional link arrows.}
 
+\item{showLabel}{logical value to show node label}
+
 \item{bounded}{logical value to enable (\code{TRUE}) or disable
 (\code{FALSE}) the bounding box limiting the graph's extent. See
 \url{http://bl.ocks.org/mbostock/1129492}.}
 
-\item{opacityNoHover}{numeric value of the opacity proportion for node labels
-text when the mouse is not hovering over them.}
+\item{clickCallback}{character string with a JavaScript expression to evaluate
+when click a node.}
 
-\item{clickAction}{character string with a JavaScript expression to evaluate
-when a node is clicked.}
+\item{hoverCallback}{a list of character string with a JavaScript expression to evaluate
+when hover a node.}
+
+\item{unhoverCallback}{a list of character string with a JavaScript expression to evaluate
+when unhover a node.}
 }
 \description{
 Create a D3 JavaScript force directed network graph.
@@ -154,8 +167,7 @@ forceNetwork(Links = MisJson$links, Nodes = MisJson$nodes, Source = "source",
 # Create graph with node text faintly visible when no hovering
 forceNetwork(Links = MisJson$links, Nodes = MisJson$nodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
-             Group = "group", opacity = 0.4, bounded = TRUE,
-             opacityNoHover = TRUE)
+             Group = "group", opacity = 0.4, bounded = TRUE)
 
 ## Specify colours for specific edges
 # Find links to Valjean (11)
@@ -175,13 +187,13 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 # Shiny.onInputChange() to allocate d.XXX to an element of input
 # for use in a Shiny app.
 
-MyClickScript <- 'alert("You clicked " + d.name + " which is in row " +
-       (d.index + 1) +  " of your original R data frame");'
+MyClickScript <- JS('alert("You clicked " + d.name + " which is in row " +
+       (d.index + 1) +  " of your original R data frame");')
 
 forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
              Target = "target", Value = "value", NodeID = "name",
              Group = "group", opacity = 1, zoom = FALSE,
-             bounded = TRUE, clickAction = MyClickScript)
+             bounded = TRUE, clickCallback = MyClickScript)
 }
 
 }

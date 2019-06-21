@@ -24,7 +24,7 @@ the strength of the link from group n to group m}
 \item{width}{numeric width for the network graph's frame area in pixels (if
 \code{NULL} then width is automatically determined based on context)}
 
-\item{initialOpacity}{specify the opacity before the user mouses over 
+\item{initialOpacity}{specify the opacity before the user mouses over
 the link}
 
 \item{useTicks}{integer number of ticks on the radial axis.
@@ -52,7 +52,7 @@ Create Reingold-Tilford Tree network diagrams.
 }
 \examples{
 \dontrun{
-#### Data about hair colour preferences, from 
+#### Data about hair colour preferences, from
 ## https://github.com/mbostock/d3/wiki/Chord-Layout
 
 hairColourData <- matrix(c(11975,  1951,  8010, 1013,
@@ -60,13 +60,13 @@ hairColourData <- matrix(c(11975,  1951,  8010, 1013,
                             8916,  2060,  8090,  940,
                             2868,  6171,  8045, 6907),
                             nrow = 4)
-                            
-chordNetwork(Data = hairColourData, 
-             width = 500, 
+
+chordNetwork(Data = hairColourData,
+             width = 500,
              height = 500,
-             colourScale = c("#000000", 
-                             "#FFDD89", 
-                             "#957244", 
+             colourScale = c("#000000",
+                             "#FFDD89",
+                             "#957244",
                              "#F26223"),
              labels = c("red", "brown", "blond", "gray"))
 

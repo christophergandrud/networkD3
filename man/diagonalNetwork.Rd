@@ -60,7 +60,7 @@ Create Reingold-Tilford Tree network diagrams.
 # Create URL. paste0 used purely to keep within line width.
 URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
               "master/JSONdata//flare.json")
-              
+
 ## Convert to list format
 Flare <- jsonlite::fromJSON(URL, simplifyDataFrame = FALSE)
 

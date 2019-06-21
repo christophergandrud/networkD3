@@ -32,7 +32,7 @@
 #' # Create URL. paste0 used purely to keep within line width.
 #' URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
 #'               "master/JSONdata//flare.json")
-#'               
+#'
 #' ## Convert to list format
 #' Flare <- jsonlite::fromJSON(URL, simplifyDataFrame = FALSE)
 #'
@@ -98,51 +98,55 @@ radialNetwork <- function(
                           nodeStroke = "steelblue",
                           textColour = "#111",
                           opacity = 0.9,
-                          margin = NULL)
-{
-    # validate input
-    if (!is.list(List))
-      stop("List must be a list object.")
-    root <- List
-    
-    margin <- margin_handler(margin)
+                          margin = NULL) {
+  # validate input
+  if (!is.list(List)) {
+    stop("List must be a list object.")
+  }
+  root <- List
 
-    # create options
-    options = list(
-        height = height,
-        width = width,
-        fontSize = fontSize,
-        fontFamily = fontFamily,
-        linkColour = linkColour,
-        nodeColour = nodeColour,
-        nodeStroke = nodeStroke,
-        textColour = textColour,
-        margin = margin,
-        opacity = opacity
-    )
+  margin <- margin_handler(margin)
 
-    # create widget
-    htmlwidgets::createWidget(
-      name = "radialNetwork",
-      x = list(root = root, options = options),
-      width = width,
-      height = height,
-      htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE),
-      package = "networkD3")
+  # create options
+  options <- list(
+    height = height,
+    width = width,
+    fontSize = fontSize,
+    fontFamily = fontFamily,
+    linkColour = linkColour,
+    nodeColour = nodeColour,
+    nodeStroke = nodeStroke,
+    textColour = textColour,
+    margin = margin,
+    opacity = opacity
+  )
+
+  # create widget
+  htmlwidgets::createWidget(
+    name = "radialNetwork",
+    x = list(root = root, options = options),
+    width = width,
+    height = height,
+    htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE),
+    package = "networkD3"
+  )
 }
 
 #' @rdname networkD3-shiny
 #' @export
 radialNetworkOutput <- function(outputId, width = "100%", height = "800px") {
-    shinyWidgetOutput(outputId, "radialNetwork", width, height,
-                        package = "networkD3")
+  shinyWidgetOutput(outputId, "radialNetwork", width, height,
+    package = "networkD3"
+  )
 }
 
 #' @rdname networkD3-shiny
 #' @export
 renderRadialNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
-    if (!quoted) { expr <- substitute(expr) } # force quoted
-    shinyRenderWidget(expr, radialNetworkOutput, env, quoted = TRUE)
+  if (!quoted) {
+    expr <- substitute(expr)
+  } # force quoted
+  shinyRenderWidget(expr, radialNetworkOutput, env, quoted = TRUE)
 }
 
 #' Convert an R hclust or dendrogram object into a radialNetwork list.
@@ -167,22 +171,21 @@ renderRadialNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
 #'
 #' @export
 
-as.radialNetwork <- function(d, root)
-{
-    if(missing(root)) root <- as.character(match.call()[[2]])
-    if("hclust" %in% class(d)) d <- as.dendrogram(d)
-    if(!("dendrogram" %in% class(d)))
-        stop("d must be a object of class hclust or dendrogram")
-    ul <- function(x, level = 1) {
-        if(is.list(x)) {
-            return(lapply(x, function(y)
-        {
+as.radialNetwork <- function(d, root) {
+  if (missing(root)) root <- as.character(match.call()[[2]])
+  if ("hclust" %in% class(d)) d <- as.dendrogram(d)
+  if (!("dendrogram" %in% class(d))) {
+    stop("d must be a object of class hclust or dendrogram")
+  }
+  ul <- function(x, level = 1) {
+    if (is.list(x)) {
+      return(lapply(x, function(y) {
         name <- ""
-        if(!is.list(y)) name <- attr(y, "label")
-            list(name=name, children=ul(y, level + 1))
-        }))
+        if (!is.list(y)) name <- attr(y, "label")
+        list(name = name, children = ul(y, level + 1))
+      }))
     }
-    list(name = attr(x,"label"))
-    }
-    list(name = root, children = ul(d))
+    list(name = attr(x, "label"))
+  }
+  list(name = root, children = ul(d))
 }

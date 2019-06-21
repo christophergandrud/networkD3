@@ -55,112 +55,127 @@
 #' @export
 #'
 dendroNetwork <- function(
-    hc,
-    height = 500,
-    width = 800,
-    fontSize = 10,
-    linkColour = "#ccc",
-    nodeColour = "#fff",
-    nodeStroke = "steelblue",
-    textColour = "#111",
-    textOpacity = 0.9,
-    textRotate = NULL,
-    opacity = 0.9,
-    margins = NULL,
-    linkType = c("elbow", "diagonal"),
-    treeOrientation = c("horizontal", "vertical"),
-    zoom = FALSE)
-{
-    # validate input
-    if (length(textColour) == 1L)
-        textColour = rep(textColour, length(hc$labels))
-    if (length(textOpacity) == 1L)
-        textOpacity = rep(textOpacity, length(hc$labels))
+                          hc,
+                          height = 500,
+                          width = 800,
+                          fontSize = 10,
+                          linkColour = "#ccc",
+                          nodeColour = "#fff",
+                          nodeStroke = "steelblue",
+                          textColour = "#111",
+                          textOpacity = 0.9,
+                          textRotate = NULL,
+                          opacity = 0.9,
+                          margins = NULL,
+                          linkType = c("elbow", "diagonal"),
+                          treeOrientation = c("horizontal", "vertical"),
+                          zoom = FALSE) {
+  # validate input
+  if (length(textColour) == 1L) {
+    textColour <- rep(textColour, length(hc$labels))
+  }
+  if (length(textOpacity) == 1L) {
+    textOpacity <- rep(textOpacity, length(hc$labels))
+  }
 
-        linkType = match.arg(linkType[1], c("elbow", "diagonal"))
-        treeOrientation = match.arg(treeOrientation[1],
-                            c("horizontal", "vertical"))
+  linkType <- match.arg(linkType[1], c("elbow", "diagonal"))
+  treeOrientation <- match.arg(
+    treeOrientation[1],
+    c("horizontal", "vertical")
+  )
 
-    root <- as.dendroNetwork(hc, textColour, textOpacity)
+  root <- as.dendroNetwork(hc, textColour, textOpacity)
 
-    if (treeOrientation == "vertical")
-        margins_def = list(top = 40, right = 40, bottom = 150, left = 40)
-    else
-        margins_def = list(top = 40, right = 150, bottom = 40, left = 40)
+  if (treeOrientation == "vertical") {
+    margins_def <- list(top = 40, right = 40, bottom = 150, left = 40)
+  } else {
+    margins_def <- list(top = 40, right = 150, bottom = 40, left = 40)
+  }
 
-    if (length(margins) == 1L && is.numeric(margins)) {
-        margins = as.list(setNames(rep(margins, 4),
-                               c("top", "right", "bottom", "left")))
-    } else if (is.null(margins)) {
-        margins = margins_def
-    } else {
-        margins = modifyList(margins_def, margins)
-    }
+  if (length(margins) == 1L && is.numeric(margins)) {
+    margins <- as.list(setNames(
+      rep(margins, 4),
+      c("top", "right", "bottom", "left")
+    ))
+  } else if (is.null(margins)) {
+    margins <- margins_def
+  } else {
+    margins <- modifyList(margins_def, margins)
+  }
 
-    if (is.null(textRotate))
-        textRotate = ifelse(treeOrientation == "vertical", 65, 0)
+  if (is.null(textRotate)) {
+    textRotate <- ifelse(treeOrientation == "vertical", 65, 0)
+  }
 
-    # create options
-    options = list(
-        height = height,
-        width = width,
-        fontSize = fontSize,
-        linkColour = linkColour,
-        nodeColour = nodeColour,
-        nodeStroke = nodeStroke,
-        textRotate = textRotate,
-        margins = margins,
-        opacity = opacity,
-        linkType = linkType,
-        treeOrientation = treeOrientation,
-        zoom = zoom
-    )
+  # create options
+  options <- list(
+    height = height,
+    width = width,
+    fontSize = fontSize,
+    linkColour = linkColour,
+    nodeColour = nodeColour,
+    nodeStroke = nodeStroke,
+    textRotate = textRotate,
+    margins = margins,
+    opacity = opacity,
+    linkType = linkType,
+    treeOrientation = treeOrientation,
+    zoom = zoom
+  )
 
-    # create widget
-    htmlwidgets::createWidget(
+  # create widget
+  htmlwidgets::createWidget(
     name = "dendroNetwork",
     x = list(root = root, options = options),
-        width = width,
-        height = height,
-        htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE),
-        package = "networkD3")
-    }
+    width = width,
+    height = height,
+    htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE),
+    package = "networkD3"
+  )
+}
 
-    #' @rdname networkD3-shiny
-    #' @export
-    dendroNetworkOutput <- function(outputId, width = "100%", height = "800px") {
-    shinyWidgetOutput(outputId, "dendroNetwork", width, height,
-                    package = "networkD3")
-    }
+#' @rdname networkD3-shiny
+#' @export
+dendroNetworkOutput <- function(outputId, width = "100%", height = "800px") {
+  shinyWidgetOutput(outputId, "dendroNetwork", width, height,
+    package = "networkD3"
+  )
+}
 
-    #' @rdname networkD3-shiny
-    #' @export
-    renderDendroNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
-    if (!quoted) { expr <- substitute(expr) } # force quoted
-        shinyRenderWidget(expr, dendroNetworkOutput, env, quoted = TRUE)
-    }
+#' @rdname networkD3-shiny
+#' @export
+renderDendroNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
+  if (!quoted) {
+    expr <- substitute(expr)
+  } # force quoted
+  shinyRenderWidget(expr, dendroNetworkOutput, env, quoted = TRUE)
+}
 
-    as.dendroNetwork <- function(hc, textColour, textOpacity)
-    {
-    if (!("hclust" %in% class(hc)))
-        stop("hc must be a object of class hclust")
+as.dendroNetwork <- function(hc, textColour, textOpacity) {
+  if (!("hclust" %in% class(hc))) {
+    stop("hc must be a object of class hclust")
+  }
 
-    if (length(textColour) != length(hc$labels))
-        stop("textColour length must match label length")
-    if (length(textOpacity) != length(hc$labels))
-        stop("textOpacity length must match label length")
+  if (length(textColour) != length(hc$labels)) {
+    stop("textColour length must match label length")
+  }
+  if (length(textOpacity) != length(hc$labels)) {
+    stop("textOpacity length must match label length")
+  }
 
-    ul <- function(lev)
-    {
-    child = lapply(1:2, function(i) {
-        val <- abs(hc$merge[lev, ][i])
-        if (hc$merge[lev, ][i] < 0)
-            list(name = hc$labels[val], y = 0, textColour = textColour[val],
-                textOpacity = textOpacity[val])
-        else
-            ul(val)
+  ul <- function(lev) {
+    child <- lapply(1:2, function(i) {
+      val <- abs(hc$merge[lev, ][i])
+      if (hc$merge[lev, ][i] < 0) {
+        list(
+          name = hc$labels[val], y = 0, textColour = textColour[val],
+          textOpacity = textOpacity[val]
+        )
+      } else {
+        ul(val)
+      }
     })
     list(name = "", y = hc$height[lev], children = child)
-    }
-    ul(nrow(hc$merge))
+  }
+  ul(nrow(hc$merge))
 }

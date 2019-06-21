@@ -32,7 +32,7 @@
 #' # Create URL. paste0 used purely to keep within line width.
 #' URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
 #'               "master/JSONdata//flare.json")
-#'               
+#'
 #' ## Convert to list format
 #' Flare <- jsonlite::fromJSON(URL, simplifyDataFrame = FALSE)
 #'
@@ -88,59 +88,63 @@
 #' @export
 #'
 diagonalNetwork <- function(
-                          List,
-                          height = NULL,
-                          width = NULL,
-                          fontSize = 10,
-                          fontFamily = "serif",
-                          linkColour = "#ccc",
-                          nodeColour = "#fff",
-                          nodeStroke = "steelblue",
-                          textColour = "#111",
-                          opacity = 0.9,
-                          margin = NULL)
-{
-    # validate input
-    if (!is.list(List))
-      stop("List must be a list object.")
-    root <- List
-    
-    margin <- margin_handler(margin)
+                            List,
+                            height = NULL,
+                            width = NULL,
+                            fontSize = 10,
+                            fontFamily = "serif",
+                            linkColour = "#ccc",
+                            nodeColour = "#fff",
+                            nodeStroke = "steelblue",
+                            textColour = "#111",
+                            opacity = 0.9,
+                            margin = NULL) {
+  # validate input
+  if (!is.list(List)) {
+    stop("List must be a list object.")
+  }
+  root <- List
 
-    # create options
-    options = list(
-        height = height,
-        width = width,
-        fontSize = fontSize,
-        fontFamily = fontFamily,
-        linkColour = linkColour,
-        nodeColour = nodeColour,
-        nodeStroke = nodeStroke,
-        textColour = textColour,
-        margin = margin,
-        opacity = opacity
-    )
+  margin <- margin_handler(margin)
 
-    # create widget
-    htmlwidgets::createWidget(
-      name = "diagonalNetwork",
-      x = list(root = root, options = options),
-      width = width,
-      height = height,
-      htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE),
-      package = "networkD3")
+  # create options
+  options <- list(
+    height = height,
+    width = width,
+    fontSize = fontSize,
+    fontFamily = fontFamily,
+    linkColour = linkColour,
+    nodeColour = nodeColour,
+    nodeStroke = nodeStroke,
+    textColour = textColour,
+    margin = margin,
+    opacity = opacity
+  )
+
+  # create widget
+  htmlwidgets::createWidget(
+    name = "diagonalNetwork",
+    x = list(root = root, options = options),
+    width = width,
+    height = height,
+    htmlwidgets::sizingPolicy(padding = 10, browser.fill = TRUE),
+    package = "networkD3"
+  )
 }
 
 #' @rdname networkD3-shiny
 #' @export
 diagonalNetworkOutput <- function(outputId, width = "100%", height = "800px") {
-    shinyWidgetOutput(outputId, "diagonalNetwork", width, height,
-                        package = "networkD3")
+  shinyWidgetOutput(outputId, "diagonalNetwork", width, height,
+    package = "networkD3"
+  )
 }
 
 #' @rdname networkD3-shiny
 #' @export
 renderDiagonalNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
-    if (!quoted) { expr <- substitute(expr) } # force quoted
-    shinyRenderWidget(expr, diagonalNetworkOutput, env, quoted = TRUE)
+  if (!quoted) {
+    expr <- substitute(expr)
+  } # force quoted
+  shinyRenderWidget(expr, diagonalNetworkOutput, env, quoted = TRUE)
 }

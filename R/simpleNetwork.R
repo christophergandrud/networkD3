@@ -58,63 +58,67 @@ simpleNetwork <- function(Data,
                           linkColour = "#666",
                           nodeColour = "#3182bd",
                           opacity = 0.6,
-                          zoom = F)
-{
-    # validate input
-    if (!is.data.frame(Data))
-        stop("data must be a data frame class object.")
+                          zoom = F) {
+  # validate input
+  if (!is.data.frame(Data)) {
+    stop("data must be a data frame class object.")
+  }
 
-    sources <- Data[[Source]]
-    targets <- Data[[Target]]
+  sources <- Data[[Source]]
+  targets <- Data[[Target]]
 
-    # Check if data is zero indexed
-    check_zero(sources, targets)
+  # Check if data is zero indexed
+  check_zero(sources, targets)
 
-    # create nodes data
-    node_names <- factor(sort(unique(c(as.character(sources), as.character(targets)))))
-    nodes <- data.frame(name = node_names, group = 1, size = 8)
+  # create nodes data
+  node_names <- factor(sort(unique(c(as.character(sources), as.character(targets)))))
+  nodes <- data.frame(name = node_names, group = 1, size = 8)
 
-    # create links data
-    links <- data.frame(source = match(sources, node_names) - 1,
-                        target = match(targets, node_names) - 1,
-                        value = 1)
+  # create links data
+  links <- data.frame(
+    source = match(sources, node_names) - 1,
+    target = match(targets, node_names) - 1,
+    value = 1
+  )
 
-    # create options
-    options = list(
-        Links = links,
-        Nodes = nodes,
-        Source = 'source',
-        Target = 'target',
-        Value = 'value',
-        NodeID = 'name',
-        Group = 'group',
-        linkDistance = linkDistance,
-        charge = charge,
-        fontSize = fontSize,
-        fontFamily = fontFamily,
-        linkColour = linkColour,
-        colourScale = JS(paste0("d3.scaleOrdinal(['", nodeColour, "'])")),
-        opacity = opacity,
-        zoom = zoom,
-        radiusCalculation = JS("d.nodesize"),
-        Nodesize = 'size',
-        linkWidth = "'1.5px'.toString()",
-        opacityNoHover = 1
-    )
+  # create options
+  options <- list(
+    Links = links,
+    Nodes = nodes,
+    Source = "source",
+    Target = "target",
+    Value = "value",
+    NodeID = "name",
+    Group = "group",
+    linkDistance = linkDistance,
+    charge = charge,
+    fontSize = fontSize,
+    fontFamily = fontFamily,
+    linkColour = linkColour,
+    colourScale = JS(paste0("d3.scaleOrdinal(['", nodeColour, "'])")),
+    opacity = opacity,
+    zoom = zoom,
+    radiusCalculation = JS("d.nodesize"),
+    Nodesize = "size",
+    linkWidth = "'1.5px'.toString()"
+  )
 
-    do.call(forceNetwork, options)
+  do.call(forceNetwork, options)
 }
 
 #' @rdname networkD3-shiny
 #' @export
 simpleNetworkOutput <- function(outputId, width = "100%", height = "500px") {
-    shinyWidgetOutput(outputId, "forceNetwork", width, height,
-                        package = "networkD3")
+  shinyWidgetOutput(outputId, "forceNetwork", width, height,
+    package = "networkD3"
+  )
 }
 
 #' @rdname networkD3-shiny
 #' @export
 renderSimpleNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
-    if (!quoted) { expr <- substitute(expr) } # force quoted
-    shinyRenderWidget(expr, simpleNetworkOutput, env, quoted = TRUE)
+  if (!quoted) {
+    expr <- substitute(expr)
+  } # force quoted
+  shinyRenderWidget(expr, simpleNetworkOutput, env, quoted = TRUE)
 }

@@ -51,10 +51,10 @@ links <- read.csv(header = TRUE, stringsAsFactors = FALSE, text = '
                    6,2,six
                    7,2,seven
                    8,6,eight')
-                   
+
  # Convert data
  as_treenetdf(links, cols = c(nodeId = 'source', parentId = 'target'))
- 
+
  # Graph (calls as_treenetdf internally)
  treeNetwork(links, cols = c(nodeId = 'source', parentId = 'target'))
 

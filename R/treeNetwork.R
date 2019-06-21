@@ -23,10 +23,10 @@
 #' @importFrom htmlwidgets shinyRenderWidget
 #'
 #' @export
-#' 
-treeNetwork <- function(data, width = NULL, height = NULL, treeType = 'tidy', 
-                        direction = 'right', linkType = 'diagonal', 
-                        defaults = NULL, mouseover = '', mouseout = '',
+#'
+treeNetwork <- function(data, width = NULL, height = NULL, treeType = "tidy",
+                        direction = "right", linkType = "diagonal",
+                        defaults = NULL, mouseover = "", mouseout = "",
                         inbrowser = FALSE, ...) {
 
   # convert to the native data format
@@ -36,45 +36,47 @@ treeNetwork <- function(data, width = NULL, height = NULL, treeType = 'tidy',
     defaults_ <-
       list(
         nodeSize = 8,
-        nodeStroke = 'steelblue',
-        nodeColour = 'steelblue',
-        nodeSymbol = 'circle',
-        nodeFont = 'sans-serif',
+        nodeStroke = "steelblue",
+        nodeColour = "steelblue",
+        nodeSymbol = "circle",
+        nodeFont = "sans-serif",
         nodeFontSize = 10,
-        textColour = 'black',
+        textColour = "black",
         textOpacity = 1,
-        linkColour = 'black',
-        linkWidth = '1.5px'
+        linkColour = "black",
+        linkWidth = "1.5px"
       )
     if (missing(defaults)) {
       return(defaults_)
     } else {
       defaults <- as.list(defaults)
-      names(defaults) <- sub('Color$', 'Colour', names(defaults))
-      return(c(defaults, defaults_[! names(defaults_) %in% names(defaults)]))
+      names(defaults) <- sub("Color$", "Colour", names(defaults))
+      return(c(defaults, defaults_[!names(defaults_) %in% names(defaults)]))
     }
   }
 
   defaults <- default(defaults)
 
-  for(i in 1:length(defaults)) {
-    if (! names(defaults)[i] %in% names(data)) {
+  for (i in 1:length(defaults)) {
+    if (!names(defaults)[i] %in% names(data)) {
       data[names(defaults)[i]] <- defaults[i]
     }
   }
 
-  options <- list(treeType = treeType, direction = direction,
-                  linkType = linkType, mouseover = mouseover, 
-                  mouseout = mouseout)
+  options <- list(
+    treeType = treeType, direction = direction,
+    linkType = linkType, mouseover = mouseover,
+    mouseout = mouseout
+  )
   x <- list(data = jsonlite::toJSON(data), options = options)
 
   # create widget
   htmlwidgets::createWidget(
-    name = 'treeNetwork',
+    name = "treeNetwork",
     x = x,
     width = width,
     height = height,
-    package = 'networkD3',
+    package = "networkD3",
     sizingPolicy = htmlwidgets::sizingPolicy(viewer.suppress = inbrowser)
   )
 }
@@ -96,14 +98,17 @@ treeNetwork <- function(data, width = NULL, height = NULL, treeType = 'tidy',
 #' @name treeNetwork-shiny
 #'
 #' @export
-treeNetworkOutput <- function(outputId, width = '100%', height = '400px'){
-  htmlwidgets::shinyWidgetOutput(outputId, 'treeNetwork', width, height, 
-                                 package = 'networkD3')
+treeNetworkOutput <- function(outputId, width = "100%", height = "400px") {
+  htmlwidgets::shinyWidgetOutput(outputId, "treeNetwork", width, height,
+    package = "networkD3"
+  )
 }
 
 #' @rdname treeNetwork-shiny
 #' @export
 renderTreeNetwork <- function(expr, env = parent.frame(), quoted = FALSE) {
-  if (!quoted) { expr <- substitute(expr) } # force quoted
+  if (!quoted) {
+    expr <- substitute(expr)
+  } # force quoted
   htmlwidgets::shinyRenderWidget(expr, treeNetworkOutput, env, quoted = TRUE)
 }
