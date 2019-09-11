@@ -64,6 +64,20 @@ HTMLWidgets.widget({
       .attr("d", d3.arc().innerRadius(innerRadius).outerRadius(outerRadius))
       .on("mouseover", fade(.1))
       .on("mouseout", fade(1));
+      
+    if(x.options.group_links){
+      s.selectAll("g")
+      .on("click", function(d){
+        window.open(x.options.group_links[d.index], name=x.options.group_links_window);
+      })
+      .on("mouseover", function(d){
+        d3.select(this).style("cursor", "pointer");
+      })
+      .on("mouseout", function(d){
+        d3.select(this).style("cursor", "default");
+      });
+    }
+      
 
       if(x.options.labels) {
         // Forumulas taken from http://sdk.gooddata.com/gooddata-js/example/chord-chart-to-analyze-sales/
