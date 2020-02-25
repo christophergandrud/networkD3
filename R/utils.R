@@ -247,3 +247,92 @@ tbl_df_strip <- function(x) {
 pkg_installed <- function(pkg_name) {
     pkg_name %in% rownames(installed.packages())
 }
+
+
+
+#' Generate nodes and links dataframe for using with sankeyNetwork function
+
+#' @param dataframe the name of the dataframe
+#' @param variables a vector of the variables (factors) to display from left to right 
+
+#' @return 2 dataframe "nodes" and "links" usable in sankeyNetwork function
+#' @examples
+#' # A simple sankeyNetwork generated with nodes_links
+#' 
+#'nodes_links(esoph, c("agegp", "alcgp", "tobgp"))
+#'networkD3::sankeyNetwork(Links = links, Nodes = nodes, Source = 'source',
+#'                             Target = 'target', Value = 'value', NodeID = 'name',
+#'                             units = 'TWh', fontSize = 12, nodeWidth = 30)
+#' 
+#' 
+#' 
+#' #A basic shiny app with a sankeyNetwork generated with nodes_links
+#' 
+#'if (interactive()) {
+#'  
+#'  shiny::shinyApp(
+#'    ui = shiny::fluidPage(
+#'      shiny::sidebarLayout(
+#'        shiny::sidebarPanel(
+#'          shiny::actionButton("newflowchart", "New flow chart")
+#'        ),
+#'        shiny::mainPanel(
+#'          networkD3::sankeyNetworkOutput("plot")
+#'        )
+#'      )
+#'    ),
+#'    server = function(input, output) {
+#'      output$plot <- networkD3::renderSankeyNetwork({
+#'        input$newflowchart
+#'        nodes_links(esoph, c("agegp", "alcgp", "tobgp"))
+#' 
+#'        networkD3::sankeyNetwork(Links = links, Nodes = nodes, Source = 'source',
+#'                                 Target = 'target', Value = 'value', NodeID = 'name',
+#'                                units = 'TWh', fontSize = 12, nodeWidth = 30)
+#'      })
+#'    }
+#' )}
+
+#' @export
+
+nodes_links <- function(dataframe, variables ) {
+  
+  data <- dplyr::select(dataframe, variables) 
+  
+  links_list = list()
+  nodes_list = list()
+  
+  for (i in 1:(length(data)-1)){
+    dat_links <- xtabs(~dplyr::pull(data, i) + dplyr::pull(data, i+1)) %>% 
+      as.data.frame() %>% 
+      dplyr::rename(source = 1, 
+                    target = 2, 
+                    value = 3)
+    links_list[[i]] <- dat_links
+    
+    dat_nodes <-data.frame(name = levels(dplyr::pull(data, i))) 
+    
+    nodes_list[[i]] <- dat_nodes
+    
+  }
+  
+  nodes_list[[length(data)]] <- data.frame(name = levels(dplyr::pull(data, length(data)))) 
+  
+  nodes <- do.call(rbind, nodes_list) %>% 
+    dplyr::mutate(code = seq(from = 0, to = length(name)-1))
+  
+  code_name <- function(name){
+    dplyr::tibble(name) %>%
+      dplyr::mutate_if(is.factor, as.character) %>% 
+      dplyr::left_join(nodes, by = "name") %>%
+      dplyr::pull(code)
+  }
+  
+  links <- do.call(rbind, links_list) %>% 
+    dplyr::mutate(source = code_name(source), 
+                  target = code_name(target)) %>% 
+    dplyr::filter(value!=0)
+  assign("nodes", nodes, envir = parent.frame())
+  assign("links", links, envir = parent.frame())
+  
+}
