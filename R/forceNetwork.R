@@ -171,9 +171,6 @@ forceNetwork <- function(Links,
                          opacityNoHover = 0,
                          clickAction = NULL)
 {
-    # Check if data is zero indexed
-    check_zero(Links[, Source], Links[, Target])
-
     # If tbl_df convert to plain data.frame
     Links <- tbl_df_strip(Links)
     Nodes <- tbl_df_strip(Nodes)
@@ -190,6 +187,14 @@ forceNetwork <- function(Links,
     if (!is.data.frame(Nodes)) {
             stop("Nodes must be a data frame class object.")
     }
+    
+    # if Source or Target are missing assume Source is the first
+    # column Target is the second column
+    if (missing(Source))
+        Source = 1
+    if (missing(Target))
+        Target = 2
+    
     if (missing(Value)) {
             LinksDF <- data.frame(Links[, Source], Links[, Target])
             names(LinksDF) <- c("source", "target")
@@ -207,6 +212,9 @@ forceNetwork <- function(Links,
             names(NodesDF) <- c("name", "group")
             nodesize = FALSE
     }
+    
+    # Check if data is zero indexed
+    check_zero(Links[, Source], Links[, Target])
 
     LinksDF <- data.frame(LinksDF, colour = linkColour)
     LinksDF$colour = as.character(LinksDF$colour)
