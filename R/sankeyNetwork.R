@@ -78,9 +78,6 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
     fontFamily = NULL, nodeWidth = 15, nodePadding = 10, margin = NULL,
     height = NULL, width = NULL, iterations = 32, sinksRight = TRUE)
 {
-    # Check if data is zero indexed
-    check_zero(Links[, Source], Links[, Target])
-
     # Hack for UI consistency. Think of improving.
     colourScale <- as.character(colourScale)
 
@@ -95,6 +92,7 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
     if (!is.data.frame(Nodes)) {
         stop("Nodes must be a data frame class object.")
     }
+    
     # if Source or Target are missing assume Source is the first
     # column Target is the second column
     if (missing(Source))
@@ -110,6 +108,9 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
             Links[, Value])
         names(LinksDF) <- c("source", "target", "value")
     }
+    
+    # Check if data is zero indexed
+    check_zero(Links[, Source], Links[, Target])
 
     # if NodeID is missing assume NodeID is the first column
     if (missing(NodeID))
