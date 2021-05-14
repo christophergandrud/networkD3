@@ -140,6 +140,27 @@ HTMLWidgets.widget({
                 .style("stroke-opacity", opacity_link);
             });
 
+	if (options.arrowheads) {
+      	link.style("marker-end",  function(d) { return "url(#arrow-" + d.colour + ")"; });
+
+      var linkColoursArr = d3.nest().key(function(d) { return d.colour; }).entries(links);
+
+      svg.append("defs").selectAll("marker")
+          .data(linkColoursArr)
+          .enter().append("marker")
+            .attr("id", function(d) { return "arrow-" + d.key; })
+            .attr("viewBox", "0, -5, 10, 10")
+            .attr("refX", 10)
+            .attr("markerWidth", 1)
+            .attr("markerHeight", 1)
+            .attr("orient", "auto")
+            .style("fill", "context-fill")
+            .style("fill", function(d) { return d.key; })
+            .style("opacity", 0.5)
+          .append("path")
+            .attr("d", "M0,-5 L10,0 L0,5");
+    }
+
         // add backwards class to cycles
         link.classed('backwards', function (d) { return d.target.x < d.source.x; });
 
