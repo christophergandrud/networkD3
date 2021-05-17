@@ -10,10 +10,19 @@ IEEE Transactions on Software Engineering, SE-7(2), 223-228.
 Mike Bostock: \url{http://bl.ocks.org/mbostock/4339083}.
 }
 \usage{
-diagonalNetwork(List, height = NULL, width = NULL, fontSize = 10,
-  fontFamily = "serif", linkColour = "#ccc", nodeColour = "#fff",
-  nodeStroke = "steelblue", textColour = "#111", opacity = 0.9,
-  margin = NULL)
+diagonalNetwork(
+  List,
+  height = NULL,
+  width = NULL,
+  fontSize = 10,
+  fontFamily = "serif",
+  linkColour = "#ccc",
+  nodeColour = "#fff",
+  nodeStroke = "steelblue",
+  textColour = "#111",
+  opacity = 0.9,
+  margin = NULL
+)
 }
 \arguments{
 \item{List}{a hierarchical list object with a root node and children.}

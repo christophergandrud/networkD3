@@ -4,8 +4,7 @@
 \alias{as_treenetdf.list}
 \title{Convert a nested list to \code{treenetdf}}
 \usage{
-\method{as_treenetdf}{list}(data, children_name = "children",
-  node_name = "name", ...)
+\method{as_treenetdf}{list}(data, children_name = "children", node_name = "name", ...)
 }
 \arguments{
 \item{data}{a tree network description in one of numerous forms (see

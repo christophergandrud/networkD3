@@ -121,7 +121,7 @@ HTMLWidgets.widget({
         var path = sankey.link();
 
         // draw links
-        var link = svg.selectAll(".link")
+        var link = svg.selectAll(".node")
             .data(links)
             .enter().append("path")
             .attr("class", "link")
@@ -139,6 +139,8 @@ HTMLWidgets.widget({
                 d3.select(this)
                 .style("stroke-opacity", opacity_link);
             });
+
+	
 
         // add backwards class to cycles
         link.classed('backwards', function (d) { return d.target.x < d.source.x; });
@@ -172,6 +174,30 @@ HTMLWidgets.widget({
             .append("xhtml:body")
             .html(function(d) { return "<pre>" + d.source.name + " \u2192 " + d.target.name +
                 "\n" + format(d.value) + " " + options.units + "</pre>"; });
+
+	if (options.arrows) {
+      	link.style("marker-end",  function(d) { return "url(#arrow-" + d.key + ")"; });
+
+      var linkColoursArr = d3.nest().key(function(d) { return d.colour; }).entries(links);
+
+      node.selectAll(".link")
+          .data(linkColoursArr)
+          .enter().append("marker")
+            .attr("id", function(d) { return "arrow-" + d.key; })
+            .attr("viewBox", "0, -5, 10, 10")
+            .attr("refX", 10)
+            .attr("refY", 0)
+            .attr("preserveAspectRatio", "xMaxYMin meet")
+            .attr("Width", sankey.nodeWidth())
+            .attr("markerHeight", 1)
+            .attr("orient", "auto-start-reverse")
+	    //.attr("transform", "skewY(40)")
+            .style("fill", "context-fill")
+            //.style("fill", function(d) { return d.key; })
+            .style("opacity", 0.5)
+          .append("path")
+            .attr("d", "M0,-5 L10,0 L0,5");
+    }		
 
         node.append("rect")
             .attr("height", function(d) { return d.dy; })

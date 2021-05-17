@@ -4,8 +4,14 @@
 \alias{as_treenetdf.data.frame}
 \title{Convert a data.frame to a \code{treenetdf}}
 \usage{
-\method{as_treenetdf}{data.frame}(data, cols = setNames(names(data),
-  names(data)), df_type = "treenetdf", subset = names(data), root, ...)
+\method{as_treenetdf}{data.frame}(
+  data,
+  cols = setNames(names(data), names(data)),
+  df_type = "treenetdf",
+  subset = names(data),
+  root,
+  ...
+)
 }
 \arguments{
 \item{data}{a tree network description in one of numerous forms (see
