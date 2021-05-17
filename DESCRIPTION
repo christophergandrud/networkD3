@@ -35,4 +35,4 @@ Suggests:
     tibble
 Enhances: knitr, shiny
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.1

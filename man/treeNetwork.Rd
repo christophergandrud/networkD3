@@ -4,9 +4,19 @@
 \alias{treeNetwork}
 \title{Create collapsible tree network diagrams.}
 \usage{
-treeNetwork(data, width = NULL, height = NULL, treeType = "tidy",
-  direction = "right", linkType = "diagonal", defaults = NULL,
-  mouseover = "", mouseout = "", inbrowser = FALSE, ...)
+treeNetwork(
+  data,
+  width = NULL,
+  height = NULL,
+  treeType = "tidy",
+  direction = "right",
+  linkType = "diagonal",
+  defaults = NULL,
+  mouseover = "",
+  mouseout = "",
+  inbrowser = FALSE,
+  ...
+)
 }
 \arguments{
 \item{data}{a tree network description in one of numerous forms (see details)}

@@ -9,15 +9,33 @@ specifically for force directed networks
 \url{https://github.com/d3/d3/blob/master/API.md#forces-d3-force}.
 }
 \usage{
-forceNetwork(Links, Nodes, Source, Target, Value, NodeID, Nodesize, Group,
-  height = NULL, width = NULL,
-  colourScale = JS("d3.scaleOrdinal(d3.schemeCategory20);"), fontSize = 7,
-  fontFamily = "serif", linkDistance = 50,
+forceNetwork(
+  Links,
+  Nodes,
+  Source,
+  Target,
+  Value,
+  NodeID,
+  Nodesize,
+  Group,
+  height = NULL,
+  width = NULL,
+  colourScale = JS("d3.scaleOrdinal(d3.schemeCategory20);"),
+  fontSize = 7,
+  fontFamily = "serif",
+  linkDistance = 50,
   linkWidth = JS("function(d) { return Math.sqrt(d.value); }"),
-  radiusCalculation = JS(" Math.sqrt(d.nodesize)+6"), charge = -30,
-  linkColour = "#666", opacity = 0.6, zoom = FALSE, legend = FALSE,
-  arrows = FALSE, bounded = FALSE, opacityNoHover = 0,
-  clickAction = NULL)
+  radiusCalculation = JS(" Math.sqrt(d.nodesize)+6"),
+  charge = -30,
+  linkColour = "#666",
+  opacity = 0.6,
+  zoom = FALSE,
+  legend = FALSE,
+  arrows = FALSE,
+  bounded = FALSE,
+  opacityNoHover = 0,
+  clickAction = NULL
+)
 }
 \arguments{
 \item{Links}{a data frame object with the links between the nodes. It should
