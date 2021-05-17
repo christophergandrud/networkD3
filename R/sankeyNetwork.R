@@ -41,7 +41,7 @@
 #' browser on the client so don't push it too high.
 #' @param sinksRight boolean. If \code{TRUE}, the last nodes are moved to the
 #' right border of the plot.
-#' @param arrowheads logical value to enable directional link arrows.
+#' @param arrows logical value to enable directional link arrows.
 #'
 #' @examples
 #' \dontrun{
@@ -78,7 +78,7 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
     colourScale = JS("d3.scaleOrdinal(d3.schemeCategory20);"), fontSize = 7,
     fontFamily = NULL, nodeWidth = 15, nodePadding = 10, margin = NULL,
     height = NULL, width = NULL, iterations = 32, sinksRight = TRUE,
-    arrowheads=FALSE)
+    arrows=FALSE)
 {
     # Check if data is zero indexed
     check_zero(Links[, Source], Links[, Target])
@@ -135,7 +135,7 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
         colourScale = colourScale, fontSize = fontSize, fontFamily = fontFamily,
         nodeWidth = nodeWidth, nodePadding = nodePadding, units = units,
         margin = margin, iterations = iterations, sinksRight = sinksRight,
-        arrowheads = arrowheads)
+        arrows = arrows)
 
     # create widget
     htmlwidgets::createWidget(name = "sankeyNetwork", x = list(links = LinksDF,
