@@ -117,6 +117,23 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
     NodesDF <- data.frame(Nodes[, NodeID])
     names(NodesDF) <- c("name")
 
+    # Check node indices for source and target are within range
+    valid.indices <- seq_len(nrow(NodesDF)) - 1
+    invalid.source.indices <- LinksDF[!(LinksDF[, "source"] %in% valid.indices), "source"]
+    if (length(invalid.source.indices) == 1)
+        stop("The following source index in the links data frame is invalid: ",
+             invalid.source.indices)
+    else if (length(invalid.source.indices) > 1)
+        stop("The following source indices in the links data frame are invalid: ",
+             paste0(invalid.source.indices, collapse = ", "))
+    invalid.target.indices <- LinksDF[!(LinksDF[, "target"] %in% valid.indices), "target"]
+    if (length(invalid.target.indices) == 1)
+        stop("The following target index in the links data frame is invalid: ",
+             invalid.target.indices)
+    else if (length(invalid.target.indices) > 1)
+        stop("The following target indices in the links data frame are invalid: ",
+             paste0(invalid.target.indices, collapse = ", "))
+
     # add node group if specified
     if (is.character(NodeGroup)) {
         NodesDF$group <- Nodes[, NodeGroup]
