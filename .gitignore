@@ -5,3 +5,4 @@
 .sass-cache
 .*.Rnb.cached
 dev/*
+/node_modules

@@ -7,3 +7,7 @@ dependencies:
     version: 1.0
     src: "htmlwidgets/lib"
     script: sankey.js
+  - name: sankeyNetworkDefinition
+    version: 1.0
+    src: "htmlwidgets/lib"
+    script: sankeyNetworkDefinition.js
