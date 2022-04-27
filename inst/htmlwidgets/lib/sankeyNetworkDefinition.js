@@ -17,13 +17,12 @@ const sankeyNetworkDefinition = {
     },
 
     resize: function(el, width, height, instance) {
-        /*  handle resizing now through the viewBox
+        // handle resizing now through the viewBox
         d3.select(el).select("svg")
             .attr("width", width)
             .attr("height", height + height * 0.05);
 
         this.renderValue(el, instance.x, instance);
-        */
         
         // with flexdashboard and slides
         //   sankey might be hidden so height and width 0
