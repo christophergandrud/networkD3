@@ -6,6 +6,8 @@
 #' @param width numeric width for the network graph's frame area in pixels (if
 #'   \code{NULL} then width is automatically determined based on context)
 #' @param fontSize numeric font size in pixels for the node text labels.
+#' @param fontSizeTransition numeric font size in pixels for the node text
+#'  labels after mouseover transition is complete.
 #' @param fontFamily font family for the node text labels.
 #' @param linkColour character string specifying the colour you want the link
 #' lines to be. Multiple formats supported (e.g. hexadecimal).
@@ -92,6 +94,7 @@ diagonalNetwork <- function(
                           height = NULL,
                           width = NULL,
                           fontSize = 10,
+                          fontSizeTransition = 25,
                           fontFamily = "serif",
                           linkColour = "#ccc",
                           nodeColour = "#fff",
@@ -112,6 +115,7 @@ diagonalNetwork <- function(
         height = height,
         width = width,
         fontSize = fontSize,
+        fontSizeTransition = fontSizeTransition,
         fontFamily = fontFamily,
         linkColour = linkColour,
         nodeColour = nodeColour,

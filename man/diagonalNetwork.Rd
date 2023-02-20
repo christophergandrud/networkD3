@@ -10,10 +10,20 @@ IEEE Transactions on Software Engineering, SE-7(2), 223-228.
 Mike Bostock: \url{http://bl.ocks.org/mbostock/4339083}.
 }
 \usage{
-diagonalNetwork(List, height = NULL, width = NULL, fontSize = 10,
-  fontFamily = "serif", linkColour = "#ccc", nodeColour = "#fff",
-  nodeStroke = "steelblue", textColour = "#111", opacity = 0.9,
-  margin = NULL)
+diagonalNetwork(
+  List,
+  height = NULL,
+  width = NULL,
+  fontSize = 10,
+  fontSizeTransition = 25,
+  fontFamily = "serif",
+  linkColour = "#ccc",
+  nodeColour = "#fff",
+  nodeStroke = "steelblue",
+  textColour = "#111",
+  opacity = 0.9,
+  margin = NULL
+)
 }
 \arguments{
 \item{List}{a hierarchical list object with a root node and children.}
@@ -25,6 +35,9 @@ diagonalNetwork(List, height = NULL, width = NULL, fontSize = 10,
 \code{NULL} then width is automatically determined based on context)}
 
 \item{fontSize}{numeric font size in pixels for the node text labels.}
+
+\item{fontSizeTransition}{numeric font size in pixels for the node text
+labels after mouseover transition is complete.}
 
 \item{fontFamily}{font family for the node text labels.}
 
