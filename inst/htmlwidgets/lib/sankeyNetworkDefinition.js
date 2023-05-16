@@ -17,7 +17,6 @@ const sankeyNetworkDefinition = {
     },
 
     resize: function(el, width, height, instance) {
-        // handle resizing now through the viewBox
         d3.select(el).select("svg")
             .attr("width", width)
             .attr("height", height + height * 0.05);
@@ -199,46 +198,6 @@ const sankeyNetworkDefinition = {
             .filter(function(d) { return d.x < width / 2 || !options.sinksRight; })
             .attr("x", 6 + sankey.nodeWidth())
             .attr("text-anchor", "start");
-
-
-        // adjust viewBox to fit the bounds of our tree
-        var s = d3.select(svg.node().parentNode);
-        s.attr(
-            "viewBox",
-            [
-              d3.min(
-                s.selectAll('g').nodes().map(function(d){
-                  return d.getBoundingClientRect().left
-                })
-              ) - s.node().getBoundingClientRect().left - margin.right,
-              d3.min(
-                s.selectAll('g').nodes().map(function(d){
-                  return d.getBoundingClientRect().top
-                })
-              ) - s.node().getBoundingClientRect().top - margin.top,
-              d3.max(
-                s.selectAll('g').nodes().map(function(d){
-                  return d.getBoundingClientRect().right
-                })
-              ) -
-              d3.min(
-                s.selectAll('g').nodes().map(function(d){
-                  return d.getBoundingClientRect().left
-                })
-              )  + margin.left + margin.right,
-              d3.max(
-                s.selectAll('g').nodes().map(function(d){
-                  return d.getBoundingClientRect().bottom
-                })
-              ) -
-              d3.min(
-                s.selectAll('g').nodes().map(function(d){
-                  return d.getBoundingClientRect().top
-                })
-              ) + margin.top + margin.bottom
-            ].join(",")
-          );
-
 
         function dragmove(d) {
             d3.select(this).attr("transform", "translate(" + d.x + "," +
