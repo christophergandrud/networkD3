@@ -199,6 +199,36 @@ const sankeyNetworkDefinition = {
             .attr("x", 6 + sankey.nodeWidth())
             .attr("text-anchor", "start");
 
+        // adjust viewBox to fit the bounds of our tree
+        var s = d3.select(svg.node().parentNode);
+        var nodes_left = d3.min(s.selectAll('g').nodes().map(function(d){return d.getBoundingClientRect().left}));
+        var nodes_right = d3.max(s.selectAll('g').nodes().map(function(d){return d.getBoundingClientRect().right}));
+        var nodes_top = d3.min(s.selectAll('g').nodes().map(function(d){return d.getBoundingClientRect().top}));
+        var nodes_bottom = d3.max(s.selectAll('g').nodes().map(function(d){return d.getBoundingClientRect().bottom}));
+
+        var s_left = s.node().getBoundingClientRect().left;
+        var s_top = s.node().getBoundingClientRect().top;
+        console.log('nodes_left:' + nodes_left);
+        console.log('nodes_top:' + nodes_top);
+        console.log('nodes_right:' + nodes_right);
+        console.log('nodes_bottom:' + nodes_bottom);
+        console.log('s_left:' + s_left);
+        console.log('s_top:' + s_top);
+
+        // Don't use viewbox in firefox because these coordinates are wrong
+        // getBoundingClientRect in firefox doesn't reflect CSS transforms
+        // But in chrome we need the viewbox to avoid the node labels from being truncated
+        if (s_left < nodes_left && s_top < nodes_top)
+            s.attr(
+                "viewBox",
+                [
+                  nodes_left - s.node().getBoundingClientRect().left - margin.left,
+                  nodes_top - s.node().getBoundingClientRect().top - margin.top,
+                  nodes_right - nodes_left  + margin.left + margin.right,
+                  nodes_bottom - nodes_top + margin.top + margin.bottom
+                ].join(",")
+              );
+
         function dragmove(d) {
             d3.select(this).attr("transform", "translate(" + d.x + "," +
             (d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))) + ")");
