@@ -205,15 +205,8 @@ const sankeyNetworkDefinition = {
         var nodes_right = d3.max(s.selectAll('g').nodes().map(function(d){return d.getBoundingClientRect().right}));
         var nodes_top = d3.min(s.selectAll('g').nodes().map(function(d){return d.getBoundingClientRect().top}));
         var nodes_bottom = d3.max(s.selectAll('g').nodes().map(function(d){return d.getBoundingClientRect().bottom}));
-
         var s_left = s.node().getBoundingClientRect().left;
         var s_top = s.node().getBoundingClientRect().top;
-        console.log('nodes_left:' + nodes_left);
-        console.log('nodes_top:' + nodes_top);
-        console.log('nodes_right:' + nodes_right);
-        console.log('nodes_bottom:' + nodes_bottom);
-        console.log('s_left:' + s_left);
-        console.log('s_top:' + s_top);
 
         // Don't use viewbox in firefox because these coordinates are wrong
         // getBoundingClientRect in firefox doesn't reflect CSS transforms
@@ -222,8 +215,8 @@ const sankeyNetworkDefinition = {
             s.attr(
                 "viewBox",
                 [
-                  nodes_left - s.node().getBoundingClientRect().left - margin.left,
-                  nodes_top - s.node().getBoundingClientRect().top - margin.top,
+                  nodes_left - s_left - margin.left,
+                  nodes_top - s_top - margin.top,
                   nodes_right - nodes_left  + margin.left + margin.right,
                   nodes_bottom - nodes_top + margin.top + margin.bottom
                 ].join(",")
