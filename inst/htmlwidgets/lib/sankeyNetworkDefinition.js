@@ -17,7 +17,6 @@ const sankeyNetworkDefinition = {
     },
 
     resize: function(el, width, height, instance) {
-        // handle resizing now through the viewBox
         d3.select(el).select("svg")
             .attr("width", width)
             .attr("height", height + height * 0.05);
@@ -200,45 +199,28 @@ const sankeyNetworkDefinition = {
             .attr("x", 6 + sankey.nodeWidth())
             .attr("text-anchor", "start");
 
-
         // adjust viewBox to fit the bounds of our tree
         var s = d3.select(svg.node().parentNode);
-        s.attr(
-            "viewBox",
-            [
-              d3.min(
-                s.selectAll('g').nodes().map(function(d){
-                  return d.getBoundingClientRect().left
-                })
-              ) - s.node().getBoundingClientRect().left - margin.right,
-              d3.min(
-                s.selectAll('g').nodes().map(function(d){
-                  return d.getBoundingClientRect().top
-                })
-              ) - s.node().getBoundingClientRect().top - margin.top,
-              d3.max(
-                s.selectAll('g').nodes().map(function(d){
-                  return d.getBoundingClientRect().right
-                })
-              ) -
-              d3.min(
-                s.selectAll('g').nodes().map(function(d){
-                  return d.getBoundingClientRect().left
-                })
-              )  + margin.left + margin.right,
-              d3.max(
-                s.selectAll('g').nodes().map(function(d){
-                  return d.getBoundingClientRect().bottom
-                })
-              ) -
-              d3.min(
-                s.selectAll('g').nodes().map(function(d){
-                  return d.getBoundingClientRect().top
-                })
-              ) + margin.top + margin.bottom
-            ].join(",")
-          );
+        var nodes_left = d3.min(s.selectAll('g').nodes().map(function(d){return d.getBoundingClientRect().left}));
+        var nodes_right = d3.max(s.selectAll('g').nodes().map(function(d){return d.getBoundingClientRect().right}));
+        var nodes_top = d3.min(s.selectAll('g').nodes().map(function(d){return d.getBoundingClientRect().top}));
+        var nodes_bottom = d3.max(s.selectAll('g').nodes().map(function(d){return d.getBoundingClientRect().bottom}));
+        var s_left = s.node().getBoundingClientRect().left;
+        var s_top = s.node().getBoundingClientRect().top;
 
+        // Don't use viewbox in firefox because these coordinates are wrong
+        // getBoundingClientRect in firefox doesn't reflect CSS transforms
+        // But in chrome we need the viewbox to avoid the node labels from being truncated
+        if (s_left < nodes_left && s_top < nodes_top)
+            s.attr(
+                "viewBox",
+                [
+                  nodes_left - s_left - margin.left,
+                  nodes_top - s_top - margin.top,
+                  nodes_right - nodes_left  + margin.left + margin.right,
+                  nodes_bottom - nodes_top + margin.top + margin.bottom
+                ].join(",")
+              );
 
         function dragmove(d) {
             d3.select(this).attr("transform", "translate(" + d.x + "," +
