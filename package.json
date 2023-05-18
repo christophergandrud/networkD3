@@ -5,10 +5,13 @@
     "node": ">=12.9.0"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "prepare": "cross-env PUPPETEER_PRODUCT=firefox node node_modules/puppeteer/install.js"
   },
   "dependencies": {
+    "cross-env": "^7.0.3",
     "jest": "^27.3.1",
+    "jest-image-snapshot": "^6.1.0",
     "puppeteer": "^11.0.0"
   }
 }

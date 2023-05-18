@@ -6,4 +6,8 @@ install:
   - npm install
 
 script:
+  - npm run prepare
   - npm run test
+
+addons:
+  artifacts: true

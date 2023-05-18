@@ -1,5 +1,5 @@
-const sankeyNetworkDefinition = require('./sankeyNetworkDefinition');
-
+const sankeyNetworkDefinition = require('../lib/sankeyNetworkDefinition');
+const testUtils = require('./testUtils');
 const puppeteer = require('puppeteer');
 
 var data = {
@@ -17,7 +17,7 @@ var data = {
         "NodeID": "name", "NodeGroup": "group", "LinkGroup": "group", "colourScale": "d3.scaleOrdinal() .domain(['0','1','2','3','4','5','6','7','8','9','10','11','12','13']) .range(['#EF5953','#3E7DCC','#D18CA2','#6CA19D','#EF5953','#3E7DCC','#D18CA2','#6CA19D','#EF5953','#3E7DCC','#6CA19D','#EF5953','#3E7DCC','#6CA19D']);", "fontSize": 17, "fontFamily": "Arial", "nodeWidth": 30, "nodePadding": 40, "units": "",
         "margin": { "top": null, "right": null, "bottom": null, "left": null },
         "iterations": 0,
-        "sinksRight": true
+        "sinksRight": false
     }
 }
 
@@ -25,12 +25,14 @@ let browser;
 let page;
 
 beforeEach(async () => {
-    browser = await puppeteer.launch();
+    browser = await puppeteer.launch({
+		product: 'firefox',
+    });
     page = await browser.newPage();
 });
 
 
-test('VIS-1023: node tooltips have newline separating category name and value', async () => {
+test('Check sankey network rendering in firefox', async () => {
 	await page.setContent(`<html><head><meta charset="UTF-8"></head><body><div id="myDiv" style="width: 800; height: 600;"></div></body></html>`);
 	await page.addScriptTag({ path: 'inst/htmlwidgets/lib/d3-4.9.1/d3.min.js' });
 	await page.addScriptTag({ path: 'inst/htmlwidgets/lib/sankey.js' });
@@ -66,14 +68,10 @@ test('VIS-1023: node tooltips have newline separating category name and value', 
 		var instance = sankeyNetworkDefinition.initialize(el, 800, 600);
 		sankeyNetworkDefinition.renderValue(el, data, instance);
 	}, data);
-
-	const tooltip_html = await page.evaluate(() => Array.from(document.getElementsByClassName('node-tooltip'), e => e.innerHTML));
-	tooltip_html.forEach(x => {
-		expect(x.match('<pre>.+\n.+</pre>$')).toBeTruthy();
-	});
 });
 
 
 afterEach(async () => {
+	await testUtils.snapshotAndCompare(page, 'firefox-screenshot', 800, 600);
     await browser.close();
 });
