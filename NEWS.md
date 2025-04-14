@@ -4,6 +4,10 @@
 [Pull Request](https://github.com/christophergandrud/networkD3/pulls) number.
 Please see those for more details.
 
+# 0.4.1
+
+- Minor link changes
+
 # 0.4
 
 ## Major changes

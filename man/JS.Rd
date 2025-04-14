@@ -5,7 +5,7 @@
 \title{Create character strings that will be evaluated as JavaScript}
 \source{
 A direct import of \code{JS} from Ramnath Vaidyanathan, Yihui Xie,
-JJ Allaire, Joe Cheng and Kenton Russell (2015). \link{htmlwidgets}: HTML
+JJ Allaire, Joe Cheng and Kenton Russell (2015). htmlwidgets: HTML
 Widgets for R. R package version 0.4.
 }
 \usage{

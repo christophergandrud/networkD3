@@ -5,7 +5,7 @@
 #'
 #' @name networkD3-package
 #' @aliases networkD3
-#' @docType package
+#' _PACKAGE
 NULL
 
 

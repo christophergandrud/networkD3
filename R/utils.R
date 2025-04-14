@@ -3,7 +3,7 @@
 #' @param ... character string to evaluate
 #'
 #' @source A direct import of \code{JS} from Ramnath Vaidyanathan, Yihui Xie,
-#' JJ Allaire, Joe Cheng and Kenton Russell (2015). \link{htmlwidgets}: HTML
+#' JJ Allaire, Joe Cheng and Kenton Russell (2015). htmlwidgets: HTML
 #' Widgets for R. R package version 0.4.
 #'
 #' @export
@@ -33,7 +33,7 @@ toJSONarray <- function(dtf){
 
   name.value <- function(i){
     quote <- '';
-    if(class(dtf[, i])!='numeric' && class(dtf[, i])!='integer'){
+    if (!inherits(dtf[, i], "numeric") && !inherits(dtf[, i], "integer")){
       quote <- '"';
     }
     paste('"', i, '" : ', quote, dtf[,i], quote, sep='')
@@ -104,7 +104,7 @@ margin_handler <- function(margin){
 #'
 #' @param g an \code{igraph} class graph object
 #' @param group an object that contains node group values, for example, those
-#' created with igraph's \code{\link{membership}} function.
+#' created with igraph's \code{\link[igraph]{membership}} function.
 #' @param what a character string specifying what to return. If
 #' \code{what = 'links'} or \code{what = 'nodes'} only the links or nodes are
 #' returned as data frames, respectively. If \code{what = 'both'} then both

@@ -10,7 +10,7 @@ igraph_to_networkD3(g, group, what = "both")
 \item{g}{an \code{igraph} class graph object}
 
 \item{group}{an object that contains node group values, for example, those
-created with igraph's \code{\link{membership}} function.}
+created with igraph's \code{\link[igraph]{membership}} function.}
 
 \item{what}{a character string specifying what to return. If
 \code{what = 'links'} or \code{what = 'nodes'} only the links or nodes are

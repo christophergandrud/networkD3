@@ -7,12 +7,21 @@
 Mike Bostock: \url{https://github.com/mbostock/d3/wiki/Chord-Layout}.
 }
 \usage{
-chordNetwork(Data, height = 500, width = 500, initialOpacity = 0.8,
-  useTicks = 0, colourScale = c("#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78",
-  "#2ca02c", "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b",
-  "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d",
-  "#17becf", "#9edae5"), padding = 0.1, fontSize = 14,
-  fontFamily = "sans-serif", labels = c(), labelDistance = 30)
+chordNetwork(
+  Data,
+  height = 500,
+  width = 500,
+  initialOpacity = 0.8,
+  useTicks = 0,
+  colourScale = c("#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c", "#98df8a",
+    "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#e377c2",
+    "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5"),
+  padding = 0.1,
+  fontSize = 14,
+  fontFamily = "sans-serif",
+  labels = c(),
+  labelDistance = 30
+)
 }
 \arguments{
 \item{Data}{A square matrix or data frame whose (n, m) entry represents
