@@ -133,7 +133,7 @@ margin_handler <- function(margin){
 #' \dontrun{
 #' # Example with data from data frame
 #' # Load data
-#' ## Original data from http://results.ref.ac.uk/DownloadSubmissions/ByUoa/21
+#' ## Original data from https://results.ref.ac.uk/DownloadSubmissions/ByUoa/21
 #' data('SchoolsJournals')
 #'
 #' # Convert to igraph

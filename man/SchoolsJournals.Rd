@@ -9,7 +9,7 @@ Relations}
 A data set with 2732 rows and 3 variables.
 }
 \source{
-See REF 2014 \url{http://results.ref.ac.uk/DownloadSubmissions/ByUoa/21}.
+See REF 2014 \url{https://results.ref.ac.uk/DownloadSubmissions/ByUoa/21}.
 }
 \usage{
 SchoolsJournals
