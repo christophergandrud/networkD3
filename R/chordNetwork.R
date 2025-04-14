@@ -47,7 +47,7 @@
 #'
 #' @source 
 #'
-#' Mike Bostock: \url{https://github.com/mbostock/d3/wiki/Chord-Layout}.
+#' Mike Bostock: \url{https://github.com/d3/d3/wiki/Chord-Layout}.
 #'
 #' @export
 #'

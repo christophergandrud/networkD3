@@ -4,7 +4,7 @@ D3 JavaScript Network Graphs from R
 Development version: 0.4.9000 [![CRAN
 Version](http://www.r-pkg.org/badges/version/networkD3)](https://CRAN.R-project.org/package=networkD3)
 [![Build
-Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://travis-ci.org/christophergandrud/networkD3)
+Status](https://travis-ci.org/christophergandrud/networkD3.svg?branch=master)](https://app.travis-ci.com/christophergandrud/networkD3)
 ![CRAN Monthly
 Downloads](http://cranlogs.r-pkg.org/badges/last-month/networkD3) ![CRAN
 Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/networkD3)
@@ -42,7 +42,7 @@ Here's `forceNetwork`:
 
 Here's `sankeyNetwork` using a downloaded JSON data file:
 
-    # Recreate Bostock Sankey diagram: http://bost.ocks.org/mike/sankey/
+    # Recreate Bostock Sankey diagram: https://bost.ocks.org/mike/sankey/
     # Load energy projection data
     URL <- paste0("https://cdn.rawgit.com/christophergandrud/networkD3/",
                   "master/JSONdata/energy.json")
@@ -55,7 +55,7 @@ Here's `sankeyNetwork` using a downloaded JSON data file:
 
 ### Interacting with igraph
 
-You can use [igraph](http://igraph.org/r/) to create network graph data
+You can use [igraph](https://igraph.org/r/) to create network graph data
 that can be plotted with **networkD3**. The `igraph_to_networkD3`
 function converts igraph graphs to lists that work well with
 **networkD3**. For example:

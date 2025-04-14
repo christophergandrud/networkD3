@@ -4,9 +4,9 @@
 \alias{dendroNetwork}
 \title{Create hierarchical cluster network diagrams.}
 \source{
-Mike Bostock: \url{http://bl.ocks.org/mbostock/4063570}.
+Mike Bostock: \url{https://bl.ocks.org/mbostock/4063570}.
 
-Fabio Nelli: \url{http://www.meccanismocomplesso.org/en/dendrogramma-d3-parte1/}
+Fabio Nelli: https://www.meccanismocomplesso.org/en/dendrogramma-d3-parte1/
 }
 \usage{
 dendroNetwork(

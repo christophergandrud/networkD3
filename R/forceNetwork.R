@@ -139,7 +139,7 @@
 #'
 
 #' @source
-#' D3.js was created by Michael Bostock. See \url{http://d3js.org/} and, more
+#' D3.js was created by Michael Bostock. See \url{https://d3js.org/} and, more
 #' specifically for force directed networks
 #' \url{https://github.com/d3/d3/blob/master/API.md#forces-d3-force}.
 #' @seealso \code{\link{JS}}.

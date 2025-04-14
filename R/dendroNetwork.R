@@ -46,9 +46,9 @@
 #'                treeOrientation = "vertical")
 #' }
 #'
-#' @source Mike Bostock: \url{http://bl.ocks.org/mbostock/4063570}.
+#' @source Mike Bostock: \url{https://bl.ocks.org/mbostock/4063570}.
 #'
-#' Fabio Nelli: \url{http://www.meccanismocomplesso.org/en/dendrogramma-d3-parte1/}
+#' Fabio Nelli: https://www.meccanismocomplesso.org/en/dendrogramma-d3-parte1/
 #'
 #' @importFrom stats setNames
 #' @importFrom utils modifyList
