@@ -1,7 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^JSONdata
-.travis.yml
 .sass-cache
 ^.*\.o$
 ^README\.Rmd$
