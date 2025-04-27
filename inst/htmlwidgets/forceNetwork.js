@@ -136,7 +136,7 @@ HTMLWidgets.widget({
       });
 
     if (options.arrows) {
-      link.style("marker-end",  function(d) { return "url(#arrow-" + d.colour + ")"; });
+      link.style("marker-end",  function(d) { return "url(" + location.href + "#arrow-" + d.colour + ")"; });
 
       var linkColoursArr = d3.nest().key(function(d) { return d.colour; }).entries(links);
 
