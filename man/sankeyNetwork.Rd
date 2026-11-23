@@ -42,10 +42,10 @@ If no ID is specified then the nodes must be in the same order as the
 grouping variable is allowed.}
 
 \item{Source}{character string naming the network source variable in the
-\code{Links} data frame.}
+\code{Links} data frame. Defaults to the first column when omitted.}
 
 \item{Target}{character string naming the network target variable in the
-\code{Links} data frame.}
+\code{Links} data frame. Defaults to the second column when omitted.}
 
 \item{Value}{character string naming the variable in the \code{Links} data
 frame for how far away the nodes are from one another.}

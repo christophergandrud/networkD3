@@ -49,10 +49,10 @@ variable column in the \code{Links} data frame. Currently only a grouping
 variable is allowed.}
 
 \item{Source}{character string naming the network source variable in the
-\code{Links} data frame.}
+\code{Links} data frame. Defaults to the first column when omitted.}
 
 \item{Target}{character string naming the network target variable in the
-\code{Links} data frame.}
+\code{Links} data frame. Defaults to the second column when omitted.}
 
 \item{Value}{character string naming the variable in the \code{Links} data
 frame for how wide the links are.}

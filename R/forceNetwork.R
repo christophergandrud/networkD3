@@ -9,9 +9,9 @@
 #' variable column in the \code{Links} data frame. Currently only a grouping
 #' variable is allowed.
 #' @param Source character string naming the network source variable in the
-#' \code{Links} data frame.
+#' \code{Links} data frame. Defaults to the first column when omitted.
 #' @param Target character string naming the network target variable in the
-#' \code{Links} data frame.
+#' \code{Links} data frame. Defaults to the second column when omitted.
 #' @param Value character string naming the variable in the \code{Links} data
 #' frame for how wide the links are.
 #' @param NodeID character string specifying the node IDs in the \code{Nodes}
@@ -171,9 +171,6 @@ forceNetwork <- function(Links,
                          opacityNoHover = 0,
                          clickAction = NULL)
 {
-    # Check if data is zero indexed
-    check_zero(Links[, Source], Links[, Target])
-
     # If tbl_df convert to plain data.frame
     Links <- tbl_df_strip(Links)
     Nodes <- tbl_df_strip(Nodes)
@@ -190,6 +187,11 @@ forceNetwork <- function(Links,
     if (!is.data.frame(Nodes)) {
             stop("Nodes must be a data frame class object.")
     }
+    if (missing(Source))
+        Source <- 1
+    if (missing(Target))
+        Target <- 2
+
     if (missing(Value)) {
             LinksDF <- data.frame(Links[, Source], Links[, Target])
             names(LinksDF) <- c("source", "target")
@@ -198,6 +200,8 @@ forceNetwork <- function(Links,
             LinksDF <- data.frame(Links[, Source], Links[, Target], Links[, Value])
             names(LinksDF) <- c("source", "target", "value")
     }
+    check_zero(LinksDF$source, LinksDF$target)
+
     if (!missing(Nodesize)){
             NodesDF <- data.frame(Nodes[, NodeID], Nodes[, Group], Nodes[, Nodesize])
             names(NodesDF) <- c("name", "group", "nodesize")
