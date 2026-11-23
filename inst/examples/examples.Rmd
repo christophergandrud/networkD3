@@ -9,6 +9,8 @@ output:
 
 ```{r}
 library(networkD3)
+data_url <- paste0("https://raw.githubusercontent.com/christophergandrud/",
+                   "networkD3/master/JSONdata/")
 src <- c("A", "A", "A", "A", "B", "B", "C", "C", "D")
 target <- c("B", "C", "D", "J", "E", "F", "G", "H", "I")
 networkData <- data.frame(src, target)
@@ -30,10 +32,9 @@ forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
 # sankeyNetwork
 
 ```{r}
-URL <- "https://raw.githubusercontent.com/christophergandrud/d3Network/sankey/JSONdata/energy.json"
-Energy <- RCurl::getURL(URL, ssl.verifypeer = FALSE)
-EngLinks <- JSONtoDF(jsonStr = Energy, array = "links")
-EngNodes <- JSONtoDF(jsonStr = Energy, array = "nodes")
+Energy <- jsonlite::fromJSON(paste0(data_url, "energy.json"))
+EngLinks <- Energy$links
+EngNodes <- Energy$nodes
 
 sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
               Target = "target", Value = "value", NodeID = "name",
@@ -43,16 +44,14 @@ sankeyNetwork(Links = EngLinks, Nodes = EngNodes, Source = "source",
 # diagonalNetwork
 
 ```{r}
-Flare <- RCurl::getURL("https://gist.githubusercontent.com/mbostock/4063550/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json")
-Flare <- rjson::fromJSON(Flare)
+Flare <- jsonlite::fromJSON(paste0(data_url, "flare.json"),
+                          simplifyDataFrame = FALSE)
 diagonalNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0)
 ```
 
 # radialNetwork
 
 ```{r}
-Flare <- RCurl::getURL("https://gist.githubusercontent.com/mbostock/4063550/raw/a05a94858375bd0ae023f6950a2b13fac5127637/flare.json")
-Flare <- rjson::fromJSON(Flare)
 radialNetwork(List = Flare, fontSize = 10, opacity = 0.9, margin=0)
 ```
 
