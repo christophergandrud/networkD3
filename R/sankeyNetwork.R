@@ -9,9 +9,9 @@
 #' \code{Source} variable column in the \code{Links} data frame. Currently only
 #' grouping variable is allowed.
 #' @param Source character string naming the network source variable in the
-#' \code{Links} data frame.
+#' \code{Links} data frame. Defaults to the first column when omitted.
 #' @param Target character string naming the network target variable in the
-#' \code{Links} data frame.
+#' \code{Links} data frame. Defaults to the second column when omitted.
 #' @param Value character string naming the variable in the \code{Links} data
 #' frame for how far away the nodes are from one another.
 #' @param NodeID character string specifying the node IDs in the \code{Nodes}.
@@ -78,9 +78,6 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
     fontFamily = NULL, nodeWidth = 15, nodePadding = 10, margin = NULL,
     height = NULL, width = NULL, iterations = 32, sinksRight = TRUE)
 {
-    # Check if data is zero indexed
-    check_zero(Links[, Source], Links[, Target])
-
     # Hack for UI consistency. Think of improving.
     colourScale <- as.character(colourScale)
 
@@ -110,6 +107,7 @@ sankeyNetwork <- function(Links, Nodes, Source, Target, Value,
             Links[, Value])
         names(LinksDF) <- c("source", "target", "value")
     }
+    check_zero(LinksDF$source, LinksDF$target)
 
     # if NodeID is missing assume NodeID is the first column
     if (missing(NodeID))
